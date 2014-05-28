@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">掌上绿源Pad</string>
+    <string name="post">回首页</string>
+    <string name="function">潮流车</string>
+    <string name="account">看产品</string>
+    <string name="setting">看技术</string>
+    <string name="refresh">刷新</string>
+
+    <string name="type_luxury">豪华款</string>
+    <string name="type_simple">简易款</string>
+    <string name="type_standard">标准款</string>
+    <string name="type_battery">锂电款</string>
+    <string name="type_replacewalk">代步车</string>
+    <string name="type_special">特种车</string>
+
+</resources>
