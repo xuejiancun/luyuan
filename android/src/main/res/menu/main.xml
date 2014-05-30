@@ -4,6 +4,5 @@
     tools:context="com.luyuan.android.mberp.ui.MainActivity" >
     <item android:id="@+id/action_settings"
         android:title="@string/refresh"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:orderInCategory="100"/>
 </menu>

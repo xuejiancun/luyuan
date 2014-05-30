@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.luyuan.android.mberp.ui.PostFragment">
+    tools:context="com.luyuan.pad.mberp.ui.ProductListFragment">
 
     <android.support.v4.app.FragmentTabHost
-        android:id="@+id/tabhost_post"
+        android:id="@+id/tabhost_product_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,7 +20,7 @@
     </android.support.v4.app.FragmentTabHost>
 
     <FrameLayout
-        android:id="@+id/realtabcontent_post"
+        android:id="@+id/realtabcontent_product_list"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"/>

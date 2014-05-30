@@ -6,13 +6,26 @@
     <string name="function">潮流车</string>
     <string name="account">看产品</string>
     <string name="setting">看技术</string>
-    <string name="refresh">刷新</string>
-
+    <string name="search">搜索</string>
     <string name="type_luxury">豪华款</string>
     <string name="type_simple">简易款</string>
     <string name="type_standard">标准款</string>
     <string name="type_battery">锂电款</string>
     <string name="type_replacewalk">代步车</string>
     <string name="type_special">特种车</string>
+    <string name="appearance">外形外观</string>
+    <string name="car_detail">车型细节</string>
+    <string name="optional_color">可选颜色</string>
+    <string name="car_equipment">整车配置</string>
+    <string name="back">返回</string>
+    <string name="product_name">MVA-CS6020-G1</string>
+    <string name="product_desc1">电池：60V20Ah</string>
+    <string name="product_desc2">电机：800W</string>
+    <string name="product_desc3">扭矩：80N.M</string>
+    <string name="product_desc4">续航：70KM</string>
+    <string name="goto_product">看产品</string>
+    <string name="goto_popular">潮流车</string>
+    <string name="goto_tech">看技术</string>
+    <string name="goto_luyuan">看绿源</string>
 
 </resources>

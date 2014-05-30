@@ -1,0 +1,71 @@
+package com.luyuan.pad.mberp.ui;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.DepthPageTransformer;
+
+
+public class PopularMainFragment extends Fragment {
+
+    /**
+     * The number of pages (wizard steps) to show in this demo.
+     */
+    private static final int NUM_PAGES = 5;
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.fragment_popular_main_slide, container, false);
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) rootView.findViewById(R.id.popular_page_pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setPageTransformer(true, new DepthPageTransformer());
+
+        return rootView;
+    }
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return PopularSubFragment.create(position);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
+
+}

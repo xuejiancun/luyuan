@@ -1,11 +1,11 @@
-package com.luyuan.android.mberp.ui;
+package com.luyuan.pad.mberp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.luyuan.android.mberp.R;
+import com.luyuan.pad.mberp.R;
 
 public class WelcomeActivity extends Activity {
 
@@ -17,12 +17,11 @@ public class WelcomeActivity extends Activity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
         }, 1500);
-
     }
 
 }

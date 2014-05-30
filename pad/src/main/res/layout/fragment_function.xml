@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.luyuan.android.mberp.ui.FunctionFragment">
+    tools:context="com.luyuan.pad.mberp.ui.FunctionFragment">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/networkimg_product"

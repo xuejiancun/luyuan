@@ -11,25 +11,25 @@ import android.widget.TextView;
 
 import com.luyuan.pad.mberp.R;
 
-public class PostFragment extends Fragment {
+public class ProductDetailFragment extends Fragment {
 
     private FragmentTabHost tabHost;
 
-    private Class fragmentArray[] = {SettingFragment.class, FunctionFragment.class, SettingFragment.class,
-            SettingFragment.class, SettingFragment.class, SettingFragment.class};
+    private Class fragmentArray[] = {ProductListFragment.class, FunctionFragment.class, AccountFragment.class,
+            SettingFragment.class, SettingFragment.class};
 
     private String textViewArray[];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
-        tabHost = (FragmentTabHost) view.findViewById(R.id.tabhost_post);
-        tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent_post);
+        tabHost = (FragmentTabHost) view.findViewById(R.id.tabhost_product_list);
+        tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent_product_list);
 
-        textViewArray = new String[]{getString(R.string.type_luxury), getString(R.string.type_simple),
-                getString(R.string.type_standard), getString(R.string.type_battery),
-                getString(R.string.type_replacewalk), getString(R.string.type_special)};
+        textViewArray = new String[]{getString(R.string.appearance), getString(R.string.car_detail),
+                getString(R.string.optional_color), getString(R.string.car_equipment),
+                getString(R.string.back)};
 
         int count = fragmentArray.length;
         for (int i = 0; i < count; i++) {
