@@ -22,5 +22,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/volley.jar')
     compile files('libs/disklrucache-2.0.1.jar')
-    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:+'
 }

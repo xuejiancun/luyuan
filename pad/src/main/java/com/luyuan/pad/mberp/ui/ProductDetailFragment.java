@@ -15,7 +15,7 @@ public class ProductDetailFragment extends Fragment {
 
     private FragmentTabHost tabHost;
 
-    private Class fragmentArray[] = {ProductListFragment.class, FunctionFragment.class, AccountFragment.class,
+    private Class fragmentArray[] = {ProductMainFragment.class, FunctionFragment.class, AccountFragment.class,
             SettingFragment.class, SettingFragment.class};
 
     private String textViewArray[];

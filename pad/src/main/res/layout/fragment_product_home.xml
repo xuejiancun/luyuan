@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:paddingTop="80dp"
+    android:paddingBottom="80dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:background="#304D55">
+
+    <Button
+        android:id="@+id/button_product_main_page_luxury"
+        android:layout_width="200dp"
+        android:layout_height="410dp"
+        android:background="@drawable/product_main_page_luxury"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:stretchColumns="3">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/button_product_main_page_battery"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/product_main_page_battery" />
+
+            <Button
+                android:id="@+id/button_product_main_page_replacewalk"
+                android:layout_marginLeft="10dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/product_main_page_replacewalk" />
+
+            <Button
+                android:id="@+id/button_product_main_page_special"
+                android:layout_marginLeft="10dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/product_main_page_special" />
+
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <Button
+                android:id="@+id/button_product_main_page_standard"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/product_main_page_standard" />
+
+            <Button
+                android:id="@+id/button_product_main_page_simple"
+                android:layout_marginLeft="10dp"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:background="@drawable/product_main_page_simple"
+                android:layout_span="2" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

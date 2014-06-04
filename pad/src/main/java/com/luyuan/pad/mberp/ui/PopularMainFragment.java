@@ -19,31 +19,29 @@ public class PopularMainFragment extends Fragment {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 15;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    private ViewPager pager;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter mPagerAdapter;
+    private PagerAdapter pagerAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_popular_main_slide, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_popular_main, container, false);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) rootView.findViewById(R.id.popular_page_pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setPageTransformer(true, new DepthPageTransformer());
+        pager = (ViewPager) rootView.findViewById(R.id.popular_page_pager);
+        pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+        pager.setAdapter(pagerAdapter);
+        pager.setPageTransformer(true, new DepthPageTransformer());
 
         return rootView;
     }

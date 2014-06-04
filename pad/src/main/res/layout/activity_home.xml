@@ -16,28 +16,50 @@
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:background="@drawable/home_page_button_popular"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            android:onClick="onClickPopular" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/home_page_button_product"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:background="@drawable/home_page_button_product"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            android:onClick="onClickProduct" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/home_page_button_tech"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:background="@drawable/home_page_button_tech"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            android:onClick="onClickTab" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/home_page_button_luyuan"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:background="@drawable/home_page_button_luyuan"
-            android:layout_gravity="left" />
+            android:layout_gravity="left"
+            android:onClick="onClickLuyuan"/>
 
     </LinearLayout>
 

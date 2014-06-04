@@ -17,7 +17,7 @@ import com.luyuan.pad.mberp.util.ImageCacheManager;
 
 import java.util.ArrayList;
 
-public class ProductListFirstFragment extends Fragment {
+public class ProductSubFirstFragment extends Fragment {
 
     private LayoutInflater layoutInflater;
 
@@ -31,7 +31,7 @@ public class ProductListFirstFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_product_list_first, null);
+        View view = inflater.inflate(R.layout.fragment_product_sub_first, null);
 
         fetchImageList();
 

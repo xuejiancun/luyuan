@@ -5,18 +5,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.util.ImageCacheManager;
 
 public class PopularSubFragment extends Fragment {
 
     public static final String ARG_PAGE = "page";
 
-    private int mPageNumber;
+    private int pageNumber;
 
-    private String[] urlList;
+    private int[] imageList = new int[]{R.drawable.popular_fx,
+            R.drawable.popular_fy, R.drawable.popular_hko,
+            R.drawable.popular_hqc, R.drawable.popular_jfq,
+            R.drawable.popular_jfu, R.drawable.popular_jfz,
+            R.drawable.popular_jjk2, R.drawable.popular_lds,
+            R.drawable.popular_mg, R.drawable.popular_mk,
+            R.drawable.popular_mna, R.drawable.popular_mu,
+            R.drawable.popular_mv, R.drawable.popular_qo,
+    };
 
     public static PopularSubFragment create(int pageNumber) {
         PopularSubFragment fragment = new PopularSubFragment();
@@ -32,26 +39,22 @@ public class PopularSubFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPageNumber = getArguments().getInt(ARG_PAGE);
+        pageNumber = getArguments().getInt(ARG_PAGE);
 
-        urlList = new String[]{"http://luyuan.cn/WEBMANAGE/Upload//6353651589845312507035132.jpg",
-                "http://www.luyuan.cn/WebManage/Upload/image/MQE-CS6020-G2/XQ/1.jpg",
-                "http://www.luyuan.cn/WebManage/Upload/image/MS-CS6020-G1/XQ/1.jpg",
-                "http://luyuan.cn/webmanage/Upload//6353307865712500004300104.jpg",
-                "http://luyuan.cn/WEBMANAGE/Upload//6353332397400000008618787.jpg"};
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_popular_slide_page, container, false);
 
-        NetworkImageView networkImageView = (NetworkImageView) view.findViewById(R.id.networkimg_popular);
-        networkImageView.setImageUrl(urlList[getPageNumber()], ImageCacheManager.getInstance().getImageLoader());
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageview_popular);
+        imageView.setImageResource(imageList[getPageNumber()]);
 
         return view;
     }
 
     public int getPageNumber() {
-        return mPageNumber;
+        return pageNumber;
     }
 }
