@@ -11,21 +11,21 @@ import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
-public class ProductDetailFirstSlideFragment extends Fragment {
+public class ImageSlideFragment extends Fragment {
 
     public static final String ARG_PAGE = "page";
 
     private int pageNumber;
 
-    public static ProductDetailFirstSlideFragment create(int pageNumber) {
-        ProductDetailFirstSlideFragment fragment = new ProductDetailFirstSlideFragment();
+    public static ImageSlideFragment create(int pageNumber) {
+        ImageSlideFragment fragment = new ImageSlideFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ProductDetailFirstSlideFragment() {
+    public ImageSlideFragment() {
     }
 
     @Override
@@ -36,9 +36,9 @@ public class ProductDetailFirstSlideFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.fragment_product_detail_first_slide_page, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_image_slide, container, false);
 
-        NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail);
+        NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
         imageView.setImageUrl(ImageDownloadManager.getInstance().getProductDetailUrlList()[getPageNumber()], ImageCacheManager.getInstance().getImageLoader());
 
         return view;

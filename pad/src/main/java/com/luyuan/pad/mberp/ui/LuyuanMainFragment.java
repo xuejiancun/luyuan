@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
 
-
 public class LuyuanMainFragment extends Fragment implements View.OnClickListener {
 
     private LuyuanSubFirstFragment luyuanSubFirstFragment;
@@ -67,7 +66,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickGoLuyuanTab() {
         luyuanSubFirstFragment = new LuyuanSubFirstFragment();
-        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, luyuanSubFirstFragment);
         fragmentTransaction.commit();
 
@@ -83,7 +82,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickHistroyTab() {
         luyuanSubSecondFragment = new LuyuanSubSecondFragment();
-        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, luyuanSubSecondFragment);
         fragmentTransaction.commit();
 
@@ -99,7 +98,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickHonorTab() {
         luyuanSubThirdFragment = new LuyuanSubThirdFragment();
-        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, luyuanSubThirdFragment);
         fragmentTransaction.commit();
 
@@ -115,7 +114,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickNewsTab() {
         luyuanSubFourthFragment = new LuyuanSubFourthFragment();
-        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, luyuanSubFourthFragment);
         fragmentTransaction.commit();
 

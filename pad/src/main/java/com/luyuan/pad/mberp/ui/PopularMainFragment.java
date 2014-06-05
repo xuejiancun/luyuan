@@ -19,7 +19,7 @@ public class PopularMainFragment extends Fragment {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 15;
+    private static final int NUM_PAGES = 7;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -57,7 +57,7 @@ public class PopularMainFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return PopularSubFragment.create(position);
+            return ImageSlideFragment.create(position);
         }
 
         @Override

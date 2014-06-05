@@ -17,7 +17,7 @@ import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
-public class ProductSubFirstFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ProductSubBatteryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
 
@@ -27,9 +27,9 @@ public class ProductSubFirstFragment extends Fragment implements AdapterView.OnI
         super.onCreate(savedInstanceState);
 
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_product_sub_first, null);
+        View view = inflater.inflate(R.layout.fragment_product_sub_battery, null);
 
-        GridView g = (GridView) view.findViewById(R.id.gridview_product_list_first);
+        GridView g = (GridView) view.findViewById(R.id.gridview_product_list_battery);
         g.setAdapter(new ImageAdapter(getActivity()));
         g.setOnItemClickListener(this);
 
@@ -40,6 +40,11 @@ public class ProductSubFirstFragment extends Fragment implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ProductDetailFragment productDetailFragment = new ProductDetailFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString("type", getArguments().getString("type"));
+        productDetailFragment.setArguments(args);
+        
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
         fragmentTransaction.commit();
     }

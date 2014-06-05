@@ -2,7 +2,9 @@ package com.luyuan.pad.mberp.ui;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -13,19 +15,22 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luyuan.pad.mberp.R;
 
+import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, SearchView.OnQueryTextListener {
 
-    private PopularMainFragment popularMainFragment;
-    private ProductHomeFragment productHomeFragment;
-    private TechMainFragment techMainFragment;
-    private LuyuanMainFragment luyuanMainFragment;
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
+    private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
 
-    private LinearLayout home_layout, popular_layout, product_layout, tech_layout, luyuan_layout;
+    private final String selectedTabColor = "#339900";
+    private final String unselectedTabColor = "#FFFFFF";
+
+    private int seletedIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +44,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         setContentView(R.layout.activity_main);
 
-        initView();
-        initData();
+        initTab();
 
         Intent intent = getIntent();
         String param = intent.getExtras().getString("com.luyuan.pad.mberp.home2main");
@@ -54,7 +58,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         } else if (param.equals("luyuan")) {
             clickLuyuanTab();
         }
-
     }
 
     @Override
@@ -86,115 +89,109 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         return true;
     }
 
+    private void initTab() {
+        LinearLayout home_layout = (LinearLayout) findViewById(R.id.layout_home);
+        LinearLayout popular_layout = (LinearLayout) findViewById(R.id.layout_popular);
+        LinearLayout product_layout = (LinearLayout) findViewById(R.id.layout_product);
+        LinearLayout tech_layout = (LinearLayout) findViewById(R.id.layout_tech);
+        LinearLayout luyuan_layout = (LinearLayout) findViewById(R.id.layout_luyuan);
 
-    private void initData() {
         home_layout.setOnClickListener(this);
         popular_layout.setOnClickListener(this);
         product_layout.setOnClickListener(this);
         tech_layout.setOnClickListener(this);
         luyuan_layout.setOnClickListener(this);
-    }
 
-    private void initView() {
-        home_layout = (LinearLayout) findViewById(R.id.layout_home);
-        popular_layout = (LinearLayout) findViewById(R.id.layout_popular);
-        product_layout = (LinearLayout) findViewById(R.id.layout_product);
-        tech_layout = (LinearLayout) findViewById(R.id.layout_tech);
-        luyuan_layout = (LinearLayout) findViewById(R.id.layout_luyuan);
+        tabLayoutList.add(home_layout);
+        tabLayoutList.add(popular_layout);
+        tabLayoutList.add(product_layout);
+        tabLayoutList.add(tech_layout);
+        tabLayoutList.add(luyuan_layout);
+
+        TextView home_textview = (TextView) findViewById(R.id.textview_goto_home);
+        TextView popular_textview = (TextView) findViewById(R.id.textview_goto_popular);
+        TextView product_textview = (TextView) findViewById(R.id.textview_goto_product);
+        TextView tech_textview = (TextView) findViewById(R.id.textview_goto_tech);
+        TextView luyuan_textview = (TextView) findViewById(R.id.textview_goto_luyuan);
+
+        tabTextViewList.add(home_textview);
+        tabTextViewList.add(popular_textview);
+        tabTextViewList.add(product_textview);
+        tabTextViewList.add(tech_textview);
+        tabTextViewList.add(luyuan_textview);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_home:
-                clickHomeTab();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.layout_popular:
-                clickPopularTab();
+                if (seletedIndex != 2) {
+                    clickPopularTab();
+                }
                 break;
             case R.id.layout_product:
-                clickProductTab();
+                if (seletedIndex != 3) {
+                    clickProductTab();
+                }
                 break;
             case R.id.layout_tech:
-                clickTechTab();
+                if (seletedIndex != 4) {
+                    clickTechTab();
+                }
                 break;
             case R.id.layout_luyuan:
-                clickLuyuanTab();
+                if (seletedIndex != 5) {
+                    clickLuyuanTab();
+                }
                 break;
         }
     }
 
-    private void clickHomeTab() {
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
-    }
-
     private void clickPopularTab() {
-        popularMainFragment = new PopularMainFragment();
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, popularMainFragment);
-        fragmentTransaction.commit();
-
-        focusOnPopularTab();
-    }
-
-    private void focusOnPopularTab() {
-        home_layout.setSelected(false);
-        popular_layout.setSelected(true);
-        product_layout.setSelected(false);
-        tech_layout.setSelected(false);
-        luyuan_layout.setSelected(false);
+        PopularMainFragment popularMainFragment = new PopularMainFragment();
+        rePlaceTabContent(popularMainFragment);
+        changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
     }
 
     private void clickProductTab() {
-        productHomeFragment = new ProductHomeFragment();
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, productHomeFragment);
-        fragmentTransaction.commit();
-
-        focusOnProductTab();
-    }
-
-    private void focusOnProductTab() {
-        home_layout.setSelected(false);
-        popular_layout.setSelected(false);
-        product_layout.setSelected(true);
-        tech_layout.setSelected(false);
-        luyuan_layout.setSelected(false);
+        ProductHomeFragment productHomeFragment = new ProductHomeFragment();
+        rePlaceTabContent(productHomeFragment);
+        changeTabBackStyle(tabLayoutList, tabTextViewList, 3);
     }
 
     private void clickTechTab() {
-        techMainFragment = new TechMainFragment();
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, techMainFragment);
-        fragmentTransaction.commit();
-
-        focusOnTechTab();
-    }
-
-    private void focusOnTechTab() {
-        home_layout.setSelected(false);
-        popular_layout.setSelected(false);
-        product_layout.setSelected(false);
-        tech_layout.setSelected(true);
-        luyuan_layout.setSelected(false);
+        TechMainFragment techMainFragment = new TechMainFragment();
+        rePlaceTabContent(techMainFragment);
+        changeTabBackStyle(tabLayoutList, tabTextViewList, 4);
     }
 
     private void clickLuyuanTab() {
-        luyuanMainFragment = new LuyuanMainFragment();
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, luyuanMainFragment);
-        fragmentTransaction.commit();
-
-        focusOnLuyuanTab();
+        LuyuanMainFragment luyuanMainFragment = new LuyuanMainFragment();
+        rePlaceTabContent(luyuanMainFragment);
+        changeTabBackStyle(tabLayoutList, tabTextViewList, 5);
     }
 
-    private void focusOnLuyuanTab() {
-        home_layout.setSelected(false);
-        popular_layout.setSelected(false);
-        product_layout.setSelected(false);
-        tech_layout.setSelected(false);
-        luyuan_layout.setSelected(true);
+    private void rePlaceTabContent(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, ArrayList<TextView> textviewList, int index) {
+        seletedIndex = index;
+        for (int i = 0; i < layoutList.size(); i++) {
+            if (i == index - 1) {
+                layoutList.get(i).setSelected(true);
+                textviewList.get(i).setTextColor(Color.parseColor(selectedTabColor));
+            } else {
+                layoutList.get(i).setSelected(false);
+                textviewList.get(i).setTextColor(Color.parseColor(unselectedTabColor));
+            }
+        }
     }
 
 }

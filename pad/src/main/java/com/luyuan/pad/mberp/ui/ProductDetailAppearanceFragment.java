@@ -13,10 +13,9 @@ import android.view.ViewGroup;
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.DepthPageTransformer;
 
+public class ProductDetailAppearanceFragment extends Fragment {
 
-public class ProductDetailFirstFragment extends Fragment {
-
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 7;
 
     private ViewPager pager;
 
@@ -25,9 +24,8 @@ public class ProductDetailFirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_product_detail_first, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_product_detail_appearance, container, false);
 
-        // Instantiate a ViewPager and a PagerAdapter.
         pager = (ViewPager) rootView.findViewById(R.id.product_page_pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
         pager.setAdapter(pagerAdapter);
@@ -43,7 +41,7 @@ public class ProductDetailFirstFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ProductDetailFirstSlideFragment.create(position);
+            return ImageSlideFragment.create(position);
         }
 
         @Override

@@ -31,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/luxury"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -62,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/simple"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -93,7 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/standard"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -124,7 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/battery"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -155,7 +159,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/replacewalk"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -186,7 +191,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/special"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 

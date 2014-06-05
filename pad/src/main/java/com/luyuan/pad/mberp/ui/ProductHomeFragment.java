@@ -21,8 +21,20 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
         Button luxury = (Button) view.findViewById(R.id.button_product_main_page_luxury);
         luxury.setOnClickListener(this);
 
+        Button simple = (Button) view.findViewById(R.id.button_product_main_page_simple);
+        simple.setOnClickListener(this);
+
+        Button standard = (Button) view.findViewById(R.id.button_product_main_page_standard);
+        standard.setOnClickListener(this);
+
         Button battery = (Button) view.findViewById(R.id.button_product_main_page_battery);
         battery.setOnClickListener(this);
+
+        Button replacewalk = (Button) view.findViewById(R.id.button_product_main_page_replacewalk);
+        replacewalk.setOnClickListener(this);
+
+        Button special = (Button) view.findViewById(R.id.button_product_main_page_special);
+        special.setOnClickListener(this);
 
         return view;
     }
@@ -33,16 +45,20 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
             case R.id.button_product_main_page_luxury:
                 onClickChooseCar("luxury");
                 break;
+            case R.id.button_product_main_page_simple:
+                onClickChooseCar("simple");
+                break;
+            case R.id.button_product_main_page_standard:
+                onClickChooseCar("standard");
+                break;
             case R.id.button_product_main_page_battery:
                 onClickChooseCar("battery");
                 break;
             case R.id.button_product_main_page_replacewalk:
+                onClickChooseCar("replacewalk");
                 break;
             case R.id.button_product_main_page_special:
-                break;
-            case R.id.button_product_main_page_standard:
-                break;
-            case R.id.button_product_main_page_simple:
+                onClickChooseCar("special");
                 break;
         }
     }

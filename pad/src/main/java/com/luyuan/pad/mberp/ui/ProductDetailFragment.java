@@ -13,7 +13,7 @@ import com.luyuan.pad.mberp.R;
 
 public class ProductDetailFragment extends Fragment implements View.OnClickListener {
 
-    private ProductDetailFirstFragment productDetailFirstFragment;
+    private ProductDetailAppearanceFragment productDetailAppearanceFragment;
 
     private LinearLayout tab_car_appearance_layout, tab_car_detail_layout, tab_optional_color_layout, tab_car_tech_layout,
             tab_car_equipment_layout, tab_back_layout;
@@ -22,30 +22,27 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_detail, null);
 
-        initView(view);
-        initData();
+        initTab(view);
 
         clickCarAppearanceTab();
 
         return view;
     }
 
-    private void initData() {
-        tab_car_appearance_layout.setOnClickListener(this);
-        tab_car_detail_layout.setOnClickListener(this);
-        tab_optional_color_layout.setOnClickListener(this);
-        tab_car_equipment_layout.setOnClickListener(this);
-        tab_car_tech_layout.setOnClickListener(this);
-        tab_back_layout.setOnClickListener(this);
-    }
-
-    private void initView(View view) {
+    private void initTab(View view) {
         tab_car_appearance_layout = (LinearLayout) view.findViewById(R.id.tab_car_appearance_layout);
         tab_car_detail_layout = (LinearLayout) view.findViewById(R.id.tab_car_detail_layout);
         tab_optional_color_layout = (LinearLayout) view.findViewById(R.id.tab_optional_color_layout);
         tab_car_equipment_layout = (LinearLayout) view.findViewById(R.id.tab_car_equipment_layout);
         tab_car_tech_layout = (LinearLayout) view.findViewById(R.id.tab_car_equipment_layout);
         tab_back_layout = (LinearLayout) view.findViewById(R.id.tab_back_layout);
+
+        tab_car_appearance_layout.setOnClickListener(this);
+        tab_car_detail_layout.setOnClickListener(this);
+        tab_optional_color_layout.setOnClickListener(this);
+        tab_car_equipment_layout.setOnClickListener(this);
+        tab_car_tech_layout.setOnClickListener(this);
+        tab_back_layout.setOnClickListener(this);
     }
 
     @Override
@@ -67,15 +64,27 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
                 // clickCarAppearanceTab();
                 break;
             case R.id.tab_back_layout:
-                // clickCarAppearanceTab();
+                clickBackTab();
                 break;
         }
     }
 
+    private void clickBackTab() {
+        ProductMainFragment productMainFragment = new ProductMainFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString("type", getArguments().getString("type"));
+        productMainFragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.frame_content, productMainFragment);
+        fragmentTransaction.commit();
+    }
+
     private void clickCarAppearanceTab() {
-        productDetailFirstFragment = new ProductDetailFirstFragment();
-        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, productDetailFirstFragment);
+        productDetailAppearanceFragment = new ProductDetailAppearanceFragment();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content, productDetailAppearanceFragment);
         fragmentTransaction.commit();
 
         focusOnCarAppearanceTab();
