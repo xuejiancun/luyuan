@@ -1,52 +1,93 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
 
-public class ProductDetailFragment extends Fragment {
+public class ProductDetailFragment extends Fragment implements View.OnClickListener {
 
-    private FragmentTabHost tabHost;
+    private ProductDetailFirstFragment productDetailFirstFragment;
 
-    private Class fragmentArray[] = {ProductMainFragment.class, FunctionFragment.class, AccountFragment.class,
-            SettingFragment.class, SettingFragment.class};
-
-    private String textViewArray[];
+    private LinearLayout tab_car_appearance_layout, tab_car_detail_layout, tab_optional_color_layout, tab_car_tech_layout,
+            tab_car_equipment_layout, tab_back_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_detail, null);
 
-        tabHost = (FragmentTabHost) view.findViewById(R.id.tabhost_product_list);
-        tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent_product_list);
+        initView(view);
+        initData();
 
-        textViewArray = new String[]{getString(R.string.appearance), getString(R.string.car_detail),
-                getString(R.string.optional_color), getString(R.string.car_equipment),
-                getString(R.string.back)};
-
-        int count = fragmentArray.length;
-        for (int i = 0; i < count; i++) {
-            TabHost.TabSpec tabSpec = tabHost.newTabSpec(textViewArray[i]).setIndicator(getTabItemView(i, inflater));
-            tabHost.addTab(tabSpec, fragmentArray[i], null);
-        }
+        clickCarAppearanceTab();
 
         return view;
     }
 
-    private View getTabItemView(int index, LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.tab_item_top, null);
+    private void initData() {
+        tab_car_appearance_layout.setOnClickListener(this);
+        tab_car_detail_layout.setOnClickListener(this);
+        tab_optional_color_layout.setOnClickListener(this);
+        tab_car_equipment_layout.setOnClickListener(this);
+        tab_car_tech_layout.setOnClickListener(this);
+        tab_back_layout.setOnClickListener(this);
+    }
 
-        TextView textView = (TextView) view.findViewById(R.id.textview);
-        textView.setText(textViewArray[index]);
+    private void initView(View view) {
+        tab_car_appearance_layout = (LinearLayout) view.findViewById(R.id.tab_car_appearance_layout);
+        tab_car_detail_layout = (LinearLayout) view.findViewById(R.id.tab_car_detail_layout);
+        tab_optional_color_layout = (LinearLayout) view.findViewById(R.id.tab_optional_color_layout);
+        tab_car_equipment_layout = (LinearLayout) view.findViewById(R.id.tab_car_equipment_layout);
+        tab_car_tech_layout = (LinearLayout) view.findViewById(R.id.tab_car_equipment_layout);
+        tab_back_layout = (LinearLayout) view.findViewById(R.id.tab_back_layout);
+    }
 
-        return view;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tab_car_appearance_layout:
+                clickCarAppearanceTab();
+                break;
+            case R.id.tab_car_detail_layout:
+                // clickCarAppearanceTab();
+                break;
+            case R.id.tab_optional_color_layout:
+                // clickCarAppearanceTab();
+                break;
+            case R.id.tab_car_equipment_layout:
+                // clickCarAppearanceTab();
+                break;
+            case R.id.tab_car_tech_layout:
+                // clickCarAppearanceTab();
+                break;
+            case R.id.tab_back_layout:
+                // clickCarAppearanceTab();
+                break;
+        }
+    }
+
+    private void clickCarAppearanceTab() {
+        productDetailFirstFragment = new ProductDetailFirstFragment();
+        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content, productDetailFirstFragment);
+        fragmentTransaction.commit();
+
+        focusOnCarAppearanceTab();
+    }
+
+    private void focusOnCarAppearanceTab() {
+        tab_car_appearance_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
+        tab_car_detail_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_optional_color_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_car_equipment_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_car_tech_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_back_layout.setBackgroundColor(Color.parseColor("#99C741"));
     }
 
 }

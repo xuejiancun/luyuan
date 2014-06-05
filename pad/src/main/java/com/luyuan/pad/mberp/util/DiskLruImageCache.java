@@ -16,30 +16,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Implementation of DiskLruCache by Jake Wharton
+ * modified from http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
+ */
 public class DiskLruImageCache implements ImageCache {
 
     private DiskLruCache mDiskCache;
-    private static final int IO_BUFFER_SIZE = 8 * 1024;
-    private static final int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
-    private static final int COMPRESS_QUALITY = 100;
-    private static final CompressFormat COMPRESS_FORMAT = CompressFormat.JPEG;
+    private CompressFormat mCompressFormat = CompressFormat.JPEG;
+    private static int IO_BUFFER_SIZE = 8 * 1024;
+    private int mCompressQuality = 70;
     private static final int APP_VERSION = 1;
     private static final int VALUE_COUNT = 1;
 
-    public DiskLruImageCache(Context context, String uniqueName) {
+    public DiskLruImageCache(Context context, String uniqueName, int diskCacheSize,
+                             CompressFormat compressFormat, int quality) {
         try {
             final File diskCacheDir = getDiskCacheDir(context, uniqueName);
-            mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, DISK_IMAGECACHE_SIZE);
+            mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, diskCacheSize);
+            mCompressFormat = compressFormat;
+            mCompressQuality = quality;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor) throws IOException, FileNotFoundException {
+    private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor)
+            throws IOException, FileNotFoundException {
         OutputStream out = null;
         try {
             out = new BufferedOutputStream(editor.newOutputStream(0), IO_BUFFER_SIZE);
-            return bitmap.compress(COMPRESS_FORMAT, COMPRESS_QUALITY, out);
+            return bitmap.compress(mCompressFormat, mCompressQuality, out);
         } finally {
             if (out != null) {
                 out.close();
@@ -48,12 +55,14 @@ public class DiskLruImageCache implements ImageCache {
     }
 
     private File getDiskCacheDir(Context context, String uniqueName) {
+
         final String cachePath = context.getCacheDir().getPath();
         return new File(cachePath + File.separator + uniqueName);
     }
 
     @Override
     public void putBitmap(String key, Bitmap data) {
+
         DiskLruCache.Editor editor = null;
         try {
             editor = mDiskCache.edit(key);
@@ -80,9 +89,11 @@ public class DiskLruImageCache implements ImageCache {
 
     @Override
     public Bitmap getBitmap(String key) {
+
         Bitmap bitmap = null;
         DiskLruCache.Snapshot snapshot = null;
         try {
+
             snapshot = mDiskCache.get(key);
             if (snapshot == null) {
                 return null;
@@ -106,6 +117,7 @@ public class DiskLruImageCache implements ImageCache {
     }
 
     public boolean containsKey(String key) {
+
         boolean contained = false;
         DiskLruCache.Snapshot snapshot = null;
         try {

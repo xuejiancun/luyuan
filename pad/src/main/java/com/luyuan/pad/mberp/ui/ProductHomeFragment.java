@@ -21,6 +21,9 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
         Button luxury = (Button) view.findViewById(R.id.button_product_main_page_luxury);
         luxury.setOnClickListener(this);
 
+        Button battery = (Button) view.findViewById(R.id.button_product_main_page_battery);
+        battery.setOnClickListener(this);
+
         return view;
     }
 
@@ -28,9 +31,10 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_product_main_page_luxury:
-                onClickLuxury();
+                onClickChooseCar("luxury");
                 break;
             case R.id.button_product_main_page_battery:
+                onClickChooseCar("battery");
                 break;
             case R.id.button_product_main_page_replacewalk:
                 break;
@@ -43,9 +47,14 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    public void onClickLuxury() {
+    public void onClickChooseCar(String type) {
         productMainFragment = new ProductMainFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString("type", type);
+        productMainFragment.setArguments(args);
+
         fragmentTransaction.replace(R.id.frame_content, productMainFragment);
         fragmentTransaction.commit();
     }

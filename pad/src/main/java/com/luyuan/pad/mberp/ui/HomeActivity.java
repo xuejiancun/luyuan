@@ -16,6 +16,7 @@ import com.luyuan.pad.mberp.R;
 
 public class HomeActivity extends Activity implements OnQueryTextListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

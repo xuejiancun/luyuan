@@ -6,14 +6,15 @@ import android.util.Log;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
+/**
+ * Basic LRU Memory cache.
+ */
 public class BitmapLruImageCache extends LruCache<String, Bitmap> implements ImageCache {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
-
-    public BitmapLruImageCache() {
-        super(DISK_IMAGECACHE_SIZE);
+    public BitmapLruImageCache(int maxSize) {
+        super(maxSize);
     }
 
     @Override

@@ -10,7 +10,7 @@
         android:layout_width="210dp"
         android:layout_height="130dp"
         android:layout_gravity="center"
-        android:background="@drawable/product_page_image_backgroud" />
+        android:background="#CCCCCC" />
 
     <TextView
         android:id="@+id/textview_product_list_name"

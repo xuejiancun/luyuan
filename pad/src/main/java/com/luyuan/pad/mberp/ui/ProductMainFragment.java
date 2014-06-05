@@ -14,6 +14,7 @@ import com.luyuan.pad.mberp.R;
 public class ProductMainFragment extends Fragment implements View.OnClickListener {
 
     private ProductSubFirstFragment productSubFirstFragment;
+    private SettingFragment settingFragment;
 
     private LinearLayout tab_luxury_layout, tab_simple_layout, tab_standard_layout,
             tab_battery_layout, tab_replacewalk_layout, tab_special_layout;
@@ -25,7 +26,14 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         initView(view);
         initData();
 
-        clickLuxuryTab();
+        String param = getArguments().toString();
+        if (param.equals("luxury")) {
+            clickLuxuryTab();
+        } else if (param.equals("battery")) {
+            clickBatteryTab();
+        } else {
+
+        }
 
         return view;
     }
@@ -55,19 +63,19 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
                 clickLuxuryTab();
                 break;
             case R.id.tab_layout_product_simple:
-                // clickHistroyTab();
+                clickBatteryTab();
                 break;
             case R.id.tab_layout_product_standard:
-                // clickHonorTab();
+                // clickLuxuryTab();
                 break;
             case R.id.tab_layout_product_battery:
-                // clickNewsTab();
+                // clickLuxuryTab();
                 break;
             case R.id.tab_layout_product_replacewalk:
-                // clickHonorTab();
+                // clickLuxuryTab();
                 break;
             case R.id.tab_layout_product_special:
-                // clickNewsTab();
+                // clickLuxuryTab();
                 break;
         }
     }
@@ -84,6 +92,24 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
     private void focusOnLuxuryTab() {
         tab_luxury_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
         tab_simple_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_standard_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_special_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_replacewalk_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_special_layout.setBackgroundColor(Color.parseColor("#99C741"));
+    }
+
+    private void clickBatteryTab() {
+        settingFragment = new SettingFragment();
+        FragmentTransaction fragmentTransaction = this.getChildFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content, settingFragment);
+        fragmentTransaction.commit();
+
+        focusOnSimpleTab();
+    }
+
+    private void focusOnSimpleTab() {
+        tab_luxury_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        tab_simple_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
         tab_standard_layout.setBackgroundColor(Color.parseColor("#99C741"));
         tab_special_layout.setBackgroundColor(Color.parseColor("#99C741"));
         tab_replacewalk_layout.setBackgroundColor(Color.parseColor("#99C741"));

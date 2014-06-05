@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/layout_product_top_tab"
+        android:id="@+id/layout_product_main_top_tab"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="center"
@@ -198,7 +198,7 @@
         android:id="@+id/frame_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_product_top_tab"
+        android:layout_below="@+id/layout_product_main_top_tab"
         android:orientation="vertical" />
 
 </RelativeLayout>
