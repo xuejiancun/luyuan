@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
 
+import java.lang.reflect.Field;
+
 public class LuyuanMainFragment extends Fragment implements View.OnClickListener {
 
     private LuyuanSubFirstFragment luyuanSubFirstFragment;
@@ -126,6 +128,23 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         tab_histroy_layout.setBackgroundColor(Color.parseColor("#99C741"));
         tab_honor_layout.setBackgroundColor(Color.parseColor("#99C741"));
         tab_news_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

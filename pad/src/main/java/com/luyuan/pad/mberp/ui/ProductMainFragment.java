@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ProductMainFragment extends Fragment implements View.OnClickListener {
@@ -37,29 +38,17 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         String param = getArguments().getString("type");
         if (param.equals("luxury")) {
-            if (seletedIndex != 1) {
-                clickLuxuryTab();
-            }
+            clickLuxuryTab();
         } else if (param.equals("simple")) {
-            if (seletedIndex != 2) {
-                clickSimpleTab();
-            }
+            clickSimpleTab();
         } else if (param.equals("standard")) {
-            if (seletedIndex != 3) {
-                clickStandardTab();
-            }
+            clickStandardTab();
         } else if (param.equals("battery")) {
-            if (seletedIndex != 4) {
-                clickBatteryTab();
-            }
+            clickBatteryTab();
         } else if (param.equals("replacewalk")) {
-            if (seletedIndex != 5) {
-                clickReplacewalkTab();
-            }
+            clickReplacewalkTab();
         } else if (param.equals("special")) {
-            if (seletedIndex != 5) {
-                clickSpecialTab();
-            }
+            clickSpecialTab();
         } else {
             clickLuxuryTab();
         }
@@ -94,22 +83,34 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab_layout_product_luxury:
-                clickLuxuryTab();
+                if (seletedIndex != 1) {
+                    clickLuxuryTab();
+                }
                 break;
             case R.id.tab_layout_product_simple:
-                clickSimpleTab();
+                if (seletedIndex != 2) {
+                    clickSimpleTab();
+                }
                 break;
             case R.id.tab_layout_product_standard:
-                clickStandardTab();
+                if (seletedIndex != 3) {
+                    clickStandardTab();
+                }
                 break;
             case R.id.tab_layout_product_battery:
-                clickBatteryTab();
+                if (seletedIndex != 4) {
+                    clickBatteryTab();
+                }
                 break;
             case R.id.tab_layout_product_replacewalk:
-                clickReplacewalkTab();
+                if (seletedIndex != 5) {
+                    clickReplacewalkTab();
+                }
                 break;
             case R.id.tab_layout_product_special:
-                clickSpecialTab();
+                if (seletedIndex != 6) {
+                    clickSpecialTab();
+                }
                 break;
         }
     }
@@ -171,6 +172,23 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {

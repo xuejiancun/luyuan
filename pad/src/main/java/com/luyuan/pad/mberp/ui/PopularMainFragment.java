@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.DepthPageTransformer;
 
+import java.lang.reflect.Field;
+
 
 public class PopularMainFragment extends Fragment {
 
@@ -44,6 +46,23 @@ public class PopularMainFragment extends Fragment {
         pager.setPageTransformer(true, new DepthPageTransformer());
 
         return rootView;
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

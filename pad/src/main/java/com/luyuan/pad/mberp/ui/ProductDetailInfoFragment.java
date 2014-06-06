@@ -15,7 +15,7 @@ import com.luyuan.pad.mberp.util.DepthPageTransformer;
 
 import java.lang.reflect.Field;
 
-public class ProductDetailAppearanceFragment extends Fragment {
+public class ProductDetailInfoFragment extends Fragment {
 
     private static final int NUM_PAGES = 7;
 
@@ -35,6 +35,7 @@ public class ProductDetailAppearanceFragment extends Fragment {
 
         return rootView;
     }
+
 
     @Override
     public void onDetach() {

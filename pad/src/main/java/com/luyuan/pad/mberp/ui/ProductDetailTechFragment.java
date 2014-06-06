@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.luyuan.pad.mberp.R;
 
-public class SettingFragment extends Fragment{
+public class ProductDetailTechFragment extends Fragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {	

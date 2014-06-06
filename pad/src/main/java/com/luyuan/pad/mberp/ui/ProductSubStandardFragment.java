@@ -17,6 +17,8 @@ import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
+import java.lang.reflect.Field;
+
 public class ProductSubStandardFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
@@ -39,7 +41,7 @@ public class ProductSubStandardFragment extends Fragment implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ProductDetailFragment productDetailFragment = new ProductDetailFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString("type", getArguments().getString("type"));
@@ -47,6 +49,22 @@ public class ProductSubStandardFragment extends Fragment implements AdapterView.
 
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public class ImageAdapter extends BaseAdapter {
