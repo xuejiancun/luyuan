@@ -18,8 +18,6 @@ import com.luyuan.pad.mberp.util.GlobalConstantValues;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
-import java.lang.reflect.Field;
-
 public class ProductSubBatteryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
@@ -78,7 +76,9 @@ public class ProductSubBatteryFragment extends Fragment implements AdapterView.O
                 view = layoutInflater.inflate(R.layout.product_item, null);
 
                 NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
+                imageView.setErrorImageResId(R.drawable.no_image);
                 imageView.setImageUrl(ImageDownloadManager.getInstance().getProductThumbUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
+
 
                 TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_name);
                 textViewName.setText(productNameList[position]);

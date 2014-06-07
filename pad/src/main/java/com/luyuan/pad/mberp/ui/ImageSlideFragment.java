@@ -41,6 +41,7 @@ public class ImageSlideFragment extends Fragment {
         View view = (View) inflater.inflate(R.layout.fragment_image_slide, null);
 
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
+        imageView.setErrorImageResId(R.drawable.no_image);
         if (imageType.equals(GlobalConstantValues.IMAGE_HONOR)) {
             imageView.setImageUrl(ImageDownloadManager.getInstance().getHonorUrlList()[getImageIndex()], ImageCacheManager.getInstance().getImageLoader());
         } else {

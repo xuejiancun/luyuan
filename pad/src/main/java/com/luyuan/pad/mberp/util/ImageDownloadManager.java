@@ -12,7 +12,7 @@ public class ImageDownloadManager {
 
     String[] productThumbUrlList = new String[]{
             "http://www.luyuan.cn/UploadPhoto/2014/3/21/2874bfec-e924-4e0e-bf3f-eaa2b581c351.png",
-            "http://www.luyuan.cn/UploadPhoto/2014/3/23/0c6940b3-03da-4102-a03c-1417137388b1.png",
+            "shttp://www.luyuan.cn/UploadPhoto/2014/3/23/0c6940b3-03da-4102-a03c-1417137388b1.png",
             "http://www.luyuan.cn/UploadPhoto/2014/4/14/4f54abd0-4051-4b86-a3bb-87e1a05b73ec.png",
             "http://www.luyuan.cn/UploadPhoto/2014/4/14/8c235d65-39de-4c4c-88bf-d6a0bfa7d0f2.png",
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/ca42f614-4680-4099-af05-72609fd4f59a.png",
@@ -27,7 +27,7 @@ public class ImageDownloadManager {
 
     String[] productDetailUrlList = new String[]{
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/8f06ab37-ff4d-4d8c-9e15-10c8450940b5.jpg",
-            "http://www.luyuan.cn/UploadPhoto/2014/4/29/20a7b27f-a02f-4035-8ab4-586ff9d124e9.jpg",
+            "shttp://www.luyuan.cn/UploadPhoto/2014/4/29/20a7b27f-a02f-4035-8ab4-586ff9d124e9.jpg",
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/31daad89-1532-4b57-98bd-5324eae57b1e.jpg",
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/f32b88a7-d05a-4d9a-9f32-308d3da48237.jpg",
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/d28f0729-948b-41ff-a316-5cc7a5a3c761.jpg",
@@ -40,15 +40,19 @@ public class ImageDownloadManager {
             "http://www.luyuan.cn/UploadPhoto/Function/10.jpg",
             "http://www.luyuan.cn/UploadPhoto/Function/11.jpg",
             "http://www.luyuan.cn/UploadPhoto/Function/12.jpg",
-            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151641272.png",
-            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151705923.png",
-            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151722365.png",
-            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151758770.png",
+            "http://www.luyuan.cn/UploadPhoto/Function/3.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/10.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/11.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/12.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/3.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/10.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/11.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/12.jpg",
     };
 
     String[] honorUrlList = new String[]{
             "http://www.luyuan.cn/hor/photos/1.jpg",
-            "http://www.luyuan.cn/hor/photos/8.jpg",
+            "shttp://www.luyuan.cn/hor/photos/8.jpg",
             "http://www.luyuan.cn/hor/photos/14.jpg",
             "http://www.luyuan.cn/hor/photos/20.jpg",
             "http://www.luyuan.cn/hor/photos/22.jpg",

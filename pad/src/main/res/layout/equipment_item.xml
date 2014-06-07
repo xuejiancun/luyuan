@@ -15,7 +15,7 @@
         android:id="@+id/textview_product_detail_equipment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="center"
         android:paddingLeft="12dp"
         android:textSize="20dp" />
 

@@ -40,7 +40,7 @@ public class ProductDetailEquipmentFragment extends Fragment {
         }
 
         public int getCount() {
-            return ImageDownloadManager.getInstance().getProductThumbUrlList().length;
+            return ImageDownloadManager.getInstance().getProductEquipmentUrlList().length;
         }
 
         public Object getItem(int position) {
@@ -56,12 +56,13 @@ public class ProductDetailEquipmentFragment extends Fragment {
             View view;
 
             if (convertView == null) {
-                view = layoutInflater.inflate(R.layout.product_item, null);
+                view = layoutInflater.inflate(R.layout.equipment_item, null);
 
-                NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
+                NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail_equipment);
+                imageView.setErrorImageResId(R.drawable.no_image);
                 imageView.setImageUrl(ImageDownloadManager.getInstance().getProductEquipmentUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
 
-                TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_name);
+                TextView textViewName = (TextView) view.findViewById(R.id.textview_product_detail_equipment);
                 textViewName.setText(productNameList[position]);
 
             } else {
@@ -76,6 +77,8 @@ public class ProductDetailEquipmentFragment extends Fragment {
         private Context mContext;
 
         private Integer[] productNameList = {
+                R.string.car_equipment, R.string.car_equipment,
+                R.string.car_equipment, R.string.car_equipment,
                 R.string.car_equipment, R.string.car_equipment,
                 R.string.car_equipment, R.string.car_equipment,
                 R.string.car_equipment, R.string.car_equipment,

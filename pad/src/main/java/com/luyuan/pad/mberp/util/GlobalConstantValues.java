@@ -22,6 +22,7 @@ public class GlobalConstantValues {
 
     public static final String IMAGE_POPULAR = "popular";
     public static final String IMAGE_HONOR = "honor";
+    public static final String IMAGE_TECH = "tech";
     public static final String IMAGE_APPERANCE = "appearance";
     public static final String IMAGE_DETAIL = "detail";
     public static final String IMAGE_COLOR = "color";

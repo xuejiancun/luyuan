@@ -76,6 +76,7 @@ public class ProductSubSimpleFragment extends Fragment implements AdapterView.On
                 view = layoutInflater.inflate(R.layout.product_item, null);
 
                 NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
+                imageView.setErrorImageResId(R.drawable.no_image);
                 imageView.setImageUrl(ImageDownloadManager.getInstance().getProductThumbUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
 
                 TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_name);
