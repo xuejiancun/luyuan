@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 
 import com.luyuan.pad.mberp.R;
 
-public class ProductDetailTechFragment extends Fragment {
+public class LuyuanSubNewsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_product_detail_tech, null);
+        return inflater.inflate(R.layout.fragment_webview, null);
     }
 
 }

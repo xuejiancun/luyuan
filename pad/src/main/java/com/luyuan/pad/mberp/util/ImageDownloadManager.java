@@ -35,6 +35,25 @@ public class ImageDownloadManager {
             "http://www.luyuan.cn/UploadPhoto/2014/4/29/af21d9d7-320e-4fb2-882b-c8e3fd764a0a.jpg",
     };
 
+    String[] productEquipmentUrlList = new String[]{
+            "http://www.luyuan.cn/UploadPhoto/Function/3.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/10.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/11.jpg",
+            "http://www.luyuan.cn/UploadPhoto/Function/12.jpg",
+            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151641272.png",
+            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151705923.png",
+            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151722365.png",
+            "http://www.luyuan.cn/UploadPhoto/2014/3/6/20140306151758770.png",
+    };
+
+    String[] honorUrlList = new String[]{
+            "http://www.luyuan.cn/hor/photos/1.jpg",
+            "http://www.luyuan.cn/hor/photos/8.jpg",
+            "http://www.luyuan.cn/hor/photos/14.jpg",
+            "http://www.luyuan.cn/hor/photos/20.jpg",
+            "http://www.luyuan.cn/hor/photos/22.jpg",
+    };
+
     private static ImageDownloadManager mInstance;
 
     private ArrayList<NetworkImageView> productThumbImageList = new ArrayList<NetworkImageView>();
@@ -61,6 +80,14 @@ public class ImageDownloadManager {
 
     public String[] getProductDetailUrlList() {
         return productDetailUrlList;
+    }
+
+    public String[] getProductEquipmentUrlList() {
+        return productEquipmentUrlList;
+    }
+
+    public String[] getHonorUrlList() {
+        return honorUrlList;
     }
 
     public void init(Context context) {

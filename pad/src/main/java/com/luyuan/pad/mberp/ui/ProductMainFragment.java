@@ -10,44 +10,35 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ProductMainFragment extends Fragment implements View.OnClickListener {
 
-    private ProductSubLuxuryFragment productSubLuxuryFragment;
-    private ProductSubSimpleFragment productSubSimpleFragment;
-    private ProductSubStandardFragment productSubStandardFragment;
-    private ProductSubBatteryFragment productSubBatteryFragment;
-    private ProductSubReplacewalkFragment productSubReplacewalkFragment;
-    private ProductSubSpecialFragment productSubSpecialFragment;
-
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
-
-    private final String selectedTabColor = "#4C7F20";
-    private final String unselectedTabColor = "#99C741";
 
     private int seletedIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_main, null);
 
         initTab(view);
 
-        String param = getArguments().getString("type");
-        if (param.equals("luxury")) {
+        String param = getArguments().getString(GlobalConstantValues.CAR_TYPE);
+        if (param.equals(GlobalConstantValues.IMAGE_LUXURY)) {
             clickLuxuryTab();
-        } else if (param.equals("simple")) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_SIMPLE)) {
             clickSimpleTab();
-        } else if (param.equals("standard")) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_STANDARD)) {
             clickStandardTab();
-        } else if (param.equals("battery")) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_BATTERY)) {
             clickBatteryTab();
-        } else if (param.equals("replacewalk")) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_REPLACEWALK)) {
             clickReplacewalkTab();
-        } else if (param.equals("special")) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_SPECIAL)) {
             clickSpecialTab();
         } else {
             clickLuxuryTab();
@@ -116,50 +107,38 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
     }
 
     private void clickLuxuryTab() {
-        if (productSubLuxuryFragment == null) {
-            productSubLuxuryFragment = new ProductSubLuxuryFragment();
-        }
-        rePlaceTabContent(productSubLuxuryFragment, "luxury");
+        ProductSubLuxuryFragment productSubLuxuryFragment = new ProductSubLuxuryFragment();
+        rePlaceTabContent(productSubLuxuryFragment, GlobalConstantValues.IMAGE_LUXURY);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickSimpleTab() {
-        if (productSubSimpleFragment == null) {
-            productSubSimpleFragment = new ProductSubSimpleFragment();
-        }
-        rePlaceTabContent(productSubSimpleFragment, "simple");
+        ProductSubSimpleFragment productSubSimpleFragment = new ProductSubSimpleFragment();
+        rePlaceTabContent(productSubSimpleFragment, GlobalConstantValues.IMAGE_SIMPLE);
         changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickStandardTab() {
-        if (productSubStandardFragment == null) {
-            productSubStandardFragment = new ProductSubStandardFragment();
-        }
-        rePlaceTabContent(productSubStandardFragment, "standard");
+        ProductSubStandardFragment productSubStandardFragment = new ProductSubStandardFragment();
+        rePlaceTabContent(productSubStandardFragment, GlobalConstantValues.IMAGE_STANDARD);
         changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickBatteryTab() {
-        if (productSubBatteryFragment == null) {
-            productSubBatteryFragment = new ProductSubBatteryFragment();
-        }
-        rePlaceTabContent(productSubBatteryFragment, "battery");
+        ProductSubBatteryFragment productSubBatteryFragment = new ProductSubBatteryFragment();
+        rePlaceTabContent(productSubBatteryFragment, GlobalConstantValues.IMAGE_BATTERY);
         changeTabBackStyle(tabLayoutList, 4);
     }
 
     private void clickReplacewalkTab() {
-        if (productSubReplacewalkFragment == null) {
-            productSubReplacewalkFragment = new ProductSubReplacewalkFragment();
-        }
-        rePlaceTabContent(productSubReplacewalkFragment, "replacewalk");
+        ProductSubReplacewalkFragment productSubReplacewalkFragment = new ProductSubReplacewalkFragment();
+        rePlaceTabContent(productSubReplacewalkFragment, GlobalConstantValues.IMAGE_REPLACEWALK);
         changeTabBackStyle(tabLayoutList, 5);
     }
 
     private void clickSpecialTab() {
-        if (productSubSpecialFragment == null) {
-            productSubSpecialFragment = new ProductSubSpecialFragment();
-        }
-        rePlaceTabContent(productSubSpecialFragment, "special");
+        ProductSubSpecialFragment productSubSpecialFragment = new ProductSubSpecialFragment();
+        rePlaceTabContent(productSubSpecialFragment, GlobalConstantValues.IMAGE_SPECIAL);
         changeTabBackStyle(tabLayoutList, 6);
     }
 
@@ -167,13 +146,23 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString("type", type);
+        args.putString(GlobalConstantValues.CAR_TYPE, type);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
     }
 
+    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {
+        seletedIndex = index;
+        for (int i = 0; i < layoutList.size(); i++) {
+            if (i == index - 1) {
+                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_SELECTED));
+            } else {
+                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
+            }
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -183,22 +172,10 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {
-        seletedIndex = index;
-        for (int i = 0; i < layoutList.size(); i++) {
-            if (i == index - 1) {
-                layoutList.get(i).setBackgroundColor(Color.parseColor(selectedTabColor));
-            } else {
-                layoutList.get(i).setBackgroundColor(Color.parseColor(unselectedTabColor));
-            }
         }
     }
 

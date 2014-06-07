@@ -31,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/go_into_luyuan"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -62,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/band_history"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -93,7 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/band_honor"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
@@ -124,7 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/latest_news"
-                    android:textSize="30dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 

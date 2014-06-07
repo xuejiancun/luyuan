@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.util.ArrayList;
 
@@ -26,9 +27,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
     private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
-
-    private final String selectedTabColor = "#339900";
-    private final String unselectedTabColor = "#FFFFFF";
 
     private int seletedIndex;
 
@@ -47,15 +45,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initTab();
 
         Intent intent = getIntent();
-        String param = intent.getExtras().getString("com.luyuan.pad.mberp.home2main");
+        String param = intent.getExtras().getString(GlobalConstantValues.INTENT_HOME_TO_MAIN);
 
-        if (param.equals("popular")) {
+        if (param.equals(GlobalConstantValues.TAB_POPULAR)) {
             clickPopularTab();
-        } else if (param.equals("product")) {
+        } else if (param.equals(GlobalConstantValues.TAB_PRODUCT)) {
             clickProductTab();
-        } else if (param.equals("tech")) {
+        } else if (param.equals(GlobalConstantValues.TAB_TECH)) {
             clickTechTab();
-        } else if (param.equals("luyuan")) {
+        } else if (param.equals(GlobalConstantValues.TAB_LUYUAN)) {
             clickLuyuanTab();
         }
     }
@@ -72,7 +70,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action actionBar's Up/Home button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -152,8 +149,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void clickPopularTab() {
-        PopularMainFragment popularMainFragment = new PopularMainFragment();
-        rePlaceTabContent(popularMainFragment);
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        rePlaceTabContent(imagePagerFragment);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_POPULAR, 7);
         changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
     }
 
@@ -181,15 +179,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
     }
 
+    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        fragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.commit();
+    }
+
     private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, ArrayList<TextView> textviewList, int index) {
         seletedIndex = index;
         for (int i = 0; i < layoutList.size(); i++) {
             if (i == index - 1) {
                 layoutList.get(i).setSelected(true);
-                textviewList.get(i).setTextColor(Color.parseColor(selectedTabColor));
+                textviewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_SELECTED));
             } else {
                 layoutList.get(i).setSelected(false);
-                textviewList.get(i).setTextColor(Color.parseColor(unselectedTabColor));
+                textviewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
     }

@@ -20,11 +20,24 @@
     <string name="car_tech">技术参数</string>
     <string name="car_equipment">整车配置</string>
     <string name="back">返回</string>
+
     <string name="product_name">MVA-CS6020-G1</string>
     <string name="product_desc1">电池：60V20Ah</string>
     <string name="product_desc2">电机：800W</string>
     <string name="product_desc3">扭矩：80N.M</string>
     <string name="product_desc4">续航：70KM</string>
+
+    <string name="arrivaldate">上市时间：</string>
+    <string name="footsteplength">脚踏板长度：</string>
+    <string name="liftofflength">盘底离地：</string>
+    <string name="endurance">续航里程：</string>
+    <string name="tyreform">轮胎形式：</string>
+    <string name="tyrespec">轮胎规格：</string>
+    <string name="brake">制动系统：</string>
+    <string name="suspension">避震系统：</string>
+    <string name="enginespec">电机规格：</string>
+    <string name="batteryspec">电池规格：</string>
+    <string name="charger">充电器：</string>
 
     <string name="goto_home">回首页</string>
     <string name="goto_product">看产品</string>

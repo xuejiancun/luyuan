@@ -13,9 +13,9 @@ import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 public class HomeActivity extends Activity implements OnQueryTextListener {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,25 +49,25 @@ public class HomeActivity extends Activity implements OnQueryTextListener {
 
     public void onClickPopular(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("com.luyuan.pad.mberp.home2main", "popular");
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_POPULAR);
         startActivity(intent);
     }
 
     public void onClickProduct(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("com.luyuan.pad.mberp.home2main", "product");
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_PRODUCT);
         startActivity(intent);
     }
 
     public void onClickTab(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("com.luyuan.pad.mberp.home2main", "tech");
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_TECH);
         startActivity(intent);
     }
 
     public void onClickLuyuan(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("com.luyuan.pad.mberp.home2main", "luyuan");
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_LUYUAN);
         startActivity(intent);
     }
 

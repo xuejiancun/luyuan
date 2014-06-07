@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 public class ProductHomeFragment extends Fragment implements View.OnClickListener {
 
@@ -16,7 +17,7 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_home, null);
 
         Button luxury = (Button) view.findViewById(R.id.button_product_main_page_luxury);
         luxury.setOnClickListener(this);
@@ -43,22 +44,22 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_product_main_page_luxury:
-                onClickChooseCar("luxury");
+                onClickChooseCar(GlobalConstantValues.IMAGE_LUXURY);
                 break;
             case R.id.button_product_main_page_simple:
-                onClickChooseCar("simple");
+                onClickChooseCar(GlobalConstantValues.IMAGE_SIMPLE);
                 break;
             case R.id.button_product_main_page_standard:
-                onClickChooseCar("standard");
+                onClickChooseCar(GlobalConstantValues.IMAGE_STANDARD);
                 break;
             case R.id.button_product_main_page_battery:
-                onClickChooseCar("battery");
+                onClickChooseCar(GlobalConstantValues.IMAGE_BATTERY);
                 break;
             case R.id.button_product_main_page_replacewalk:
-                onClickChooseCar("replacewalk");
+                onClickChooseCar(GlobalConstantValues.IMAGE_REPLACEWALK);
                 break;
             case R.id.button_product_main_page_special:
-                onClickChooseCar("special");
+                onClickChooseCar(GlobalConstantValues.IMAGE_SPECIAL);
                 break;
         }
     }
@@ -68,7 +69,7 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString("type", type);
+        args.putString(GlobalConstantValues.CAR_TYPE, type);
         productMainFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productMainFragment);

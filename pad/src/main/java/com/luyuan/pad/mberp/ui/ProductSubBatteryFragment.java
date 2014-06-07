@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
@@ -41,32 +42,16 @@ public class ProductSubBatteryFragment extends Fragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         ProductDetailFragment productDetailFragment = new ProductDetailFragment();
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString("type", getArguments().getString("type"));
+        args.putString(GlobalConstantValues.CAR_TYPE, getArguments().getString(GlobalConstantValues.CAR_TYPE));
         productDetailFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
     public class ImageAdapter extends BaseAdapter {
 
         public ImageAdapter(Context c) {

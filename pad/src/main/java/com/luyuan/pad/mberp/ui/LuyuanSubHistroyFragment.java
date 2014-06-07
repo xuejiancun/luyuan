@@ -9,15 +9,16 @@ import android.webkit.WebView;
 
 import com.luyuan.pad.mberp.R;
 
-public class LuyuanSubFirstFragment extends Fragment {
+public class LuyuanSubHistroyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_luyuan_sub_first, null);
+        View view = inflater.inflate(R.layout.fragment_webview, null);
 
-        WebView webView = (WebView) view.findViewById(R.id.webview_about_luyuan);
-        webView.loadUrl("http://luyuan.cn/aboot_brand.html");
+        WebView webView = (WebView) view.findViewById(R.id.webview_band_history);
+        webView.loadUrl("http://luyuan.cn/history/index.html");
 
         return view;
     }
+    
 }

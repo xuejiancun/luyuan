@@ -10,126 +10,133 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class LuyuanMainFragment extends Fragment implements View.OnClickListener {
 
-    private LuyuanSubFirstFragment luyuanSubFirstFragment;
-    private LuyuanSubSecondFragment luyuanSubSecondFragment;
-    private LuyuanSubThirdFragment luyuanSubThirdFragment;
-    private LuyuanSubFourthFragment luyuanSubFourthFragment;
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
-    private LinearLayout tab_goluyuan_layout, tab_histroy_layout, tab_honor_layout, tab_news_layout;
+    private int seletedIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_luyuan_main, null);
 
-        initView(view);
-        initData();
-
+        initTab(view);
         clickGoLuyuanTab();
 
         return view;
     }
 
-    private void initData() {
+    private void initTab(View view) {
+        LinearLayout tab_goluyuan_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_goluyuan);
+        LinearLayout tab_histroy_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_history);
+        LinearLayout tab_honor_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_honor);
+        LinearLayout tab_news_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_news);
+
         tab_goluyuan_layout.setOnClickListener(this);
         tab_histroy_layout.setOnClickListener(this);
         tab_honor_layout.setOnClickListener(this);
         tab_news_layout.setOnClickListener(this);
-    }
 
-    private void initView(View view) {
-        tab_goluyuan_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_goluyuan);
-        tab_histroy_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_history);
-        tab_honor_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_honor);
-        tab_news_layout = (LinearLayout) view.findViewById(R.id.tab_layout_luyuan_news);
+        tabLayoutList.add(tab_goluyuan_layout);
+        tabLayoutList.add(tab_histroy_layout);
+        tabLayoutList.add(tab_honor_layout);
+        tabLayoutList.add(tab_news_layout);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab_layout_luyuan_goluyuan:
-                clickGoLuyuanTab();
+                if (seletedIndex != 1) {
+                    clickGoLuyuanTab();
+                }
                 break;
             case R.id.tab_layout_luyuan_history:
-                clickHistroyTab();
+                if (seletedIndex != 2) {
+                    clickHistroyTab();
+                }
                 break;
             case R.id.tab_layout_luyuan_honor:
-                clickHonorTab();
+                if (seletedIndex != 3) {
+                    clickHonorTab();
+                }
                 break;
             case R.id.tab_layout_luyuan_news:
-                clickNewsTab();
+                if (seletedIndex != 4) {
+                    clickNewsTab();
+                }
                 break;
         }
     }
 
     private void clickGoLuyuanTab() {
-        luyuanSubFirstFragment = new LuyuanSubFirstFragment();
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, luyuanSubFirstFragment);
-        fragmentTransaction.commit();
-
-        focusOnGoLuyuanTab();
-    }
-
-    private void focusOnGoLuyuanTab() {
-        tab_goluyuan_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
-        tab_histroy_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_honor_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_news_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        WebViewFragment webViewFragment = new WebViewFragment();
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_GOLUYUAN);
+        changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickHistroyTab() {
-        luyuanSubSecondFragment = new LuyuanSubSecondFragment();
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, luyuanSubSecondFragment);
-        fragmentTransaction.commit();
-
-        focusOnHistroyTab();
-    }
-
-    private void focusOnHistroyTab() {
-        tab_goluyuan_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_histroy_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
-        tab_honor_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_news_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        WebViewFragment webViewFragment = new WebViewFragment();
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_HISTROY);
+        changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickHonorTab() {
-        luyuanSubThirdFragment = new LuyuanSubThirdFragment();
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, luyuanSubThirdFragment);
-        fragmentTransaction.commit();
-
-        focusOnHonorTab();
-    }
-
-    private void focusOnHonorTab() {
-        tab_goluyuan_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_histroy_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_honor_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
-        tab_news_layout.setBackgroundColor(Color.parseColor("#99C741"));
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_HONOR, 5);
+        changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickNewsTab() {
-        luyuanSubFourthFragment = new LuyuanSubFourthFragment();
+        WebViewFragment webViewFragment = new WebViewFragment();
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_NEWS);
+        changeTabBackStyle(tabLayoutList, 4);
+    }
+
+    private void rePlaceTabContent(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, luyuanSubFourthFragment);
+        fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
-
-        focusOnNewsTab();
     }
 
-    private void focusOnNewsTab() {
-        tab_goluyuan_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_histroy_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_honor_layout.setBackgroundColor(Color.parseColor("#99C741"));
-        tab_news_layout.setBackgroundColor(Color.parseColor("#4C7F20"));
+    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        fragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.commit();
     }
 
+    private void rePlaceTabContentForWebView(Fragment fragment, String url) {
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(GlobalConstantValues.WEBVIEW_URL, url);
+        fragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {
+        seletedIndex = index;
+        for (int i = 0; i < layoutList.size(); i++) {
+            if (i == index - 1) {
+                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_SELECTED));
+            } else {
+                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
+            }
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -139,7 +146,6 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {

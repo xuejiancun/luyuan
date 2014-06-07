@@ -12,28 +12,49 @@ import android.view.ViewGroup;
 
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.DepthPageTransformer;
+import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.lang.reflect.Field;
 
-public class ProductDetailAppearanceFragment extends Fragment {
 
-    private static final int NUM_PAGES = 7;
+public class ImagePagerFragment extends Fragment {
+
+    private String imageType;
+    private int imageNum;
 
     private ViewPager pager;
-
     private PagerAdapter pagerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_product_detail_appearance, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_pager, null);
 
-        pager = (ViewPager) rootView.findViewById(R.id.product_page_pager);
+        imageType = getArguments().getString(GlobalConstantValues.IMAGE_TYPE);
+        imageNum = getArguments().getInt(GlobalConstantValues.IMAGE_NUM);
+
+        pager = (ViewPager) rootView.findViewById(R.id.image_pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new DepthPageTransformer());
 
         return rootView;
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ImageSlideFragment.create(position, imageType);
+        }
+
+        @Override
+        public int getCount() {
+            return imageNum;
+        }
     }
 
     @Override
@@ -44,27 +65,10 @@ public class ProductDetailAppearanceFragment extends Fragment {
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ImageSlideFragment.create(position);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
         }
     }
 
