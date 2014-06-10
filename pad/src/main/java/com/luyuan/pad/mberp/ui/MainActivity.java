@@ -35,13 +35,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-
         setContentView(R.layout.activity_main);
 
         initTab();
@@ -152,7 +149,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void clickPopularTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContent(imagePagerFragment);
         PopularCarData popularCarData = ImageDownloadManager.getInstance().getPopularCarData();
         if (popularCarData != null && popularCarData.getSuccess().equals("true")) {
             rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_POPULAR_CAR,

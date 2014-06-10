@@ -16,7 +16,6 @@ import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.lang.reflect.Field;
 
-
 public class ImagePagerFragment extends Fragment {
 
     private String imageType;

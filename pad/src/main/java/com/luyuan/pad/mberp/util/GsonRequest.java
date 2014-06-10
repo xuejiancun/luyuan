@@ -1,4 +1,4 @@
-package com.luyuan.pad.mberp.model;
+package com.luyuan.pad.mberp.util;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;

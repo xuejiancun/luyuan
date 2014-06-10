@@ -8,9 +8,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.model.GsonRequest;
+import com.luyuan.pad.mberp.model.BrandHonorData;
+import com.luyuan.pad.mberp.model.BrandHonorSlide;
 import com.luyuan.pad.mberp.model.PopularCarData;
 import com.luyuan.pad.mberp.model.PopularCarSlide;
+import com.luyuan.pad.mberp.model.ProductThumbData;
 import com.luyuan.pad.mberp.model.TechImageData;
 import com.luyuan.pad.mberp.model.TechImageSlide;
 
@@ -56,14 +58,6 @@ public class ImageDownloadManager {
             "http://www.luyuan.cn/UploadPhoto/Function/12.jpg",
     };
 
-    String[] honorUrlList = new String[]{
-            "http://www.luyuan.cn/hor/photos/1.jpg",
-            "shttp://www.luyuan.cn/hor/photos/8.jpg",
-            "http://www.luyuan.cn/hor/photos/14.jpg",
-            "http://www.luyuan.cn/hor/photos/20.jpg",
-            "http://www.luyuan.cn/hor/photos/22.jpg",
-    };
-
     private static ImageDownloadManager mInstance;
 
     public static ImageDownloadManager getInstance() {
@@ -75,6 +69,8 @@ public class ImageDownloadManager {
 
     private PopularCarData popularCarData;
     private TechImageData techImageData;
+    private BrandHonorData brandHonorData;
+    private ProductThumbData productThumbData;
 
     public PopularCarData getPopularCarData() {
         return popularCarData;
@@ -82,6 +78,14 @@ public class ImageDownloadManager {
 
     public TechImageData getTechImageData() {
         return techImageData;
+    }
+
+    public BrandHonorData getBrandHonorData() {
+        return brandHonorData;
+    }
+
+    public ProductThumbData getProductThumbData() {
+        return productThumbData;
     }
 
     public String[] getProductThumbUrlList() {
@@ -102,6 +106,7 @@ public class ImageDownloadManager {
         imageView = new ImageView(context);
         fetchPopularCarData();
         fetchTechImageData();
+        // fetchBrandHonorData();
     }
 
     public void fetchPopularCarData() {
@@ -137,7 +142,6 @@ public class ImageDownloadManager {
                 }
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
             }
@@ -159,7 +163,27 @@ public class ImageDownloadManager {
                 }
             }
         }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        );
 
+        RequestManager.getRequestQueue().add(gsonObjRequest);
+    }
+
+    public void fetchBrandHonorData() {
+        GsonRequest gsonObjRequest = new GsonRequest<BrandHonorData>(Request.Method.GET, GlobalConstantValues.API_BRAND_HONOR,
+                BrandHonorData.class, new Response.Listener<BrandHonorData>() {
+            @Override
+            public void onResponse(BrandHonorData response) {
+                brandHonorData = response;
+                for (BrandHonorSlide brandHonorSlide : brandHonorData.getBrandHonorSlides()) {
+                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
+                    imageLoader.get(brandHonorSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
+                }
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
             }

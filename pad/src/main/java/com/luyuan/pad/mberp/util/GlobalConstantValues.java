@@ -41,5 +41,7 @@ public class GlobalConstantValues {
 
     public static final String API_POPULAR_CAR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=popularslide";
     public static final String API_TECH_IMAGE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techslide";
+    public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=honorslide";
+    public static final String API_PRODUCT_THUMB = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=honorslide";
 
 }
