@@ -1,12 +1,18 @@
 package com.luyuan.pad.mberp.util;
 
 import android.content.Context;
+import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
-
-import java.util.ArrayList;
+import com.luyuan.pad.mberp.model.GsonRequest;
+import com.luyuan.pad.mberp.model.PopularCarData;
+import com.luyuan.pad.mberp.model.PopularCarSlide;
+import com.luyuan.pad.mberp.model.TechImageData;
+import com.luyuan.pad.mberp.model.TechImageSlide;
 
 public class ImageDownloadManager {
 
@@ -60,9 +66,6 @@ public class ImageDownloadManager {
 
     private static ImageDownloadManager mInstance;
 
-    private ArrayList<NetworkImageView> productThumbImageList = new ArrayList<NetworkImageView>();
-    private ArrayList<NetworkImageView> productDetailImageList = new ArrayList<NetworkImageView>();
-
     public static ImageDownloadManager getInstance() {
         if (mInstance == null)
             mInstance = new ImageDownloadManager();
@@ -70,12 +73,15 @@ public class ImageDownloadManager {
         return mInstance;
     }
 
-    public ArrayList<NetworkImageView> getProductThumbImageList() {
-        return productThumbImageList;
+    private PopularCarData popularCarData;
+    private TechImageData techImageData;
+
+    public PopularCarData getPopularCarData() {
+        return popularCarData;
     }
 
-    public ArrayList<NetworkImageView> getProductDetailImageList() {
-        return productDetailImageList;
+    public TechImageData getTechImageData() {
+        return techImageData;
     }
 
     public String[] getProductThumbUrlList() {
@@ -90,24 +96,77 @@ public class ImageDownloadManager {
         return productEquipmentUrlList;
     }
 
-    public String[] getHonorUrlList() {
-        return honorUrlList;
+    private ImageView imageView;
+
+    public void downloadEverything(Context context) {
+        imageView = new ImageView(context);
+        fetchPopularCarData();
+        fetchTechImageData();
     }
 
-    public void init(Context context) {
-        for (String url : productThumbUrlList) {
-            NetworkImageView imageView = new NetworkImageView(context);
-            ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
-            imageLoader.get(url, ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
-            ImageDownloadManager.getInstance().getProductThumbImageList().add(imageView);
-        }
+    public void fetchPopularCarData() {
+//        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
+//                POPULAR_CAR_URL, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        if (response != null) {
+//                            popularCarData = JSON.parseObject(response.toString(), PopularCarData.class);
+//                            for (PopularCarSlide popularSlide : popularCarData.getPopularCarSlides()) {
+//                                ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
+//                                imageLoader.get(popularSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
+//                            }
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//            }
+//        }
+//        );
 
-        for (String url : productDetailUrlList) {
-            NetworkImageView imageView = new NetworkImageView(context);
-            ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
-            imageLoader.get(url, ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
-            ImageDownloadManager.getInstance().getProductThumbImageList().add(imageView);
+        GsonRequest gsonObjRequest = new GsonRequest<PopularCarData>(Request.Method.GET, GlobalConstantValues.API_POPULAR_CAR,
+                PopularCarData.class, new Response.Listener<PopularCarData>() {
+            @Override
+            public void onResponse(PopularCarData response) {
+                popularCarData = response;
+                for (PopularCarSlide popularSlide : popularCarData.getPopularCarSlides()) {
+                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
+                    imageLoader.get(popularSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
         }
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
+    }
+
+    public void fetchTechImageData() {
+        GsonRequest gsonObjRequest = new GsonRequest<TechImageData>(Request.Method.GET, GlobalConstantValues.API_TECH_IMAGE,
+                TechImageData.class, new Response.Listener<TechImageData>() {
+            @Override
+            public void onResponse(TechImageData response) {
+                techImageData = response;
+                for (TechImageSlide techImageSlide : techImageData.getTechImageSlides()) {
+                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
+                    imageLoader.get(techImageSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
     }
 
 }

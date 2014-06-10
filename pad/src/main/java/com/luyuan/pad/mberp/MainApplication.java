@@ -37,7 +37,7 @@ public class MainApplication extends Application {
     }
 
     private void downloadImage() {
-        ImageDownloadManager.getInstance().init(this);
+        ImageDownloadManager.getInstance().downloadEverything(this);
     }
 
 }

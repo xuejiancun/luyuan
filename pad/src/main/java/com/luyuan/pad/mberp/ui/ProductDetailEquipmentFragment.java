@@ -30,7 +30,6 @@ public class ProductDetailEquipmentFragment extends Fragment {
         g.setAdapter(new ImageAdapter(getActivity()));
 
         return view;
-
     }
 
     public class ImageAdapter extends BaseAdapter {

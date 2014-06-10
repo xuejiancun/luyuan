@@ -76,25 +76,25 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickGoLuyuanTab() {
         WebViewFragment webViewFragment = new WebViewFragment();
-        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_GOLUYUAN);
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.URL_ABOUT_LUYUAN);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickHistroyTab() {
         WebViewFragment webViewFragment = new WebViewFragment();
-        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_HISTROY);
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.URL_BRAND_HISTROY);
         changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickHonorTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_HONOR, 5);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_BRAND_HONOR, 5);
         changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickNewsTab() {
         WebViewFragment webViewFragment = new WebViewFragment();
-        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.WEBVIEW_URL_NEWS);
+        rePlaceTabContentForWebView(webViewFragment, GlobalConstantValues.URL_LUYUAN_NEWS);
         changeTabBackStyle(tabLayoutList, 4);
     }
 
@@ -108,8 +108,8 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -120,7 +120,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.WEBVIEW_URL, url);
+        args.putString(GlobalConstantValues.PARAM_URL, url);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

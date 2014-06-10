@@ -44,22 +44,22 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_product_main_page_luxury:
-                onClickChooseCar(GlobalConstantValues.IMAGE_LUXURY);
+                onClickChooseCar(GlobalConstantValues.IMAGE_LUXURY_CAR);
                 break;
             case R.id.button_product_main_page_simple:
-                onClickChooseCar(GlobalConstantValues.IMAGE_SIMPLE);
+                onClickChooseCar(GlobalConstantValues.IMAGE_SIMPLE_CAR);
                 break;
             case R.id.button_product_main_page_standard:
-                onClickChooseCar(GlobalConstantValues.IMAGE_STANDARD);
+                onClickChooseCar(GlobalConstantValues.IMAGE_STANDARD_CAR);
                 break;
             case R.id.button_product_main_page_battery:
-                onClickChooseCar(GlobalConstantValues.IMAGE_BATTERY);
+                onClickChooseCar(GlobalConstantValues.IMAGE_BATTERY_CAR);
                 break;
             case R.id.button_product_main_page_replacewalk:
-                onClickChooseCar(GlobalConstantValues.IMAGE_REPLACEWALK);
+                onClickChooseCar(GlobalConstantValues.IMAGE_REPLACEWALK_CAR);
                 break;
             case R.id.button_product_main_page_special:
-                onClickChooseCar(GlobalConstantValues.IMAGE_SPECIAL);
+                onClickChooseCar(GlobalConstantValues.IMAGE_SPECIAL_CAR);
                 break;
         }
     }
@@ -69,7 +69,7 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.CAR_TYPE, type);
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
         productMainFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productMainFragment);

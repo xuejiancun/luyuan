@@ -30,8 +30,11 @@ public class ImagePagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_pager, null);
 
-        imageType = getArguments().getString(GlobalConstantValues.IMAGE_TYPE);
-        imageNum = getArguments().getInt(GlobalConstantValues.IMAGE_NUM);
+        Bundle args = getArguments();
+        if (args != null) {
+            imageType = args.getString(GlobalConstantValues.PARAM_IMAGE_TYPE);
+            imageNum = args.getInt(GlobalConstantValues.PARAM_IMAGE_NUM);
+        }
 
         pager = (ViewPager) rootView.findViewById(R.id.image_pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());

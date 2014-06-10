@@ -27,18 +27,18 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         initTab(view);
 
-        String param = getArguments().getString(GlobalConstantValues.CAR_TYPE);
-        if (param.equals(GlobalConstantValues.IMAGE_LUXURY)) {
+        String param = getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE);
+        if (param.equals(GlobalConstantValues.IMAGE_LUXURY_CAR)) {
             clickLuxuryTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_SIMPLE)) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_SIMPLE_CAR)) {
             clickSimpleTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_STANDARD)) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_STANDARD_CAR)) {
             clickStandardTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_BATTERY)) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_BATTERY_CAR)) {
             clickBatteryTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_REPLACEWALK)) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_REPLACEWALK_CAR)) {
             clickReplacewalkTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_SPECIAL)) {
+        } else if (param.equals(GlobalConstantValues.IMAGE_SPECIAL_CAR)) {
             clickSpecialTab();
         } else {
             clickLuxuryTab();
@@ -108,37 +108,37 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
     private void clickLuxuryTab() {
         ProductSubLuxuryFragment productSubLuxuryFragment = new ProductSubLuxuryFragment();
-        rePlaceTabContent(productSubLuxuryFragment, GlobalConstantValues.IMAGE_LUXURY);
+        rePlaceTabContent(productSubLuxuryFragment, GlobalConstantValues.IMAGE_LUXURY_CAR);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickSimpleTab() {
         ProductSubSimpleFragment productSubSimpleFragment = new ProductSubSimpleFragment();
-        rePlaceTabContent(productSubSimpleFragment, GlobalConstantValues.IMAGE_SIMPLE);
+        rePlaceTabContent(productSubSimpleFragment, GlobalConstantValues.IMAGE_SIMPLE_CAR);
         changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickStandardTab() {
         ProductSubStandardFragment productSubStandardFragment = new ProductSubStandardFragment();
-        rePlaceTabContent(productSubStandardFragment, GlobalConstantValues.IMAGE_STANDARD);
+        rePlaceTabContent(productSubStandardFragment, GlobalConstantValues.IMAGE_STANDARD_CAR);
         changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickBatteryTab() {
         ProductSubBatteryFragment productSubBatteryFragment = new ProductSubBatteryFragment();
-        rePlaceTabContent(productSubBatteryFragment, GlobalConstantValues.IMAGE_BATTERY);
+        rePlaceTabContent(productSubBatteryFragment, GlobalConstantValues.IMAGE_BATTERY_CAR);
         changeTabBackStyle(tabLayoutList, 4);
     }
 
     private void clickReplacewalkTab() {
         ProductSubReplacewalkFragment productSubReplacewalkFragment = new ProductSubReplacewalkFragment();
-        rePlaceTabContent(productSubReplacewalkFragment, GlobalConstantValues.IMAGE_REPLACEWALK);
+        rePlaceTabContent(productSubReplacewalkFragment, GlobalConstantValues.IMAGE_REPLACEWALK_CAR);
         changeTabBackStyle(tabLayoutList, 5);
     }
 
     private void clickSpecialTab() {
         ProductSubSpecialFragment productSubSpecialFragment = new ProductSubSpecialFragment();
-        rePlaceTabContent(productSubSpecialFragment, GlobalConstantValues.IMAGE_SPECIAL);
+        rePlaceTabContent(productSubSpecialFragment, GlobalConstantValues.IMAGE_SPECIAL_CAR);
         changeTabBackStyle(tabLayoutList, 6);
     }
 
@@ -146,7 +146,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.CAR_TYPE, type);
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

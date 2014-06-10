@@ -92,19 +92,19 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private void clickCarAppearanceTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_APPERANCE, 7);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_APPERANCE, 7);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickCarDetailTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_DETAIL, 7);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_DETAIL, 7);
         changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickCarColorTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_COLOR, 7);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_COLOR, 7);
         changeTabBackStyle(tabLayoutList, 3);
     }
 
@@ -125,7 +125,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.CAR_TYPE, getArguments().getString(GlobalConstantValues.CAR_TYPE));
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE));
         productMainFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productMainFragment);
@@ -142,8 +142,8 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

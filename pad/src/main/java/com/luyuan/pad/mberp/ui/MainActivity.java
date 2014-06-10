@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.model.PopularCarData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
+import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
 import java.util.ArrayList;
 
@@ -47,13 +49,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Intent intent = getIntent();
         String param = intent.getExtras().getString(GlobalConstantValues.INTENT_HOME_TO_MAIN);
 
-        if (param.equals(GlobalConstantValues.TAB_POPULAR)) {
+        if (param.equals(GlobalConstantValues.TAB_POPULAR_CAR)) {
             clickPopularTab();
-        } else if (param.equals(GlobalConstantValues.TAB_PRODUCT)) {
+        } else if (param.equals(GlobalConstantValues.TAB_PRODUCT_APPRECIATE)) {
             clickProductTab();
-        } else if (param.equals(GlobalConstantValues.TAB_TECH)) {
+        } else if (param.equals(GlobalConstantValues.TAB_TECH_EMBODIED)) {
             clickTechTab();
-        } else if (param.equals(GlobalConstantValues.TAB_LUYUAN)) {
+        } else if (param.equals(GlobalConstantValues.TAB_LUYUAN_CULTURE)) {
             clickLuyuanTab();
         }
     }
@@ -151,7 +153,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void clickPopularTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
         rePlaceTabContent(imagePagerFragment);
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_POPULAR, 7);
+        PopularCarData popularCarData = ImageDownloadManager.getInstance().getPopularCarData();
+        if (popularCarData != null && popularCarData.getSuccess().equals("true")) {
+            rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_POPULAR_CAR,
+                    ImageDownloadManager.getInstance().getPopularCarData().getPopularCarSlides().size());
+        } else {
+            // TODO show another fragment
+        }
         changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
     }
 
@@ -183,8 +191,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

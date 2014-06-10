@@ -43,7 +43,7 @@ public class ProductSubReplacewalkFragment extends Fragment implements AdapterVi
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.CAR_TYPE, getArguments().getString(GlobalConstantValues.CAR_TYPE));
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE));
         productDetailFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);

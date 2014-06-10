@@ -29,7 +29,7 @@ public class TechMainFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.button_tech_main_page_tech1:
                 ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-                rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_COLOR, 7);
+                rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_COLOR, 7);
                 break;
         }
     }
@@ -38,8 +38,8 @@ public class TechMainFragment extends Fragment implements View.OnClickListener {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.IMAGE_NUM, num);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

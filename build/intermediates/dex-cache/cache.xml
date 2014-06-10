@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="/Users/jackxue/Documents/src/mberp/pad/build/intermediates/pre-dexed/debug/gson-2.2.4-fbcc588719a41605eaa5495d64272759b8d8b741.jar"
+        jar="/Users/jackxue/Documents/src/mberp/pad/libs/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
+    <item
         dex="/Users/jackxue/Documents/src/mberp/pad/build/intermediates/pre-dexed/debug/volley-89d5fd7f39b6623977198159c0c3b1eaf4bdefd7.jar"
         jar="/Users/jackxue/Documents/src/mberp/pad/libs/volley.jar"
         jumboMode="false"

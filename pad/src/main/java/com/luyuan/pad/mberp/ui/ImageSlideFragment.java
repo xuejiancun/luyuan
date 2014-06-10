@@ -20,8 +20,8 @@ public class ImageSlideFragment extends Fragment {
     public static ImageSlideFragment create(int imageIndex, String imageType) {
         ImageSlideFragment fragment = new ImageSlideFragment();
         Bundle args = new Bundle();
-        args.putInt(GlobalConstantValues.IMAGE_INDEX, imageIndex);
-        args.putString(GlobalConstantValues.IMAGE_TYPE, imageType);
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_INDEX, imageIndex);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, imageType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,8 +32,8 @@ public class ImageSlideFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageIndex = getArguments().getInt(GlobalConstantValues.IMAGE_INDEX);
-        imageType = getArguments().getString(GlobalConstantValues.IMAGE_TYPE);
+        imageIndex = getArguments().getInt(GlobalConstantValues.PARAM_IMAGE_INDEX);
+        imageType = getArguments().getString(GlobalConstantValues.PARAM_IMAGE_TYPE);
     }
 
     @Override
@@ -41,9 +41,14 @@ public class ImageSlideFragment extends Fragment {
         View view = (View) inflater.inflate(R.layout.fragment_image_slide, null);
 
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
+        // TODO set default image && not null condition
         imageView.setErrorImageResId(R.drawable.no_image);
-        if (imageType.equals(GlobalConstantValues.IMAGE_HONOR)) {
-            imageView.setImageUrl(ImageDownloadManager.getInstance().getHonorUrlList()[getImageIndex()], ImageCacheManager.getInstance().getImageLoader());
+        if (imageType.equals(GlobalConstantValues.IMAGE_POPULAR_CAR)) {
+            imageView.setImageUrl(ImageDownloadManager.getInstance().getPopularCarData().getPopularCarSlides().get(getImageIndex()).getUrl(),
+                    ImageCacheManager.getInstance().getImageLoader());
+        } else if (imageType.equals(GlobalConstantValues.IMAGE_TECH_IMAGE)) {
+            imageView.setImageUrl(ImageDownloadManager.getInstance().getTechImageData().getTechImageSlides().get(getImageIndex()).getUrl(),
+                    ImageCacheManager.getInstance().getImageLoader());
         } else {
             imageView.setImageUrl(ImageDownloadManager.getInstance().getProductDetailUrlList()[getImageIndex()], ImageCacheManager.getInstance().getImageLoader());
         }
@@ -54,5 +59,5 @@ public class ImageSlideFragment extends Fragment {
     public int getImageIndex() {
         return imageIndex;
     }
-    
+
 }

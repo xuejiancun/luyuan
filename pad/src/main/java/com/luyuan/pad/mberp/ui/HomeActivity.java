@@ -49,25 +49,25 @@ public class HomeActivity extends Activity implements OnQueryTextListener {
 
     public void onClickPopular(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_POPULAR);
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_POPULAR_CAR);
         startActivity(intent);
     }
 
     public void onClickProduct(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_PRODUCT);
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_PRODUCT_APPRECIATE);
         startActivity(intent);
     }
 
     public void onClickTab(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_TECH);
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_TECH_EMBODIED);
         startActivity(intent);
     }
 
     public void onClickLuyuan(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_LUYUAN);
+        intent.putExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN, GlobalConstantValues.TAB_LUYUAN_CULTURE);
         startActivity(intent);
     }
 

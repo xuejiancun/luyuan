@@ -17,7 +17,7 @@ public class WebViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_webview, null);
 
         WebView webView = (WebView) view.findViewById(R.id.webview);
-        webView.loadUrl(getArguments().getString(GlobalConstantValues.WEBVIEW_URL));
+        webView.loadUrl(getArguments().getString(GlobalConstantValues.PARAM_URL));
 
         return view;
     }
