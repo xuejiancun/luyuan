@@ -32,8 +32,8 @@ public class ImagePagerFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            imageNum = args.getInt(GlobalConstantValues.PARAM_IMAGE_NUM);
-            slideUrlArraryList = args.getStringArrayList(GlobalConstantValues.PARAM_IMAGE_TYPE);
+            slideUrlArraryList = args.getStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS);
+            imageNum = slideUrlArraryList.size();
         }
 
         pager = (ViewPager) rootView.findViewById(R.id.image_pager);

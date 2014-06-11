@@ -12,15 +12,22 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.model.ProductThumbData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
+import com.luyuan.pad.mberp.util.GsonRequest;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
+import com.luyuan.pad.mberp.util.RequestManager;
 
 public class ProductSubLuxuryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
+    private ProductThumbData productThumbData;
+    private GridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,9 +36,8 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_product_sub_luxury, null);
 
-        GridView g = (GridView) view.findViewById(R.id.gridview_product_list_luxury);
-        g.setAdapter(new ImageAdapter(getActivity()));
-        g.setOnItemClickListener(this);
+        gridView = (GridView) view.findViewById(R.id.gridview_product_list_luxury);
+        fetchProductThumbData();
 
         return view;
     }
@@ -58,7 +64,7 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
         }
 
         public int getCount() {
-            return ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().size();
+            return productThumbData.getProductThumbInfos().size();
         }
 
         public Object getItem(int position) {
@@ -71,39 +77,49 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
 
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view;
+            View view = layoutInflater.inflate(R.layout.product_item, null);
 
-            if (convertView == null) {
-                view = layoutInflater.inflate(R.layout.product_item, null);
-
-                NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
-                imageView.setDefaultImageResId(R.drawable.no_image);
+            NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
+            imageView.setDefaultImageResId(R.drawable.no_image);
 //                imageView.setErrorImageResId(R.drawable.no_image);
-                imageView.setImageUrl(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getImageLoader());
+            imageView.setImageUrl(productThumbData.getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getImageLoader());
 
-                TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_info_name);
-                textViewName.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getName());
+            TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_info_name);
+            textViewName.setText(productThumbData.getProductThumbInfos().get(position).getName());
 
-                TextView textViewDesc1 = (TextView) view.findViewById(R.id.textview_product_list_info_model);
-                textViewDesc1.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getModel());
+            TextView textViewDesc1 = (TextView) view.findViewById(R.id.textview_product_list_info_model);
+            textViewDesc1.setText(productThumbData.getProductThumbInfos().get(position).getModel());
 
-                TextView textViewDesc2 = (TextView) view.findViewById(R.id.textview_product_list_info_battery);
-                textViewDesc2.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getBattery());
+            TextView textViewDesc2 = (TextView) view.findViewById(R.id.textview_product_list_info_battery);
+            textViewDesc2.setText(productThumbData.getProductThumbInfos().get(position).getBattery());
 
-                TextView textViewDesc3 = (TextView) view.findViewById(R.id.textview_product_list_info_endurance);
-                textViewDesc3.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getEndurance());
+            TextView textViewDesc3 = (TextView) view.findViewById(R.id.textview_product_list_info_endurance);
+            textViewDesc3.setText(productThumbData.getProductThumbInfos().get(position).getEndurance());
 
-                TextView textViewDesc4 = (TextView) view.findViewById(R.id.textview_product_list_info_series);
-                textViewDesc4.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getSeries());
-
-            } else {
-                view = convertView;
-            }
-
-            view.refreshDrawableState();
+            TextView textViewDesc4 = (TextView) view.findViewById(R.id.textview_product_list_info_series);
+            textViewDesc4.setText(productThumbData.getProductThumbInfos().get(position).getSeries());
 
             return view;
         }
+    }
+
+    public void fetchProductThumbData() {
+        GsonRequest gsonObjRequest = new GsonRequest<ProductThumbData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_THUMB_LUXURY,
+                ProductThumbData.class, new Response.Listener<ProductThumbData>() {
+            @Override
+            public void onResponse(ProductThumbData response) {
+                productThumbData = response;
+                gridView.setAdapter(new ImageAdapter(getActivity()));
+                // gridView.setOnItemClickListener(ProductSubLuxuryFragment.this);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
     }
 
 }

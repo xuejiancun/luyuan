@@ -10,18 +10,17 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
 public class ImageSlideFragment extends Fragment {
 
-    private int imageIndex;
-    private String imageType;
+    private int index;
+    private String url;
 
-    public static ImageSlideFragment create(int imageIndex, String imageType) {
+    public static ImageSlideFragment create(int imageIndex, String url) {
         ImageSlideFragment fragment = new ImageSlideFragment();
         Bundle args = new Bundle();
         args.putInt(GlobalConstantValues.PARAM_IMAGE_INDEX, imageIndex);
-        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, imageType);
+        args.putString(GlobalConstantValues.PARAM_IMAGE_URL, url);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,33 +31,23 @@ public class ImageSlideFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageIndex = getArguments().getInt(GlobalConstantValues.PARAM_IMAGE_INDEX);
-        imageType = getArguments().getString(GlobalConstantValues.PARAM_IMAGE_TYPE);
+        index = getArguments().getInt(GlobalConstantValues.PARAM_IMAGE_INDEX);
+        url = getArguments().getString(GlobalConstantValues.PARAM_IMAGE_URL);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_image_slide, null);
-
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
         // TODO set error image && not null condition
         imageView.setDefaultImageResId(R.drawable.no_image);
 //        imageView.setErrorImageResId(R.drawable.no_image);
-        if (imageType.equals(GlobalConstantValues.IMAGE_POPULAR_CAR)) {
-            imageView.setImageUrl(ImageDownloadManager.getInstance().getPopularCarData().getPopularCarSlides().get(getImageIndex()).getUrl(),
-                    ImageCacheManager.getInstance().getImageLoader());
-        } else if (imageType.equals(GlobalConstantValues.IMAGE_TECH_IMAGE)) {
-            imageView.setImageUrl(ImageDownloadManager.getInstance().getTechImageData().getTechImageSlides().get(getImageIndex()).getUrl(),
-                    ImageCacheManager.getInstance().getImageLoader());
-        } else {
-            imageView.setImageUrl(ImageDownloadManager.getInstance().getProductDetailUrlList()[getImageIndex()], ImageCacheManager.getInstance().getImageLoader());
-        }
-
+        imageView.setImageUrl(url, ImageCacheManager.getInstance().getImageLoader());
         return view;
     }
 
-    public int getImageIndex() {
-        return imageIndex;
+    public int getIndex() {
+        return index;
     }
 
 }

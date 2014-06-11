@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.model.ProductThumbData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageDownloadManager;
@@ -21,6 +22,8 @@ import com.luyuan.pad.mberp.util.ImageDownloadManager;
 public class ProductSubBatteryFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
+    private ProductThumbData productThumbData;
+    private GridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,9 +33,8 @@ public class ProductSubBatteryFragment extends Fragment implements AdapterView.O
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_product_sub_battery, null);
 
-        GridView g = (GridView) view.findViewById(R.id.gridview_product_list_battery);
-        g.setAdapter(new ImageAdapter(getActivity()));
-        g.setOnItemClickListener(this);
+        gridView = (GridView) view.findViewById(R.id.gridview_product_list_luxury);
+        fetchProductThumbData();
 
         return view;
     }

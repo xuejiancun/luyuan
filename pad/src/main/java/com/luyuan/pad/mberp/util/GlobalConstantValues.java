@@ -15,6 +15,7 @@ public class GlobalConstantValues {
     public static final String PARAM_IMAGE_NUM = "PARAM_IMAGE_NUM";
     public static final String PARAM_IMAGE_INDEX = "PARAM_IMAGE_INDEX";
     public static final String PARAM_IMAGE_URLS = "PARAM_IMAGE_URLS";
+    public static final String PARAM_IMAGE_URL = "PARAM_IMAGE_URL";
 
     public static final String IMAGE_LUXURY_CAR = "IMAGE_LUXURY_CAR";
     public static final String IMAGE_SIMPLE_CAR = "IMAGE_SIMPLE_CAR";

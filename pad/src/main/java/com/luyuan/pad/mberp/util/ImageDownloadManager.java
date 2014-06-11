@@ -7,9 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.model.BrandHonorData;
-import com.luyuan.pad.mberp.model.PopularCarData;
 import com.luyuan.pad.mberp.model.ProductThumbData;
-import com.luyuan.pad.mberp.model.TechImageData;
 
 public class ImageDownloadManager {
 
@@ -47,18 +45,8 @@ public class ImageDownloadManager {
         return mInstance;
     }
 
-    private PopularCarData popularCarData;
-    private TechImageData techImageData;
     private BrandHonorData brandHonorData;
     private ProductThumbData productThumbData;
-
-    public PopularCarData getPopularCarData() {
-        return popularCarData;
-    }
-
-    public TechImageData getTechImageData() {
-        return techImageData;
-    }
 
     public BrandHonorData getBrandHonorData() {
         return brandHonorData;
@@ -80,73 +68,8 @@ public class ImageDownloadManager {
 
     public void downloadEverything(Context context) {
         imageView = new ImageView(context);
-        fetchPopularCarData();
-        fetchTechImageData();
         // fetchBrandHonorData();
-        fetchProductThumbData();
-    }
-
-    public void fetchPopularCarData() {
-//        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
-//                POPULAR_CAR_URL, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        if (response != null) {
-//                            popularCarData = JSON.parseObject(response.toString(), PopularCarData.class);
-//                            for (PopularCarSlide popularSlide : popularCarData.getPopularCarSlides()) {
-//                                ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
-//                                imageLoader.get(popularSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
-//                            }
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        }
-//        );
-
-        GsonRequest gsonObjRequest = new GsonRequest<PopularCarData>(Request.Method.GET, GlobalConstantValues.API_POPULAR_CAR,
-                PopularCarData.class, new Response.Listener<PopularCarData>() {
-            @Override
-            public void onResponse(PopularCarData response) {
-                popularCarData = response;
-//                for (PopularCarSlide popularSlide : popularCarData.getPopularCarSlides()) {
-//                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
-//                    imageLoader.get(popularSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
-//                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }
-        );
-
-        RequestManager.getRequestQueue().add(gsonObjRequest);
-    }
-
-    public void fetchTechImageData() {
-        GsonRequest gsonObjRequest = new GsonRequest<TechImageData>(Request.Method.GET, GlobalConstantValues.API_TECH_IMAGE,
-                TechImageData.class, new Response.Listener<TechImageData>() {
-            @Override
-            public void onResponse(TechImageData response) {
-                techImageData = response;
-//                for (TechImageSlide techImageSlide : techImageData.getTechImageSlides()) {
-//                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
-//                    imageLoader.get(techImageSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
-//                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }
-        );
-
-        RequestManager.getRequestQueue().add(gsonObjRequest);
+        //  fetchProductThumbData();
     }
 
     public void fetchBrandHonorData() {

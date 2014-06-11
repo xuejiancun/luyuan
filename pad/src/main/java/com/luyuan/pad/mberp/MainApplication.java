@@ -5,12 +5,11 @@ import android.graphics.Bitmap.CompressFormat;
 
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.ImageCacheManager.CacheType;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
 import com.luyuan.pad.mberp.util.RequestManager;
 
 public class MainApplication extends Application {
 
-    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 20;
+    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 80;
     private static int DISK_IMAGECACHE_QUALITY = 100;
     private static CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = CompressFormat.JPEG;
 
@@ -24,7 +23,6 @@ public class MainApplication extends Application {
     private void init() {
         RequestManager.init(this);
         createImageCache();
-        downloadImage();
     }
 
     private void createImageCache() {
@@ -34,10 +32,6 @@ public class MainApplication extends Application {
                 , DISK_IMAGECACHE_COMPRESS_FORMAT
                 , DISK_IMAGECACHE_QUALITY
                 , CacheType.MEMORY);
-    }
-
-    private void downloadImage() {
-        ImageDownloadManager.getInstance().downloadEverything(this);
     }
 
 }

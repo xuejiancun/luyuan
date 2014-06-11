@@ -18,10 +18,15 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.model.PopularCarData;
+import com.luyuan.pad.mberp.model.PopularCarSlide;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
+import com.luyuan.pad.mberp.util.GsonRequest;
+import com.luyuan.pad.mberp.util.RequestManager;
 
 import java.util.ArrayList;
 
@@ -148,15 +153,26 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void clickPopularTab() {
-        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        PopularCarData popularCarData = ImageDownloadManager.getInstance().getPopularCarData();
-        if (popularCarData != null && popularCarData.getSuccess().equals("true")) {
-            rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_POPULAR_CAR,
-                    ImageDownloadManager.getInstance().getPopularCarData().getPopularCarSlides().size());
-        } else {
-            // TODO show another fragment
+        GsonRequest gsonObjRequest = new GsonRequest<PopularCarData>(Request.Method.GET, GlobalConstantValues.API_POPULAR_CAR,
+                PopularCarData.class, new Response.Listener<PopularCarData>() {
+            @Override
+            public void onResponse(PopularCarData response) {
+                if (response != null && response.getSuccess().equals("true")) {
+                    ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+                    rePlaceTabContentForSlide(imagePagerFragment, getPopularCarUrls(response));
+                } else {
+                    // TODO show another fragment
+                }
+                changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
         }
-        changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
     }
 
     private void clickProductTab() {
@@ -183,12 +199,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+    private void rePlaceTabContentForSlide(Fragment fragment, ArrayList<String> urls) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
+        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -206,6 +221,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 textviewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
+    }
+
+    public ArrayList<String> getPopularCarUrls(PopularCarData popularCarData) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (PopularCarSlide popularCarSlide : popularCarData.getPopularCarSlides()) {
+            result.add(popularCarSlide.getUrl());
+        }
+        return result;
     }
 
 }

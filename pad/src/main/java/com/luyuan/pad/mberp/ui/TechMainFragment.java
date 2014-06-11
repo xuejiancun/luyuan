@@ -8,10 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.model.TechImageData;
+import com.luyuan.pad.mberp.model.TechImageSlide;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
+import com.luyuan.pad.mberp.util.GsonRequest;
+import com.luyuan.pad.mberp.util.RequestManager;
+
+import java.util.ArrayList;
 
 public class TechMainFragment extends Fragment implements View.OnClickListener {
 
@@ -64,28 +71,46 @@ public class TechMainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_tech_main_page_tech1:
-                ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-                TechImageData techImageData = ImageDownloadManager.getInstance().getTechImageData();
-                if (techImageData != null && techImageData.getSuccess().equals("true")) {
-                    rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_TECH_IMAGE,
-                            ImageDownloadManager.getInstance().getTechImageData().getTechImageSlides().size());
-                } else {
-                    // TODO show another fragment
+                GsonRequest gsonObjRequest = new GsonRequest<TechImageData>(Request.Method.GET, GlobalConstantValues.API_TECH_IMAGE,
+                        TechImageData.class, new Response.Listener<TechImageData>() {
+                    @Override
+                    public void onResponse(TechImageData response) {
+                        if (response != null && response.getSuccess().equals("true")) {
+                            ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+                            rePlaceTabContentForSlide(imagePagerFragment, getTechImageUrls(response));
+                        } else {
+                            // TODO show another fragment
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
                 }
+                );
+
+                RequestManager.getRequestQueue().add(gsonObjRequest);
                 break;
         }
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+    private void rePlaceTabContentForSlide(Fragment fragment, ArrayList<String> urls) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
+        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
+    }
+
+    public ArrayList<String> getTechImageUrls(TechImageData techImageData) {
+        ArrayList<String> result = new ArrayList<String>();
+        for (TechImageSlide techImageSlide : techImageData.getTechImageSlides()) {
+            result.add(techImageSlide.getUrl());
+        }
+        return result;
     }
 
 }
