@@ -9,10 +9,12 @@ public class GlobalConstantValues {
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#FFFFFF";
 
     public static final String PARAM_CAR_TYPE = "PARAM_CAR_TYPE";
+    public static final String PARAM_CAR_MODEL = "PARAM_CAR_MODEL";
     public static final String PARAM_URL = "PARAM_URL";
     public static final String PARAM_IMAGE_TYPE = "PARAM_IMAGE_TYPE";
     public static final String PARAM_IMAGE_NUM = "PARAM_IMAGE_NUM";
     public static final String PARAM_IMAGE_INDEX = "PARAM_IMAGE_INDEX";
+    public static final String PARAM_IMAGE_URLS = "PARAM_IMAGE_URLS";
 
     public static final String IMAGE_LUXURY_CAR = "IMAGE_LUXURY_CAR";
     public static final String IMAGE_SIMPLE_CAR = "IMAGE_SIMPLE_CAR";
@@ -42,6 +44,14 @@ public class GlobalConstantValues {
     public static final String API_POPULAR_CAR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=popularslide";
     public static final String API_TECH_IMAGE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techslide";
     public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=honorslide";
-    public static final String API_PRODUCT_THUMB = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=honorslide";
+
+    public static final String API_PRODUCT_THUMB_LUXURY = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=22";
+    public static final String API_PRODUCT_THUMB_SIMPLE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=23";
+    public static final String API_PRODUCT_THUMB_STANDARD = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=24";
+    public static final String API_PRODUCT_THUMB_BATTERY = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=25";
+    public static final String API_PRODUCT_THUMB_REPLACEWALK = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=26";
+    public static final String API_PRODUCT_THUMB_SPECIAL = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=27";
+
+    public static final String API_PRODUCT_DETAIL_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productdetail";
 
 }

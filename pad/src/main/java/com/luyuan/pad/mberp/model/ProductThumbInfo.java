@@ -3,12 +3,21 @@ package com.luyuan.pad.mberp.model;
 public class ProductThumbInfo {
 
     private String type;
+    private String id;
     private String name;
     private String series;
     private String model;
     private String battery;
     private String endurance;
     private String url;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getType() {
         return type;
@@ -65,5 +74,5 @@ public class ProductThumbInfo {
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
 }

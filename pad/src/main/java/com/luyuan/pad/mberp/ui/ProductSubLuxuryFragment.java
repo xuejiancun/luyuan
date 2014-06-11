@@ -24,7 +24,6 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         layoutInflater = inflater;
@@ -43,7 +42,7 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE));
+        args.putString(GlobalConstantValues.PARAM_CAR_MODEL, ((TextView) v.findViewById(R.id.textview_product_list_info_model)).getText().toString());
         productDetailFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
@@ -52,12 +51,14 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
 
     public class ImageAdapter extends BaseAdapter {
 
+        private Context mContext;
+
         public ImageAdapter(Context c) {
             mContext = c;
         }
 
         public int getCount() {
-            return ImageDownloadManager.getInstance().getProductThumbUrlList().length;
+            return ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().size();
         }
 
         public Object getItem(int position) {
@@ -76,23 +77,24 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
                 view = layoutInflater.inflate(R.layout.product_item, null);
 
                 NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
-                imageView.setErrorImageResId(R.drawable.no_image);
-                imageView.setImageUrl(ImageDownloadManager.getInstance().getProductThumbUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
+                imageView.setDefaultImageResId(R.drawable.no_image);
+//                imageView.setErrorImageResId(R.drawable.no_image);
+                imageView.setImageUrl(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getImageLoader());
 
-                TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_name);
-                textViewName.setText(productNameList[position]);
+                TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_info_name);
+                textViewName.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getName());
 
-                TextView textViewDesc1 = (TextView) view.findViewById(R.id.textview_product_list_desc1);
-                textViewDesc1.setText(productDesc1List[position]);
+                TextView textViewDesc1 = (TextView) view.findViewById(R.id.textview_product_list_info_model);
+                textViewDesc1.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getModel());
 
-                TextView textViewDesc2 = (TextView) view.findViewById(R.id.textview_product_list_desc2);
-                textViewDesc2.setText(productDesc2List[position]);
+                TextView textViewDesc2 = (TextView) view.findViewById(R.id.textview_product_list_info_battery);
+                textViewDesc2.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getBattery());
 
-                TextView textViewDesc3 = (TextView) view.findViewById(R.id.textview_product_list_desc3);
-                textViewDesc3.setText(productDesc3List[position]);
+                TextView textViewDesc3 = (TextView) view.findViewById(R.id.textview_product_list_info_endurance);
+                textViewDesc3.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getEndurance());
 
-                TextView textViewDesc4 = (TextView) view.findViewById(R.id.textview_product_list_desc4);
-                textViewDesc4.setText(productDesc4List[position]);
+                TextView textViewDesc4 = (TextView) view.findViewById(R.id.textview_product_list_info_series);
+                textViewDesc4.setText(ImageDownloadManager.getInstance().getProductThumbData().getProductThumbInfos().get(position).getSeries());
 
             } else {
                 view = convertView;
@@ -102,87 +104,6 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
 
             return view;
         }
-
-        private Context mContext;
-
-        private Integer[] productNameList = {
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-                R.string.product_name, R.string.product_name,
-        };
-
-        private Integer[] productDesc1List = {
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-                R.string.product_desc1, R.string.product_desc1,
-        };
-
-        private Integer[] productDesc2List = {
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-                R.string.product_desc2, R.string.product_desc2,
-        };
-
-        private Integer[] productDesc3List = {
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-                R.string.product_desc3, R.string.product_desc3,
-        };
-
-        private Integer[] productDesc4List = {
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-                R.string.product_desc4, R.string.product_desc4,
-        };
     }
 
 }

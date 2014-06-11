@@ -10,9 +10,9 @@ import com.luyuan.pad.mberp.util.RequestManager;
 
 public class MainApplication extends Application {
 
-    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
+    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 20;
     private static int DISK_IMAGECACHE_QUALITY = 100;
-    private static CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = CompressFormat.PNG;
+    private static CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = CompressFormat.JPEG;
 
     @Override
     public void onCreate() {

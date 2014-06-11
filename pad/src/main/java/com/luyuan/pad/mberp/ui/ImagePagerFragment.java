@@ -15,11 +15,12 @@ import com.luyuan.pad.mberp.util.DepthPageTransformer;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class ImagePagerFragment extends Fragment {
 
-    private String imageType;
     private int imageNum;
+    private ArrayList<String> slideUrlArraryList;
 
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
@@ -31,8 +32,8 @@ public class ImagePagerFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            imageType = args.getString(GlobalConstantValues.PARAM_IMAGE_TYPE);
             imageNum = args.getInt(GlobalConstantValues.PARAM_IMAGE_NUM);
+            slideUrlArraryList = args.getStringArrayList(GlobalConstantValues.PARAM_IMAGE_TYPE);
         }
 
         pager = (ViewPager) rootView.findViewById(R.id.image_pager);
@@ -50,7 +51,7 @@ public class ImagePagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ImageSlideFragment.create(position, imageType);
+            return ImageSlideFragment.create(position, slideUrlArraryList.get(position));
         }
 
         @Override

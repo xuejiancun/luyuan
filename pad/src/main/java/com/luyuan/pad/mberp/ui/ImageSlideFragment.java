@@ -41,8 +41,9 @@ public class ImageSlideFragment extends Fragment {
         View view = (View) inflater.inflate(R.layout.fragment_image_slide, null);
 
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
-        // TODO set default image && not null condition
-        imageView.setErrorImageResId(R.drawable.no_image);
+        // TODO set error image && not null condition
+        imageView.setDefaultImageResId(R.drawable.no_image);
+//        imageView.setErrorImageResId(R.drawable.no_image);
         if (imageType.equals(GlobalConstantValues.IMAGE_POPULAR_CAR)) {
             imageView.setImageUrl(ImageDownloadManager.getInstance().getPopularCarData().getPopularCarSlides().get(getImageIndex()).getUrl(),
                     ImageCacheManager.getInstance().getImageLoader());

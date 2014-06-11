@@ -9,8 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.model.CarAppearanceSlide;
+import com.luyuan.pad.mberp.model.ProductDetailData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
+import com.luyuan.pad.mberp.util.GsonRequest;
+import com.luyuan.pad.mberp.util.RequestManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,6 +26,10 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
+    private String model;
+    private ProductDetailData productDetailData;
+    private ArrayList<String> carAppearanceArrayList = new ArrayList<String>();
+
     private int seletedIndex;
 
     @Override
@@ -26,6 +37,13 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_product_detail, null);
 
         initTab(view);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
+            fetchProductDetailData();
+        }
+
         clickCarAppearanceTab();
 
         return view;
@@ -92,20 +110,20 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private void clickCarAppearanceTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_APPERANCE, 7);
+        rePlaceTabContentForSlide(imagePagerFragment, carAppearanceArrayList);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickCarDetailTab() {
-        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_DETAIL, 7);
-        changeTabBackStyle(tabLayoutList, 2);
+//        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+//        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_DETAIL, 7);
+//        changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickCarColorTab() {
-        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_COLOR, 7);
-        changeTabBackStyle(tabLayoutList, 3);
+//        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+//        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_COLOR, 7);
+//        changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickCarTechTab() {
@@ -138,12 +156,11 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         fragmentTransaction.commit();
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+    private void rePlaceTabContentForSlide(Fragment fragment, ArrayList<String> urls) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
+        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -159,6 +176,32 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
                 layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
             }
         }
+    }
+
+    public void fetchProductDetailData() {
+        GsonRequest gsonObjRequest = new GsonRequest<ProductDetailData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_THUMB_LUXURY,
+                ProductDetailData.class, new Response.Listener<ProductDetailData>() {
+            @Override
+            public void onResponse(ProductDetailData response) {
+                productDetailData = response;
+                getCarAppearanceArrayList();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
+    }
+
+    public ArrayList<String> getCarAppearanceArrayList() {
+        ArrayList<String> result = new ArrayList<String>();
+        for (CarAppearanceSlide carAppearanceSlide : productDetailData.getCarAppearanceSlides()) {
+            result.add(carAppearanceSlide.getUrl());
+        }
+        return result;
     }
 
     @Override

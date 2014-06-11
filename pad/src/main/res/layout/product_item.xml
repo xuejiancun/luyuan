@@ -13,7 +13,7 @@
         android:background="#CCCCCC" />
 
     <TextView
-        android:id="@+id/textview_product_list_name"
+        android:id="@+id/textview_product_list_info_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -30,7 +30,7 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textview_product_list_desc1"
+                android:id="@+id/textview_product_list_info_model"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -39,7 +39,7 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textview_product_list_desc2"
+                android:id="@+id/textview_product_list_info_battery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -48,7 +48,7 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textview_product_list_desc3"
+                android:id="@+id/textview_product_list_info_endurance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -57,7 +57,7 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textview_product_list_desc4"
+                android:id="@+id/textview_product_list_info_series"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
