@@ -88,7 +88,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
 
     private void clickHonorTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_BRAND_HONOR, 5);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_BRAND_HONOR);
         changeTabBackStyle(tabLayoutList, 3);
     }
 
@@ -98,18 +98,11 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         changeTabBackStyle(tabLayoutList, 4);
     }
 
-    private void rePlaceTabContent(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content, fragment);
-        fragmentTransaction.commit();
-    }
-
-    private void rePlaceTabContentForSlide(Fragment fragment, String type, int num) {
+    private void rePlaceTabContentForSlide(Fragment fragment, String api) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_IMAGE_TYPE, type);
-        args.putInt(GlobalConstantValues.PARAM_IMAGE_NUM, num);
+        args.putString(GlobalConstantValues.PARAM_API_URL, api);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -120,7 +113,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_URL, url);
+        args.putString(GlobalConstantValues.PARAM_WEBVIEW_URL, url);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

@@ -8,17 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.model.TechImageData;
-import com.luyuan.pad.mberp.model.TechImageSlide;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
-import com.luyuan.pad.mberp.util.GsonRequest;
-import com.luyuan.pad.mberp.util.RequestManager;
-
-import java.util.ArrayList;
 
 public class TechMainFragment extends Fragment implements View.OnClickListener {
 
@@ -71,46 +62,21 @@ public class TechMainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_tech_main_page_tech1:
-                GsonRequest gsonObjRequest = new GsonRequest<TechImageData>(Request.Method.GET, GlobalConstantValues.API_TECH_IMAGE,
-                        TechImageData.class, new Response.Listener<TechImageData>() {
-                    @Override
-                    public void onResponse(TechImageData response) {
-                        if (response != null && response.getSuccess().equals("true")) {
-                            ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-                            rePlaceTabContentForSlide(imagePagerFragment, getTechImageUrls(response));
-                        } else {
-                            // TODO show another fragment
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                }
-                );
-
-                RequestManager.getRequestQueue().add(gsonObjRequest);
+                ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+                rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_TECH_IMAGE);
                 break;
         }
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, ArrayList<String> urls) {
+    private void rePlaceTabContentForSlide(Fragment fragment, String api) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
+        args.putString(GlobalConstantValues.PARAM_API_URL, api);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
-    }
-
-    public ArrayList<String> getTechImageUrls(TechImageData techImageData) {
-        ArrayList<String> result = new ArrayList<String>();
-        for (TechImageSlide techImageSlide : techImageData.getTechImageSlides()) {
-            result.add(techImageSlide.getUrl());
-        }
-        return result;
     }
 
 }

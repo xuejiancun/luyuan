@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.luyuan.pad.mberp.model.BrandHonorData;
+import com.luyuan.pad.mberp.model.ImagePager;
 import com.luyuan.pad.mberp.model.ProductThumbData;
 
 public class ImageDownloadManager {
@@ -45,11 +45,11 @@ public class ImageDownloadManager {
         return mInstance;
     }
 
-    private BrandHonorData brandHonorData;
+    private ImagePager imagePager;
     private ProductThumbData productThumbData;
 
-    public BrandHonorData getBrandHonorData() {
-        return brandHonorData;
+    public ImagePager getImagePager() {
+        return imagePager;
     }
 
     public ProductThumbData getProductThumbData() {
@@ -73,32 +73,15 @@ public class ImageDownloadManager {
     }
 
     public void fetchBrandHonorData() {
-        GsonRequest gsonObjRequest = new GsonRequest<BrandHonorData>(Request.Method.GET, GlobalConstantValues.API_BRAND_HONOR,
-                BrandHonorData.class, new Response.Listener<BrandHonorData>() {
+        GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, GlobalConstantValues.API_BRAND_HONOR,
+                ImagePager.class, new Response.Listener<ImagePager>() {
             @Override
-            public void onResponse(BrandHonorData response) {
-                brandHonorData = response;
-//                for (BrandHonorSlide brandHonorSlide : brandHonorData.getBrandHonorSlides()) {
+            public void onResponse(ImagePager response) {
+                imagePager = response;
+//                for (ImageSlide brandHonorSlide : imagePager.getImageSlides()) {
 //                    ImageLoader imageLoader = ImageCacheManager.getInstance().getImageLoader();
 //                    imageLoader.get(brandHonorSlide.getUrl(), ImageLoader.getImageListener(imageView, R.drawable.no_image, R.drawable.no_image));
 //                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }
-        );
-
-        RequestManager.getRequestQueue().add(gsonObjRequest);
-    }
-
-    public void fetchProductThumbData() {
-        GsonRequest gsonObjRequest = new GsonRequest<ProductThumbData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_THUMB_LUXURY,
-                ProductThumbData.class, new Response.Listener<ProductThumbData>() {
-            @Override
-            public void onResponse(ProductThumbData response) {
-                productThumbData = response;
             }
         }, new Response.ErrorListener() {
             @Override

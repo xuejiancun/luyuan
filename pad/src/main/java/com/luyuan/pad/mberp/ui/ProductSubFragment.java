@@ -23,7 +23,7 @@ import com.luyuan.pad.mberp.util.GsonRequest;
 import com.luyuan.pad.mberp.util.ImageCacheManager;
 import com.luyuan.pad.mberp.util.RequestManager;
 
-public class ProductSubLuxuryFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ProductSubFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
     private ProductThumbData productThumbData;
@@ -34,10 +34,10 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
         super.onCreate(savedInstanceState);
 
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_product_sub_luxury, null);
+        View view = inflater.inflate(R.layout.fragment_product_sub, null);
 
-        gridView = (GridView) view.findViewById(R.id.gridview_product_list_luxury);
-        fetchProductThumbData();
+        gridView = (GridView) view.findViewById(R.id.gridview_product_list);
+        fetchProductThumbData(getArguments().getString(GlobalConstantValues.PARAM_API_URL));
 
         return view;
     }
@@ -103,8 +103,8 @@ public class ProductSubLuxuryFragment extends Fragment implements AdapterView.On
         }
     }
 
-    public void fetchProductThumbData() {
-        GsonRequest gsonObjRequest = new GsonRequest<ProductThumbData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_THUMB_LUXURY,
+    public void fetchProductThumbData(String url) {
+        GsonRequest gsonObjRequest = new GsonRequest<ProductThumbData>(Request.Method.GET, url,
                 ProductThumbData.class, new Response.Listener<ProductThumbData>() {
             @Override
             public void onResponse(ProductThumbData response) {

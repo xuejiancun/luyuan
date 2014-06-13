@@ -44,22 +44,22 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_product_main_page_luxury:
-                onClickChooseCar(GlobalConstantValues.IMAGE_LUXURY_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_LUXURY_CAR);
                 break;
             case R.id.button_product_main_page_simple:
-                onClickChooseCar(GlobalConstantValues.IMAGE_SIMPLE_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_SIMPLE_CAR);
                 break;
             case R.id.button_product_main_page_standard:
-                onClickChooseCar(GlobalConstantValues.IMAGE_STANDARD_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_STANDARD_CAR);
                 break;
             case R.id.button_product_main_page_battery:
-                onClickChooseCar(GlobalConstantValues.IMAGE_BATTERY_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_BATTERY_CAR);
                 break;
             case R.id.button_product_main_page_replacewalk:
-                onClickChooseCar(GlobalConstantValues.IMAGE_REPLACEWALK_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_REPLACEWALK_CAR);
                 break;
             case R.id.button_product_main_page_special:
-                onClickChooseCar(GlobalConstantValues.IMAGE_SPECIAL_CAR);
+                onClickChooseCar(GlobalConstantValues.TAB_SPECIAL_CAR);
                 break;
         }
     }

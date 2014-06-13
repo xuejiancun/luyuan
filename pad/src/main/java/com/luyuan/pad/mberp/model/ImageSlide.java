@@ -1,6 +1,6 @@
 package com.luyuan.pad.mberp.model;
 
-public class BrandHonorSlide {
+public class ImageSlide {
 
     private String url;
 

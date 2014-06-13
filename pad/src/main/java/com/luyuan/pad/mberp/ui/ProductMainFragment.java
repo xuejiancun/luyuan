@@ -28,21 +28,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         initTab(view);
 
         String param = getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE);
-        if (param.equals(GlobalConstantValues.IMAGE_LUXURY_CAR)) {
-            clickLuxuryTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_SIMPLE_CAR)) {
-            clickSimpleTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_STANDARD_CAR)) {
-            clickStandardTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_BATTERY_CAR)) {
-            clickBatteryTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_REPLACEWALK_CAR)) {
-            clickReplacewalkTab();
-        } else if (param.equals(GlobalConstantValues.IMAGE_SPECIAL_CAR)) {
-            clickSpecialTab();
-        } else {
-            clickLuxuryTab();
-        }
+        clickTab(param);
 
         return view;
     }
@@ -62,6 +48,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         tab_replacewalk_layout.setOnClickListener(this);
         tab_special_layout.setOnClickListener(this);
 
+        // Plz do not change the order
         tabLayoutList.add(tab_luxury_layout);
         tabLayoutList.add(tab_simple_layout);
         tabLayoutList.add(tab_standard_layout);
@@ -75,82 +62,88 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.tab_layout_product_luxury:
                 if (seletedIndex != 1) {
-                    clickLuxuryTab();
+                    clickTab(GlobalConstantValues.TAB_LUXURY_CAR);
                 }
                 break;
             case R.id.tab_layout_product_simple:
                 if (seletedIndex != 2) {
-                    clickSimpleTab();
+                    clickTab(GlobalConstantValues.TAB_SIMPLE_CAR);
                 }
                 break;
             case R.id.tab_layout_product_standard:
                 if (seletedIndex != 3) {
-                    clickStandardTab();
+                    clickTab(GlobalConstantValues.TAB_STANDARD_CAR);
                 }
                 break;
             case R.id.tab_layout_product_battery:
                 if (seletedIndex != 4) {
-                    clickBatteryTab();
+                    clickTab(GlobalConstantValues.TAB_BATTERY_CAR);
                 }
                 break;
             case R.id.tab_layout_product_replacewalk:
                 if (seletedIndex != 5) {
-                    clickReplacewalkTab();
+                    clickTab(GlobalConstantValues.TAB_REPLACEWALK_CAR);
                 }
                 break;
             case R.id.tab_layout_product_special:
                 if (seletedIndex != 6) {
-                    clickSpecialTab();
+                    clickTab(GlobalConstantValues.TAB_SPECIAL_CAR);
                 }
                 break;
         }
     }
 
-    private void clickLuxuryTab() {
-        ProductSubLuxuryFragment productSubLuxuryFragment = new ProductSubLuxuryFragment();
-        rePlaceTabContent(productSubLuxuryFragment, GlobalConstantValues.IMAGE_LUXURY_CAR);
-        changeTabBackStyle(tabLayoutList, 1);
-    }
-
-    private void clickSimpleTab() {
-        ProductSubSimpleFragment productSubSimpleFragment = new ProductSubSimpleFragment();
-        rePlaceTabContent(productSubSimpleFragment, GlobalConstantValues.IMAGE_SIMPLE_CAR);
-        changeTabBackStyle(tabLayoutList, 2);
-    }
-
-    private void clickStandardTab() {
-        ProductSubStandardFragment productSubStandardFragment = new ProductSubStandardFragment();
-        rePlaceTabContent(productSubStandardFragment, GlobalConstantValues.IMAGE_STANDARD_CAR);
-        changeTabBackStyle(tabLayoutList, 3);
-    }
-
-    private void clickBatteryTab() {
-        ProductSubBatteryFragment productSubBatteryFragment = new ProductSubBatteryFragment();
-        rePlaceTabContent(productSubBatteryFragment, GlobalConstantValues.IMAGE_BATTERY_CAR);
-        changeTabBackStyle(tabLayoutList, 4);
-    }
-
-    private void clickReplacewalkTab() {
-        ProductSubReplacewalkFragment productSubReplacewalkFragment = new ProductSubReplacewalkFragment();
-        rePlaceTabContent(productSubReplacewalkFragment, GlobalConstantValues.IMAGE_REPLACEWALK_CAR);
-        changeTabBackStyle(tabLayoutList, 5);
-    }
-
-    private void clickSpecialTab() {
-        ProductSubSpecialFragment productSubSpecialFragment = new ProductSubSpecialFragment();
-        rePlaceTabContent(productSubSpecialFragment, GlobalConstantValues.IMAGE_SPECIAL_CAR);
-        changeTabBackStyle(tabLayoutList, 6);
+    private void clickTab(String type) {
+        ProductSubFragment productSubFragment = new ProductSubFragment();
+        rePlaceTabContent(productSubFragment, type);
+        changeTabBackStyle(tabLayoutList, getIndex(type));
     }
 
     private void rePlaceTabContent(Fragment fragment, String type) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
+        args.putString(GlobalConstantValues.PARAM_API_URL, getApiUrl(type));
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
+    }
+
+    private int getIndex(String type) {
+        int result = 1;
+        if (type.equals(GlobalConstantValues.TAB_LUXURY_CAR)) {
+            result = 1;
+        } else if (type.equals(GlobalConstantValues.TAB_SIMPLE_CAR)) {
+            result = 2;
+        } else if (type.equals(GlobalConstantValues.TAB_STANDARD_CAR)) {
+            result = 3;
+        } else if (type.equals(GlobalConstantValues.TAB_BATTERY_CAR)) {
+            result = 4;
+        } else if (type.equals(GlobalConstantValues.TAB_REPLACEWALK_CAR)) {
+            result = 5;
+        } else if (type.equals(GlobalConstantValues.TAB_SPECIAL_CAR)) {
+            result = 6;
+        }
+        return result;
+    }
+
+    private String getApiUrl(String type) {
+        String result = GlobalConstantValues.API_PRODUCT_THUMB_LUXURY;
+        if (type.equals(GlobalConstantValues.TAB_LUXURY_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_LUXURY;
+        } else if (type.equals(GlobalConstantValues.TAB_SIMPLE_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_SIMPLE;
+        } else if (type.equals(GlobalConstantValues.TAB_STANDARD_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_STANDARD;
+        } else if (type.equals(GlobalConstantValues.TAB_BATTERY_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_BATTERY;
+        } else if (type.equals(GlobalConstantValues.TAB_REPLACEWALK_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_REPLACEWALK;
+        } else if (type.equals(GlobalConstantValues.TAB_SPECIAL_CAR)) {
+            result = GlobalConstantValues.API_PRODUCT_THUMB_SPECIAL;
+        }
+        return result;
     }
 
     private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {

@@ -10,26 +10,17 @@ public class GlobalConstantValues {
 
     public static final String PARAM_CAR_TYPE = "PARAM_CAR_TYPE";
     public static final String PARAM_CAR_MODEL = "PARAM_CAR_MODEL";
-    public static final String PARAM_URL = "PARAM_URL";
-    public static final String PARAM_IMAGE_TYPE = "PARAM_IMAGE_TYPE";
-    public static final String PARAM_IMAGE_NUM = "PARAM_IMAGE_NUM";
+    public static final String PARAM_WEBVIEW_URL = "PARAM_WEBVIEW_URL";
+    public static final String PARAM_API_URL = "PARAM_API_URL";
     public static final String PARAM_IMAGE_INDEX = "PARAM_IMAGE_INDEX";
-    public static final String PARAM_IMAGE_URLS = "PARAM_IMAGE_URLS";
     public static final String PARAM_IMAGE_URL = "PARAM_IMAGE_URL";
 
-    public static final String IMAGE_LUXURY_CAR = "IMAGE_LUXURY_CAR";
-    public static final String IMAGE_SIMPLE_CAR = "IMAGE_SIMPLE_CAR";
-    public static final String IMAGE_STANDARD_CAR = "IMAGE_STANDARD_CAR";
-    public static final String IMAGE_BATTERY_CAR = "IMAGE_BATTERY_CAR";
-    public static final String IMAGE_REPLACEWALK_CAR = "IMAGE_REPLACEWALK_CAR";
-    public static final String IMAGE_SPECIAL_CAR = "IMAGE_SPECIAL_CAR";
-
-    public static final String IMAGE_POPULAR_CAR = "IMAGE_POPULAR_CAR";
-    public static final String IMAGE_BRAND_HONOR = "IMAGE_BRAND_HONOR";
-    public static final String IMAGE_TECH_IMAGE = "IMAGE_TECH_IMAGE";
-    public static final String IMAGE_CAR_APPERANCE = "IMAGE_CAR_APPERANCE";
-    public static final String IMAGE_CAR_DETAIL = "IMAGE_CAR_DETAIL";
-    public static final String IMAGE_CAR_COLOR = "IMAGE_CAR_COLOR";
+    public static final String TAB_LUXURY_CAR = "TAB_LUXURY_CAR";
+    public static final String TAB_SIMPLE_CAR = "TAB_SIMPLE_CAR";
+    public static final String TAB_STANDARD_CAR = "TAB_STANDARD_CAR";
+    public static final String TAB_BATTERY_CAR = "TAB_BATTERY_CAR";
+    public static final String TAB_REPLACEWALK_CAR = "TAB_REPLACEWALK_CAR";
+    public static final String TAB_SPECIAL_CAR = "TAB_SPECIAL_CAR";
 
     public static final String TAB_POPULAR_CAR = "TAB_POPULAR_CAR";
     public static final String TAB_PRODUCT_APPRECIATE = "TAB_PRODUCT_APPRECIATE";
@@ -44,7 +35,7 @@ public class GlobalConstantValues {
 
     public static final String API_POPULAR_CAR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=popularslide";
     public static final String API_TECH_IMAGE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techslide";
-    public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=honorslide";
+    public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=brandhonorslides";
 
     public static final String API_PRODUCT_THUMB_LUXURY = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=22";
     public static final String API_PRODUCT_THUMB_SIMPLE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=23";

@@ -160,7 +160,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
+       // args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
