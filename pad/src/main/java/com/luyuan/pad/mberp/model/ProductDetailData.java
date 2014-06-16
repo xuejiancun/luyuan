@@ -19,9 +19,6 @@ public class ProductDetailData {
     private String enginespec;
     private String batteryspec;
     private String charger;
-    private List<CarAppearanceSlide> carAppearanceSlides = new ArrayList<CarAppearanceSlide>();
-    private List<CarDetailSlide> carDetailSlides = new ArrayList<CarDetailSlide>();
-    private List<CarColorSlide> carColorSlides = new ArrayList<CarColorSlide>();
     private List<CarEquipmentSlide> carEquipmentSlides = new ArrayList<CarEquipmentSlide>();
 
     public String getSuccess() {
@@ -134,30 +131,6 @@ public class ProductDetailData {
 
     public void setCharger(String charger) {
         this.charger = charger;
-    }
-
-    public List<CarAppearanceSlide> getCarAppearanceSlides() {
-        return carAppearanceSlides;
-    }
-
-    public void setCarAppearanceSlides(List<CarAppearanceSlide> carAppearanceSlides) {
-        this.carAppearanceSlides = carAppearanceSlides;
-    }
-
-    public List<CarDetailSlide> getCarDetailSlides() {
-        return carDetailSlides;
-    }
-
-    public void setCarDetailSlides(List<CarDetailSlide> carDetailSlides) {
-        this.carDetailSlides = carDetailSlides;
-    }
-
-    public List<CarColorSlide> getCarColorSlides() {
-        return carColorSlides;
-    }
-
-    public void setCarColorSlides(List<CarColorSlide> carColorSlides) {
-        this.carColorSlides = carColorSlides;
     }
 
     public List<CarEquipmentSlide> getCarEquipmentSlides() {

@@ -41,12 +41,8 @@ public class ImageSlideFragment extends Fragment {
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
         imageView.setDefaultImageResId(R.drawable.loading);
         imageView.setErrorImageResId(R.drawable.error);
-        imageView.setImageUrl(url, ImageCacheManager.getInstance().getImageLoader());
+        imageView.setImageUrl(url, ImageCacheManager.getInstance().getLargeImageLoader());
         return view;
-    }
-
-    public int getIndex() {
-        return index;
     }
 
 }

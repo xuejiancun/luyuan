@@ -8,8 +8,10 @@ import com.android.volley.toolbox.ImageLoader.ImageCache;
 public class ImageCacheManager {
 
     private static ImageCacheManager mInstance;
-    private ImageLoader mImageLoader;
-    private ImageCache mImageCache;
+    private ImageLoader mLargeImageLoader;
+    private ImageLoader mSmallImageLoader;
+    private ImageCache mLargeImageCache;
+    private ImageCache mSmallImageCache;
 
     public static ImageCacheManager getInstance() {
         if (mInstance == null)
@@ -19,12 +21,18 @@ public class ImageCacheManager {
     }
 
     public void init(Context context, String uniqueName) {
-        mImageCache = new LruImageCache(context, uniqueName);
-        mImageLoader = new ImageLoader(RequestManager.getRequestQueue(), mImageCache);
+        mLargeImageCache = new LruImageCache(context, uniqueName);
+        mSmallImageCache = new BitmapLruImageCache();
+        mLargeImageLoader = new ImageLoader(RequestManager.getRequestQueue(), mLargeImageCache);
+        mSmallImageLoader = new ImageLoader(RequestManager.getRequestQueue(), mSmallImageCache);
     }
 
-    public ImageLoader getImageLoader() {
-        return mImageLoader;
+    public ImageLoader getLargeImageLoader() {
+        return mLargeImageLoader;
+    }
+
+    public ImageLoader getSmallImageLoader() {
+        return mSmallImageLoader;
     }
 
 }

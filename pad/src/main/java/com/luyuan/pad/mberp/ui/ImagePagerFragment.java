@@ -1,5 +1,7 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 
 public class ImagePagerFragment extends Fragment {
 
+    private ViewGroup rootView;
+
     private int imageNum;
     private String api;
     private ArrayList<String> urls;
@@ -36,33 +40,41 @@ public class ImagePagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_pager, null);
+        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_pager, null);
 
-        api = getArguments().getString(GlobalConstantValues.PARAM_API_URL);
+        if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
+            api = getArguments().getString(GlobalConstantValues.PARAM_API_URL);
 
-        GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, api,
-                ImagePager.class, new Response.Listener<ImagePager>() {
-            @Override
-            public void onResponse(ImagePager response) {
-                if (response != null && response.getSuccess().equals("true")) {
-                    urls = getImageUrls(response);
-                    imageNum = urls.size();
-                } else {
-                    // TODO
+            GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, api,
+                    ImagePager.class, new Response.Listener<ImagePager>() {
+                @Override
+                public void onResponse(ImagePager response) {
+                    if (response != null && response.getSuccess().equals("true")) {
+                        urls = getImageUrls(response);
+                        imageNum = urls.size();
+
+                        pager = (ViewPager) ImagePagerFragment.this.rootView.findViewById(R.id.image_pager);
+                        pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+                        pager.setAdapter(pagerAdapter);
+                        pager.setPageTransformer(true, new DepthPageTransformer());
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.fetch_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create();
+                    alertDialog.show();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        }
-        );
+            );
 
-        RequestManager.getRequestQueue().add(gsonObjRequest);
-        pager = (ViewPager) rootView.findViewById(R.id.image_pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
-        pager.setAdapter(pagerAdapter);
-        pager.setPageTransformer(true, new DepthPageTransformer());
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+        }
 
         return rootView;
     }

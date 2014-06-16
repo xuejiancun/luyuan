@@ -1,5 +1,7 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.model.CarAppearanceSlide;
 import com.luyuan.pad.mberp.model.ProductDetailData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
 import com.luyuan.pad.mberp.util.GsonRequest;
@@ -28,7 +29,6 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private String model;
     private ProductDetailData productDetailData;
-    private ArrayList<String> carAppearanceArrayList = new ArrayList<String>();
 
     private int seletedIndex;
 
@@ -110,20 +110,20 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private void clickCarAppearanceTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, carAppearanceArrayList);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_APPEARANCE + "&model=" + model);
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickCarDetailTab() {
-//        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-//        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_DETAIL, 7);
-//        changeTabBackStyle(tabLayoutList, 2);
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_DETAIL + "&model=" + model);
+        changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickCarColorTab() {
-//        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-//        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.IMAGE_CAR_COLOR, 7);
-//        changeTabBackStyle(tabLayoutList, 3);
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_COLOR + "&model=" + model);
+        changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickCarTechTab() {
@@ -156,11 +156,11 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         fragmentTransaction.commit();
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, ArrayList<String> urls) {
+    private void rePlaceTabContentForSlide(Fragment fragment, String api) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-       // args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URLS, urls);
+        args.putString(GlobalConstantValues.PARAM_API_URL, api);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -184,24 +184,21 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(ProductDetailData response) {
                 productDetailData = response;
-                getCarAppearanceArrayList();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.fetch_data_error)
+                        .setTitle(R.string.dialog_hint)
+                        .setPositiveButton(R.string.dialog_confirm, null)
+                        .create();
+                alertDialog.show();
             }
         }
         );
 
         RequestManager.getRequestQueue().add(gsonObjRequest);
-    }
-
-    public ArrayList<String> getCarAppearanceArrayList() {
-        ArrayList<String> result = new ArrayList<String>();
-        for (CarAppearanceSlide carAppearanceSlide : productDetailData.getCarAppearanceSlides()) {
-            result.add(carAppearanceSlide.getUrl());
-        }
-        return result;
     }
 
     @Override

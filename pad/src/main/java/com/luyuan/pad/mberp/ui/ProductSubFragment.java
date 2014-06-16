@@ -1,5 +1,7 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +39,9 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
         View view = inflater.inflate(R.layout.fragment_product_sub, null);
 
         gridView = (GridView) view.findViewById(R.id.gridview_product_list);
-        fetchProductThumbData(getArguments().getString(GlobalConstantValues.PARAM_API_URL));
+        if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
+            fetchProductThumbData(getArguments().getString(GlobalConstantValues.PARAM_API_URL));
+        }
 
         return view;
     }
@@ -82,7 +86,7 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
             NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
             imageView.setDefaultImageResId(R.drawable.loading);
             imageView.setErrorImageResId(R.drawable.error);
-            imageView.setImageUrl(productThumbData.getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getImageLoader());
+            imageView.setImageUrl(productThumbData.getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
 
             TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_info_name);
             textViewName.setText(productThumbData.getProductThumbInfos().get(position).getName());
@@ -110,11 +114,17 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
             public void onResponse(ProductThumbData response) {
                 productThumbData = response;
                 gridView.setAdapter(new ImageAdapter(getActivity()));
-                // gridView.setOnItemClickListener(ProductSubLuxuryFragment.this);
+                gridView.setOnItemClickListener(ProductSubFragment.this);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.fetch_data_error)
+                        .setTitle(R.string.dialog_hint)
+                        .setPositiveButton(R.string.dialog_confirm, null)
+                        .create();
+                alertDialog.show();
             }
         }
         );

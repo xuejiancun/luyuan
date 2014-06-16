@@ -21,11 +21,10 @@
     <string name="car_equipment">整车配置</string>
     <string name="back">返回</string>
 
-    <string name="product_name">MVA-CS6020-G1</string>
-    <string name="product_desc1">电池：60V20Ah</string>
-    <string name="product_desc2">电机：800W</string>
-    <string name="product_desc3">扭矩：80N.M</string>
-    <string name="product_desc4">续航：70KM</string>
+    <string name="info_model">型号：</string>
+    <string name="info_battery">电池：</string>
+    <string name="info_endurance">续航：</string>
+    <string name="info_series">系列：</string>
 
     <string name="arrivaldate">上市时间：</string>
     <string name="footsteplength">脚踏板长度：</string>
@@ -49,5 +48,10 @@
     <string name="band_history">品牌历史</string>
     <string name="band_honor">品牌荣誉</string>
     <string name="latest_news">最新资讯</string>
+
+    <string name="network_disconnected">您的网络链接存在问题，请保证网络通畅以后，再重新尝试。</string>
+    <string name="fetch_data_error">应用程序读取数据失败，请稍后再试。</string>
+    <string name="dialog_hint">提示</string>
+    <string name="dialog_confirm">确定</string>
 
 </resources>

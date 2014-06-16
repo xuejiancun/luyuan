@@ -58,7 +58,7 @@ public class ProductDetailEquipmentFragment extends Fragment {
                 NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail_equipment);
                 imageView.setDefaultImageResId(R.drawable.loading);
                 imageView.setErrorImageResId(R.drawable.error);
-                // imageView.setImageUrl(ImageDownloadManager.getInstance().getProductEquipmentUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
+                // imageView.setImageUrl(ImageDownloadManager.getInstance().getProductEquipmentUrlList()[position], ImageCacheManager.getInstance().getLargeImageLoader());
 
                 TextView textViewName = (TextView) view.findViewById(R.id.textview_product_detail_equipment);
                 textViewName.setText(productNameList[position]);

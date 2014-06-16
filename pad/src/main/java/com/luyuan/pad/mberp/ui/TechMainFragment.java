@@ -60,12 +60,8 @@ public class TechMainFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_tech_main_page_tech1:
-                ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-                rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_TECH_IMAGE);
-                break;
-        }
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_TECH_IMAGE);
     }
 
     private void rePlaceTabContentForSlide(Fragment fragment, String api) {

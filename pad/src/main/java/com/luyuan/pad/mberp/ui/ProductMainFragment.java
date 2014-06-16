@@ -96,7 +96,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
     private void clickTab(String type) {
         ProductSubFragment productSubFragment = new ProductSubFragment();
         rePlaceTabContent(productSubFragment, type);
-        changeTabBackStyle(tabLayoutList, getIndex(type));
+        changeTabBackStyle(getIndex(type));
     }
 
     private void rePlaceTabContent(Fragment fragment, String type) {
@@ -146,13 +146,13 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         return result;
     }
 
-    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, int index) {
+    private void changeTabBackStyle(int index) {
         seletedIndex = index;
-        for (int i = 0; i < layoutList.size(); i++) {
+        for (int i = 0; i < tabLayoutList.size(); i++) {
             if (i == index - 1) {
-                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_SELECTED));
+                tabLayoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_SELECTED));
             } else {
-                layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
+                tabLayoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
             }
         }
     }

@@ -16,7 +16,6 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.luyuan.pad.mberp.R;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
@@ -79,7 +78,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this, "Searching for: " + query + "...", Toast.LENGTH_SHORT).show();
+        ProductSubFragment productSubFragment = new ProductSubFragment();
+        rePlaceTabContentForSlide(productSubFragment, GlobalConstantValues.API_SEARCH_DATA + "&query=" + query);
+        changeTabBackStyle(3);
+
         return true;
     }
 
@@ -148,25 +150,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void clickPopularTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
         rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_POPULAR_CAR);
-        changeTabBackStyle(tabLayoutList, tabTextViewList, 2);
+        changeTabBackStyle(2);
     }
 
     private void clickProductTab() {
         ProductHomeFragment productHomeFragment = new ProductHomeFragment();
         rePlaceTabContent(productHomeFragment);
-        changeTabBackStyle(tabLayoutList, tabTextViewList, 3);
+        changeTabBackStyle(3);
     }
 
     private void clickTechTab() {
         TechMainFragment techMainFragment = new TechMainFragment();
         rePlaceTabContent(techMainFragment);
-        changeTabBackStyle(tabLayoutList, tabTextViewList, 4);
+        changeTabBackStyle(4);
     }
 
     private void clickLuyuanTab() {
         LuyuanMainFragment luyuanMainFragment = new LuyuanMainFragment();
         rePlaceTabContent(luyuanMainFragment);
-        changeTabBackStyle(tabLayoutList, tabTextViewList, 5);
+        changeTabBackStyle(5);
     }
 
     private void rePlaceTabContent(Fragment fragment) {
@@ -186,15 +188,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
     }
 
-    private void changeTabBackStyle(ArrayList<LinearLayout> layoutList, ArrayList<TextView> textviewList, int index) {
+    private void changeTabBackStyle(int index) {
         seletedIndex = index;
-        for (int i = 0; i < layoutList.size(); i++) {
+        for (int i = 0; i < tabLayoutList.size(); i++) {
             if (i == index - 1) {
-                layoutList.get(i).setSelected(true);
-                textviewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_SELECTED));
+                tabLayoutList.get(i).setSelected(true);
+                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_SELECTED));
             } else {
-                layoutList.get(i).setSelected(false);
-                textviewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
+                tabLayoutList.get(i).setSelected(false);
+                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
     }

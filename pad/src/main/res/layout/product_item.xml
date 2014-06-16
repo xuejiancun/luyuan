@@ -30,6 +30,11 @@
         <TableRow>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_model" />
+
+            <TextView
                 android:id="@+id/textview_product_list_info_model"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -37,6 +42,11 @@
         </TableRow>
 
         <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_battery" />
 
             <TextView
                 android:id="@+id/textview_product_list_info_battery"
@@ -48,6 +58,11 @@
         <TableRow>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_endurance" />
+
+            <TextView
                 android:id="@+id/textview_product_list_info_endurance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -55,6 +70,11 @@
         </TableRow>
 
         <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_series" />
 
             <TextView
                 android:id="@+id/textview_product_list_info_series"

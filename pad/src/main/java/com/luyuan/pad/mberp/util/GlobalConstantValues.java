@@ -1,5 +1,13 @@
 package com.luyuan.pad.mberp.util;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.luyuan.pad.mberp.R;
+
 public class GlobalConstantValues {
 
     public static final String COLOR_TOP_TAB_SELECTED = "#4C7F20";
@@ -44,6 +52,35 @@ public class GlobalConstantValues {
     public static final String API_PRODUCT_THUMB_REPLACEWALK = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=26";
     public static final String API_PRODUCT_THUMB_SPECIAL = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=27";
 
-    public static final String API_PRODUCT_DETAIL_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productdetail";
+    public static final String API_PRODUCT_DETAIL = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productdetail";
+    public static final String API_CAR_APPEARANCE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=carappearance";
+    public static final String API_CAR_DETAIL = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=cardetail";
+    public static final String API_CAR_COLOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=carcolor";
+    public static final String API_CAR_EQUIPMENT = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=carequipment";
+
+    public static final String API_SEARCH_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=searchdata";
+
+
+    private static boolean wifiConnected = false;
+    private static boolean mobileConnected = false;
+
+    public static boolean checkNetworkConnection(Context context) {
+        boolean result = true;
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+        if (activeInfo != null && activeInfo.isConnected()) {
+            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(context)
+                    .setMessage(R.string.network_disconnected)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
+            result = false;
+        }
+        return result;
+    }
 
 }

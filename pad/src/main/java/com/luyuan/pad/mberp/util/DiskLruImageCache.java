@@ -20,15 +20,16 @@ public class DiskLruImageCache implements ImageCache {
 
     private DiskLruCache mDiskCache;
     private CompressFormat mCompressFormat = CompressFormat.JPEG;
+    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 80;
     private static int IO_BUFFER_SIZE = 8 * 1024;
     private int mCompressQuality = 70;
     private static final int APP_VERSION = 1;
     private static final int VALUE_COUNT = 1;
 
-    public DiskLruImageCache(Context context, String uniqueName, int diskCacheSize) {
+    public DiskLruImageCache(Context context, String uniqueName) {
         try {
             final File diskCacheDir = getDiskCacheDir(context, uniqueName);
-            mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, diskCacheSize);
+            mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, DISK_IMAGECACHE_SIZE);
         } catch (IOException e) {
             e.printStackTrace();
         }
