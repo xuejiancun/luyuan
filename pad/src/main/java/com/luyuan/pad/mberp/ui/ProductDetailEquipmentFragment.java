@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.util.ImageCacheManager;
-import com.luyuan.pad.mberp.util.ImageDownloadManager;
 
 public class ProductDetailEquipmentFragment extends Fragment {
 
@@ -39,7 +37,7 @@ public class ProductDetailEquipmentFragment extends Fragment {
         }
 
         public int getCount() {
-            return ImageDownloadManager.getInstance().getProductEquipmentUrlList().length;
+            return 4;
         }
 
         public Object getItem(int position) {
@@ -58,8 +56,9 @@ public class ProductDetailEquipmentFragment extends Fragment {
                 view = layoutInflater.inflate(R.layout.equipment_item, null);
 
                 NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail_equipment);
-                imageView.setErrorImageResId(R.drawable.no_image);
-                imageView.setImageUrl(ImageDownloadManager.getInstance().getProductEquipmentUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
+                imageView.setDefaultImageResId(R.drawable.loading);
+                imageView.setErrorImageResId(R.drawable.error);
+                // imageView.setImageUrl(ImageDownloadManager.getInstance().getProductEquipmentUrlList()[position], ImageCacheManager.getInstance().getImageLoader());
 
                 TextView textViewName = (TextView) view.findViewById(R.id.textview_product_detail_equipment);
                 textViewName.setText(productNameList[position]);

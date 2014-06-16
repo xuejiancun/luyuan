@@ -16,10 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Implementation of DiskLruCache by Jake Wharton
- * modified from http://stackoverflow.com/questions/10185898/using-disklrucache-in-android-4-0-does-not-provide-for-opencache-method
- */
 public class DiskLruImageCache implements ImageCache {
 
     private DiskLruCache mDiskCache;
@@ -29,20 +25,16 @@ public class DiskLruImageCache implements ImageCache {
     private static final int APP_VERSION = 1;
     private static final int VALUE_COUNT = 1;
 
-    public DiskLruImageCache(Context context, String uniqueName, int diskCacheSize,
-                             CompressFormat compressFormat, int quality) {
+    public DiskLruImageCache(Context context, String uniqueName, int diskCacheSize) {
         try {
             final File diskCacheDir = getDiskCacheDir(context, uniqueName);
             mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, diskCacheSize);
-            mCompressFormat = compressFormat;
-            mCompressQuality = quality;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor)
-            throws IOException, FileNotFoundException {
+    private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor) throws IOException, FileNotFoundException {
         OutputStream out = null;
         try {
             out = new BufferedOutputStream(editor.newOutputStream(0), IO_BUFFER_SIZE);
@@ -55,14 +47,12 @@ public class DiskLruImageCache implements ImageCache {
     }
 
     private File getDiskCacheDir(Context context, String uniqueName) {
-
         final String cachePath = context.getCacheDir().getPath();
         return new File(cachePath + File.separator + uniqueName);
     }
 
     @Override
     public void putBitmap(String key, Bitmap data) {
-
         DiskLruCache.Editor editor = null;
         try {
             editor = mDiskCache.edit(key);
@@ -84,12 +74,10 @@ public class DiskLruImageCache implements ImageCache {
             } catch (IOException ignored) {
             }
         }
-
     }
 
     @Override
     public Bitmap getBitmap(String key) {
-
         Bitmap bitmap = null;
         DiskLruCache.Snapshot snapshot = null;
         try {
@@ -111,13 +99,10 @@ public class DiskLruImageCache implements ImageCache {
                 snapshot.close();
             }
         }
-
         return bitmap;
-
     }
 
     public boolean containsKey(String key) {
-
         boolean contained = false;
         DiskLruCache.Snapshot snapshot = null;
         try {
@@ -130,9 +115,7 @@ public class DiskLruImageCache implements ImageCache {
                 snapshot.close();
             }
         }
-
         return contained;
-
     }
 
     public void clearCache() {

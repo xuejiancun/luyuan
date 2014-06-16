@@ -39,9 +39,8 @@ public class ImageSlideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_image_slide, null);
         NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_slide);
-        // TODO set error image && not null condition
-        imageView.setDefaultImageResId(R.drawable.no_image);
-//        imageView.setErrorImageResId(R.drawable.no_image);
+        imageView.setDefaultImageResId(R.drawable.loading);
+        imageView.setErrorImageResId(R.drawable.error);
         imageView.setImageUrl(url, ImageCacheManager.getInstance().getImageLoader());
         return view;
     }

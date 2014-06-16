@@ -9,15 +9,13 @@ public class LruImageCache implements ImageLoader.ImageCache {
 
     private static int RAM_IMAGECACHE_SIZE = 1024 * 1024 * 40;
     private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 80;
-    private static int DISK_IMAGECACHE_QUALITY = 100;
-    private static Bitmap.CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = Bitmap.CompressFormat.JPEG;
 
     private BitmapLruImageCache bitmapLruImageCache;
     private DiskLruImageCache diskLruImageCache;
 
     public LruImageCache(Context context, String uniqueName) {
         bitmapLruImageCache = new BitmapLruImageCache(RAM_IMAGECACHE_SIZE);
-        diskLruImageCache = new DiskLruImageCache(context, uniqueName, DISK_IMAGECACHE_SIZE, DISK_IMAGECACHE_COMPRESS_FORMAT, DISK_IMAGECACHE_QUALITY);
+        diskLruImageCache = new DiskLruImageCache(context, uniqueName, DISK_IMAGECACHE_SIZE);
     }
 
     @Override
