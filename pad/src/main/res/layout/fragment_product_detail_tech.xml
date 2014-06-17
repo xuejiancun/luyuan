@@ -28,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -49,8 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -70,8 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -91,8 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -112,8 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -133,8 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -154,8 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -175,8 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -196,8 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -217,8 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 
@@ -238,8 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textSize="20dp"
-                android:layout_gravity="left"
-                android:text="@string/car_tech" />
+                android:layout_gravity="left" />
 
         </TableRow>
 

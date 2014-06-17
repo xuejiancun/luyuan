@@ -1,7 +1,5 @@
 package com.luyuan.pad.mberp.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,26 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.luyuan.pad.mberp.R;
-import com.luyuan.pad.mberp.model.ProductDetailData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
-import com.luyuan.pad.mberp.util.GsonRequest;
-import com.luyuan.pad.mberp.util.RequestManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ProductDetailFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
-
     private String model;
-    private ProductDetailData productDetailData;
-
+    private String type;
     private int seletedIndex;
+
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +32,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         Bundle args = getArguments();
         if (args != null) {
             model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
-            fetchProductDetailData();
+            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
         }
 
         clickCarAppearanceTab();
@@ -110,31 +101,31 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
     private void clickCarAppearanceTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_APPEARANCE + "&model=" + model);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_APPEARANCE + "&model=" + model.trim());
         changeTabBackStyle(tabLayoutList, 1);
     }
 
     private void clickCarDetailTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_DETAIL + "&model=" + model);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_DETAIL + "&model=" + model.trim());
         changeTabBackStyle(tabLayoutList, 2);
     }
 
     private void clickCarColorTab() {
         ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_COLOR + "&model=" + model);
+        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_CAR_COLOR + "&model=" + model.trim());
         changeTabBackStyle(tabLayoutList, 3);
     }
 
     private void clickCarTechTab() {
         ProductDetailTechFragment productDetailTechFragment = new ProductDetailTechFragment();
-        rePlaceTabContent(productDetailTechFragment);
+        rePlaceTabContent(productDetailTechFragment, model);
         changeTabBackStyle(tabLayoutList, 4);
     }
 
     private void clickCarEquipmentTab() {
         ProductDetailEquipmentFragment productDetailEquipmentFragment = new ProductDetailEquipmentFragment();
-        rePlaceTabContent(productDetailEquipmentFragment);
+        rePlaceTabContent(productDetailEquipmentFragment, model);
         changeTabBackStyle(tabLayoutList, 5);
     }
 
@@ -143,15 +134,20 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE));
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
         productMainFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productMainFragment);
         fragmentTransaction.commit();
     }
 
-    private void rePlaceTabContent(Fragment fragment) {
+    private void rePlaceTabContent(Fragment fragment, String model) {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(GlobalConstantValues.PARAM_CAR_MODEL, model);
+        fragment.setArguments(args);
+
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
     }
@@ -176,29 +172,6 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
                 layoutList.get(i).setBackgroundColor(Color.parseColor(GlobalConstantValues.COLOR_TOP_TAB_UNSELECTED));
             }
         }
-    }
-
-    public void fetchProductDetailData() {
-        GsonRequest gsonObjRequest = new GsonRequest<ProductDetailData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_THUMB_LUXURY,
-                ProductDetailData.class, new Response.Listener<ProductDetailData>() {
-            @Override
-            public void onResponse(ProductDetailData response) {
-                productDetailData = response;
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Dialog alertDialog = new AlertDialog.Builder(getActivity())
-                        .setMessage(R.string.fetch_data_error)
-                        .setTitle(R.string.dialog_hint)
-                        .setPositiveButton(R.string.dialog_confirm, null)
-                        .create();
-                alertDialog.show();
-            }
-        }
-        );
-
-        RequestManager.getRequestQueue().add(gsonObjRequest);
     }
 
     @Override

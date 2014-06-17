@@ -53,11 +53,27 @@ public class ImagePagerFragment extends Fragment {
                         urls = getImageUrls(response);
                         imageNum = urls.size();
 
+                        if (imageNum == 0) {
+                            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                                    .setMessage(R.string.fetch_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create();
+                            alertDialog.show();
+                        }
+
                         pager = (ViewPager) ImagePagerFragment.this.rootView.findViewById(R.id.image_pager);
                         pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
                         pager.setAdapter(pagerAdapter);
                         pager.setPageTransformer(true, new DepthPageTransformer());
 
+                    } else {
+                        Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                                .setMessage(R.string.fetch_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create();
+                        alertDialog.show();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -98,7 +114,7 @@ public class ImagePagerFragment extends Fragment {
     public ArrayList<String> getImageUrls(ImagePager imagePager) {
         ArrayList<String> result = new ArrayList<String>();
         for (ImageSlide imageSlide : imagePager.getImageSlides()) {
-            result.add(imageSlide.getUrl());
+            result.add(imageSlide.getUrl().trim());
         }
         return result;
     }

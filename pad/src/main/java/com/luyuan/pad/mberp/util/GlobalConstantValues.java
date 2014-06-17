@@ -29,6 +29,7 @@ public class GlobalConstantValues {
     public static final String TAB_BATTERY_CAR = "TAB_BATTERY_CAR";
     public static final String TAB_REPLACEWALK_CAR = "TAB_REPLACEWALK_CAR";
     public static final String TAB_SPECIAL_CAR = "TAB_SPECIAL_CAR";
+    public static final String TAB_QUERY_CAR = "TAB_QUERY_CAR";
 
     public static final String TAB_POPULAR_CAR = "TAB_POPULAR_CAR";
     public static final String TAB_PRODUCT_APPRECIATE = "TAB_PRODUCT_APPRECIATE";

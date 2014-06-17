@@ -78,8 +78,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public boolean onQueryTextSubmit(String query) {
-        ProductSubFragment productSubFragment = new ProductSubFragment();
-        rePlaceTabContentForSlide(productSubFragment, GlobalConstantValues.API_SEARCH_DATA + "&query=" + query);
+        rePlaceTabContentForSearch(GlobalConstantValues.API_SEARCH_DATA + "&query=" + query);
         changeTabBackStyle(3);
 
         return true;
@@ -148,8 +147,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void clickPopularTab() {
-        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_POPULAR_CAR);
+        rePlaceTabContentForSlide(GlobalConstantValues.API_POPULAR_CAR);
         changeTabBackStyle(2);
     }
 
@@ -177,14 +175,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
     }
 
-    private void rePlaceTabContentForSlide(Fragment fragment, String api) {
+    private void rePlaceTabContentForSearch(String api) {
+        ProductMainFragment productMainFragment = new ProductMainFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString(GlobalConstantValues.PARAM_API_URL, api);
-        fragment.setArguments(args);
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, GlobalConstantValues.TAB_QUERY_CAR);
+        productMainFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.replace(R.id.frame_content, productMainFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void rePlaceTabContentForSlide(String api) {
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(GlobalConstantValues.PARAM_API_URL, api);
+        imagePagerFragment.setArguments(args);
+
+        fragmentTransaction.replace(R.id.frame_content, imagePagerFragment);
         fragmentTransaction.commit();
     }
 

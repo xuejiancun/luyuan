@@ -1,8 +1,5 @@
 package com.luyuan.pad.mberp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProductDetailData {
 
     private String success;
@@ -19,7 +16,6 @@ public class ProductDetailData {
     private String enginespec;
     private String batteryspec;
     private String charger;
-    private List<CarEquipmentSlide> carEquipmentSlides = new ArrayList<CarEquipmentSlide>();
 
     public String getSuccess() {
         return success;
@@ -133,12 +129,4 @@ public class ProductDetailData {
         this.charger = charger;
     }
 
-    public List<CarEquipmentSlide> getCarEquipmentSlides() {
-        return carEquipmentSlides;
-    }
-
-    public void setCarEquipmentSlides(List<CarEquipmentSlide> carEquipmentSlides) {
-        this.carEquipmentSlides = carEquipmentSlides;
-    }
-    
 }

@@ -19,6 +19,8 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
+    private String type;
+    private String query;
     private int seletedIndex;
 
     @Override
@@ -27,8 +29,13 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         initTab(view);
 
-        String param = getArguments().getString(GlobalConstantValues.PARAM_CAR_TYPE);
-        clickTab(param);
+        Bundle args = getArguments();
+        if (args != null) {
+            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            query = (args.getString(GlobalConstantValues.PARAM_API_URL) == null) ? query : args.getString(GlobalConstantValues.PARAM_API_URL);
+        }
+
+        clickTab(type);
 
         return view;
     }
@@ -104,6 +111,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         Bundle args = new Bundle();
         args.putString(GlobalConstantValues.PARAM_API_URL, getApiUrl(type));
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
@@ -124,6 +132,8 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
             result = 5;
         } else if (type.equals(GlobalConstantValues.TAB_SPECIAL_CAR)) {
             result = 6;
+        } else if (type.equals(GlobalConstantValues.TAB_QUERY_CAR)) {
+            result = 0;
         }
         return result;
     }
@@ -142,6 +152,8 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
             result = GlobalConstantValues.API_PRODUCT_THUMB_REPLACEWALK;
         } else if (type.equals(GlobalConstantValues.TAB_SPECIAL_CAR)) {
             result = GlobalConstantValues.API_PRODUCT_THUMB_SPECIAL;
+        } else if (type.equals(GlobalConstantValues.TAB_QUERY_CAR)) {
+            result = query;
         }
         return result;
     }

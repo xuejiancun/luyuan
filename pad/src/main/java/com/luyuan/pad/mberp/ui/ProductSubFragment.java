@@ -31,16 +31,25 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
     private ProductThumbData productThumbData;
     private GridView gridView;
 
+    private String type;
+    private String api;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_product_sub, null);
-
         gridView = (GridView) view.findViewById(R.id.gridview_product_list);
-        if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
-            fetchProductThumbData(getArguments().getString(GlobalConstantValues.PARAM_API_URL));
+
+        Bundle args = getArguments();
+        if (args != null) {
+            api = args.getString(GlobalConstantValues.PARAM_API_URL);
+            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+
+            if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
+                fetchProductThumbData(api);
+            }
         }
 
         return view;
@@ -53,6 +62,7 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
 
         Bundle args = new Bundle();
         args.putString(GlobalConstantValues.PARAM_CAR_MODEL, ((TextView) v.findViewById(R.id.textview_product_list_info_model)).getText().toString());
+        args.putString(GlobalConstantValues.PARAM_CAR_TYPE, type);
         productDetailFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
@@ -112,9 +122,19 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
                 ProductThumbData.class, new Response.Listener<ProductThumbData>() {
             @Override
             public void onResponse(ProductThumbData response) {
-                productThumbData = response;
-                gridView.setAdapter(new ImageAdapter(getActivity()));
-                gridView.setOnItemClickListener(ProductSubFragment.this);
+                if (response != null && response.getSuccess().equals("true")) {
+                    productThumbData = response;
+                    gridView.setAdapter(new ImageAdapter(getActivity()));
+                    gridView.setOnItemClickListener(ProductSubFragment.this);
+                } else {
+                    Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.fetch_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create();
+                    alertDialog.show();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
