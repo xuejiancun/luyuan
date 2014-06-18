@@ -27,12 +27,12 @@ import com.luyuan.pad.mberp.util.RequestManager;
 
 public class ProductSubFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private LayoutInflater layoutInflater;
-    private ProductThumbData productThumbData;
-    private GridView gridView;
+    private String type = "";
 
-    private String type;
-    private String api;
+    private GridView gridView;
+    private LayoutInflater layoutInflater;
+
+    private ProductThumbData productThumbData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,12 +44,25 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
 
         Bundle args = getArguments();
         if (args != null) {
-            api = args.getString(GlobalConstantValues.PARAM_API_URL);
-            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            String api = "";
 
-            if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
+            if (args.getString(GlobalConstantValues.PARAM_API_URL) != null) {
+                api = args.getString(GlobalConstantValues.PARAM_API_URL);
+            }
+            if (args.getString(GlobalConstantValues.PARAM_CAR_TYPE) != null) {
+                type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            }
+
+            if (!api.isEmpty() && GlobalConstantValues.checkNetworkConnection(getActivity())) {
                 fetchProductThumbData(api);
             }
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
 
         return view;

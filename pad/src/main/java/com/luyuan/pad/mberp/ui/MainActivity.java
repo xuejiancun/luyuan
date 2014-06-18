@@ -1,16 +1,16 @@
 package com.luyuan.pad.mberp.ui;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -24,33 +24,43 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, SearchView.OnQueryTextListener {
 
+    private int seletedIndex;
+
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
     private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
-
-    private int seletedIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+
         setContentView(R.layout.activity_main);
 
         initTab();
 
-        Intent intent = getIntent();
-        String param = intent.getExtras().getString(GlobalConstantValues.INTENT_HOME_TO_MAIN);
+        if (getIntent() != null && getIntent().getStringExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN) != null) {
+            String param = getIntent().getStringExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN);
 
-        if (param.equals(GlobalConstantValues.TAB_POPULAR_CAR)) {
-            clickPopularTab();
-        } else if (param.equals(GlobalConstantValues.TAB_PRODUCT_APPRECIATE)) {
-            clickProductTab();
-        } else if (param.equals(GlobalConstantValues.TAB_TECH_EMBODIED)) {
-            clickTechTab();
-        } else if (param.equals(GlobalConstantValues.TAB_LUYUAN_CULTURE)) {
-            clickLuyuanTab();
+            if (param.equals(GlobalConstantValues.TAB_POPULAR_CAR)) {
+                clickPopularTab();
+            } else if (param.equals(GlobalConstantValues.TAB_PRODUCT_APPRECIATE)) {
+                clickProductTab();
+            } else if (param.equals(GlobalConstantValues.TAB_TECH_EMBODIED)) {
+                clickTechTab();
+            } else if (param.equals(GlobalConstantValues.TAB_LUYUAN_CULTURE)) {
+                clickLuyuanTab();
+            }
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(this)
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
     }
 
@@ -58,19 +68,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
+
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setOnQueryTextListener(this);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     public boolean onQueryTextChange(String newText) {
@@ -97,6 +99,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tech_layout.setOnClickListener(this);
         luyuan_layout.setOnClickListener(this);
 
+        // Do not change the order
         tabLayoutList.add(home_layout);
         tabLayoutList.add(popular_layout);
         tabLayoutList.add(product_layout);
@@ -109,6 +112,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         TextView tech_textview = (TextView) findViewById(R.id.textview_goto_tech);
         TextView luyuan_textview = (TextView) findViewById(R.id.textview_goto_luyuan);
 
+        // Do not change the order
         tabTextViewList.add(home_textview);
         tabTextViewList.add(popular_textview);
         tabTextViewList.add(product_textview);

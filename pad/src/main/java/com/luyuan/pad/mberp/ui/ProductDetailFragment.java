@@ -1,5 +1,7 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,8 +19,8 @@ import java.util.ArrayList;
 
 public class ProductDetailFragment extends Fragment implements View.OnClickListener {
 
-    private String model;
-    private String type;
+    private String model = "";
+    private String type = "";
     private int seletedIndex;
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
@@ -31,11 +33,21 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
         Bundle args = getArguments();
         if (args != null) {
-            model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
-            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            if (args.getString(GlobalConstantValues.PARAM_CAR_MODEL) != null) {
+                model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
+            }
+            if (args.getString(GlobalConstantValues.PARAM_CAR_TYPE) != null) {
+                type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            }
+            clickCarAppearanceTab();
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
-
-        clickCarAppearanceTab();
 
         return view;
     }
@@ -55,6 +67,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         tab_car_tech_layout.setOnClickListener(this);
         tab_back_layout.setOnClickListener(this);
 
+        // Do not change the order
         tabLayoutList.add(tab_car_appearance_layout);
         tabLayoutList.add(tab_car_detail_layout);
         tabLayoutList.add(tab_optional_color_layout);

@@ -6,9 +6,6 @@ import android.util.Log;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
-/**
- * Basic LRU Memory cache.
- */
 public class BitmapLruImageCache extends LruCache<String, Bitmap> implements ImageCache {
 
     private final String TAG = this.getClass().getSimpleName();

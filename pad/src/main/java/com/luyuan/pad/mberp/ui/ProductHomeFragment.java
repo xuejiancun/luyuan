@@ -13,28 +13,22 @@ import com.luyuan.pad.mberp.util.GlobalConstantValues;
 
 public class ProductHomeFragment extends Fragment implements View.OnClickListener {
 
-    private ProductMainFragment productMainFragment;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_home, null);
 
         Button luxury = (Button) view.findViewById(R.id.button_product_main_page_luxury);
-        luxury.setOnClickListener(this);
-
         Button simple = (Button) view.findViewById(R.id.button_product_main_page_simple);
-        simple.setOnClickListener(this);
-
         Button standard = (Button) view.findViewById(R.id.button_product_main_page_standard);
-        standard.setOnClickListener(this);
-
         Button battery = (Button) view.findViewById(R.id.button_product_main_page_battery);
-        battery.setOnClickListener(this);
-
         Button replacewalk = (Button) view.findViewById(R.id.button_product_main_page_replacewalk);
-        replacewalk.setOnClickListener(this);
-
         Button special = (Button) view.findViewById(R.id.button_product_main_page_special);
+
+        luxury.setOnClickListener(this);
+        simple.setOnClickListener(this);
+        standard.setOnClickListener(this);
+        battery.setOnClickListener(this);
+        replacewalk.setOnClickListener(this);
         special.setOnClickListener(this);
 
         return view;
@@ -65,7 +59,7 @@ public class ProductHomeFragment extends Fragment implements View.OnClickListene
     }
 
     public void onClickChooseCar(String type) {
-        productMainFragment = new ProductMainFragment();
+        ProductMainFragment productMainFragment = new ProductMainFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();

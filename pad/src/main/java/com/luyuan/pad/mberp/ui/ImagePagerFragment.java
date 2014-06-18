@@ -28,12 +28,10 @@ import java.util.ArrayList;
 
 public class ImagePagerFragment extends Fragment {
 
-    private ViewGroup rootView;
-
     private int imageNum;
-    private String api;
     private ArrayList<String> urls;
 
+    private ViewGroup rootView;
     private ViewPager pager;
     private PagerAdapter pagerAdapter;
 
@@ -42,8 +40,20 @@ public class ImagePagerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_image_pager, null);
 
-        if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
-            api = getArguments().getString(GlobalConstantValues.PARAM_API_URL);
+        String api = "";
+        Bundle args = getArguments();
+        if (args != null && args.getString(GlobalConstantValues.PARAM_API_URL) != null) {
+            api = args.getString(GlobalConstantValues.PARAM_API_URL);
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
+        }
+
+        if (!api.isEmpty() && GlobalConstantValues.checkNetworkConnection(getActivity())) {
 
             GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, api,
                     ImagePager.class, new Response.Listener<ImagePager>() {
@@ -55,7 +65,7 @@ public class ImagePagerFragment extends Fragment {
 
                         if (imageNum == 0) {
                             Dialog alertDialog = new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.fetch_data_error)
+                                    .setMessage(R.string.fetch_data_empty)
                                     .setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null)
                                     .create();

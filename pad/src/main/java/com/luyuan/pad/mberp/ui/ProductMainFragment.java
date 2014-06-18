@@ -1,5 +1,7 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +19,11 @@ import java.util.ArrayList;
 
 public class ProductMainFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
-
-    private String type;
-    private String query;
+    private String type = "";
+    private String query = "";
     private int seletedIndex;
+
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,11 +33,21 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
 
         Bundle args = getArguments();
         if (args != null) {
-            type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
-            query = (args.getString(GlobalConstantValues.PARAM_API_URL) == null) ? query : args.getString(GlobalConstantValues.PARAM_API_URL);
+            if (args.getString(GlobalConstantValues.PARAM_CAR_TYPE) != null) {
+                type = args.getString(GlobalConstantValues.PARAM_CAR_TYPE);
+            }
+            if (args.getString(GlobalConstantValues.PARAM_API_URL) != null) {
+                query = args.getString(GlobalConstantValues.PARAM_API_URL);
+            }
+            clickTab(type);
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
-
-        clickTab(type);
 
         return view;
     }

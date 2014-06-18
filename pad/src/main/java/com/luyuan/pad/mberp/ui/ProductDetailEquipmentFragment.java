@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,7 +25,6 @@ import com.luyuan.pad.mberp.util.RequestManager;
 
 public class ProductDetailEquipmentFragment extends Fragment {
 
-    private String model;
     private GridView gridView;
     private LayoutInflater layoutInflater;
     private CarEquipmentData carEquipmentData;
@@ -37,13 +37,21 @@ public class ProductDetailEquipmentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_detail_equipment, null);
         gridView = (GridView) view.findViewById(R.id.gridview_product_detail_equipment);
 
+        String model = "";
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null && args.getString(GlobalConstantValues.PARAM_CAR_MODEL) != null) {
             model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
 
             if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
-                fetchCarEquipmentData();
+                fetchCarEquipmentData(GlobalConstantValues.API_CAR_EQUIPMENT + "&model=" + model.trim());
             }
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
 
         return view;
@@ -56,7 +64,7 @@ public class ProductDetailEquipmentFragment extends Fragment {
         }
 
         public int getCount() {
-            return carEquipmentData.getImageSlides().size();
+            return carEquipmentData.getCarEquipmentInfos().size();
         }
 
         public Object getItem(int position) {
@@ -68,13 +76,15 @@ public class ProductDetailEquipmentFragment extends Fragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-
             View view = layoutInflater.inflate(R.layout.equipment_item, null);
 
             NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail_equipment);
             imageView.setDefaultImageResId(R.drawable.loading);
             imageView.setErrorImageResId(R.drawable.error);
-            imageView.setImageUrl(carEquipmentData.getImageSlides().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
+            imageView.setImageUrl(carEquipmentData.getCarEquipmentInfos().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
+
+            TextView textViewName = (TextView) view.findViewById(R.id.textview_product_detail_equipment);
+            textViewName.setText(carEquipmentData.getCarEquipmentInfos().get(position).getDesc());
 
             return view;
         }
@@ -83,8 +93,8 @@ public class ProductDetailEquipmentFragment extends Fragment {
 
     }
 
-    public void fetchCarEquipmentData() {
-        GsonRequest gsonObjRequest = new GsonRequest<CarEquipmentData>(Request.Method.GET, GlobalConstantValues.API_CAR_EQUIPMENT + "&model=" + model.trim(),
+    public void fetchCarEquipmentData(String url) {
+        GsonRequest gsonObjRequest = new GsonRequest<CarEquipmentData>(Request.Method.GET, url,
                 CarEquipmentData.class, new Response.Listener<CarEquipmentData>() {
             @Override
             public void onResponse(CarEquipmentData response) {

@@ -20,8 +20,6 @@ import com.luyuan.pad.mberp.util.RequestManager;
 
 public class ProductDetailTechFragment extends Fragment {
 
-    private String model;
-
     private TextView arrivaldate;
     private TextView footsteplength;
     private TextView liftofflength;
@@ -50,20 +48,28 @@ public class ProductDetailTechFragment extends Fragment {
         batteryspec = (TextView) view.findViewById(R.id.textview_product_detail_tech_batteryspec);
         charger = (TextView) view.findViewById(R.id.textview_product_detail_tech_charger);
 
+        String model = "";
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null && args.getString(GlobalConstantValues.PARAM_CAR_MODEL) != null) {
             model = args.getString(GlobalConstantValues.PARAM_CAR_MODEL);
 
             if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
-                fetchProductDetailData();
+                fetchProductDetailData(GlobalConstantValues.API_PRODUCT_DETAIL + "&model=" + model.trim());
             }
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
 
         return view;
     }
 
-    public void fetchProductDetailData() {
-        GsonRequest gsonObjRequest = new GsonRequest<ProductDetailData>(Request.Method.GET, GlobalConstantValues.API_PRODUCT_DETAIL + "&model=" + model.trim(),
+    public void fetchProductDetailData(String url) {
+        GsonRequest gsonObjRequest = new GsonRequest<ProductDetailData>(Request.Method.GET, url,
                 ProductDetailData.class, new Response.Listener<ProductDetailData>() {
             @Override
             public void onResponse(ProductDetailData response) {

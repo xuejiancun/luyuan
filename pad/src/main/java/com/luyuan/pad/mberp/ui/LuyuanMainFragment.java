@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class LuyuanMainFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
-
     private int seletedIndex;
+
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         tab_honor_layout.setOnClickListener(this);
         tab_news_layout.setOnClickListener(this);
 
+        // Do not change the order
         tabLayoutList.add(tab_goluyuan_layout);
         tabLayoutList.add(tab_histroy_layout);
         tabLayoutList.add(tab_honor_layout);

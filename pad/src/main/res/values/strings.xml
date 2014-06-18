@@ -52,6 +52,7 @@
     <string name="network_disconnected">您的网络链接存在问题，请保证网络通畅以后，再重新尝试。</string>
     <string name="fetch_data_error">应用程序读取数据失败，请稍后再试。</string>
     <string name="fetch_data_empty">暂未添加图片，请稍后再试。</string>
+    <string name="app_param_error">应用程序页面参数传输出错，请稍后再试。</string>
     <string name="dialog_hint">提示</string>
     <string name="dialog_confirm">确定</string>
 
