@@ -107,8 +107,8 @@ public class ProductSubFragment extends Fragment implements AdapterView.OnItemCl
             View view = layoutInflater.inflate(R.layout.product_item, null);
 
             NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_list);
-            imageView.setDefaultImageResId(R.drawable.loading);
-            imageView.setErrorImageResId(R.drawable.error);
+            imageView.setDefaultImageResId(R.drawable.loading_small);
+            imageView.setErrorImageResId(R.drawable.error_small);
             imageView.setImageUrl(productThumbData.getProductThumbInfos().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
 
             TextView textViewName = (TextView) view.findViewById(R.id.textview_product_list_info_name);

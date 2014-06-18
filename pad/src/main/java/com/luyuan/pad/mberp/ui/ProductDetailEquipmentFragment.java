@@ -79,8 +79,8 @@ public class ProductDetailEquipmentFragment extends Fragment {
             View view = layoutInflater.inflate(R.layout.equipment_item, null);
 
             NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_product_detail_equipment);
-            imageView.setDefaultImageResId(R.drawable.loading);
-            imageView.setErrorImageResId(R.drawable.error);
+            imageView.setDefaultImageResId(R.drawable.loading_small);
+            imageView.setErrorImageResId(R.drawable.error_small);
             imageView.setImageUrl(carEquipmentData.getCarEquipmentInfos().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
 
             TextView textViewName = (TextView) view.findViewById(R.id.textview_product_detail_equipment);
