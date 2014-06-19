@@ -1,78 +1,127 @@
 package com.luyuan.pad.mberp.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.mberp.R;
+import com.luyuan.pad.mberp.model.TechIconData;
 import com.luyuan.pad.mberp.util.GlobalConstantValues;
+import com.luyuan.pad.mberp.util.GsonRequest;
+import com.luyuan.pad.mberp.util.ImageCacheManager;
+import com.luyuan.pad.mberp.util.RequestManager;
 
-public class TechMainFragment extends Fragment implements View.OnClickListener {
+public class TechMainFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private GridView gridView;
+    private LayoutInflater layoutInflater;
+
+    private TechIconData techIconData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_tech_main, null);
+        gridView = (GridView) view.findViewById(R.id.gridview_tech_list);
 
-        Button tech1 = (Button) view.findViewById(R.id.button_tech_main_page_tech1);
-        Button tech2 = (Button) view.findViewById(R.id.button_tech_main_page_tech2);
-        Button tech3 = (Button) view.findViewById(R.id.button_tech_main_page_tech3);
-        Button tech4 = (Button) view.findViewById(R.id.button_tech_main_page_tech4);
-        Button tech5 = (Button) view.findViewById(R.id.button_tech_main_page_tech5);
-        Button tech6 = (Button) view.findViewById(R.id.button_tech_main_page_tech6);
-        Button tech7 = (Button) view.findViewById(R.id.button_tech_main_page_tech7);
-        Button tech8 = (Button) view.findViewById(R.id.button_tech_main_page_tech8);
-        Button tech9 = (Button) view.findViewById(R.id.button_tech_main_page_tech9);
-        Button tech10 = (Button) view.findViewById(R.id.button_tech_main_page_tech10);
-        Button tech11 = (Button) view.findViewById(R.id.button_tech_main_page_tech11);
-        Button tech12 = (Button) view.findViewById(R.id.button_tech_main_page_tech12);
-        Button tech13 = (Button) view.findViewById(R.id.button_tech_main_page_tech13);
-        Button tech14 = (Button) view.findViewById(R.id.button_tech_main_page_tech14);
-        Button tech15 = (Button) view.findViewById(R.id.button_tech_main_page_tech15);
-        Button tech16 = (Button) view.findViewById(R.id.button_tech_main_page_tech16);
-        Button tech17 = (Button) view.findViewById(R.id.button_tech_main_page_tech17);
-        Button tech18 = (Button) view.findViewById(R.id.button_tech_main_page_tech18);
-
-        tech1.setOnClickListener(this);
-        tech2.setOnClickListener(this);
-        tech3.setOnClickListener(this);
-        tech4.setOnClickListener(this);
-        tech5.setOnClickListener(this);
-        tech6.setOnClickListener(this);
-        tech7.setOnClickListener(this);
-        tech8.setOnClickListener(this);
-        tech9.setOnClickListener(this);
-        tech10.setOnClickListener(this);
-        tech11.setOnClickListener(this);
-        tech12.setOnClickListener(this);
-        tech13.setOnClickListener(this);
-        tech14.setOnClickListener(this);
-        tech15.setOnClickListener(this);
-        tech16.setOnClickListener(this);
-        tech17.setOnClickListener(this);
-        tech18.setOnClickListener(this);
+        fetchTechIconData(GlobalConstantValues.API_TECH_ICON);
 
         return view;
     }
 
     @Override
-    public void onClick(View v) {
-        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
-        rePlaceTabContentForSlide(imagePagerFragment, GlobalConstantValues.API_TECH_IMAGE);
-    }
-
-    private void rePlaceTabContentForSlide(Fragment fragment, String api) {
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_API_URL, api);
-        fragment.setArguments(args);
+        args.putString(GlobalConstantValues.PARAM_API_URL, GlobalConstantValues.API_TECH_IMAGE);
+        productDetailFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
         fragmentTransaction.commit();
+    }
+
+    public class ImageAdapter extends BaseAdapter {
+
+        private Context mContext;
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+
+        public int getCount() {
+            return techIconData.getImageSlides().size();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = layoutInflater.inflate(R.layout.techicon_item, null);
+
+            NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_tech_icon);
+            imageView.setDefaultImageResId(R.drawable.loading_small);
+            imageView.setErrorImageResId(R.drawable.error_small);
+            imageView.setImageUrl(techIconData.getImageSlides().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
+
+            return view;
+        }
+    }
+
+    public void fetchTechIconData(String url) {
+        GsonRequest gsonObjRequest = new GsonRequest<TechIconData>(Request.Method.GET, url,
+                TechIconData.class, new Response.Listener<TechIconData>() {
+            @Override
+            public void onResponse(TechIconData response) {
+                if (response != null && response.getSuccess().equals("true")) {
+                    techIconData = response;
+                    gridView.setAdapter(new ImageAdapter(getActivity()));
+                    gridView.setOnItemClickListener(TechMainFragment.this);
+                } else {
+                    Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.fetch_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create();
+                    alertDialog.show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.fetch_data_error)
+                        .setTitle(R.string.dialog_hint)
+                        .setPositiveButton(R.string.dialog_confirm, null)
+                        .create();
+                alertDialog.show();
+            }
+        }
+        );
+
+        RequestManager.getRequestQueue().add(gsonObjRequest);
     }
 
 }

@@ -44,6 +44,7 @@ public class GlobalConstantValues {
 
     public static final String API_POPULAR_CAR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=popularslide";
     public static final String API_TECH_IMAGE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techslide";
+    public static final String API_TECH_ICON = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techicon";
     public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=brandhonorslides";
 
     public static final String API_PRODUCT_THUMB_LUXURY = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=22";
@@ -60,7 +61,6 @@ public class GlobalConstantValues {
     public static final String API_CAR_EQUIPMENT = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=carequipment";
 
     public static final String API_SEARCH_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=searchdata";
-
 
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;

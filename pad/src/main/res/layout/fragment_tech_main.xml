@@ -1,137 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tech_main_page_background">
+    android:orientation="vertical"
+    android:background="@drawable/tech_main_page_background"
+    android:gravity="left|bottom">
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:paddingTop="200dp"
-        android:stretchColumns="6">
+    <GridView
+        android:id="@+id/gridview_tech_list"
+        android:layout_width="600dp"
+        android:layout_height="360dp"
+        android:numColumns="6"
+        android:layout_gravity="left"
+        android:scrollbars="none" />
 
-        <TableRow>
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech1"
-                android:background="@drawable/tech_main_page_tech1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech2"
-                android:background="@drawable/tech_main_page_tech2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech3"
-                android:background="@drawable/tech_main_page_tech3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech4"
-                android:background="@drawable/tech_main_page_tech4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech5"
-                android:background="@drawable/tech_main_page_tech5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech6"
-                android:background="@drawable/tech_main_page_tech6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech7"
-                android:background="@drawable/tech_main_page_tech7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech8"
-                android:background="@drawable/tech_main_page_tech8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech9"
-                android:background="@drawable/tech_main_page_tech9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech10"
-                android:background="@drawable/tech_main_page_tech10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech11"
-                android:background="@drawable/tech_main_page_tech11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech12"
-                android:background="@drawable/tech_main_page_tech12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech13"
-                android:background="@drawable/tech_main_page_tech13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech14"
-                android:background="@drawable/tech_main_page_tech14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech15"
-                android:background="@drawable/tech_main_page_tech15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech16"
-                android:background="@drawable/tech_main_page_tech16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech17"
-                android:background="@drawable/tech_main_page_tech17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/button_tech_main_page_tech18"
-                android:background="@drawable/tech_main_page_tech18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </TableRow>
-
-    </TableLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

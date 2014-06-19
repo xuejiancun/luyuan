@@ -10,6 +10,7 @@ public class ImageCacheManager {
     private static ImageCacheManager mInstance;
     private ImageLoader mLargeImageLoader;
     private ImageLoader mSmallImageLoader;
+
     private ImageCache mLargeImageCache;
     private ImageCache mSmallImageCache;
 
