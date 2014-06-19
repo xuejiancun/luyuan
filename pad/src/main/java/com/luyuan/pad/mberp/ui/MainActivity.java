@@ -25,7 +25,6 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -67,6 +66,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initTab();
 
+        // Check version: version + url
+        if (MainApplication.REMEMBER_IF_NEED_UPDATE) {
+            checkNewVersion();
+        }
+
         if (getIntent() != null && getIntent().getStringExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN) != null) {
             String param = getIntent().getStringExtra(GlobalConstantValues.INTENT_HOME_TO_MAIN);
 
@@ -87,12 +91,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     .create();
             alertDialog.show();
         }
-
-        // Check version: version + url
-        if (MainApplication.REMEMBER_IF_NEED_UPDATE) {
-            checkNewVersion();
-        }
-
     }
 
     @Override
@@ -254,7 +252,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, GlobalConstantValues.API_CHECK_VERSION,
                 VersionData.class, new Response.Listener<VersionData>() {
             @Override
-            public void onResponse(VersionData response) {
+            public void onResponse(final VersionData response) {
                 if (response != null && response.getSuccess().equals("true")) {
                     try {
                         PackageInfo packageInfo = getPackageManager().getPackageInfo("com.luyuan.pad.mberp", 0);
@@ -263,6 +261,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                             Dialog alertDialog = new AlertDialog.Builder(MainActivity.this)
                                     .setMessage(R.string.dialog_hint_new_version)
                                     .setTitle(R.string.dialog_hint)
+                                    .setCancelable(false)
                                     .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -274,7 +273,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                             mProgressDialog.setCancelable(true);
 
                                             final DownloadTask downloadTask = new DownloadTask(MainActivity.this);
-                                            downloadTask.execute("http://zhangmenshiting.baidu.com/data2/music/120950583/120948904230400128.mp3?xcode=bda178540032d41c8cfaef0743a6cc57251121686eefea70");
+                                            downloadTask.execute(response.getUrl());
 
                                             mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                                                 @Override
@@ -331,22 +330,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
+                    return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
                 }
 
-                // this will be useful to display download percentage
-                // might be -1: server did not report the length
                 int fileLength = connection.getContentLength();
 
                 // download the file
                 input = connection.getInputStream();
                 output = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pad.apk");
 
-                byte data[] = new byte[4096];
+                byte data[] = new byte[1024];
                 long total = 0;
                 int count;
                 while ((count = input.read(data)) != -1) {
@@ -401,16 +395,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mWakeLock.release();
             mProgressDialog.dismiss();
             if (result != null) {
-                Toast.makeText(context, "Download error: " + result, Toast.LENGTH_LONG).show();
+                Dialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage(R.string.dialog_download_error)
+                        .setTitle(R.string.dialog_hint)
+                        .setPositiveButton(R.string.dialog_confirm, null)
+                        .setCancelable(true)
+                        .create();
+                alertDialog.show();
             } else {
-                Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
-
                 String fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/pad.apk";
                 Uri uri = Uri.fromFile(new File(fileName));
                 Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setDataAndType(uri, "application/vnd.android.package-archive");
 
-                // startActivity(intent);
+                startActivity(intent);
             }
         }
     }
