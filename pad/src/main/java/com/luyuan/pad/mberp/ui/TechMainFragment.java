@@ -39,21 +39,23 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_tech_main, null);
         gridView = (GridView) view.findViewById(R.id.gridview_tech_list);
 
-        fetchTechIconData(GlobalConstantValues.API_TECH_ICON);
+        if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
+            fetchTechIconData(GlobalConstantValues.API_TECH_ICON);
+        }
 
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+        ImagePagerFragment imagePagerFragment = new ImagePagerFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString(GlobalConstantValues.PARAM_API_URL, GlobalConstantValues.API_TECH_IMAGE);
-        productDetailFragment.setArguments(args);
+        imagePagerFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content, productDetailFragment);
+        fragmentTransaction.replace(R.id.frame_content, imagePagerFragment);
         fragmentTransaction.commit();
     }
 

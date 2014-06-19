@@ -7,6 +7,8 @@ import com.luyuan.pad.mberp.util.RequestManager;
 
 public class MainApplication extends Application {
 
+    public static boolean REMEMBER_IF_NEED_UPDATE = true;
+
     @Override
     public void onCreate() {
         super.onCreate();

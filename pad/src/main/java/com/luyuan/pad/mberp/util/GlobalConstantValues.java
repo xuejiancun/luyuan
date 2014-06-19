@@ -61,6 +61,7 @@ public class GlobalConstantValues {
     public static final String API_CAR_EQUIPMENT = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=carequipment";
 
     public static final String API_SEARCH_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=searchdata";
+    public static final String API_CHECK_VERSION = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=getversion";
 
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;

@@ -57,4 +57,7 @@
     <string name="dialog_confirm">确定</string>
     <string name="dialog_cancel">取消</string>
 
+    <string name="dialog_hint_new_version">系统有新版本发布，需要现在更新？</string>
+    <string name="dialog_downloading_file">正在下载更新文件...</string>
+
 </resources>
