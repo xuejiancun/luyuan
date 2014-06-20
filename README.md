@@ -1,6 +1,6 @@
-mberp
+Luyuan
 =====
 
-1. Android module for factory daily operation.
+1. mobile module for factory daily operation.
 
 2. Pad module for product presentation.
