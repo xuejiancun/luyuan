@@ -128,7 +128,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tech_layout.setOnClickListener(this);
         luyuan_layout.setOnClickListener(this);
 
-        // Do not change the order
+        // do not change the order
         tabLayoutList.add(home_layout);
         tabLayoutList.add(popular_layout);
         tabLayoutList.add(product_layout);
@@ -141,7 +141,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         TextView tech_textview = (TextView) findViewById(R.id.textview_goto_tech);
         TextView luyuan_textview = (TextView) findViewById(R.id.textview_goto_luyuan);
 
-        // Do not change the order
+        // do not change the order
         tabTextViewList.add(home_textview);
         tabTextViewList.add(popular_textview);
         tabTextViewList.add(product_textview);

@@ -1,10 +1,15 @@
 package com.luyuan.mobile.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -48,9 +53,24 @@ public class LoginActivity extends Activity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if (!state.equals("ok")) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                        if (state.equals("ok")) {
+                            // choose job dialog, if only one item, do not show, choose it by default.
+                            Dialog dialog = new AlertDialog.Builder(LoginActivity.this)
+                                    .setTitle(R.string.dialog_choose_job)
+                                    .setSingleChoiceItems(new CharSequence[]{"A", "B", "C"}, 0, null)
+                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.cancel, null)
+                                    .create();
+
+                            dialog.show();
+                        } else {
+                            Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
+                            findViewById(R.id.edittext_password).startAnimation(shake);
                         }
                     }
                 }, new Response.ErrorListener() {

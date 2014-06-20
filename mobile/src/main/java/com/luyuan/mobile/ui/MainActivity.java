@@ -1,32 +1,27 @@
 package com.luyuan.mobile.ui;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v4.app.NavUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.TabHost.TabSpec;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.util.GlobalConstantValues;
 
-public class MainActivity extends FragmentActivity {
+import java.util.ArrayList;
 
-    private FragmentTabHost tabHost;
+public class MainActivity extends Activity implements View.OnClickListener {
 
-    private LayoutInflater layoutInflater;
+    private int seletedIndex;
 
-    private Class fragmentArray[] = {PostFragment.class, FunctionFragment.class, AccountFragment.class, SettingFragment.class};
-
-    private int imageViewArray[];
-
-    private String textViewArray[];
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
+    private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +36,7 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
-        initView();
+        initTab();
     }
 
     @Override
@@ -53,47 +48,76 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
+    private void initTab() {
+        LinearLayout layout_tab_home = (LinearLayout) findViewById(R.id.layout_tab_home);
+        LinearLayout layout_tab_function = (LinearLayout) findViewById(R.id.layout_tab_function);
+        LinearLayout layout_tab_explore = (LinearLayout) findViewById(R.id.layout_tab_explore);
+        LinearLayout layout_tab_account = (LinearLayout) findViewById(R.id.layout_tab_account);
+
+        layout_tab_home.setOnClickListener(this);
+        layout_tab_function.setOnClickListener(this);
+        layout_tab_explore.setOnClickListener(this);
+        layout_tab_account.setOnClickListener(this);
+
+        // do not change the order
+        tabLayoutList.add(layout_tab_home);
+        tabLayoutList.add(layout_tab_function);
+        tabLayoutList.add(layout_tab_explore);
+        tabLayoutList.add(layout_tab_account);
+
+        TextView textview_tab_home = (TextView) findViewById(R.id.textview_tab_home);
+        TextView textview_tab_function = (TextView) findViewById(R.id.textview_tab_function);
+        TextView textview_tab_explore = (TextView) findViewById(R.id.textview_tab_explore);
+        TextView textview_tab_account = (TextView) findViewById(R.id.textview_tab_account);
+
+        // do not change the order
+        tabTextViewList.add(textview_tab_home);
+        tabTextViewList.add(textview_tab_function);
+        tabTextViewList.add(textview_tab_explore);
+        tabTextViewList.add(textview_tab_account);
+    }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action actionBar's Up/Home button
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.layout_tab_home:
+                if (seletedIndex != 1) {
+                    // TODO
+                    changeTabBackStyle(1);
+                }
+                break;
+            case R.id.layout_tab_function:
+                if (seletedIndex != 2) {
+                    // TODO
+                    changeTabBackStyle(2);
+                }
+                break;
+            case R.id.layout_tab_explore:
+                if (seletedIndex != 3) {
+                    // TODO
+                    changeTabBackStyle(3);
+                }
+                break;
+            case R.id.layout_tab_account:
+                if (seletedIndex != 4) {
+                    // TODO
+                    changeTabBackStyle(4);
+                }
+                break;
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private void initView() {
-        layoutInflater = LayoutInflater.from(this);
-
-        tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        // Initial imageViewArray and textViewArray
-        imageViewArray = new int[]{R.drawable.tab_home_button, R.drawable.tab_function_button,
-                R.drawable.tab_account_button, R.drawable.tab_setting_button};
-
-        textViewArray = new String[]{getString(R.string.post), getString(R.string.function), getString(R.string.account), getString(R.string.setting)};
-
-        int count = fragmentArray.length;
-        for (int i = 0; i < count; i++) {
-            TabSpec tabSpec = tabHost.newTabSpec(textViewArray[i]).setIndicator(getTabItemView(i));
-            tabHost.addTab(tabSpec, fragmentArray[i], null);
-            tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.main_tab_background);
+    private void changeTabBackStyle(int index) {
+        seletedIndex = index;
+        for (int i = 0; i < tabLayoutList.size(); i++) {
+            if (i == index - 1) {
+                tabLayoutList.get(i).setSelected(true);
+                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_SELECTED));
+            } else {
+                tabLayoutList.get(i).setSelected(false);
+                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
+            }
         }
-    }
-
-    private View getTabItemView(int index) {
-        View view = layoutInflater.inflate(R.layout.tab_item, null);
-
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-        imageView.setImageResource(imageViewArray[index]);
-
-        TextView textView = (TextView) view.findViewById(R.id.textview);
-        textView.setText(textViewArray[index]);
-
-        return view;
     }
 
 }
