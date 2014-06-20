@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_view_login_page"
+            android:layout_width="match_parent"
+            android:layout_height="172dp"
+            android:background="@drawable/login_page_background"
+            android:scaleType="fitCenter" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:stretchColumns="2"
+            android:background="#ffededed">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_icon_sob"
+                    android:background="@drawable/login_page_icon_sob"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom" />
+
+                <TextView
+                    android:id="@+id/textview_sob"
+                    android:text="@string/sob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_sob"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_icon_username"
+                    android:background="@drawable/login_page_icon_username"
+                    android:layout_width="30dp"
+                    android:layout_height="36dp"
+                    android:gravity="bottom" />
+
+                <TextView
+                    android:id="@+id/textview_username"
+                    android:text="@string/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_username"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_icon_password"
+                    android:background="@drawable/login_page_icon_password"
+                    android:layout_width="30dp"
+                    android:layout_height="36dp"
+                    android:gravity="bottom" />
+
+                <TextView
+                    android:id="@+id/textview_password"
+                    android:text="@string/password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_password"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/textview_empty_1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="@string/empty"
+                android:visibility="invisible" />
+
+            <CheckBox
+                android:id="@+id/checkbox_remember_password"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="3"
+                android:textSize="16dp"
+                android:text="@string/remember_password" />
+
+            <TextView
+                android:id="@+id/textview_empty_2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="@string/empty"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textview_forgot_password"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="3"
+                android:textSize="16dp"
+                android:text="@string/forgot_password"
+                android:autoLink="web"
+                android:clickable="true"
+                android:onClick="forgotPassword"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_login"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/login"
+                android:textSize="20dp"
+                android:background="#46C50C"
+                android:onClick="login" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

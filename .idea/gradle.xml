@@ -5,10 +5,11 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../install/gradle-1.10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/android" />
+            <option value="$PROJECT_DIR$/mobile" />
             <option value="$PROJECT_DIR$/pad" />
           </set>
         </option>
