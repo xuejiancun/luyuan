@@ -43,7 +43,7 @@ public class LuyuanMainFragment extends Fragment implements View.OnClickListener
         tab_honor_layout.setOnClickListener(this);
         tab_news_layout.setOnClickListener(this);
 
-        // Do not change the order
+        // do not change the order
         tabLayoutList.add(tab_goluyuan_layout);
         tabLayoutList.add(tab_histroy_layout);
         tabLayoutList.add(tab_honor_layout);

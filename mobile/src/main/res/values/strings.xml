@@ -2,13 +2,16 @@
 <resources>
 
     <string name="app_name">掌上绿源</string>
+
     <string name="sob">帐套</string>
     <string name="username">用户</string>
     <string name="password">密码</string>
     <string name="login">立即登录</string>
     <string name="reset_password">重置密码</string>
+
     <string name="refresh">刷新</string>
     <string name="empty">空白</string>
+
     <string name="home">主页</string>
     <string name="function">功能</string>
     <string name="explore">探索</string>

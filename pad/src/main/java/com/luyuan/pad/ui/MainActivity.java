@@ -66,7 +66,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initTab();
 
-        // Check version: version + url
         if (MainApplication.REMEMBER_IF_NEED_UPDATE) {
             checkNewVersion();
         }
@@ -167,9 +166,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 break;
             case R.id.layout_tech:
-                if (seletedIndex != 4) {
-                    clickTechTab();
-                }
+                clickTechTab();
                 break;
             case R.id.layout_luyuan:
                 if (seletedIndex != 5) {

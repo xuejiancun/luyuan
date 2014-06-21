@@ -3,7 +3,7 @@
 
     <string name="app_name">掌上绿源</string>
     <string name="post">回首页</string>
-    <string name="function">潮流车</string>
+    <string name="function">冠军车</string>
     <string name="account">看产品</string>
     <string name="setting">看技术</string>
     <string name="search">搜索</string>
@@ -40,7 +40,7 @@
 
     <string name="goto_home">回首页</string>
     <string name="goto_product">看产品</string>
-    <string name="goto_popular">潮流车</string>
+    <string name="goto_popular">冠军车</string>
     <string name="goto_tech">看技术</string>
     <string name="goto_luyuan">看绿源</string>
 

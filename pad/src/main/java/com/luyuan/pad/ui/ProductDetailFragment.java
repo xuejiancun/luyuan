@@ -68,7 +68,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         tab_car_tech_layout.setOnClickListener(this);
         tab_back_layout.setOnClickListener(this);
 
-        // Do not change the order
+        // do not change the order
         tabLayoutList.add(tab_car_appearance_layout);
         tabLayoutList.add(tab_car_detail_layout);
         tabLayoutList.add(tab_optional_color_layout);

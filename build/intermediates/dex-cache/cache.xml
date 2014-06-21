@@ -8,6 +8,24 @@
         revision="19.1.0"
         sha1="089ca8147c0216f1917d676855d3d3d9cac65cdd"/>
     <item
+        dex="/Users/jackxue/Documents/src/luyuan/pad/build/intermediates/pre-dexed/debug/volley-feba5c327747118f88cac62086cdabf56d174b31.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/pad/libs/volley.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="089ca8147c0216f1917d676855d3d3d9cac65cdd"/>
+    <item
+        dex="/Users/jackxue/Documents/src/luyuan/pad/build/intermediates/pre-dexed/debug/disklrucache-2.0.1-f39c2c351dca0f7e076c47581ee4f376237da499.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/pad/libs/disklrucache-2.0.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="cdfda74b941164bbf3622347940ba0dd88d2dc91"/>
+    <item
+        dex="/Users/jackxue/Documents/src/luyuan/pad/build/intermediates/pre-dexed/debug/gson-2.2.4-46c055a1a00f34e0f2e0ab71600d9f044ca9a4b9.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/pad/libs/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
+    <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/classes-bd5f3f23ccd778fbd92170719f9ff86b67f587ce.jar"
         jar="/Users/jackxue/Documents/src/luyuan/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
         jumboMode="false"

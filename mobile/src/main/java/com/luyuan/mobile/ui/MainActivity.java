@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem actionItem = menu.add("Refresh");
         actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        actionItem.setIcon(R.drawable.ic_action_refresh);
+        actionItem.setIcon(android.R.drawable.ic_notification_overlay);
 
         return true;
     }

@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.luyuan.mobile.R;
 
-public class PostFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

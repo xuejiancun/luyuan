@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview_login_page"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -116,7 +118,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:paddingTop="30dp"
             android:orientation="horizontal"
             android:gravity="center">
@@ -138,6 +140,7 @@
                 android:layout_weight="1"
                 android:text="@string/login"
                 android:textSize="20dp"
+                android:textColor="#FFFFFF"
                 android:background="#46C50C"
                 android:onClick="login" />
 

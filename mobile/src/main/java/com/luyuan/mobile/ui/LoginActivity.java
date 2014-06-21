@@ -6,11 +6,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,7 +27,9 @@ import com.luyuan.mobile.util.RequestManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements View.OnTouchListener {
+
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,27 @@ public class LoginActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
+
+        findViewById(R.id.edittext_sob).setOnTouchListener(this);
+        findViewById(R.id.edittext_username).setOnTouchListener(this);
+        findViewById(R.id.edittext_password).setOnTouchListener(this);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        changeScrollView();
+        return false;
+    }
+
+    private void changeScrollView() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, scrollView.getHeight());
+            }
+        }, 300);
     }
 
     public void login(View view) {
@@ -85,7 +111,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    public void forgotPassword(View view) {
+    public void reset(View view) {
 
     }
 

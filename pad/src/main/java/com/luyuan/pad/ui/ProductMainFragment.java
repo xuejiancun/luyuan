@@ -68,7 +68,7 @@ public class ProductMainFragment extends Fragment implements View.OnClickListene
         tab_replacewalk_layout.setOnClickListener(this);
         tab_special_layout.setOnClickListener(this);
 
-        // Plz do not change the order
+        // do not change the order
         tabLayoutList.add(tab_luxury_layout);
         tabLayoutList.add(tab_simple_layout);
         tabLayoutList.add(tab_standard_layout);
