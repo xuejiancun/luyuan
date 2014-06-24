@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.util.GlobalConstantValues;
+import com.luyuan.mobile.util.MyGlobal;
 
 import java.util.ArrayList;
 
@@ -39,10 +39,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         initTab();
 
-        WebViewFragment webViewFragment = new WebViewFragment();
+        FunctionFragment functionFragment = new FunctionFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        fragmentTransaction.replace(R.id.frame_content, webViewFragment);
+        fragmentTransaction.replace(R.id.frame_content, functionFragment);
         fragmentTransaction.commit();
     }
 
@@ -119,10 +119,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         for (int i = 0; i < tabLayoutList.size(); i++) {
             if (i == index - 1) {
                 tabLayoutList.get(i).setSelected(true);
-                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_SELECTED));
+                tabTextViewList.get(i).setTextColor(Color.parseColor(MyGlobal.COLOR_BOTTOM_TAB_SELECTED));
             } else {
                 tabLayoutList.get(i).setSelected(false);
-                tabTextViewList.get(i).setTextColor(Color.parseColor(GlobalConstantValues.COLOR_BOTTOM_TAB_UNSELECTED));
+                tabTextViewList.get(i).setTextColor(Color.parseColor(MyGlobal.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
     }

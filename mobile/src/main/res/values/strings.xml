@@ -9,7 +9,7 @@
     <string name="login">立即登录</string>
     <string name="reset_password">重置密码</string>
 
-    <string name="refresh">刷新</string>
+    <string name="search">搜索</string>
     <string name="empty">空白</string>
 
     <string name="home">主页</string>
@@ -21,5 +21,20 @@
     <string name="cancel">取消</string>
 
     <string name="dialog_choose_job">请选择岗位</string>
+
+    <string name="network_disconnected">您的网络链接存在问题，请保证网络通畅以后，再重新尝试。</string>
+    <string name="fetch_data_error">应用程序读取数据失败，请稍后再试。</string>
+    <string name="fetch_data_empty">暂未添加图片，请稍后再试。</string>
+    <string name="app_param_error">应用程序页面参数传输出错，请稍后再试。</string>
+    <string name="dialog_hint">提示</string>
+    <string name="dialog_confirm">确定</string>
+    <string name="dialog_cancel">取消</string>
+
+    <string name="dialog_hint_new_version">系统有新版本发布，需要现在更新？</string>
+    <string name="dialog_downloading_file">正在下载更新文件...</string>
+    <string name="dialog_download_error">下载更新文件失败，请稍后再试。</string>
+
+    <string name="function_warehouse_vouchar_manager">采购入库单管理</string>
+    <string name="hint_enter_purchase_order_no">请输入采购订单号</string>
 
 </resources>

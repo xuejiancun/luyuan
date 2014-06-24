@@ -20,7 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.util.GlobalConstantValues;
+import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.RequestManager;
 
@@ -65,7 +65,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         String username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        StringBuffer url = new StringBuffer(GlobalConstantValues.API_LOGIN);
+        StringBuffer url = new StringBuffer(MyGlobal.API_LOGIN);
         url.append("&Sid=" + sob + "&LoginName=" + username + "&sha1=" + MD5Util.encode(password + username + "089"));
 
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
