@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class ImagePagerFragment extends Fragment {
 
     private int imageNum;
+    private int index;
     private ArrayList<String> urls;
 
     private ViewGroup rootView;
@@ -44,40 +46,43 @@ public class ImagePagerFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.getString(GlobalConstantValues.PARAM_API_URL) != null) {
             api = args.getString(GlobalConstantValues.PARAM_API_URL);
-        } else {
-            Dialog alertDialog = new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.app_param_error)
-                    .setTitle(R.string.dialog_hint)
-                    .setPositiveButton(R.string.dialog_confirm, null)
-                    .create();
-            alertDialog.show();
-        }
 
-        if (!api.isEmpty() && GlobalConstantValues.checkNetworkConnection(getActivity())) {
+            if (!api.isEmpty() && GlobalConstantValues.checkNetworkConnection(getActivity())) {
 
-            GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, api,
-                    ImagePager.class, new Response.Listener<ImagePager>() {
-                @Override
-                public void onResponse(ImagePager response) {
-                    if (response != null && response.getSuccess().equals("true")) {
-                        urls = getImageUrls(response);
-                        imageNum = urls.size();
+                GsonRequest gsonObjRequest = new GsonRequest<ImagePager>(Request.Method.GET, api,
+                        ImagePager.class, new Response.Listener<ImagePager>() {
+                    @Override
+                    public void onResponse(ImagePager response) {
+                        if (response != null && response.getSuccess().equals("true")) {
+                            urls = getImageUrls(response);
+                            imageNum = urls.size();
 
-                        if (imageNum == 0) {
+                            if (imageNum == 0) {
+                                Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                                        .setMessage(R.string.fetch_data_empty)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create();
+                                alertDialog.show();
+                            }
+
+                            pager = (ViewPager) ImagePagerFragment.this.rootView.findViewById(R.id.image_pager);
+                            pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+                            pager.setAdapter(pagerAdapter);
+                            pager.setPageTransformer(true, new DepthPageTransformer());
+
+                        } else {
                             Dialog alertDialog = new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.fetch_data_empty)
+                                    .setMessage(R.string.fetch_data_error)
                                     .setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null)
                                     .create();
                             alertDialog.show();
                         }
-
-                        pager = (ViewPager) ImagePagerFragment.this.rootView.findViewById(R.id.image_pager);
-                        pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
-                        pager.setAdapter(pagerAdapter);
-                        pager.setPageTransformer(true, new DepthPageTransformer());
-
-                    } else {
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
                         Dialog alertDialog = new AlertDialog.Builder(getActivity())
                                 .setMessage(R.string.fetch_data_error)
                                 .setTitle(R.string.dialog_hint)
@@ -86,20 +91,41 @@ public class ImagePagerFragment extends Fragment {
                         alertDialog.show();
                     }
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Dialog alertDialog = new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.fetch_data_error)
-                            .setTitle(R.string.dialog_hint)
-                            .setPositiveButton(R.string.dialog_confirm, null)
-                            .create();
-                    alertDialog.show();
-                }
-            }
-            );
+                );
 
-            RequestManager.getRequestQueue().add(gsonObjRequest);
+                RequestManager.getRequestQueue().add(gsonObjRequest);
+                gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        GlobalConstantValues.CONNECTION_TIMEOUT_MS,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            }
+
+        } else if (args != null && args.getStringArrayList(GlobalConstantValues.PARAM_IMAGE_URL_LIST) != null) {
+            index = args.getInt(GlobalConstantValues.PARAM_IMAGE_INDEX);
+            urls = args.getStringArrayList(GlobalConstantValues.PARAM_IMAGE_URL_LIST);
+            imageNum = 1;
+
+            if (imageNum == 0) {
+                Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.fetch_data_empty)
+                        .setTitle(R.string.dialog_hint)
+                        .setPositiveButton(R.string.dialog_confirm, null)
+                        .create();
+                alertDialog.show();
+            }
+
+            pager = (ViewPager) ImagePagerFragment.this.rootView.findViewById(R.id.image_pager);
+            pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
+            pager.setAdapter(pagerAdapter);
+            pager.setPageTransformer(true, new DepthPageTransformer());
+
+        } else {
+            Dialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.app_param_error)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create();
+            alertDialog.show();
         }
 
         return rootView;
@@ -112,7 +138,13 @@ public class ImagePagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ImageSlideFragment.create(position, urls.get(position));
+            int current = (imageNum == 1) ? index : position;
+            return ImageSlideFragment.create(current, urls.get(current));
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
         }
 
         @Override

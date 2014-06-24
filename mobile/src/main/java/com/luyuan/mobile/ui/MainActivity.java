@@ -2,6 +2,7 @@ package com.luyuan.mobile.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +38,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
         initTab();
+
+        WebViewFragment webViewFragment = new WebViewFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        fragmentTransaction.replace(R.id.frame_content, webViewFragment);
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -21,16 +21,22 @@
             android:name="com.luyuan.mobile.ui.WelcomeActivity"
             android:theme="@style/MyTheme.WelcomePage.Background"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name="com.luyuan.mobile.ui.MainActivity"
+            android:parentActivityName="com.luyuan.mobile.ui.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.luyuan.mobile.ui.MainActivity"
-            android:parentActivityName="com.luyuan.mobile.ui.LoginActivity"
-            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="com.luyuan.mobile.util.FileContentProvider"
+            android:authorities="com.example.fileprovider" />
     </application>
 
 </manifest>

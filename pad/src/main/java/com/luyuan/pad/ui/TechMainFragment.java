@@ -13,23 +13,27 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.luyuan.pad.R;
-import com.luyuan.pad.model.TechIconData;
+import com.luyuan.pad.model.TechData;
+import com.luyuan.pad.model.TechInfo;
 import com.luyuan.pad.util.GlobalConstantValues;
 import com.luyuan.pad.util.GsonRequest;
 import com.luyuan.pad.util.ImageCacheManager;
 import com.luyuan.pad.util.RequestManager;
+
+import java.util.ArrayList;
 
 public class TechMainFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private GridView gridView;
     private LayoutInflater layoutInflater;
 
-    private TechIconData techIconData;
+    private TechData techData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
         gridView = (GridView) view.findViewById(R.id.gridview_tech_list);
 
         if (GlobalConstantValues.checkNetworkConnection(getActivity())) {
-            fetchTechIconData(GlobalConstantValues.API_TECH_ICON);
+            fetchTechIconData(GlobalConstantValues.API_TECH_DATA);
         }
 
         return view;
@@ -52,7 +56,8 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(GlobalConstantValues.PARAM_API_URL, GlobalConstantValues.API_TECH_IMAGE);
+        args.putStringArrayList(GlobalConstantValues.PARAM_IMAGE_URL_LIST, getImageUrls());
+        args.putInt(GlobalConstantValues.PARAM_IMAGE_INDEX, position);
         imagePagerFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, imagePagerFragment);
@@ -68,7 +73,7 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
         }
 
         public int getCount() {
-            return techIconData.getImageSlides().size();
+            return techData.getTechInfos().size();
         }
 
         public Object getItem(int position) {
@@ -85,19 +90,19 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
             NetworkImageView imageView = (NetworkImageView) view.findViewById(R.id.imageview_tech_icon);
             imageView.setDefaultImageResId(R.drawable.loading_small);
             imageView.setErrorImageResId(R.drawable.error_small);
-            imageView.setImageUrl(techIconData.getImageSlides().get(position).getUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
+            imageView.setImageUrl(techData.getTechInfos().get(position).getIconUrl(), ImageCacheManager.getInstance().getSmallImageLoader());
 
             return view;
         }
     }
 
     public void fetchTechIconData(String url) {
-        GsonRequest gsonObjRequest = new GsonRequest<TechIconData>(Request.Method.GET, url,
-                TechIconData.class, new Response.Listener<TechIconData>() {
+        GsonRequest gsonObjRequest = new GsonRequest<TechData>(Request.Method.GET, url,
+                TechData.class, new Response.Listener<TechData>() {
             @Override
-            public void onResponse(TechIconData response) {
+            public void onResponse(TechData response) {
                 if (response != null && response.getSuccess().equals("true")) {
-                    techIconData = response;
+                    techData = response;
                     gridView.setAdapter(new ImageAdapter(getActivity()));
                     gridView.setOnItemClickListener(TechMainFragment.this);
                 } else {
@@ -124,6 +129,18 @@ public class TechMainFragment extends Fragment implements AdapterView.OnItemClic
         );
 
         RequestManager.getRequestQueue().add(gsonObjRequest);
+        gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                GlobalConstantValues.CONNECTION_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    public ArrayList<String> getImageUrls() {
+        ArrayList<String> result = new ArrayList<String>();
+        for (TechInfo techinfo : techData.getTechInfos()) {
+            result.add(techinfo.getImageUrl().trim());
+        }
+        return result;
     }
 
 }

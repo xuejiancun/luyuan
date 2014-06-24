@@ -22,6 +22,7 @@ public class GlobalConstantValues {
     public static final String PARAM_API_URL = "PARAM_API_URL";
     public static final String PARAM_IMAGE_INDEX = "PARAM_IMAGE_INDEX";
     public static final String PARAM_IMAGE_URL = "PARAM_IMAGE_URL";
+    public static final String PARAM_IMAGE_URL_LIST = "PARAM_IMAGE_URL_LIST";
 
     public static final String TAB_LUXURY_CAR = "TAB_LUXURY_CAR";
     public static final String TAB_SIMPLE_CAR = "TAB_SIMPLE_CAR";
@@ -43,8 +44,7 @@ public class GlobalConstantValues {
     public static final String URL_LUYUAN_NEWS = "http://luyuan.cn/lyzs.aspx";
 
     public static final String API_POPULAR_CAR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=popularslide";
-    public static final String API_TECH_IMAGE = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techslide";
-    public static final String API_TECH_ICON = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techicon";
+    public static final String API_TECH_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=techdata";
     public static final String API_BRAND_HONOR = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=brandhonorslides";
 
     public static final String API_PRODUCT_THUMB_LUXURY = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=productthumb&typeid=22";
@@ -62,6 +62,8 @@ public class GlobalConstantValues {
 
     public static final String API_SEARCH_DATA = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=searchdata";
     public static final String API_CHECK_VERSION = "http://www.luyuan.cn/LuyuanAPI/Ajax/action.ashx?fn=getversion";
+
+    public static final int CONNECTION_TIMEOUT_MS = 1500;
 
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;
