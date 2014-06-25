@@ -68,27 +68,4 @@ public class WebViewFragment extends Fragment {
         return view;
     }
 
-    private final class FooViewClient extends WebViewClient {
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-//            String jscontent = "";
-//            try {
-//                InputStream is = getActivity().getAssets().open("jstest.js"); //am = Activity.getAssets()
-//                InputStreamReader isr = new InputStreamReader(is);
-//                BufferedReader br = new BufferedReader(isr);
-//
-//                String line;
-//                while ((line = br.readLine()) != null) {
-//                    jscontent += line;
-//                }
-//                is.close();
-//            } catch (Exception e) {
-//            }
-//            view.loadUrl("javascript:(" + jscontent + ")()");
-            view.loadUrl(url);
-        }
-
-    }
-
 }

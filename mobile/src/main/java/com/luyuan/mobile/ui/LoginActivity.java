@@ -2,7 +2,6 @@ package com.luyuan.mobile.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,22 +13,24 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.model.JobData;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
+import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends Activity implements View.OnTouchListener {
 
     ScrollView scrollView;
+
+    int jobIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,48 +67,75 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
         StringBuffer url = new StringBuffer(MyGlobal.API_LOGIN);
-        url.append("&Sid=" + sob + "&LoginName=" + username + "&sha1=" + MD5Util.encode(password + username + "089"));
+        url.append("&sob=" + sob + "&username=" + username + "&password=" + MD5Util.encode(password + username + "089"));
 
-        JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
-                url.toString(), null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        String state = "";
-                        try {
-                            state = response.getString("return_");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (state.equals("ok")) {
-                            // choose job dialog, if only one item, do not show, choose it by default.
-                            Dialog dialog = new AlertDialog.Builder(LoginActivity.this)
-                                    .setTitle(R.string.dialog_choose_job)
-                                    .setSingleChoiceItems(new CharSequence[]{"A", "B", "C"}, 0, null)
-                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.cancel, null)
-                                    .create();
+        if (MyGlobal.checkNetworkConnection(this)) {
 
-                            dialog.show();
-                        } else {
-                            Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
-                            findViewById(R.id.edittext_password).startAnimation(shake);
+            GsonRequest gsonObjRequest = new GsonRequest<JobData>(Request.Method.GET, url.toString(),
+                    JobData.class, new Response.Listener<JobData>() {
+                @Override
+                public void onResponse(JobData response) {
+                    if (response != null && response.getSuccess().equals("true")) {
+                        CharSequence[] jobList = new CharSequence[]{};
+
+                        int count = response.getJobInfos().size();
+                        for (int i = 0; i < count; i++) {
+                            jobList[i] = response.getJobInfos().get(i).getJobName();
                         }
+
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle(R.string.dialog_choose_job)
+                                .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        jobIndex = which;
+                                        Toast.makeText(LoginActivity.this, "choose" + jobIndex, Toast.LENGTH_SHORT).show();
+
+                                    }
+                                })
+                                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("", "");
+                                        startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, null)
+                                .create()
+                                .show();
+                    } else if (response != null && response.getSuccess().equals("false_username_error")) {
+                        Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
+                        findViewById(R.id.edittext_username).startAnimation(shake);
+                    } else if (response != null && response.getSuccess().equals("false_password_error")) {
+                        Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
+                        findViewById(R.id.edittext_password).startAnimation(shake);
+                    } else {
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.fetch_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
                     }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setMessage(R.string.fetch_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                }
             }
-        }
-        );
+            );
 
-        RequestManager.getRequestQueue().add(jsonObjRequest);
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MyGlobal.CONNECTION_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        }
 
     }
 

@@ -16,7 +16,7 @@ public class MyGlobal {
     public static final String PARAM_API_URL = "PARAM_API_URL";
 
 
-    public static final String API_LOGIN = "http://192.168.10.100:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=login";
+    public static final String API_LOGIN = "http://192.168.10.100:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
 
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getordercode_app";
 

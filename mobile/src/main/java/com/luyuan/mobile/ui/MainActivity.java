@@ -44,6 +44,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         fragmentTransaction.replace(R.id.frame_content, functionFragment);
         fragmentTransaction.commit();
+
+        // TODO
+        // check if has app new version ~
     }
 
     @Override
