@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
+import com.luyuan.mobile.model.JobInfo;
+import com.luyuan.mobile.model.User;
 
 public class MyGlobal {
 
@@ -16,9 +19,10 @@ public class MyGlobal {
     public static final String PARAM_API_URL = "PARAM_API_URL";
 
 
-    public static final String API_LOGIN = "http://192.168.10.100:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_FETCH_LOGIN = "http://192.168.10.60:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_FETCH_FUNCTION = "http://192.168.10.60:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
 
-    public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getordercode_app";
+    public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 
     public static final int CONNECTION_TIMEOUT_MS = 1500;
 
@@ -42,6 +46,49 @@ public class MyGlobal {
             result = false;
         }
         return result;
+    }
+
+    public static Class getFunctionActivity(String functionCode) {
+        Class clz = null;
+
+        if (functionCode.equals("WarehouseVoucherManager")) {
+            clz = WarehouseVoucherManagerActivity.class;
+        } else {
+            // TODO
+        }
+
+        return clz;
+    }
+
+    public static int getFunctionIcon(String functionCode) {
+        int resId = 0;
+
+        if (functionCode.equals("WarehouseVoucherManager")) {
+            resId = R.drawable.ic_tab_function;
+        } else {
+            // TODO
+        }
+
+        return resId;
+    }
+
+    private static User user = new User();
+    private static JobInfo jobInfo = new JobInfo();
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        MyGlobal.user = user;
+    }
+
+    public static JobInfo getJobInfo() {
+        return jobInfo;
+    }
+
+    public static void setJobInfo(JobInfo jobInfo) {
+        MyGlobal.jobInfo = jobInfo;
     }
 
 }

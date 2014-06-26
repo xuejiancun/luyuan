@@ -18,14 +18,7 @@
         <activity
             android:name="com.luyuan.mobile.ui.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.luyuan.mobile.ui.WelcomeActivity"
             android:theme="@style/MyTheme.WelcomePage.Background"
@@ -39,7 +32,13 @@
         <activity
             android:name="com.luyuan.mobile.function.WarehouseVoucherManagerActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

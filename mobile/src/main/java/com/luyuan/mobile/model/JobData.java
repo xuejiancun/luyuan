@@ -5,7 +5,7 @@ import java.util.List;
 
 public class JobData {
 
-    private String success;
+    private String success = "";
     private List<JobInfo> jobInfos = new ArrayList<JobInfo>();
 
     public String getSuccess() {

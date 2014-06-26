@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:descendantFocusability="beforeDescendants">
+
+        <CheckBox
+            android:id="@+id/checkbox_confirm_selection"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TableLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_item_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:text="编号" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_item_spec"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="规格描述XXXXXXXXX" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="订单数" />
+
+                <TextView
+                    android:id="@+id/textview_order_num"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="300" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="发货数" />
+
+                <TextView
+                    android:id="@+id/textview_delivery_num"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="300" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/edittext_confirm_num"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:gravity="bottom"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

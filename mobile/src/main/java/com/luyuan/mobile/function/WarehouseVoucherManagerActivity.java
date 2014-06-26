@@ -10,7 +10,6 @@ import android.view.Window;
 import android.widget.SearchView;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.ui.SearchDataFragment;
 import com.luyuan.mobile.util.MyGlobal;
 
 public class WarehouseVoucherManagerActivity extends Activity implements SearchView.OnQueryTextListener {
@@ -28,8 +27,6 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         actionBar.setTitle(R.string.function_warehouse_vouchar_manager);
 
         setContentView(R.layout.activity_warehouse_voucher_manager);
-
-        rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH);
     }
 
     @Override
@@ -55,14 +52,14 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
     }
 
     private void rePlaceTabContentForSearch(String api) {
-        SearchDataFragment searchDataFragment = new SearchDataFragment();
+        WarehouseVoucherSearchFragment warehouseVoucherSearchFragment = new WarehouseVoucherSearchFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString(MyGlobal.PARAM_API_URL, api);
-        searchDataFragment.setArguments(args);
+        warehouseVoucherSearchFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, searchDataFragment);
+        fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherSearchFragment);
         fragmentTransaction.commit();
     }
 

@@ -2,11 +2,11 @@ package com.luyuan.mobile.model;
 
 public class FunctionInfo {
 
-    private String id;
-    private String parentId;
-    private String code;
-    private String name;
-    private String desc;
+    private String id = "";
+    private String parentId = "";
+    private String code = "";
+    private String name = "";
+    private String desc = "";
 
     public String getId() {
         return id;

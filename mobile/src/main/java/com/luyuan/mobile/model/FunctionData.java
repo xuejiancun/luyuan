@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FunctionData {
 
-    private String success;
+    private String success = "";
     private List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
 
     public String getSuccess() {

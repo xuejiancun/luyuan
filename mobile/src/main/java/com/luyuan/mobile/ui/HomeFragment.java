@@ -11,28 +11,33 @@ import android.widget.ListView;
 
 import com.luyuan.mobile.R;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_warehouse_voucher_manager, null);
-        final ListView listView = (ListView) view.findViewById(R.id.listview_search_data);
+        View view = inflater.inflate(R.layout.fragment_home, null);
+        listView = (ListView) view.findViewById(R.id.listview_function_list);
 
         String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2"};
 
-        ArrayAdapter<String> files = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
+        ArrayAdapter<String> files = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, values);
 
         listView.setAdapter(files);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-        });
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.setOnItemClickListener(this);
 
         return view;
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        listView.setItemChecked(i, true);
+    }
+
 }

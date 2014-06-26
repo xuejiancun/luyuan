@@ -66,7 +66,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         String username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        StringBuffer url = new StringBuffer(MyGlobal.API_LOGIN);
+        StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
         url.append("&sob=" + sob + "&username=" + username + "&password=" + MD5Util.encode(password + username + "089"));
 
         if (MyGlobal.checkNetworkConnection(this)) {
