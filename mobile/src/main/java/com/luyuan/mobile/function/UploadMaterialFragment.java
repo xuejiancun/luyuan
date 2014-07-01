@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -22,15 +22,20 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
+import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.ZipUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 public class UploadMaterialFragment extends Fragment {
@@ -39,11 +44,15 @@ public class UploadMaterialFragment extends Fragment {
 
     private Gallery gallery;
     private Uri imageUri;
-    private final ArrayList<String> imagePaths = new ArrayList<String>();
-    private final ArrayList<Bitmap> images = new ArrayList<Bitmap>();
+    private final ArrayList<String> filePaths = new ArrayList<String>();
+    private final ArrayList<Bitmap> fileThumbs = new ArrayList<Bitmap>();
 
     private final int FROM_CAMERA = 1;
     private final int FROM_PHOTO = 2;
+    private final int FROM_VIDEO = 3;
+    private final int FROM_AUDIO = 4;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,17 +63,18 @@ public class UploadMaterialFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final CharSequence[] items = new CharSequence[]{getText(R.string.from_camera), getText(R.string.from_photo)
-                        , getText(R.string.from_camera), getText(R.string.from_photo)};
+                        , getText(R.string.from_video), getText(R.string.from_audio)};
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.choose_file)
                         .setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                                     String name = "IMG_" + sdf.format(new Date()) + ".jpg";
-                                    File dir = new File(Environment.getExternalStorageDirectory() + "/luyuan/camera/");
-                                    dir.mkdirs();
+                                    File dir = new File(MyGlobal.CAMERA_PATH);
+                                    if (!dir.exists()) {
+                                        dir.mkdirs();
+                                    }
                                     File file = new File(dir, name);
                                     imageUri = Uri.fromFile(file);
                                     Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -77,11 +87,11 @@ public class UploadMaterialFragment extends Fragment {
                                 } else if (which == 2) {
                                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                     intent.setType("video/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select video"), FROM_PHOTO);
+                                    startActivityForResult(Intent.createChooser(intent, "Select video"), FROM_VIDEO);
                                 } else if (which == 3) {
                                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                     intent.setType("audio/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select audio"), FROM_PHOTO);
+                                    startActivityForResult(Intent.createChooser(intent, "Select audio"), FROM_AUDIO);
                                 }
                             }
                         })
@@ -94,14 +104,30 @@ public class UploadMaterialFragment extends Fragment {
         ((Button) view.findViewById(R.id.button_submit_material_upload_material)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (String path : imagePaths) {
+                // compress files
+                File dir = new File(MyGlobal.COMPRESS_PATH);
+                if (!dir.exists() || !dir.isDirectory()) {
+                    dir.mkdirs();
+                }
+                File compressed = new File(dir, "ZIP_" + sdf.format(new Date()) + ".zip");
+
+                Collection<File> files = new ArrayList<File>();
+                for (String path : filePaths) {
                     File file = new File(path);
-                    if (file.exists()) {
-                        post = new HttpMultipartPost(getActivity(), path);
-                        post.execute();
-                    } else {
-                        // Toast.makeText(getActivity(), "file not exists", Toast.LENGTH_LONG).show();
-                    }
+                    files.add(file);
+                }
+
+                try {
+                    ZipUtils.zipFiles(files, compressed);
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                if (compressed.exists()) {
+                    post = new HttpMultipartPost(getActivity(), compressed.getAbsolutePath());
+                    post.execute();
+                } else {
+                    Toast.makeText(getActivity(), "file not exists", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -130,8 +156,8 @@ public class UploadMaterialFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        images.remove(info.position);
-        imagePaths.remove(info.position);
+        fileThumbs.remove(info.position);
+        filePaths.remove(info.position);
         gallery.setAdapter(new ImageAdapter(getActivity()));
         return true;
     }
@@ -141,37 +167,69 @@ public class UploadMaterialFragment extends Fragment {
         if (resultCode != getActivity().RESULT_OK) {
             return;
         }
-        String path = "";
+        Uri uri = null;
+        String filePath = "";
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        Bitmap bitmap = null;
+
         switch (requestCode) {
             case FROM_CAMERA:
-                path = imageUri.getPath();
-
+                filePath = imageUri.getPath();
+                bitmap = BitmapFactory.decodeFile(filePath, options);
                 break;
+
             case FROM_PHOTO:
-                Uri uri = data.getData();
+                uri = data.getData();
                 if (uri == null) {
                     return;
                 }
                 try {
-                    path = FileUtilities.getPath(getActivity(), uri);
+                    filePath = FileUtilities.getPath(getActivity(), uri);
                 } catch (URISyntaxException e) {
                 }
+                bitmap = BitmapFactory.decodeFile(filePath, options);
+                break;
+
+            case FROM_VIDEO:
+                uri = data.getData();
+                if (uri == null) {
+                    return;
+                }
+                try {
+                    filePath = FileUtilities.getPath(getActivity(), uri);
+                } catch (URISyntaxException e) {
+                }
+                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.video)).getBitmap();
+
+                break;
+
+            case FROM_AUDIO:
+                uri = data.getData();
+                if (uri == null) {
+                    return;
+                }
+                try {
+                    filePath = FileUtilities.getPath(getActivity(), uri);
+                } catch (URISyntaxException e) {
+                }
+                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.audio)).getBitmap();
+
                 break;
         }
-        if (!path.isEmpty()) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            Bitmap bm = BitmapFactory.decodeFile(path, options);
-            images.add(0, bm);
-            imagePaths.add(0, path);
-            gallery.setAdapter(new ImageAdapter(getActivity()));
+        if (!filePath.isEmpty()) {
+            filePaths.add(0, filePath);
         }
+        fileThumbs.add(0, bitmap);
+        gallery.setAdapter(new ImageAdapter(getActivity()));
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     public class ImageAdapter extends BaseAdapter {
-        private static final int ITEM_WIDTH = 140;
-        private static final int ITEM_HEIGHT = 90;
+        private static final int ITEM_WIDTH = 100;
+        private static final int ITEM_HEIGHT = 100;
 
         private final int mGalleryItemBackground;
         private final Context mContext;
@@ -188,7 +246,7 @@ public class UploadMaterialFragment extends Fragment {
         }
 
         public int getCount() {
-            return images.size();
+            return fileThumbs.size();
         }
 
         public Object getItem(int position) {
@@ -216,7 +274,7 @@ public class UploadMaterialFragment extends Fragment {
                 imageView = (ImageView) convertView;
             }
 
-            imageView.setImageBitmap(images.get(position));
+            imageView.setImageBitmap(fileThumbs.get(position));
 
             return imageView;
         }

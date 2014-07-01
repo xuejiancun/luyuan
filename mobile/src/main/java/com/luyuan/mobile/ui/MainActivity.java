@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -45,15 +44,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
         fragmentTransaction.replace(R.id.frame_content, functionFragment);
         fragmentTransaction.commit();
 
+        changeTabBackStyle(2);
+
         // TODO
         // check if has app new version ~
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem actionItem = menu.add("Refresh");
-        actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        actionItem.setIcon(android.R.drawable.ic_notification_overlay);
+//        MenuItem actionItem = menu.add("Refresh");
+//        actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        actionItem.setIcon(android.R.drawable.ic_notification_overlay);
 
         return true;
     }

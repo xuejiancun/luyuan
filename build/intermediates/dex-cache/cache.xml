@@ -2,12 +2,6 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/gson-2.2.4-25231ff3c4985ece4cdc225d9a492d75908ddb38.jar"
-        jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/gson-2.2.4.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
-    <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/volley-9c67f33a2bd9339fa2736aceeeda0b3c7448053f.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/volley.jar"
         jumboMode="false"
@@ -20,16 +14,22 @@
         revision="19.1.0"
         sha1="ed8b5ee0167cb27dea55851259eb34b609f31df0"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/gson-2.2.4-25231ff3c4985ece4cdc225d9a492d75908ddb38.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/gson-2.2.4.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
     <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/classes-bd5f3f23ccd778fbd92170719f9ff86b67f587ce.jar"
         jar="/Users/jackxue/Documents/src/luyuan/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
 
 </pre-dex-items>

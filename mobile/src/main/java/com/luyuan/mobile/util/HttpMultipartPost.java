@@ -31,7 +31,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
     protected void onPreExecute() {
         pd = new ProgressDialog(context);
         pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pd.setMessage("Uploading Picture...");
+        pd.setMessage("上传资料中..."); // TODO need retrieve from strings.xml
         pd.setCancelable(false);
         pd.show();
     }
@@ -42,7 +42,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext httpContext = new BasicHttpContext();
-        HttpPost httpPost = new HttpPost("http://www.xx.com/upload.php");
+        HttpPost httpPost = new HttpPost("http://pic2.luyuan.cn/upload4app.aspx");
 
         try {
             CustomMultipartEntity multipartContent = new CustomMultipartEntity(
@@ -54,11 +54,9 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
                     }
             );
 
-            // We use FileBody to transfer an image
-            multipartContent.addPart("data", new FileBody(new File(filePath)));
+            multipartContent.addPart("file", new FileBody(new File(filePath)));
             totalSize = multipartContent.getContentLength();
 
-            // Send it
             httpPost.setEntity(multipartContent);
             HttpResponse response = httpClient.execute(httpPost, httpContext);
             serverResponse = EntityUtils.toString(response.getEntity());

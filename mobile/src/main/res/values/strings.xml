@@ -56,9 +56,13 @@
     <string name="attach_file">附件</string>
     <string name="choose_file">选择文件</string>
     <string name="from_camera">拍照</string>
-    <string name="from_photo">从手机相册选择</string>
+    <string name="from_photo">相册</string>
+    <string name="from_video">视频</string>
+    <string name="from_audio">音频</string>
     <string name="submit">提交</string>
+    <string name="uploading">上传资料中...</string>
     <string name="delete">删除</string>
 
+    <string name="sales_tactical_report">销售战报</string>
 
 </resources>

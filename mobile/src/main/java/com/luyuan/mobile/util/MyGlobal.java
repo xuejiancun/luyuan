@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
@@ -23,6 +24,9 @@ public class MyGlobal {
     public static final String API_FETCH_FUNCTION = "http://192.168.10.60:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
 
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
+
+    public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
+    public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
 
     public static final int CONNECTION_TIMEOUT_MS = 1500;
 

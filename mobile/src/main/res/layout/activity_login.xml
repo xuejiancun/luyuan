@@ -30,8 +30,8 @@
                 <TextView
                     android:id="@+id/textview_icon_sob"
                     android:background="@drawable/login_page_icon_sob"
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:gravity="bottom" />
 
                 <TextView
@@ -62,8 +62,8 @@
                 <TextView
                     android:id="@+id/textview_icon_username"
                     android:background="@drawable/login_page_icon_username"
-                    android:layout_width="30dp"
-                    android:layout_height="36dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:gravity="bottom" />
 
                 <TextView
@@ -91,8 +91,8 @@
                 <TextView
                     android:id="@+id/textview_icon_password"
                     android:background="@drawable/login_page_icon_password"
-                    android:layout_width="30dp"
-                    android:layout_height="36dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:gravity="bottom" />
 
                 <TextView
