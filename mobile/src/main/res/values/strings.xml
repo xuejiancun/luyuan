@@ -46,4 +46,19 @@
     <string name="save">保存</string>
     <string name="check">送检</string>
 
+    <string name="function_upload_material">资料上传管理</string>
+    <string name="material_name">资料名称</string>
+    <string name="material_remarks">资料备注</string>
+    <string name="material_state">结办状态</string>
+    <string name="material_date">提交时间</string>
+    <string name="material_feedback">反馈内容</string>
+
+    <string name="attach_file">附件</string>
+    <string name="choose_file">选择文件</string>
+    <string name="from_camera">拍照</string>
+    <string name="from_photo">从手机相册选择</string>
+    <string name="submit">提交</string>
+    <string name="delete">删除</string>
+
+
 </resources>

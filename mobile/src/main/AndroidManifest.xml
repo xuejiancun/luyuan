@@ -26,11 +26,13 @@
         <activity
             android:name="com.luyuan.mobile.ui.MainActivity"
             android:parentActivityName="com.luyuan.mobile.ui.LoginActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.luyuan.mobile.function.WarehouseVoucherManagerActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".function.UploadMaterialActivity"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
