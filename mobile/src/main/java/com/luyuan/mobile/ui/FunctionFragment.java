@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.function.SalesTacticalReport;
+import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.model.FunctionData;
@@ -59,6 +60,16 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), UploadMaterialActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout layout_function_7 = (LinearLayout) view.findViewById(R.id.layout_function_7);
+        layout_function_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ScheduleManagerActivity.class);
                 startActivity(intent);
             }
         });

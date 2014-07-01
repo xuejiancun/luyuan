@@ -42,7 +42,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext httpContext = new BasicHttpContext();
-        HttpPost httpPost = new HttpPost("http://pic2.luyuan.cn/upload4app.aspx");
+        HttpPost httpPost = new HttpPost("http://pic2.luyuan.cn/upload4app.ashx");
 
         try {
             CustomMultipartEntity multipartContent = new CustomMultipartEntity(

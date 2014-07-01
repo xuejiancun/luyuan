@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="20dp"
             android:layout_gravity="right"
             android:src="@drawable/function_list_forward" />
 
@@ -75,7 +75,7 @@
             android:padding="5dp"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/function_sales"
+            android:src="@drawable/function_upload"
             android:scaleType="fitCenter" />
 
         <TableLayout
@@ -112,7 +112,7 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="20dp"
             android:layout_gravity="right"
             android:src="@drawable/function_list_forward" />
 
@@ -132,7 +132,7 @@
             android:padding="5dp"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/function_upload"
+            android:src="@drawable/function_sales"
             android:scaleType="fitCenter" />
 
         <TableLayout
@@ -169,7 +169,64 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="20dp"
+            android:layout_gravity="right"
+            android:src="@drawable/function_list_forward" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_function_7"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/imageview_function_icon_7"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/function_upload"
+            android:scaleType="fitCenter" />
+
+        <TableLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_funciton_name_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="日程管理" />
+
+            </TableRow>
+
+            <TableRow android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/textview_funciton_desc_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="描述信息" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <ImageView
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="20dp"
             android:layout_gravity="right"
             android:src="@drawable/function_list_forward" />
 

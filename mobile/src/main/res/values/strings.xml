@@ -65,4 +65,12 @@
 
     <string name="sales_tactical_report">销售战报</string>
 
+    <string name="function_schedule_manager">日程管理</string>
+
+    <string name="day_name_format">EEE</string>
+    <string name="invalid_date">Date must be between %1$s and %2$s.</string>
+    <string name="month_name_format">MMMM yyyy</string>
+
+    <string name="choose_date">Choose Date</string>
+
 </resources>
