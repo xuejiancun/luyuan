@@ -38,13 +38,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         initTab();
 
-        FunctionFragment functionFragment = new FunctionFragment();
+        HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        fragmentTransaction.replace(R.id.frame_content, functionFragment);
+        fragmentTransaction.replace(R.id.frame_content, homeFragment);
         fragmentTransaction.commit();
 
-        changeTabBackStyle(2);
+        changeTabBackStyle(1);
 
         // TODO
         // check if has app new version ~

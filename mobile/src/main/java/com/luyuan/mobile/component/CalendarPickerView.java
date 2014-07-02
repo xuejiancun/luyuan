@@ -1,4 +1,3 @@
-// Copyright 2012 Square, Inc.
 package com.luyuan.mobile.component;
 
 import android.content.Context;
@@ -36,52 +35,34 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.SECOND;
 import static java.util.Calendar.YEAR;
 
-/**
- * Android component to allow picking a date from a calendar view (a list of months).  Must be
- * initialized after inflation with {@link #init(java.util.Date, java.util.Date)} and can be customized with any of the
- * {@link FluentInitializer} methods returned.  The currently selected date can be retrieved with
- * {@link #getSelectedDate()}.
- */
 public class CalendarPickerView extends ListView {
+
     public enum SelectionMode {
-        /**
-         * Only one date will be selectable.  If there is already a selected date and you select a new
-         * one, the old date will be unselected.
-         */
         SINGLE,
-        /**
-         * Multiple dates will be selectable.  Selecting an already-selected date will un-select it.
-         */
         MULTIPLE,
-        /**
-         * Allows you to select a date range.  Previous selections are cleared when you either:
-         * <ul>
-         * <li>Have a range selected and select another date (even if it's in the current range).</li>
-         * <li>Have one date selected and then select an earlier date.</li>
-         * </ul>
-         */
         RANGE
     }
 
     private final CalendarPickerView.MonthAdapter adapter;
-    private final List<List<List<MonthCellDescriptor>>> cells =
-            new ArrayList<List<List<MonthCellDescriptor>>>();
+    private final List<List<List<MonthCellDescriptor>>> cells = new ArrayList<List<List<MonthCellDescriptor>>>();
+
     final MonthView.Listener listener = new CellClickedListener();
     final List<MonthDescriptor> months = new ArrayList<MonthDescriptor>();
     final List<MonthCellDescriptor> selectedCells = new ArrayList<MonthCellDescriptor>();
     final List<MonthCellDescriptor> highlightedCells = new ArrayList<MonthCellDescriptor>();
     final List<Calendar> selectedCals = new ArrayList<Calendar>();
     final List<Calendar> highlightedCals = new ArrayList<Calendar>();
+
     private Locale locale;
     private DateFormat monthNameFormat;
     private DateFormat weekdayNameFormat;
     private DateFormat fullDateFormat;
-    private Calendar minCal;
-    private Calendar maxCal;
+    private Calendar calendar;
     private Calendar monthCounter;
     private boolean displayOnly;
     SelectionMode selectionMode;
     Calendar today;
+
     private int dividerColor;
     private int dayBackgroundResId;
     private int dayTextColorResId;
@@ -90,26 +71,19 @@ public class CalendarPickerView extends ListView {
 
     private OnDateSelectedListener dateListener;
     private DateSelectableFilter dateConfiguredListener;
-    private OnInvalidDateSelectedListener invalidDateListener =
-            new DefaultOnInvalidDateSelectedListener();
+    private OnInvalidDateSelectedListener invalidDateListener = new DefaultOnInvalidDateSelectedListener();
 
     public CalendarPickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         Resources res = context.getResources();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CalendarPickerView);
-        final int bg = a.getColor(R.styleable.CalendarPickerView_android_background,
-                res.getColor(R.color.calendar_bg));
-        dividerColor = a.getColor(R.styleable.CalendarPickerView_dividerColor,
-                res.getColor(R.color.calendar_divider));
-        dayBackgroundResId = a.getResourceId(R.styleable.CalendarPickerView_dayBackground,
-                R.drawable.calendar_bg_selector);
-        dayTextColorResId = a.getResourceId(R.styleable.CalendarPickerView_dayTextColor,
-                R.color.calendar_text_selector);
-        titleTextColor =
-                a.getColor(R.styleable.CalendarPickerView_titleTextColor, R.color.calendar_text_active);
-        headerTextColor =
-                a.getColor(R.styleable.CalendarPickerView_headerTextColor, R.color.calendar_text_active);
+        final int bg = a.getColor(R.styleable.CalendarPickerView_android_background, res.getColor(R.color.calendar_bg));
+        dividerColor = a.getColor(R.styleable.CalendarPickerView_dividerColor, res.getColor(R.color.calendar_divider));
+        dayBackgroundResId = a.getResourceId(R.styleable.CalendarPickerView_dayBackground, R.drawable.calendar_bg_selector);
+        dayTextColorResId = a.getResourceId(R.styleable.CalendarPickerView_dayTextColor, R.color.calendar_text_selector);
+        titleTextColor = a.getColor(R.styleable.CalendarPickerView_titleTextColor, R.color.calendar_text_active);
+        headerTextColor = a.getColor(R.styleable.CalendarPickerView_headerTextColor, R.color.calendar_text_active);
         a.recycle();
 
         adapter = new MonthAdapter();
@@ -119,8 +93,7 @@ public class CalendarPickerView extends ListView {
         setCacheColorHint(bg);
         locale = Locale.getDefault();
         today = Calendar.getInstance(locale);
-        minCal = Calendar.getInstance(locale);
-        maxCal = Calendar.getInstance(locale);
+        calendar = Calendar.getInstance(locale);
         monthCounter = Calendar.getInstance(locale);
         monthNameFormat = new SimpleDateFormat(context.getString(R.string.month_name_format), locale);
         weekdayNameFormat = new SimpleDateFormat(context.getString(R.string.day_name_format), locale);
@@ -130,58 +103,31 @@ public class CalendarPickerView extends ListView {
             Calendar nextYear = Calendar.getInstance(locale);
             nextYear.add(Calendar.YEAR, 1);
 
-            init(new Date(), nextYear.getTime()) //
-                    .withSelectedDate(new Date());
+            init(new Date()).withSelectedDate(new Date());
         }
     }
 
-    /**
-     * Both date parameters must be non-null and their {@link java.util.Date#getTime()} must not return 0. Time
-     * of day will be ignored.  For instance, if you pass in {@code minDate} as 11/16/2012 5:15pm and
-     * {@code maxDate} as 11/16/2013 4:30am, 11/16/2012 will be the first selectable date and
-     * 11/15/2013 will be the last selectable date ({@code maxDate} is exclusive).
-     * <p/>
-     * This will implicitly set the {@link SelectionMode} to {@link SelectionMode#SINGLE}.  If you
-     * want a different selection mode, use {@link FluentInitializer#inMode(SelectionMode)} on the
-     * {@link FluentInitializer} this method returns.
-     * <p/>
-     * The calendar will be constructed using the given locale. This means that all names
-     * (months, days) will be in the language of the locale and the weeks start with the day
-     * specified by the locale.
-     *
-     * @param minDate Earliest selectable date, inclusive.  Must be earlier than {@code maxDate}.
-     * @param maxDate Latest selectable date, exclusive.  Must be later than {@code minDate}.
-     */
-    public FluentInitializer init(Date minDate, Date maxDate, Locale locale) {
-        if (minDate == null || maxDate == null) {
-            throw new IllegalArgumentException(
-                    "minDate and maxDate must be non-null.  " + dbg(minDate, maxDate));
+    public FluentInitializer init(Date initDate, Locale locale) {
+        if (initDate == null) {
+            throw new IllegalArgumentException("date must be non-null.");
         }
-        if (minDate.after(maxDate)) {
-            throw new IllegalArgumentException(
-                    "minDate must be before maxDate.  " + dbg(minDate, maxDate));
-        }
-        if (minDate.getTime() == 0 || maxDate.getTime() == 0) {
-            throw new IllegalArgumentException(
-                    "minDate and maxDate must be non-zero.  " + dbg(minDate, maxDate));
+        if (initDate.getTime() == 0) {
+            throw new IllegalArgumentException("minDate and maxDate must be non-zero.");
         }
         if (locale == null) {
             throw new IllegalArgumentException("Locale is null.");
         }
 
-        // Make sure that all calendar instances use the same locale.
         this.locale = locale;
         today = Calendar.getInstance(locale);
-        minCal = Calendar.getInstance(locale);
-        maxCal = Calendar.getInstance(locale);
+        calendar = Calendar.getInstance(locale);
         monthCounter = Calendar.getInstance(locale);
-        monthNameFormat =
-                new SimpleDateFormat(getContext().getString(R.string.month_name_format), locale);
+        monthCounter.setTime(initDate);
+        monthNameFormat = new SimpleDateFormat(getContext().getString(R.string.month_name_format), locale);
         for (MonthDescriptor month : months) {
             month.setLabel(monthNameFormat.format(month.getDate()));
         }
-        weekdayNameFormat =
-                new SimpleDateFormat(getContext().getString(R.string.day_name_format), locale);
+        weekdayNameFormat = new SimpleDateFormat(getContext().getString(R.string.day_name_format), locale);
         fullDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 
         this.selectionMode = SelectionMode.SINGLE;
@@ -194,36 +140,11 @@ public class CalendarPickerView extends ListView {
         // Clear previous state.
         cells.clear();
         months.clear();
-        minCal.setTime(minDate);
-        maxCal.setTime(maxDate);
-        setMidnight(minCal);
-        setMidnight(maxCal);
+        calendar.setTime(initDate);
+        setMidnight(calendar);
         displayOnly = false;
 
-        // maxDate is exclusive: bump back to the previous day so if maxDate is the first of a month,
-        // we don't accidentally include that month in the view.
-        maxCal.add(MINUTE, -1);
-
-        // Now iterate between minCal and maxCal and build up our list of months to show.
-        monthCounter.setTime(minCal.getTime());
-        final int maxMonth = maxCal.get(MONTH);
-        final int maxYear = maxCal.get(YEAR);
-//        while ((monthCounter.get(MONTH) <= maxMonth // Up to, including the month.
-//                || monthCounter.get(YEAR) < maxYear) // Up to the year.
-//                && monthCounter.get(YEAR) < maxYear + 1) { // But not > next yr.
-//            Date date = monthCounter.getTime();
-//            MonthDescriptor month =
-//                    new MonthDescriptor(monthCounter.get(MONTH), monthCounter.get(YEAR), date,
-//                            monthNameFormat.format(date));
-//            cells.add(getMonthCells(month, monthCounter));
-//            months.add(month);
-//            monthCounter.add(MONTH, 1);
-//        }
-
-        Date date = monthCounter.getTime();
-        MonthDescriptor month =
-                new MonthDescriptor(monthCounter.get(MONTH), monthCounter.get(YEAR), date,
-                        monthNameFormat.format(date));
+        MonthDescriptor month = new MonthDescriptor(monthCounter.get(MONTH), monthCounter.get(YEAR), initDate, monthNameFormat.format(initDate));
 
         cells.add(getMonthCells(month, monthCounter));
         months.add(month);
@@ -233,25 +154,8 @@ public class CalendarPickerView extends ListView {
         return new FluentInitializer();
     }
 
-    /**
-     * Both date parameters must be non-null and their {@link java.util.Date#getTime()} must not return 0. Time
-     * of day will be ignored.  For instance, if you pass in {@code minDate} as 11/16/2012 5:15pm and
-     * {@code maxDate} as 11/16/2013 4:30am, 11/16/2012 will be the first selectable date and
-     * 11/15/2013 will be the last selectable date ({@code maxDate} is exclusive).
-     * <p/>
-     * This will implicitly set the {@link SelectionMode} to {@link SelectionMode#SINGLE}.  If you
-     * want a different selection mode, use {@link FluentInitializer#inMode(SelectionMode)} on the
-     * {@link FluentInitializer} this method returns.
-     * <p/>
-     * The calendar will be constructed using the default locale as returned by
-     * {@link java.util.Locale#getDefault()}. If you wish the calendar to be constructed using a
-     * different locale, use {@link #init(java.util.Date, java.util.Date, java.util.Locale)}.
-     *
-     * @param minDate Earliest selectable date, inclusive.  Must be earlier than {@code maxDate}.
-     * @param maxDate Latest selectable date, exclusive.  Must be later than {@code minDate}.
-     */
-    public FluentInitializer init(Date minDate, Date maxDate) {
-        return init(minDate, maxDate, Locale.getDefault());
+    public FluentInitializer init(Date date) {
+        return init(date, Locale.getDefault());
     }
 
     public class FluentInitializer {
@@ -408,13 +312,6 @@ public class CalendarPickerView extends ListView {
     }
 
     /**
-     * Returns a string summarizing what the client sent us for init() params.
-     */
-    private static String dbg(Date minDate, Date maxDate) {
-        return "minDate: " + minDate + "\nmaxDate: " + maxDate;
-    }
-
-    /**
      * Clears out the hours/minutes/seconds/millis of a Calendar.
      */
     static void setMidnight(Calendar cal) {
@@ -429,7 +326,7 @@ public class CalendarPickerView extends ListView {
         public void handleClick(MonthCellDescriptor cell) {
             Date clickedDate = cell.getDate();
 
-            if (!betweenDates(clickedDate, minCal, maxCal) || !isDateSelectable(clickedDate)) {
+            if (!isDateSelectable(clickedDate)) {
                 if (invalidDateListener != null) {
                     invalidDateListener.onInvalidDateSelected(clickedDate);
                 }
@@ -493,14 +390,6 @@ public class CalendarPickerView extends ListView {
         }
         if (date.getTime() == 0) {
             throw new IllegalArgumentException("Selected date must be non-zero.  " + date);
-        }
-        if (date.before(minCal.getTime()) || date.after(maxCal.getTime())) {
-            throw new IllegalArgumentException(
-                    String.format("SelectedDate must be between minDate and maxDate."
-                                    + "%nminDate: %s%nmaxDate: %s%nselectedDate: %s",
-                            minCal.getTime(), maxCal.getTime(), date
-                    )
-            );
         }
     }
 
@@ -722,7 +611,7 @@ public class CalendarPickerView extends ListView {
                 boolean isCurrentMonth = cal.get(MONTH) == month.getMonth();
                 boolean isSelected = isCurrentMonth && containsDate(selectedCals, cal);
                 boolean isSelectable =
-                        isCurrentMonth && betweenDates(cal, minCal, maxCal) && isDateSelectable(date);
+                        isCurrentMonth && isDateSelectable(date);
                 boolean isToday = sameDate(cal, today);
                 boolean isHighlighted = containsDate(highlightedCals, cal);
                 int value = cal.get(DAY_OF_MONTH);
@@ -811,13 +700,6 @@ public class CalendarPickerView extends ListView {
         invalidDateListener = listener;
     }
 
-    /**
-     * Set a listener used to discriminate between selectable and unselectable dates. Set this to
-     * disable arbitrary dates as they are rendered.
-     * <p/>
-     * Important: set this before you call {@link #init(java.util.Date, java.util.Date)} methods.  If called afterwards,
-     * it will not be consistently applied.
-     */
     public void setDateSelectableFilter(DateSelectableFilter listener) {
         dateConfiguredListener = listener;
     }
@@ -860,9 +742,9 @@ public class CalendarPickerView extends ListView {
         @Override
         public void onInvalidDateSelected(Date date) {
             String errMessage =
-                    getResources().getString(R.string.invalid_date, fullDateFormat.format(minCal.getTime()),
-                            fullDateFormat.format(maxCal.getTime()));
+                    getResources().getString(R.string.invalid_date, fullDateFormat.format(calendar.getTime()));
             Toast.makeText(getContext(), errMessage, Toast.LENGTH_SHORT).show();
         }
     }
+
 }

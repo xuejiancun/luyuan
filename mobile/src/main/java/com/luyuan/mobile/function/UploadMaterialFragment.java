@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
 import com.luyuan.mobile.util.MyGlobal;
@@ -138,8 +139,13 @@ public class UploadMaterialFragment extends Fragment {
         // Set a item click listener, and just Toast the clicked position
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                // TODO preview image
-                // Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                String filePath = filePaths.get(position).toString();
+                String fileType = FileUtilities.getFileType(filePath);
+                if (fileType.equals("jpg") || fileType.equals("png") || fileType.equals("bmp") || fileType.equals("gif")) {
+                    Intent intent = new Intent(getActivity(), ImagePreviewActivity.class);
+                    intent.putExtra("filePath", filePaths.get(position).toString());
+                    startActivity(intent);
+                }
             }
         });
 

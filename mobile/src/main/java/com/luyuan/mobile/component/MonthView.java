@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MonthView extends LinearLayout {
-  TextView title;
   CalendarGridView grid;
   private Listener listener;
 
@@ -25,7 +24,6 @@ public class MonthView extends LinearLayout {
     final MonthView view = (MonthView) inflater.inflate(R.layout.month, parent, false);
     view.setDividerColor(dividerColor);
     view.setDayTextColor(dayTextColorResId);
-    view.setTitleTextColor(titleTextColor);
     view.setHeaderTextColor(headerTextColor);
 
     if (dayBackgroundResId != 0) {
@@ -52,14 +50,12 @@ public class MonthView extends LinearLayout {
 
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
-    title = (TextView) findViewById(R.id.title);
     grid = (CalendarGridView) findViewById(R.id.calendar_grid);
   }
 
   public void init(MonthDescriptor month, List<List<MonthCellDescriptor>> cells,
       boolean displayOnly) {
     long start = System.currentTimeMillis();
-    title.setText(month.getLabel());
 
     final int numRows = cells.size();
     grid.setNumRows(numRows);
@@ -101,10 +97,6 @@ public class MonthView extends LinearLayout {
 
   public void setDayTextColor(int resId) {
     grid.setDayTextColor(resId);
-  }
-
-  public void setTitleTextColor(int color) {
-    title.setTextColor(color);
   }
 
   public void setHeaderTextColor(int color) {

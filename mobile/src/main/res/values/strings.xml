@@ -72,5 +72,8 @@
     <string name="month_name_format">MMMM yyyy</string>
 
     <string name="choose_date">Choose Date</string>
+    <string name="view_my_schedule">我的日程</string>
+    <string name="view_others_schedule">下属日程</string>
+    <string name="hint_enter_query">请输入关键字</string>
 
 </resources>

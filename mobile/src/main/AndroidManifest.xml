@@ -24,8 +24,17 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.luyuan.mobile.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:parentActivityName="com.luyuan.mobile.ui.LoginActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.ImagePreviewActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".function.SalesPersonalReport"
@@ -55,13 +64,8 @@
         <activity
             android:name=".function.ScheduleManagerActivity"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait"></activity>
 
     </application>
 
