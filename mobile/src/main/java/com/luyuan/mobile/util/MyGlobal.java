@@ -17,11 +17,8 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 
-    public static final String PARAM_API_URL = "PARAM_API_URL";
-
-
-    public static final String API_FETCH_LOGIN = "http://192.168.10.60:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
-    public static final String API_FETCH_FUNCTION = "http://192.168.10.60:8080/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
+    public static final String API_FETCH_LOGIN = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_FETCH_FUNCTION = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
 
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 

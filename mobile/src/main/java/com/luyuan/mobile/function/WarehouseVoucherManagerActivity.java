@@ -56,7 +56,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(MyGlobal.PARAM_API_URL, api);
+        args.putString("api", api);
         warehouseVoucherSearchFragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherSearchFragment);

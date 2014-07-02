@@ -42,7 +42,7 @@ public class ImagePreviewActivity extends Activity {
         });
         setContentView(view);
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.3f, 1.0f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.5f, 1.0f);
         alphaAnimation.setDuration(DELAY_MILLIS);
         view.startAnimation(alphaAnimation);
 

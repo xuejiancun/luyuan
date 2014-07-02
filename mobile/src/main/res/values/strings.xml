@@ -8,6 +8,7 @@
     <string name="password">密码</string>
     <string name="login">立即登录</string>
     <string name="reset_password">重置密码</string>
+    <string name="validating">正在验证...</string>
 
     <string name="search">搜索</string>
     <string name="empty">空白</string>
@@ -75,5 +76,8 @@
     <string name="view_my_schedule">我的日程</string>
     <string name="view_others_schedule">下属日程</string>
     <string name="hint_enter_query">请输入关键字</string>
+
+    <string name="location">定位</string>
+    <string name="locating">正在定位...</string>
 
 </resources>

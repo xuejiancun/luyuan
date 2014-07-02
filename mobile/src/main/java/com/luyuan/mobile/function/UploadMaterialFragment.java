@@ -2,13 +2,18 @@ package com.luyuan.mobile.function;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.service.LocationService;
 import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
@@ -38,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class UploadMaterialFragment extends Fragment {
 
@@ -133,10 +140,28 @@ public class UploadMaterialFragment extends Fragment {
             }
         });
 
+        // get location
+        ((Button) view.findViewById(R.id.button_get_current_location)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentFilter filter = new IntentFilter();
+                filter.addAction("locationAction");
+                getActivity().registerReceiver(new LocationBroadcastReceiver(), filter);
+
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), LocationService.class);
+                getActivity().startService(intent);
+
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage(getText(R.string.locating));
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        });
+
         gallery = (Gallery) view.findViewById(R.id.gallery_attach_file_upload_material);
         gallery.setAdapter(new ImageAdapter(getActivity()));
 
-        // Set a item click listener, and just Toast the clicked position
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String filePath = filePaths.get(position).toString();
@@ -274,7 +299,6 @@ public class UploadMaterialFragment extends Fragment {
                         (int) (ITEM_WIDTH * mDensity + 0.5f),
                         (int) (ITEM_HEIGHT * mDensity + 0.5f)));
 
-                // The preferred Gallery item background
                 imageView.setBackgroundResource(mGalleryItemBackground);
             } else {
                 imageView = (ImageView) convertView;
@@ -283,6 +307,28 @@ public class UploadMaterialFragment extends Fragment {
             imageView.setImageBitmap(fileThumbs.get(position));
 
             return imageView;
+        }
+    }
+
+    private ProgressDialog dialog;
+
+    private class LocationBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!intent.getAction().equals("locationAction")) return;
+            double latitude = intent.getDoubleExtra("latitude", 0.0d);
+            double longitude = intent.getDoubleExtra("longitude", 0.0d);
+            Geocoder geoCoder = new Geocoder(getActivity());
+            try {
+                List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
+                String location = list.get(0).getAddressLine(0).toString();
+                Toast.makeText(getActivity(), location, Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+            }
+
+            dialog.dismiss();
+            getActivity().unregisterReceiver(this);
         }
     }
 

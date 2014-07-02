@@ -100,6 +100,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.layout_tab_function:
                 if (seletedIndex != 2) {
                     // TODO
+                    FunctionFragment functionFragment = new FunctionFragment();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+                    fragmentTransaction.replace(R.id.frame_content, functionFragment);
+                    fragmentTransaction.commit();
                     changeTabBackStyle(2);
                 }
                 break;

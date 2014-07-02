@@ -2,6 +2,7 @@ package com.luyuan.mobile.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,18 +10,29 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.JobData;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.RequestManager;
 
 public class LoginActivity extends Activity implements View.OnTouchListener {
 
-    ScrollView scrollView;
-
-    int jobIndex = 0;
+    private int jobIndex = 0;
+    private JobData jobData;
+    private ScrollView scrollView;
+    private Animation shake;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         setContentView(R.layout.activity_login);
 
         scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
+        shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
 
         findViewById(R.id.edittext_sob).setOnTouchListener(this);
         findViewById(R.id.edittext_username).setOnTouchListener(this);
@@ -56,98 +69,100 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         String username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        CharSequence[] jobList = new CharSequence[]{"软件工程师", "销售经理"};
+        if (username.isEmpty()) {
+            findViewById(R.id.edittext_username).startAnimation(shake);
+            return;
+        }
 
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(R.string.dialog_choose_job)
-                .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        jobIndex = which;
-                        // Toast.makeText(LoginActivity.this, "choose" + jobIndex, Toast.LENGTH_SHORT).show();
-
-                    }
-                })
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("", "");
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .create()
-                .show();
+        if (password.isEmpty()) {
+            findViewById(R.id.edittext_password).startAnimation(shake);
+            return;
+        }
 
         StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
         url.append("&sob=" + sob + "&username=" + username + "&password=" + MD5Util.encode(password + username + "089"));
 
-//        if (MyGlobal.checkNetworkConnection(this)) {
+        if (MyGlobal.checkNetworkConnection(this)) {
 
-//            GsonRequest gsonObjRequest = new GsonRequest<JobData>(Request.Method.GET, url.toString(),
-//                    JobData.class, new Response.Listener<JobData>() {
-//                @Override
-//                public void onResponse(JobData response) {
-//                    if (response != null && response.getSuccess().equals("true")) {
-//                        CharSequence[] jobList = new CharSequence[]{};
-//
-//                        int count = response.getJobInfos().size();
-//                        for (int i = 0; i < count; i++) {
-//                            jobList[i] = response.getJobInfos().get(i).getJobName();
-//                        }
-//
-//                        new AlertDialog.Builder(LoginActivity.this)
-//                                .setTitle(R.string.dialog_choose_job)
-//                                .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        jobIndex = which;
-//                                        Toast.makeText(LoginActivity.this, "choose" + jobIndex, Toast.LENGTH_SHORT).show();
-//
-//                                    }
-//                                })
-//                                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                        intent.putExtra("", "");
-//                                        startActivity(intent);
-//                                    }
-//                                })
-//                                .setNegativeButton(R.string.cancel, null)
-//                                .create()
-//                                .show();
-//                    } else if (response != null && response.getSuccess().equals("false_username_error")) {
-//                        Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
-//                        findViewById(R.id.edittext_username).startAnimation(shake);
-//                    } else if (response != null && response.getSuccess().equals("false_password_error")) {
-//                        Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
-//                        findViewById(R.id.edittext_password).startAnimation(shake);
-//                    } else {
-//                        new AlertDialog.Builder(LoginActivity.this)
-//                                .setMessage(R.string.fetch_data_error)
-//                                .setTitle(R.string.dialog_hint)
-//                                .setPositiveButton(R.string.dialog_confirm, null)
-//                                .create()
-//                                .show();
-//                    }
-//                }
-//            }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    new AlertDialog.Builder(LoginActivity.this)
-//                            .setMessage(R.string.fetch_data_error)
-//                            .setTitle(R.string.dialog_hint)
-//                            .setPositiveButton(R.string.dialog_confirm, null)
-//                            .create()
-//                            .show();
-//                }
-//            }
-//            );
-//
-//            RequestManager.getRequestQueue().add(gsonObjRequest);
-//            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                    MyGlobal.CONNECTION_TIMEOUT_MS,
-//                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        }
+            dialog = new ProgressDialog(this);
+            dialog.setMessage(getText(R.string.validating));
+            dialog.setCancelable(true);
+            dialog.show();
+
+            GsonRequest gsonObjRequest = new GsonRequest<JobData>(Request.Method.GET, url.toString(),
+                    JobData.class, new Response.Listener<JobData>() {
+
+                @Override
+                public void onResponse(JobData response) {
+                    dialog.dismiss();
+
+                    if (response != null && response.getSuccess().equals("true")) {
+
+                        jobData = response;
+                        int count = jobData.getJobInfos().size();
+                        if (count == 1) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("stId", response.getJobInfos().get(0).getStId());
+                            startActivity(intent);
+
+                        } else if (count > 1) {
+                            CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
+                            for (int i = 0; i < count; i++) {
+                                jobList[i] = jobData.getJobInfos().get(i).getJobName();
+                            }
+
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setTitle(R.string.dialog_choose_job)
+                                    .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            jobIndex = which;
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.cancel, null)
+                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            intent.putExtra("stId", jobData.getJobInfos().get(jobIndex).getStId());
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .create()
+                                    .show();
+                        }
+                    } else if (response != null && response.getSuccess().equals("false_username_error")) {
+                        findViewById(R.id.edittext_username).startAnimation(shake);
+                    } else if (response != null && response.getSuccess().equals("false_password_error")) {
+                        findViewById(R.id.edittext_password).startAnimation(shake);
+                    } else {
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.fetch_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dialog.dismiss();
+
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setMessage(R.string.fetch_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                }
+            }
+            );
+
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MyGlobal.CONNECTION_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        }
 
     }
 
