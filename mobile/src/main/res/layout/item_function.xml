@@ -5,9 +5,10 @@
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_margin="10dp"
         android:descendantFocusability="blocksDescendants">
 
         <ImageView
@@ -57,7 +58,7 @@
             android:layout_weight="1"
             android:padding="15dp"
             android:layout_gravity="right"
-            android:src="@drawable/function_list_forward" />
+            android:src="@drawable/function_item_forward" />
 
     </LinearLayout>
 

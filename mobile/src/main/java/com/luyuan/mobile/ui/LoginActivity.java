@@ -6,12 +6,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
@@ -28,10 +25,9 @@ import com.luyuan.mobile.util.RequestManager;
 
 public class LoginActivity extends Activity implements View.OnTouchListener {
 
-    private int jobIndex = 0;
+    private int jobIndex;
     private JobData jobData;
     private ScrollView scrollView;
-    private Animation shake;
     private ProgressDialog dialog;
 
     @Override
@@ -42,7 +38,6 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         setContentView(R.layout.activity_login);
 
         scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
-        shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
 
         findViewById(R.id.edittext_sob).setOnTouchListener(this);
         findViewById(R.id.edittext_username).setOnTouchListener(this);
@@ -56,12 +51,12 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
     }
 
     private void changeScrollView() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.scrollTo(0, scrollView.getHeight());
-            }
-        }, 300);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                scrollView.scrollTo(0, scrollVie`w.getHeight());
+//            }
+//        }, 300);
     }
 
     public void login(View view) {
@@ -70,12 +65,24 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
         if (username.isEmpty()) {
-            findViewById(R.id.edittext_username).startAnimation(shake);
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setMessage(R.string.username_empty)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create()
+                    .show();
+
             return;
         }
 
         if (password.isEmpty()) {
-            findViewById(R.id.edittext_password).startAnimation(shake);
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setMessage(R.string.password_empty)
+                    .setTitle(R.string.dialog_hint)
+                    .setPositiveButton(R.string.dialog_confirm, null)
+                    .create()
+                    .show();
+
             return;
         }
 
@@ -98,6 +105,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
 
                     if (response != null && response.getSuccess().equals("true")) {
 
+                        // TODO remember User object
                         jobData = response;
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
@@ -130,9 +138,19 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                     .show();
                         }
                     } else if (response != null && response.getSuccess().equals("false_username_error")) {
-                        findViewById(R.id.edittext_username).startAnimation(shake);
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.username_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
                     } else if (response != null && response.getSuccess().equals("false_password_error")) {
-                        findViewById(R.id.edittext_password).startAnimation(shake);
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.password_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
                     } else {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.fetch_data_error)
@@ -167,7 +185,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
     }
 
     public void reset(View view) {
-
+        // TODO
     }
 
 }

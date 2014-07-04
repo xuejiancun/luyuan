@@ -2,18 +2,15 @@ package com.luyuan.mobile.function;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,17 +22,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.service.LocationService;
 import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.ZipUtils;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,12 +44,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class UploadMaterialFragment extends Fragment {
+public class UploadMaterialNewFragment extends Fragment {
 
     private HttpMultipartPost post;
-
     private Gallery gallery;
     private Uri imageUri;
+    private ProgressDialog dialog;
+
+    private EditText editTextName;
+    private EditText editTextRemark;
+
     private final ArrayList<String> filePaths = new ArrayList<String>();
     private final ArrayList<Bitmap> fileThumbs = new ArrayList<Bitmap>();
 
@@ -64,9 +66,12 @@ public class UploadMaterialFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_material, null);
+        View view = inflater.inflate(R.layout.fragment_upload_material_new, null);
 
-        // choose files
+        editTextName = (EditText) view.findViewById(R.id.edittext_material_name_upload_material);
+        editTextRemark = (EditText) view.findViewById(R.id.edittext_material_remark_upload_material);
+
+        // add attachment
         ((Button) view.findViewById(R.id.button_attach_file_upload_material)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,10 +113,38 @@ public class UploadMaterialFragment extends Fragment {
             }
         });
 
-        // upload files
+        // submit material
         ((Button) view.findViewById(R.id.button_submit_material_upload_material)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // create material
+                String name = editTextName.getText().toString().trim();
+                String remark = editTextRemark.getText().toString().trim();
+                if (name.isEmpty()) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.material_name_empty)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                    return;
+                }
+                if (filePaths.isEmpty()) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.material_files_empty)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                    return;
+                }
+
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage(getText(R.string.compressing));
+                dialog.setCancelable(true);
+                dialog.show();
+
                 // compress files
                 File dir = new File(MyGlobal.COMPRESS_PATH);
                 if (!dir.exists() || !dir.isDirectory()) {
@@ -128,34 +161,41 @@ public class UploadMaterialFragment extends Fragment {
                 try {
                     ZipUtils.zipFiles(files, compressed);
                 } catch (IOException e) {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.compress_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
                 }
 
+                dialog.dismiss();
+
+                // submitting material
                 if (compressed.exists()) {
-                    post = new HttpMultipartPost(getActivity(), compressed.getAbsolutePath());
+                    List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+                    pairs.add(new BasicNameValuePair("name", name));
+                    pairs.add(new BasicNameValuePair("remark", remark));
+                    pairs.add(new BasicNameValuePair("attachment", compressed.getName()));
+
+                    post = new HttpMultipartPost(getActivity(), pairs, compressed.getAbsolutePath(), getText(R.string.submitting).toString());
                     post.execute();
                 } else {
-                    Toast.makeText(getActivity(), "file not exists", Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.compress_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
                 }
             }
         });
 
-        // get location
-        ((Button) view.findViewById(R.id.button_get_current_location)).setOnClickListener(new View.OnClickListener() {
+        // back to channel
+        ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentFilter filter = new IntentFilter();
-                filter.addAction("locationAction");
-                getActivity().registerReceiver(new LocationBroadcastReceiver(), filter);
-
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), LocationService.class);
-                getActivity().startService(intent);
-
-                dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(getText(R.string.locating));
-                dialog.setCancelable(true);
-                dialog.show();
+                replaceTabContent(new UploadMaterialChannelFragment());
             }
         });
 
@@ -190,6 +230,7 @@ public class UploadMaterialFragment extends Fragment {
         fileThumbs.remove(info.position);
         filePaths.remove(info.position);
         gallery.setAdapter(new ImageAdapter(getActivity()));
+
         return true;
     }
 
@@ -232,7 +273,7 @@ public class UploadMaterialFragment extends Fragment {
                     filePath = FileUtilities.getPath(getActivity(), uri);
                 } catch (URISyntaxException e) {
                 }
-                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.video)).getBitmap();
+                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.upload_video)).getBitmap();
 
                 break;
 
@@ -245,7 +286,7 @@ public class UploadMaterialFragment extends Fragment {
                     filePath = FileUtilities.getPath(getActivity(), uri);
                 } catch (URISyntaxException e) {
                 }
-                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.audio)).getBitmap();
+                bitmap = ((BitmapDrawable) getActivity().getResources().getDrawable(R.drawable.upload_audio)).getBitmap();
 
                 break;
         }
@@ -310,26 +351,11 @@ public class UploadMaterialFragment extends Fragment {
         }
     }
 
-    private ProgressDialog dialog;
+    private void replaceTabContent(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-    private class LocationBroadcastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!intent.getAction().equals("locationAction")) return;
-            double latitude = intent.getDoubleExtra("latitude", 0.0d);
-            double longitude = intent.getDoubleExtra("longitude", 0.0d);
-            Geocoder geoCoder = new Geocoder(getActivity());
-            try {
-                List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                String location = list.get(0).getAddressLine(0).toString();
-                Toast.makeText(getActivity(), location, Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-            }
-
-            dialog.dismiss();
-            getActivity().unregisterReceiver(this);
-        }
+        fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+        fragmentTransaction.commit();
     }
 
 }

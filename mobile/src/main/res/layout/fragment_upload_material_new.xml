@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_name_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_remarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_remark_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_transact_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_transact_state_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_transact_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_transact_date_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_submit_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_submit_date_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_material_feedback_upload_material"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textSize="20dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <Gallery
+                android:id="@+id/gallery_attach_file_upload_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_attach_file_upload_material"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/attach_file"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_submit_material_upload_material"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/submit"
+                android:textSize="20dp"
+                android:background="#46C50C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_back"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/back"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

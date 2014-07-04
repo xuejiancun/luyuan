@@ -14,7 +14,7 @@
             android:id="@+id/image_view_login_page"
             android:layout_width="match_parent"
             android:layout_height="172dp"
-            android:background="@drawable/login_page_background"
+            android:background="@drawable/login_background"
             android:scaleType="fitCenter" />
 
         <TableLayout
@@ -29,7 +29,7 @@
 
                 <TextView
                     android:id="@+id/textview_icon_sob"
-                    android:background="@drawable/login_page_icon_sob"
+                    android:background="@drawable/login_sob"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:gravity="bottom" />
@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:textSize="20dp"
+                    android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
@@ -60,7 +61,7 @@
 
                 <TextView
                     android:id="@+id/textview_icon_username"
-                    android:background="@drawable/login_page_icon_username"
+                    android:background="@drawable/login_username"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:gravity="bottom" />
@@ -71,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:textSize="20dp"
+                    android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
@@ -88,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/textview_icon_password"
-                    android:background="@drawable/login_page_icon_password"
+                    android:background="@drawable/login_password"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:gravity="bottom" />
@@ -99,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:textSize="20dp"
+                    android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText

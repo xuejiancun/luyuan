@@ -19,6 +19,7 @@ public class MyGlobal {
 
     public static final String API_FETCH_LOGIN = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
+    public static final String API_UPLOAD_MATERIAL = "http://pic2.luyuan.cn/upload4app.ashx";
 
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 
@@ -65,7 +66,7 @@ public class MyGlobal {
         int resId = 0;
 
         if (functionCode.equals("WarehouseVoucherManager")) {
-            resId = R.drawable.ic_tab_function;
+            resId = R.drawable.main_tab_function;
         } else {
             // TODO
         }

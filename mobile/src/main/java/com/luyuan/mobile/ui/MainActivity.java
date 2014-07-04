@@ -2,6 +2,7 @@ package com.luyuan.mobile.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private int seletedIndex;
+    private int tabSeletedIndex;
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
     private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
@@ -39,15 +40,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         initTab();
 
         HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-        fragmentTransaction.replace(R.id.frame_content, homeFragment);
-        fragmentTransaction.commit();
-
-        changeTabBackStyle(1);
-
+        replaceTabContent(homeFragment);
+        changeTabSelectedStyle(1);
         // TODO
-        // check if has app new version ~
+        // check if has app new version ~ or .... think about push
     }
 
     @Override
@@ -70,61 +66,60 @@ public class MainActivity extends Activity implements View.OnClickListener {
         layout_tab_explore.setOnClickListener(this);
         layout_tab_account.setOnClickListener(this);
 
-        // do not change the order
-        tabLayoutList.add(layout_tab_home);
-        tabLayoutList.add(layout_tab_function);
-        tabLayoutList.add(layout_tab_explore);
-        tabLayoutList.add(layout_tab_account);
+        tabLayoutList.add(0, layout_tab_home);
+        tabLayoutList.add(1, layout_tab_function);
+        tabLayoutList.add(2, layout_tab_explore);
+        tabLayoutList.add(3, layout_tab_account);
 
         TextView textview_tab_home = (TextView) findViewById(R.id.textview_tab_home);
         TextView textview_tab_function = (TextView) findViewById(R.id.textview_tab_function);
         TextView textview_tab_explore = (TextView) findViewById(R.id.textview_tab_explore);
         TextView textview_tab_account = (TextView) findViewById(R.id.textview_tab_account);
 
-        // do not change the order
-        tabTextViewList.add(textview_tab_home);
-        tabTextViewList.add(textview_tab_function);
-        tabTextViewList.add(textview_tab_explore);
-        tabTextViewList.add(textview_tab_account);
+        tabTextViewList.add(0, textview_tab_home);
+        tabTextViewList.add(1, textview_tab_function);
+        tabTextViewList.add(2, textview_tab_explore);
+        tabTextViewList.add(3, textview_tab_account);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_tab_home:
-                if (seletedIndex != 1) {
-                    // TODO
-                    changeTabBackStyle(1);
+                if (tabSeletedIndex != 1) {
+                    replaceTabContent(new HomeFragment());
+                    changeTabSelectedStyle(1);
                 }
                 break;
             case R.id.layout_tab_function:
-                if (seletedIndex != 2) {
-                    // TODO
-                    FunctionFragment functionFragment = new FunctionFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-                    fragmentTransaction.replace(R.id.frame_content, functionFragment);
-                    fragmentTransaction.commit();
-                    changeTabBackStyle(2);
+                if (tabSeletedIndex != 2) {
+                    replaceTabContent(new FunctionFragment());
+                    changeTabSelectedStyle(2);
                 }
                 break;
             case R.id.layout_tab_explore:
-                if (seletedIndex != 3) {
-                    // TODO
-                    changeTabBackStyle(3);
+                if (tabSeletedIndex != 3) {
+                    replaceTabContent(new ExploreFragment());
+                    changeTabSelectedStyle(3);
                 }
                 break;
             case R.id.layout_tab_account:
-                if (seletedIndex != 4) {
-                    // TODO
-                    changeTabBackStyle(4);
+                if (tabSeletedIndex != 4) {
+                    replaceTabContent(new AccountFragment());
+                    changeTabSelectedStyle(4);
                 }
                 break;
         }
     }
 
-    private void changeTabBackStyle(int index) {
-        seletedIndex = index;
+    private void replaceTabContent(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void changeTabSelectedStyle(int index) {
+        tabSeletedIndex = index;
         for (int i = 0; i < tabLayoutList.size(); i++) {
             if (i == index - 1) {
                 tabLayoutList.get(i).setSelected(true);

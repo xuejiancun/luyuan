@@ -8,6 +8,10 @@
     <string name="password">密码</string>
     <string name="login">立即登录</string>
     <string name="reset_password">重置密码</string>
+    <string name="username_empty">请输入用户名</string>
+    <string name="password_empty">请输入密码</string>
+    <string name="username_error">用户名错误</string>
+    <string name="password_error">密码错误</string>
     <string name="validating">正在验证...</string>
 
     <string name="search">搜索</string>
@@ -18,13 +22,15 @@
     <string name="explore">探索</string>
     <string name="account">账户</string>
 
+    <string name="delete">删除</string>
+    <string name="top">置顶</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
 
     <string name="dialog_choose_job">请选择岗位</string>
 
     <string name="network_disconnected">没有连接网络，请稍后再试。</string>
-    <string name="fetch_data_error">读取数据失败，请稍后再试。</string>
+    <string name="fetch_data_error">应用程序与服务器通讯遇到错误。</string>
     <string name="fetch_data_empty">暂未添加图片，请稍后再试。</string>
     <string name="app_param_error">页面参数错误，请稍后再试。</string>
 
@@ -48,10 +54,15 @@
     <string name="check">送检</string>
 
     <string name="function_upload_material">资料上传管理</string>
+
+    <string name="enter">进入</string>
+    <string name="choose_channel">选择自定义通道</string>
     <string name="material_name">资料名称</string>
     <string name="material_remarks">资料备注</string>
-    <string name="material_state">结办状态</string>
-    <string name="material_date">提交时间</string>
+    <string name="material_type">选择通道</string>
+    <string name="material_transact_state">办结状态</string>
+    <string name="material_transact_date">办结时间</string>
+    <string name="material_submit_date">提交时间</string>
     <string name="material_feedback">反馈内容</string>
 
     <string name="attach_file">附件</string>
@@ -61,21 +72,36 @@
     <string name="from_video">视频</string>
     <string name="from_audio">音频</string>
     <string name="submit">提交</string>
-    <string name="uploading">上传资料中...</string>
-    <string name="delete">删除</string>
+    <string name="back">返回</string>
+    <string name="submitting">正在提交...</string>
+    <string name="material_name_empty">请填写资料名称</string>
+    <string name="material_files_empty">请添加附件</string>
+    <string name="compressing">正在压缩附件...</string>
+    <string name="compress_error">压缩附件的时候遇到错误</string>
 
     <string name="sales_tactical_report">销售战报</string>
 
     <string name="function_schedule_manager">日程管理</string>
+    <string name="month">月</string>
+    <string name="cross">-</string>
 
     <string name="day_name_format">EEE</string>
     <string name="invalid_date">Date must be between %1$s and %2$s.</string>
     <string name="month_name_format">MMMM yyyy</string>
+    <string name="sample_date">2014-03-23</string>
+    <string name="sample_time">14:00</string>
 
-    <string name="choose_date">Choose Date</string>
+    <string name="schedule_info">日程信息</string>
+    <string name="location_info">定位信息</string>
+    <string name="new_schedule">添加日程</string>
     <string name="view_my_schedule">我的日程</string>
     <string name="view_others_schedule">下属日程</string>
     <string name="hint_enter_query">请输入关键字</string>
+
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="content">日程内容</string>
+    <string name="notification">是否提醒</string>
 
     <string name="location">定位</string>
     <string name="locating">正在定位...</string>

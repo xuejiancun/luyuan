@@ -18,7 +18,6 @@
             android:layout_height="50dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="@string/login"
             android:textSize="20dp"
             android:background="#FFEDEDED" />
 
@@ -44,14 +43,13 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button_view_my_schedule"
+            android:id="@+id/button_view_others_schedule"
             android:layout_height="50dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="@string/view_my_schedule"
+            android:text="@string/view_others_schedule"
             android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:background="#46C50C" />
+            android:background="#FFEDEDED" />
 
     </LinearLayout>
 
@@ -64,13 +62,52 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/button_view_others_schedule"
+            android:id="@+id/button_my_schedule"
             android:layout_height="50dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="@string/view_others_schedule"
+            android:text="@string/view_my_schedule"
             android:textSize="20dp"
             android:background="#FFEDEDED" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_get_current_location"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/location"
+            android:textSize="20dp"
+            android:background="#FFEDEDED" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_add"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/new_schedule"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:background="#46C50C" />
 
     </LinearLayout>
 
