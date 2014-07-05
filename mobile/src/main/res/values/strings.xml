@@ -79,7 +79,11 @@
     <string name="compressing">正在压缩附件...</string>
     <string name="compress_error">压缩附件的时候遇到错误</string>
 
-    <string name="sales_tactical_report">销售战报</string>
+    <string name="sales_billboard_report">销售战报龙虎榜</string>
+    <string name="sales_personal_report">销售战报个人版</string>
+    <string name="sales_tactical_report">销售战报战略版</string>
+    <string name="sales_strategy_report">销售战报战术版</string>
+    <string name="payroll_query">薪资查询</string>
 
     <string name="function_schedule_manager">日程管理</string>
     <string name="month">月</string>

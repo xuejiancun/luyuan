@@ -2,9 +2,18 @@ package com.luyuan.mobile.model;
 
 public class Location {
 
+    private String userId = "";
     private String username = "";
     private String datetime = "";
     private String location = "";
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

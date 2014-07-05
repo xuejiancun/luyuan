@@ -17,11 +17,19 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+
     public static final String API_FETCH_LOGIN = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_POST_JOB = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=chooserole4app";
     public static final String API_FETCH_FUNCTION = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
     public static final String API_UPLOAD_MATERIAL = "http://pic2.luyuan.cn/upload4app.ashx";
-
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
+
+    public static final String WEBVIEW_URL_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx?_t=447235&_wind=w431";
+    public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
+    public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
+    public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
+    public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
 
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";

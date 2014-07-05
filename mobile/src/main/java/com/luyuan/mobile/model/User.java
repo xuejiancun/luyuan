@@ -6,7 +6,7 @@ public class User {
     private String sob = "";
     private String username = "";
     private String password = "";
-    private String session = "";
+    private String sessionId = "";
 
     public String getId() {
         return id;
@@ -40,12 +40,11 @@ public class User {
         this.password = password;
     }
 
-    public String getSession() {
-        return session;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setSession(String session) {
-        this.session = session;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
-
 }

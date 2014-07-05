@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.function.SalesTacticalReport;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
@@ -34,12 +33,58 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_function, null);
         listView = (ListView) view.findViewById(R.id.listview_function_list);
 
+        LinearLayout layout_function_1 = (LinearLayout) view.findViewById(R.id.layout_function_1);
+        layout_function_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", "billboard");
+                startActivity(intent);
+            }
+        });
+
+
+        LinearLayout layout_function_2 = (LinearLayout) view.findViewById(R.id.layout_function_2);
+        layout_function_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", "personal");
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout layout_function_3 = (LinearLayout) view.findViewById(R.id.layout_function_3);
+        layout_function_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", "strategy");
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout layout_function_8 = (LinearLayout) view.findViewById(R.id.layout_function_8);
+        layout_function_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", "tactical");
+                startActivity(intent);
+            }
+        });
+
         LinearLayout layout_function_4 = (LinearLayout) view.findViewById(R.id.layout_function_4);
         layout_function_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), SalesTacticalReport.class);
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", "payroll");
                 startActivity(intent);
             }
         });

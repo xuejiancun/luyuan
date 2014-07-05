@@ -12,12 +12,13 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.JobData;
+import com.luyuan.mobile.model.TempData;
+import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
@@ -29,6 +30,10 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
     private JobData jobData;
     private ScrollView scrollView;
     private ProgressDialog dialog;
+
+    private String sob;
+    private String username;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +59,21 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
-//                scrollView.scrollTo(0, scrollVie`w.getHeight());
+//                scrollView.scrollTo(0, scrollView.getHeight());
 //            }
 //        }, 300);
     }
 
     public void login(View view) {
-        String sob = ((EditText) findViewById(R.id.edittext_sob)).getText().toString().trim();
-        String username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
-        String password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
+        sob = ((EditText) findViewById(R.id.edittext_sob)).getText().toString().trim();
+        username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
+        password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
+
+        username = "xuejiancun";
+        password = "qwerT5%5";
+//
+//        username = "ceshi2";
+//        password = "Xx8888..";
 
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)
@@ -104,13 +115,21 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                     dialog.dismiss();
 
                     if (response != null && response.getSuccess().equals("true")) {
-
-                        // TODO remember User object
                         jobData = response;
+
+                        User user = new User();
+                        user.setId(jobData.getUserId());
+                        user.setSob(sob);
+                        user.setUsername(username);
+                        user.setPassword(password);
+                        user.setSessionId(jobData.getSessionId());
+                        MyGlobal.setUser(user);
+
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
+                            String stId = jobData.getJobInfos().get(0).getStId();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("stId", response.getJobInfos().get(0).getStId());
+                            intent.putExtra("stId", stId);
                             startActivity(intent);
 
                         } else if (count > 1) {
@@ -129,8 +148,31 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                     .setNegativeButton(R.string.cancel, null)
                                     .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
+                                            String stId = jobData.getJobInfos().get(jobIndex).getStId();
+
+                                            GsonRequest gsonObjRequest = new GsonRequest<TempData>(Request.Method.POST, MyGlobal.API_POST_JOB + "&stID=" + stId,
+                                                    TempData.class, new Response.Listener<TempData>() {
+                                                @Override
+                                                public void onResponse(TempData response) {
+                                                    response.getSuccess();
+                                                }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    new AlertDialog.Builder(LoginActivity.this)
+                                                            .setMessage(R.string.fetch_data_error)
+                                                            .setTitle(R.string.dialog_hint)
+                                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                                            .create()
+                                                            .show();
+                                                }
+                                            }
+                                            );
+
+                                            RequestManager.getRequestQueue().add(gsonObjRequest);
+
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            intent.putExtra("stId", jobData.getJobInfos().get(jobIndex).getStId());
+                                            intent.putExtra("stId", stId);
                                             startActivity(intent);
                                         }
                                     })
@@ -176,10 +218,6 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
             );
 
             RequestManager.getRequestQueue().add(gsonObjRequest);
-            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    MyGlobal.CONNECTION_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
 
     }

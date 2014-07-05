@@ -1,5 +1,6 @@
 package com.luyuan.mobile.util;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -11,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Wrapper for Volley requests to facilitate parsing of json responses.
@@ -18,6 +21,8 @@ import java.io.UnsupportedEncodingException;
  * @param <T>
  */
 public class GsonRequest<T> extends Request<T> {
+
+    private Map<String, String> headers = new HashMap<String, String>();
 
     /**
      * Gson parser
@@ -81,16 +86,19 @@ public class GsonRequest<T> extends Request<T> {
     @Override
 
     public Priority getPriority() {
-
         return priority;
-
     }
 
 
     public void setPriority(Priority priority) {
-
         this.priority = priority;
-
     }
 
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        if (!MyGlobal.getUser().getSessionId().isEmpty()) {
+            headers.put("Cookie", "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
+        }
+        return headers;
+    }
 }

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,11 +41,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         initTab();
 
-        HomeFragment homeFragment = new HomeFragment();
-        replaceTabContent(homeFragment);
-        changeTabSelectedStyle(1);
-        // TODO
-        // check if has app new version ~ or .... think about push
+        FunctionFragment functionFragment = new FunctionFragment();
+        replaceTabContent(functionFragment);
+        changeTabSelectedStyle(2);
+
+        CookieSyncManager.createInstance(this);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeSessionCookie();
+        cookieManager.setCookie(MyGlobal.SERVER_URL_PREFIX, "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
+        CookieSyncManager.getInstance().sync();
     }
 
     @Override
