@@ -3,6 +3,7 @@ package com.luyuan.mobile.ui;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
         FunctionInfo functionInfo1 = new FunctionInfo();
         functionInfo1.setCode("billboard");
-        functionInfo1.setName(getText(R.string.function_personal_report).toString());
+        functionInfo1.setName(getText(R.string.function_billboard_report).toString());
         functionInfo1.setDesc("billboard description");
         functionInfos.add(functionInfo1);
 
@@ -71,11 +72,11 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         functionInfo6.setDesc("train description");
         functionInfos.add(functionInfo6);
 
-        FunctionInfo functionInfo7 = new FunctionInfo();
-        functionInfo7.setCode("voucher");
-        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
-        functionInfo7.setDesc("voucher description");
-        functionInfos.add(functionInfo7);
+//        FunctionInfo functionInfo7 = new FunctionInfo();
+//        functionInfo7.setCode("voucher");
+//        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
+//        functionInfo7.setDesc("voucher description");
+//        functionInfos.add(functionInfo7);
 
         FunctionInfo functionInfo8 = new FunctionInfo();
         functionInfo8.setCode("upload");
@@ -94,6 +95,12 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         listView = (ListView) view.findViewById(R.id.listview_function_list);
         listView.setAdapter(new FunctionAdapter());
         listView.setOnItemClickListener(this);
+        listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                contextMenu.add(0, 1, 1, R.string.shortcut);
+            }
+        });
 
         StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
         url.append("&stId=" + MyGlobal.getJobInfo().getStId());
@@ -150,6 +157,8 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyGlobal.getFunctionActivity(functionData.getFunctionInfos().get(i).getCode()));
+        intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+
         startActivity(intent);
     }
 

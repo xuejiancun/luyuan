@@ -29,8 +29,8 @@ public class UploadMaterialChannelFragment extends Fragment implements AdapterVi
             }
         });
 
-        String[] values = new String[]{"Warehouse 1", "Warehouse 2", "Warehouse 3",
-                "Warehouse 4", "Warehouse 5", "Warehouse 6", "Warehouse 7", "Warehouse 8"};
+        String[] values = new String[]{"财务上报", "质量反馈", "网店报备",
+                "市场信息", "其他信息"};
         ArrayAdapter<String> files = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, values);
 
         listView.setAdapter(files);

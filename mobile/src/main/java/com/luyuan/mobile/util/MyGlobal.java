@@ -8,9 +8,12 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.ScheduleManagerActivity;
+import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.model.JobInfo;
 import com.luyuan.mobile.model.User;
+import com.luyuan.mobile.ui.WebViewActivity;
 
 public class MyGlobal {
 
@@ -62,10 +65,24 @@ public class MyGlobal {
     public static Class getFunctionActivity(String functionCode) {
         Class clz = null;
 
-        if (functionCode.equals("WarehouseVoucherManager")) {
+        if (functionCode.equals("billboard")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("personal")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("strategy")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("tactical")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("payroll")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("train")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("voucher")) {
             clz = WarehouseVoucherManagerActivity.class;
-        } else {
-            // TODO
+        } else if (functionCode.equals("upload")) {
+            clz = UploadMaterialActivity.class;
+        } else if (functionCode.equals("schedule")) {
+            clz = ScheduleManagerActivity.class;
         }
 
         return clz;

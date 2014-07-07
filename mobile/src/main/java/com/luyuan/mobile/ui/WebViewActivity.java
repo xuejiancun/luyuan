@@ -54,7 +54,7 @@ public class WebViewActivity extends Activity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
-        // settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webview.addJavascriptInterface(this, "android");
         webview.setWebViewClient(new WebViewClient() {
             @Override

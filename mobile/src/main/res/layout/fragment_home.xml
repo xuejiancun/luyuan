@@ -7,7 +7,7 @@
         android:id="@+id/gridview_shortcut_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="4"
+        android:numColumns="3"
         android:layout_gravity="center"
         android:scrollbars="none" />
 
