@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
@@ -170,6 +172,13 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                             );
 
                                             RequestManager.getRequestQueue().add(gsonObjRequest);
+
+                                            CookieSyncManager.createInstance(LoginActivity.this);
+                                            CookieManager cookieManager = CookieManager.getInstance();
+                                            cookieManager.setAcceptCookie(true);
+                                            cookieManager.removeSessionCookie();
+                                            cookieManager.setCookie(MyGlobal.SERVER_URL_PREFIX, "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
+                                            CookieSyncManager.getInstance().sync();
 
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("stId", stId);

@@ -26,6 +26,7 @@
     <string name="top">置顶</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="shortcut">添加到常用功能</string>
 
     <string name="dialog_choose_job">请选择岗位</string>
 
@@ -42,7 +43,7 @@
     <string name="dialog_downloading_file">正在下载更新文件...</string>
     <string name="dialog_download_error">下载更新文件失败，请稍后再试。</string>
 
-    <string name="function_warehouse_vouchar_manager">采购入库单管理</string>
+    <string name="function_voucher_manager">采购入库单管理</string>
     <string name="hint_enter_purchase_order_no">请输入采购订单号</string>
     <string name="order_no">订单编号</string>
     <string name="order_by">订购人</string>
@@ -79,13 +80,14 @@
     <string name="compressing">正在压缩附件...</string>
     <string name="compress_error">压缩附件的时候遇到错误</string>
 
-    <string name="sales_billboard_report">销售战报龙虎榜</string>
-    <string name="sales_personal_report">销售战报个人版</string>
-    <string name="sales_tactical_report">销售战报战略版</string>
-    <string name="sales_strategy_report">销售战报战术版</string>
-    <string name="payroll_query">薪资查询</string>
-
+    <string name="function_billboard_report">销售战报龙虎榜</string>
+    <string name="function_personal_report">销售战报个人版</string>
+    <string name="function_tactical_report">销售战报战略版</string>
+    <string name="function_strategy_report">销售战报战术版</string>
+    <string name="function_payroll_query">薪资查询</string>
+    <string name="function_train_manager">培训管理</string>
     <string name="function_schedule_manager">日程管理</string>
+
     <string name="month">月</string>
     <string name="cross">-</string>
 

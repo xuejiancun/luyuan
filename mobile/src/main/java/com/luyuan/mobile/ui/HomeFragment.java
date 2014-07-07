@@ -15,23 +15,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.Shortcut;
+import com.luyuan.mobile.util.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private GridView gridView;
     private LayoutInflater layoutInflater;
 
-    private ArrayList<String> shortcuts = new ArrayList<String>();
+    private List<Shortcut> shortcuts = new ArrayList<Shortcut>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        for (int i = 0; i < 28; i++) {
-            shortcuts.add(i, "六个名称" + i);
-        }
+        loadShortCuts();
 
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_home, null);
@@ -52,13 +53,14 @@ public class HomeFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if (item.getItemId() == 1) {
-            String shortcut = shortcuts.get(info.position);
+            Shortcut shortcut = shortcuts.get(info.position);
             shortcuts.remove(info.position);
             shortcuts.add(0, shortcut);
         } else {
             shortcuts.remove(info.position);
         }
         gridView.setAdapter(new ShortCutAdapter(getActivity()));
+        updateShortCuts();
 
         return true;
     }
@@ -92,7 +94,7 @@ public class HomeFragment extends Fragment {
 
             TextView textView = (TextView) view.findViewById(R.id.textview_shortcut);
             textView.setTextSize(12);
-            textView.setText(shortcuts.get(position));
+            textView.setText(shortcuts.get(position).getName());
 
             view.setPadding(10, 5, 10, 5);
 
@@ -100,5 +102,23 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void updateShortCuts() {
+        removeShortcuts();
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        for (Shortcut shortcut : this.shortcuts) {
+            instance.createShortcut(shortcut.getName());
+        }
+    }
+
+    private void loadShortCuts() {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        List<Shortcut> shortcuts = instance.loadShortcuts();
+        this.shortcuts = shortcuts;
+    }
+
+    private void removeShortcuts() {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        instance.removeShortcuts();
+    }
 
 }

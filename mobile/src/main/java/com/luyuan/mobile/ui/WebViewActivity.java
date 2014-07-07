@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -48,10 +49,12 @@ public class WebViewActivity extends Activity {
         setContentView(R.layout.webview_fragment);
 
         webview = (WebView) findViewById(R.id.webview);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webview.getSettings().setDomStorageEnabled(true);
-        webview.getSettings().setAllowFileAccess(true);
+        WebSettings settings = webview.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        // settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webview.addJavascriptInterface(this, "android");
         webview.setWebViewClient(new WebViewClient() {
             @Override
@@ -138,15 +141,17 @@ public class WebViewActivity extends Activity {
     public String getFunctionTitle(String function) {
         String result = "";
         if (function.equals("payroll")) {
-            result = getText(R.string.payroll_query).toString();
+            result = getText(R.string.function_payroll_query).toString();
         } else if (function.equals("billboard")) {
-            result = getText(R.string.sales_billboard_report).toString();
+            result = getText(R.string.function_billboard_report).toString();
         } else if (function.equals("personal")) {
-            result = getText(R.string.sales_personal_report).toString();
+            result = getText(R.string.function_personal_report).toString();
         } else if (function.equals("strategy")) {
-            result = getText(R.string.sales_strategy_report).toString();
+            result = getText(R.string.function_strategy_report).toString();
         } else if (function.equals("tactical")) {
-            result = getText(R.string.sales_tactical_report).toString();
+            result = getText(R.string.function_tactical_report).toString();
+        } else if (function.equals("train")) {
+            result = getText(R.string.function_train_manager).toString();
         }
 
         return result;
@@ -164,6 +169,8 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_STRATEGY;
         } else if (function.equals("tactical")) {
             result = MyGlobal.WEBVIEW_URL_TACTICAL;
+        } else if (function.equals("train")) {
+            result = MyGlobal.WEBVIEW_URL_TRAIN;
         }
 
         return result;

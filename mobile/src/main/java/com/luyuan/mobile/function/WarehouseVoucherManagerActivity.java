@@ -24,7 +24,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.function_warehouse_vouchar_manager);
+        actionBar.setTitle(R.string.function_voucher_manager);
 
         setContentView(R.layout.activity_warehouse_voucher_manager);
     }

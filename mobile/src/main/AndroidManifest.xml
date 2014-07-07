@@ -20,22 +20,22 @@
         <activity
             android:name=".ui.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyTheme.WelcomePage.Background" />
+            android:theme="@style/MyTheme.WelcomePage.Background"></activity>
         <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:parentActivityName=".ui.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".ui.MainActivity"
-            android:parentActivityName=".ui.LoginActivity"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.ImagePreviewActivity"
             android:screenOrientation="portrait" />

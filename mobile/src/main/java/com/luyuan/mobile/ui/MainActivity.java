@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,12 +43,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         replaceTabContent(functionFragment);
         changeTabSelectedStyle(2);
 
-        CookieSyncManager.createInstance(this);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();
-        cookieManager.setCookie(MyGlobal.SERVER_URL_PREFIX, "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
-        CookieSyncManager.getInstance().sync();
     }
 
     @Override

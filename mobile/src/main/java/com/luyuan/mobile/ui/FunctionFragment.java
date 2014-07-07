@@ -1,123 +1,99 @@
 package com.luyuan.mobile.ui;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.function.ScheduleManagerActivity;
-import com.luyuan.mobile.function.UploadMaterialActivity;
-import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.model.FunctionData;
+import com.luyuan.mobile.model.FunctionInfo;
+import com.luyuan.mobile.util.DatabaseHelper;
 import com.luyuan.mobile.util.MyGlobal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FunctionFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
     private ListView listView;
-    private FunctionData functionData;
+    private FunctionData functionData = new FunctionData();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_function, null);
+
+        List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
+
+        FunctionInfo functionInfo1 = new FunctionInfo();
+        functionInfo1.setCode("billboard");
+        functionInfo1.setName(getText(R.string.function_personal_report).toString());
+        functionInfo1.setDesc("billboard description");
+        functionInfos.add(functionInfo1);
+
+        FunctionInfo functionInfo2 = new FunctionInfo();
+        functionInfo2.setCode("personal");
+        functionInfo2.setName(getText(R.string.function_personal_report).toString());
+        functionInfo2.setDesc("personal description");
+        functionInfos.add(functionInfo2);
+
+        FunctionInfo functionInfo3 = new FunctionInfo();
+        functionInfo3.setCode("strategy");
+        functionInfo3.setName(getText(R.string.function_strategy_report).toString());
+        functionInfo3.setDesc("strategy description");
+        functionInfos.add(functionInfo3);
+
+        FunctionInfo functionInfo4 = new FunctionInfo();
+        functionInfo4.setCode("tactical");
+        functionInfo4.setName(getText(R.string.function_tactical_report).toString());
+        functionInfo4.setDesc("tactical description");
+        functionInfos.add(functionInfo4);
+
+        FunctionInfo functionInfo5 = new FunctionInfo();
+        functionInfo5.setCode("payroll");
+        functionInfo5.setName(getText(R.string.function_payroll_query).toString());
+        functionInfo5.setDesc("payroll description");
+        functionInfos.add(functionInfo5);
+
+        FunctionInfo functionInfo6 = new FunctionInfo();
+        functionInfo6.setCode("train");
+        functionInfo6.setName(getText(R.string.function_train_manager).toString());
+        functionInfo6.setDesc("train description");
+        functionInfos.add(functionInfo6);
+
+        FunctionInfo functionInfo7 = new FunctionInfo();
+        functionInfo7.setCode("voucher");
+        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
+        functionInfo7.setDesc("voucher description");
+        functionInfos.add(functionInfo7);
+
+        FunctionInfo functionInfo8 = new FunctionInfo();
+        functionInfo8.setCode("upload");
+        functionInfo8.setName(getText(R.string.function_upload_material).toString());
+        functionInfo8.setDesc("upload description");
+        functionInfos.add(functionInfo8);
+
+        FunctionInfo functionInfo9 = new FunctionInfo();
+        functionInfo9.setCode("schedule");
+        functionInfo9.setName(getText(R.string.function_schedule_manager).toString());
+        functionInfo9.setDesc("schedule description");
+        functionInfos.add(functionInfo9);
+
+        functionData.setFunctionInfos(functionInfos);
+
         listView = (ListView) view.findViewById(R.id.listview_function_list);
-
-        LinearLayout layout_function_1 = (LinearLayout) view.findViewById(R.id.layout_function_1);
-        layout_function_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", "billboard");
-                startActivity(intent);
-            }
-        });
-
-
-        LinearLayout layout_function_2 = (LinearLayout) view.findViewById(R.id.layout_function_2);
-        layout_function_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", "personal");
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_3 = (LinearLayout) view.findViewById(R.id.layout_function_3);
-        layout_function_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", "strategy");
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_8 = (LinearLayout) view.findViewById(R.id.layout_function_8);
-        layout_function_8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", "tactical");
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_4 = (LinearLayout) view.findViewById(R.id.layout_function_4);
-        layout_function_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", "payroll");
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_5 = (LinearLayout) view.findViewById(R.id.layout_function_5);
-        layout_function_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), WarehouseVoucherManagerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_6 = (LinearLayout) view.findViewById(R.id.layout_function_6);
-        layout_function_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), UploadMaterialActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout layout_function_7 = (LinearLayout) view.findViewById(R.id.layout_function_7);
-        layout_function_7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ScheduleManagerActivity.class);
-                startActivity(intent);
-            }
-        });
+        listView.setAdapter(new FunctionAdapter());
+        listView.setOnItemClickListener(this);
 
         StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
         url.append("&stId=" + MyGlobal.getJobInfo().getStId());
@@ -163,17 +139,21 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        createShortCuts(functionData.getFunctionInfos().get(info.position).getName());
+
+        return true;
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyGlobal.getFunctionActivity(functionData.getFunctionInfos().get(i).getCode()));
         startActivity(intent);
     }
 
-    public class FunctionAdapter extends ArrayAdapter<String> {
-
-        public FunctionAdapter(Context c) {
-            super(c, R.layout.item_function);
-        }
+    public class FunctionAdapter extends BaseAdapter {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -191,10 +171,25 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         }
 
         @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
         public int getCount() {
             return functionData.getFunctionInfos().size();
         }
 
+    }
+
+    private void createShortCuts(String name) {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        instance.createShortcut(name);
     }
 
 }

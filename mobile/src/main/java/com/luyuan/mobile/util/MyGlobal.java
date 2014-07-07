@@ -25,11 +25,12 @@ public class MyGlobal {
     public static final String API_UPLOAD_MATERIAL = "http://pic2.luyuan.cn/upload4app.ashx";
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 
-    public static final String WEBVIEW_URL_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx?_t=447235&_wind=w431";
+    public static final String WEBVIEW_URL_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
     public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
     public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
     public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
     public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
+    public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.aspx";
 
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
@@ -71,10 +72,10 @@ public class MyGlobal {
     }
 
     public static int getFunctionIcon(String functionCode) {
-        int resId = 0;
+        int resId = R.drawable.function_item_sales;
 
-        if (functionCode.equals("WarehouseVoucherManager")) {
-            resId = R.drawable.main_tab_function;
+        if (functionCode.equals("billboard")) {
+            resId = R.drawable.function_item_sales;
         } else {
             // TODO
         }
