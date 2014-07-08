@@ -29,10 +29,11 @@
     <string name="shortcut">添加到主页</string>
 
     <string name="dialog_choose_job">请选择岗位</string>
+    <string name="dialog_choose_material">请选择资料</string>
 
     <string name="network_disconnected">没有连接网络，请稍后再试。</string>
     <string name="fetch_data_error">应用程序与服务器通讯遇到错误。</string>
-    <string name="fetch_data_empty">暂未添加图片，请稍后再试。</string>
+    <string name="fetch_data_empty">没有查询到资料</string>
     <string name="app_param_error">页面参数错误，请稍后再试。</string>
 
     <string name="dialog_hint">提示</string>
@@ -55,7 +56,7 @@
     <string name="check">送检</string>
 
     <string name="function_upload_material">资料上传管理</string>
-
+    <string name="loading">正在加载...</string>
     <string name="enter">进入</string>
     <string name="choose_channel">选择自定义通道</string>
     <string name="material_name">资料名称</string>
@@ -75,10 +76,14 @@
     <string name="submit">提交</string>
     <string name="back">返回</string>
     <string name="submitting">正在提交...</string>
+    <string name="submitted_success">资料提交成功</string>
+    <string name="upload_error">附件上传失败，请稍后再试。</string>
+    <string name="submitted_error">资料提交失败，请稍后再试。</string>
     <string name="material_name_empty">请填写资料名称</string>
     <string name="material_files_empty">请添加附件</string>
     <string name="compressing">正在压缩附件...</string>
     <string name="compress_error">压缩附件的时候遇到错误</string>
+    <string name="cancel_success">资料取消成功</string>
 
     <string name="function_billboard_report">销售战报龙虎榜</string>
     <string name="function_personal_report">销售战报个人版</string>

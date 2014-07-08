@@ -2,6 +2,7 @@ package com.luyuan.mobile.ui;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.Shortcut;
 import com.luyuan.mobile.util.DatabaseHelper;
+import com.luyuan.mobile.util.MyGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,16 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, null);
         gridView = (GridView) view.findViewById(R.id.gridview_shortcut_list);
         gridView.setAdapter(new ShortCutAdapter(getActivity()));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyGlobal.getFunctionActivity(shortcuts.get(i).getCode()));
+                intent.putExtra("function", shortcuts.get(i).getCode());
+
+                startActivity(intent);
+            }
+        });
         registerForContextMenu(gridView);
 
         return view;
@@ -106,7 +118,7 @@ public class HomeFragment extends Fragment {
         removeShortcuts();
         DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
         for (Shortcut shortcut : this.shortcuts) {
-            instance.createShortcut(shortcut.getName());
+            instance.createShortcut(shortcut.getCode(), shortcut.getName());
         }
     }
 

@@ -27,7 +27,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_name_upload_material_query"
+                    android:id="@+id/edittext_material_name"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -49,7 +49,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_remark_upload_material_query"
+                    android:id="@+id/edittext_material_remark"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -70,7 +70,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_transact_state_upload_material_query"
+                    android:id="@+id/edittext_material_transact_state"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -92,7 +92,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_transact_date_upload_material_query"
+                    android:id="@+id/edittext_material_transact_date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -114,7 +114,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_submit_date_upload_material_query"
+                    android:id="@+id/edittext_material_submit_date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -136,7 +136,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_feedback_upload_material_query"
+                    android:id="@+id/edittext_material_feedback"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -155,8 +155,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:id="@+id/textview_material_attachment"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

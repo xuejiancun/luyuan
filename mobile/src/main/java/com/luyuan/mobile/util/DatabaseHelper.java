@@ -15,11 +15,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "luyuan.db";
     private static final int DATABASE_VERSION = 1;
     private static DatabaseHelper helper;
-    public static final String[] SHORTCUT_COLS = new String[]
-            {
-                    "id",
-                    "name"
-            };
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (helper == null) {
@@ -39,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CREATE TABLE `shortcut` " +
                         "(" +
                         "`id` INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "`code` VARCHAR, " +
                         "`name` VARCHAR " +
                         ") ";
         sqLiteDatabase.execSQL(createShortcutTable);
@@ -50,31 +46,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void createShortcut(String name) {
+    public void createShortcut(String code, String name) {
         final SQLiteDatabase writableDatabase = getWritableDatabase();
         final ContentValues contentValues = new ContentValues();
 
+        contentValues.put("code", code);
         contentValues.put("name", name);
 
         writableDatabase.insertOrThrow("shortcut", null, contentValues);
     }
 
-    public int countShortcuts() {
-        Cursor cursor = getReadableDatabase().rawQuery("select count(*) from shortcut", null);
-        cursor.moveToFirst();
-        return cursor.getInt(0);
-    }
-
-    public void updateShortcut(Integer id, String desc) {
+    public void removeShortcut(String code) {
         final SQLiteDatabase writableDatabase = getWritableDatabase();
-        try {
-            final ContentValues contentValues = new ContentValues();
-
-            contentValues.put("name", desc);
-
-            writableDatabase.update("shortcut", contentValues, "id = ?", new String[]{id.toString()});
-        } finally {
-        }
+        writableDatabase.delete("shortcut", "code = ?", new String[]{code});
     }
 
     public void removeShortcuts() {
@@ -85,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         final SQLiteDatabase readableDatabase = getReadableDatabase();
 
         List<Shortcut> shortcuts;
-        final Cursor shortcutCursor = readableDatabase.query("shortcut", SHORTCUT_COLS, null, null, null, null, "id", null);
+        final Cursor shortcutCursor = readableDatabase.rawQuery("select id, code, name from shortcut order by id desc", null);
 
         try {
             shortcuts = new ArrayList<Shortcut>();
@@ -102,32 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return shortcuts;
     }
 
-    public Shortcut loadShortcut(Integer id) {
-        final SQLiteDatabase readableDatabase = getReadableDatabase();
-
-        final Shortcut shortcut;
-        final Cursor cursor = readableDatabase.query("shortcut",
-                SHORTCUT_COLS,
-                "id = ?",
-                new String[]{id.toString()},
-                null,
-                null,
-                null,
-                null
-        );
-        try {
-            cursor.moveToNext();
-
-            shortcut = shortcutFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-
-        return shortcut;
-    }
-
     private Shortcut shortcutFromCursor(Cursor cursor) {
-        final Shortcut shortcut = new Shortcut(cursor.getInt(0), cursor.getString(1));
+        final Shortcut shortcut = new Shortcut(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
         return shortcut;
     }
 

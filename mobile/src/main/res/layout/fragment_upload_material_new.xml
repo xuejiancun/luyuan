@@ -164,7 +164,6 @@
             android:layout_height="60dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:gravity="center">
 
@@ -203,7 +202,6 @@
             android:layout_height="60dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:gravity="center">
 

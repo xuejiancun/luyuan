@@ -1,6 +1,7 @@
 package com.luyuan.mobile.util;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -63,6 +64,8 @@ public class GsonRequest<T> extends Request<T> {
         this.mListener = listener;
         mGson = new Gson();
 
+        setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
     }
 
     @Override
@@ -101,4 +104,10 @@ public class GsonRequest<T> extends Request<T> {
         }
         return headers;
     }
+
+    @Override
+    public String getBodyContentType() {
+        return "application/x-www-form-urlencoded; charset=UTF-8";
+    }
+
 }

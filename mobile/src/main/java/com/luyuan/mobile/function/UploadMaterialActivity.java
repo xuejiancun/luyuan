@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +15,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,13 +25,15 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class UploadMaterialActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;
     private ProgressDialog dialog;
     private MaterialData materialData;
+    private int materialIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,37 +48,10 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
 
         setContentView(R.layout.activity_upload_material);
 
-        replaceTabContent(new UploadMaterialChannelFragment());
-
-        // init data
-        Material material1 = new Material();
-        material1.setChannelId("ID00001");
-        material1.setId("XX000001");
-        material1.setName("NAME000001");
-        material1.setRemark("REMARK000001");
-        material1.setTransactState("STATE000001");
-        material1.setTransactDate("2014-07-13");
-        material1.setSubmitDate("2014-06-13");
-        material1.setFeedback("FEEDBACK00001");
-        material1.setFeedback("XXX000001.zip");
-
-        Material material2 = new Material();
-        material2.setChannelId("ID00002");
-        material2.setId("XX000002");
-        material2.setName("NAME000002");
-        material2.setRemark("REMARK000002");
-        material2.setTransactState("STATE000002");
-        material2.setTransactDate("2014-07-13");
-        material2.setSubmitDate("2014-06-13");
-        material2.setFeedback("FEEDBACK00002");
-        material2.setFeedback("XXX000002.zip");
-
-        ArrayList<Material> materials = new ArrayList<Material>();
-        materials.add(material1);
-        materials.add(material2);
-
-        materialData = new MaterialData();
-        materialData.setMaterials(materials);
+        Fragment fragment = new UploadMaterialChannelFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -96,20 +71,20 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     }
 
     public boolean onQueryTextSubmit(String query) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-
-        StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
-        url.append("&query=" + query);
+        String url = "";
+        try {
+            url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString() + "&query=" + URLEncoder.encode(query, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+        }
 
         if (MyGlobal.checkNetworkConnection(this)) {
 
             dialog = new ProgressDialog(this);
-            dialog.setMessage(getText(R.string.validating));
+            dialog.setMessage(getText(R.string.loading));
             dialog.setCancelable(true);
             dialog.show();
 
-            GsonRequest gsonObjRequest = new GsonRequest<MaterialData>(Request.Method.GET, url.toString(),
+            GsonRequest gsonObjRequest = new GsonRequest<MaterialData>(Request.Method.GET, url,
                     MaterialData.class, new Response.Listener<MaterialData>() {
 
                 @Override
@@ -118,36 +93,44 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
 
                     if (response != null && response.getSuccess().equals("true")) {
 
-//                        materialData = response;
-//                        int count = materialData.getMaterials().size();
-//                        if (count == 1) {
-//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                            intent.putExtra("stId", response.getMaterials().get(0).getId());
-//                            startActivity(intent);
-//
-//                        } else if (count > 1) {
-//                            CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
-//                            for (int i = 0; i < count; i++) {
-//                                jobList[i] = jobData.getJobInfos().get(i).getJobName();
-//                            }
-//
-//                            new AlertDialog.Builder(LoginActivity.this)
-//                                    .setTitle(R.string.dialog_choose_job)
-//                                    .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            jobIndex = which;
-//                                        }
-//                                    })
-//                                    .setNegativeButton(R.string.cancel, null)
-//                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                            intent.putExtra("stId", jobData.getJobInfos().get(jobIndex).getStId());
-//                                            startActivity(intent);
-//                                        }
-//                                    })
-//                                    .create()
-//                                    .show();
+                        materialData = response;
+                        int count = materialData.getMaterials().size();
+                        if (count == 1) {
+                            materialIndex = 0;
+                            replaceContentForQuery();
+
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
+                        } else if (count > 1) {
+                            CharSequence[] jobList = new CharSequence[materialData.getMaterials().size()];
+                            for (int i = 0; i < count; i++) {
+                                jobList[i] = materialData.getMaterials().get(i).getName();
+                            }
+
+                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                                    .setTitle(R.string.dialog_choose_material)
+                                    .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            materialIndex = which;
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.cancel, null)
+                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            replaceContentForQuery();
+                                        }
+                                    })
+                                    .create()
+                                    .show();
+                        } else {
+                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                                    .setMessage(R.string.fetch_data_empty)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
                     } else {
                         new AlertDialog.Builder(UploadMaterialActivity.this)
                                 .setMessage(R.string.fetch_data_error)
@@ -173,19 +156,27 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
             );
 
             RequestManager.getRequestQueue().add(gsonObjRequest);
-            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    MyGlobal.CONNECTION_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         }
-
-        replaceTabContent(new UploadMaterialQueryFragment());
 
         return true;
     }
 
-    private void replaceTabContent(Fragment fragment) {
+    private void replaceContentForQuery() {
+        Fragment fragment = new UploadMaterialQueryFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        Material material = materialData.getMaterials().get(materialIndex);
+
+        Bundle args = new Bundle();
+        args.putString("id", material.getId());
+        args.putString("name", material.getName());
+        args.putString("remark", material.getRemark());
+        args.putString("transactsate", material.getTransactState());
+        args.putString("transactdate", material.getTransactDate());
+        args.putString("submitdate", material.getSubmitDate());
+        args.putString("feedback", material.getFeedback());
+        args.putString("attachment", material.getAttachment());
+        fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
         fragmentTransaction.commit();

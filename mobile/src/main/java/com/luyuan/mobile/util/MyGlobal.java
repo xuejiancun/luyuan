@@ -15,6 +15,8 @@ import com.luyuan.mobile.model.JobInfo;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.ui.WebViewActivity;
 
+import java.text.SimpleDateFormat;
+
 public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
@@ -22,11 +24,15 @@ public class MyGlobal {
 
     public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
 
-    public static final String API_FETCH_LOGIN = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
-    public static final String API_POST_JOB = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=chooserole4app";
-    public static final String API_FETCH_FUNCTION = "http://192.168.10.60:801/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
-    public static final String API_UPLOAD_MATERIAL = "http://pic2.luyuan.cn/upload4app.ashx";
-    public static final String API_WAREHOUSE_VOUCHER_SEARCH = "https://erp.luyuan.cn/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
+    public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_POST_JOB = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=chooserole4app";
+    public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
+    public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
+    public static final String API_FETCH_CHANNEL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchchannels";
+    public static final String API_UPLOAD_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=uploadmaterial";
+    public static final String API_SUBMIT_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=submitmaterial";
+    public static final String API_CANCEL_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=cancelmaterial";
+    public static final String API_WAREHOUSE_VOUCHER_SEARCH = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 
     public static final String WEBVIEW_URL_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
     public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
@@ -38,7 +44,7 @@ public class MyGlobal {
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
 
-    public static final int CONNECTION_TIMEOUT_MS = 1500;
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;

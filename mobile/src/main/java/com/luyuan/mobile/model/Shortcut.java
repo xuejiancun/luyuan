@@ -3,16 +3,26 @@ package com.luyuan.mobile.model;
 public class Shortcut {
 
     private Integer id;
+    private String code;
     private String name;
-    private Integer order;
 
-    public Shortcut(Integer id, String name) {
-        this.name = name;
+    public Shortcut(Integer id, String code, String name) {
+
         this.id = id;
+        this.code = code;
+        this.name = name;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

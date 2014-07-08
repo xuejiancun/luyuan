@@ -1,6 +1,6 @@
 package com.luyuan.mobile.model;
 
-public class TempData {
+public class SuccessData {
 
     private String success = "";
 
@@ -11,6 +11,5 @@ public class TempData {
     public void setSuccess(String success) {
         this.success = success;
     }
-
 
 }

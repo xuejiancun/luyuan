@@ -31,16 +31,12 @@ import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
 import com.luyuan.mobile.util.MyGlobal;
-import com.luyuan.mobile.util.ZipUtils;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +46,8 @@ public class UploadMaterialNewFragment extends Fragment {
     private Gallery gallery;
     private Uri imageUri;
     private ProgressDialog dialog;
+
+    private String channel = "";
 
     private EditText editTextName;
     private EditText editTextRemark;
@@ -62,14 +60,17 @@ public class UploadMaterialNewFragment extends Fragment {
     private final int FROM_VIDEO = 3;
     private final int FROM_AUDIO = 4;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upload_material_new, null);
 
         editTextName = (EditText) view.findViewById(R.id.edittext_material_name_upload_material);
         editTextRemark = (EditText) view.findViewById(R.id.edittext_material_remark_upload_material);
+
+        Bundle args = getArguments();
+        if (args != null && args.getString("channel") != null) {
+            channel = args.getString("channel");
+        }
 
         // add attachment
         ((Button) view.findViewById(R.id.button_attach_file_upload_material)).setOnClickListener(new View.OnClickListener() {
@@ -83,7 +84,7 @@ public class UploadMaterialNewFragment extends Fragment {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
-                                    String name = "IMG_" + sdf.format(new Date()) + ".jpg";
+                                    String name = "IMG_" + MyGlobal.sdf.format(new Date()) + ".jpg";
                                     File dir = new File(MyGlobal.CAMERA_PATH);
                                     if (!dir.exists()) {
                                         dir.mkdirs();
@@ -140,54 +141,14 @@ public class UploadMaterialNewFragment extends Fragment {
                     return;
                 }
 
-                dialog = new ProgressDialog(getActivity());
-                dialog.setMessage(getText(R.string.compressing));
-                dialog.setCancelable(true);
-                dialog.show();
+                List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+                pairs.add(new BasicNameValuePair("channel", channel));
+                pairs.add(new BasicNameValuePair("name", name));
+                pairs.add(new BasicNameValuePair("remark", remark));
 
-                // compress files
-                File dir = new File(MyGlobal.COMPRESS_PATH);
-                if (!dir.exists() || !dir.isDirectory()) {
-                    dir.mkdirs();
-                }
-                File compressed = new File(dir, "ZIP_" + sdf.format(new Date()) + ".zip");
+                post = new HttpMultipartPost(getActivity(), pairs, filePaths, getText(R.string.submitting).toString());
+                post.execute();
 
-                Collection<File> files = new ArrayList<File>();
-                for (String path : filePaths) {
-                    File file = new File(path);
-                    files.add(file);
-                }
-
-                try {
-                    ZipUtils.zipFiles(files, compressed);
-                } catch (IOException e) {
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.compress_error)
-                            .setTitle(R.string.dialog_hint)
-                            .setPositiveButton(R.string.dialog_confirm, null)
-                            .create()
-                            .show();
-                }
-
-                dialog.dismiss();
-
-                // submitting material
-                if (compressed.exists()) {
-                    List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-                    pairs.add(new BasicNameValuePair("name", name));
-                    pairs.add(new BasicNameValuePair("remark", remark));
-                    pairs.add(new BasicNameValuePair("attachment", compressed.getName()));
-
-                    post = new HttpMultipartPost(getActivity(), pairs, compressed.getAbsolutePath(), getText(R.string.submitting).toString());
-                    post.execute();
-                } else {
-                    new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.compress_error)
-                            .setTitle(R.string.dialog_hint)
-                            .setPositiveButton(R.string.dialog_confirm, null)
-                            .create()
-                            .show();
-                }
             }
         });
 
@@ -195,7 +156,9 @@ public class UploadMaterialNewFragment extends Fragment {
         ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceTabContent(new UploadMaterialChannelFragment());
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame_content_upload_material, new UploadMaterialChannelFragment());
+                fragmentTransaction.commit();
             }
         });
 
@@ -290,10 +253,10 @@ public class UploadMaterialNewFragment extends Fragment {
 
                 break;
         }
-        if (!filePath.isEmpty()) {
+        if (!filePath.isEmpty() && !filePaths.contains(filePath)) {
             filePaths.add(0, filePath);
+            fileThumbs.add(0, bitmap);
         }
-        fileThumbs.add(0, bitmap);
         gallery.setAdapter(new ImageAdapter(getActivity()));
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -349,13 +312,6 @@ public class UploadMaterialNewFragment extends Fragment {
 
             return imageView;
         }
-    }
-
-    private void replaceTabContent(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-        fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
-        fragmentTransaction.commit();
     }
 
 }

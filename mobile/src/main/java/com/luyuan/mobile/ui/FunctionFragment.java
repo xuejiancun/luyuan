@@ -148,7 +148,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        createShortCuts(functionData.getFunctionInfos().get(info.position).getName());
+        createShortCuts(functionData.getFunctionInfos().get(info.position).getCode(), functionData.getFunctionInfos().get(info.position).getName());
 
         return true;
     }
@@ -196,9 +196,10 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
     }
 
-    private void createShortCuts(String name) {
+    private void createShortCuts(String code, String name) {
         DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
-        instance.createShortcut(name);
+        instance.removeShortcut(code);
+        instance.createShortcut(code, name);
     }
 
 }

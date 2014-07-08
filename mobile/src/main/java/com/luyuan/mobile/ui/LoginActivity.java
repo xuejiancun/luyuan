@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.JobData;
-import com.luyuan.mobile.model.TempData;
+import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
@@ -69,8 +69,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-//        username = "xuejiancun";
-//        password = "qwerT5%5";
+        username = "xuejiancun";
+        password = "qwerT5%5";
 //
 //        username = "ceshi2";
 //        password = "Xx8888..";
@@ -150,10 +150,10 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                         public void onClick(DialogInterface dialog, int which) {
                                             String stId = jobData.getJobInfos().get(jobIndex).getStId();
 
-                                            GsonRequest gsonObjRequest = new GsonRequest<TempData>(Request.Method.POST, MyGlobal.API_POST_JOB + "&stID=" + stId,
-                                                    TempData.class, new Response.Listener<TempData>() {
+                                            GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.POST, MyGlobal.API_POST_JOB + "&stID=" + stId,
+                                                    SuccessData.class, new Response.Listener<SuccessData>() {
                                                 @Override
-                                                public void onResponse(TempData response) {
+                                                public void onResponse(SuccessData response) {
                                                     response.getSuccess();
                                                 }
                                             }, new Response.ErrorListener() {

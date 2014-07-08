@@ -1,6 +1,6 @@
 package com.luyuan.mobile.model;
 
-public class Channel {
+public class ChannelInfo {
 
     private String id = "";
     private String name = "";
