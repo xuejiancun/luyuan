@@ -94,7 +94,7 @@ public class UploadMaterialQueryFragment extends Fragment {
 
                             } else {
                                 new AlertDialog.Builder(getActivity())
-                                        .setMessage(R.string.fetch_data_error)
+                                        .setMessage(R.string.interact_data_error)
                                         .setTitle(R.string.dialog_hint)
                                         .setPositiveButton(R.string.dialog_confirm, null)
                                         .create()
@@ -107,7 +107,7 @@ public class UploadMaterialQueryFragment extends Fragment {
                             dialog.dismiss();
 
                             new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.fetch_data_error)
+                                    .setMessage(R.string.interact_data_error)
                                     .setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null)
                                     .create()

@@ -291,10 +291,6 @@ public class CalendarPickerView extends ListView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (months.isEmpty()) {
-            throw new IllegalStateException(
-                    "Must have at least one month to display.  Did you forget to call init()?");
-        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 

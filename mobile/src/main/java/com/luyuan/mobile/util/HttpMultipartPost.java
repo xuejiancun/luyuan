@@ -60,7 +60,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
         if (!dir.exists() || !dir.isDirectory()) {
             dir.mkdirs();
         }
-        File compressed = new File(dir, MyGlobal.getUser().getUsername() + "_" + MyGlobal.sdf.format(new Date()) + ".zip");
+        File compressed = new File(dir, MyGlobal.getUser().getUsername() + "_" + MyGlobal.SIMPLE_DATE_FORMAT_WITH_TIME.format(new Date()) + ".zip");
 
         Collection<File> files = new ArrayList<File>();
         for (String path : filePaths) {

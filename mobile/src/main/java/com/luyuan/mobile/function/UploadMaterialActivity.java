@@ -103,14 +103,14 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
                         } else if (count > 1) {
-                            CharSequence[] jobList = new CharSequence[materialData.getMaterials().size()];
+                            CharSequence[] list = new CharSequence[materialData.getMaterials().size()];
                             for (int i = 0; i < count; i++) {
-                                jobList[i] = materialData.getMaterials().get(i).getName();
+                                list[i] = materialData.getMaterials().get(i).getName();
                             }
 
                             new AlertDialog.Builder(UploadMaterialActivity.this)
                                     .setTitle(R.string.dialog_choose_material)
-                                    .setSingleChoiceItems(jobList, 0, new DialogInterface.OnClickListener() {
+                                    .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             materialIndex = which;
                                         }
@@ -133,7 +133,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                         }
                     } else {
                         new AlertDialog.Builder(UploadMaterialActivity.this)
-                                .setMessage(R.string.fetch_data_error)
+                                .setMessage(R.string.interact_data_error)
                                 .setTitle(R.string.dialog_hint)
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
@@ -146,7 +146,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                     dialog.dismiss();
 
                     new AlertDialog.Builder(UploadMaterialActivity.this)
-                            .setMessage(R.string.fetch_data_error)
+                            .setMessage(R.string.interact_data_error)
                             .setTitle(R.string.dialog_hint)
                             .setPositiveButton(R.string.dialog_confirm, null)
                             .create()

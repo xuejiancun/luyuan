@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -26,17 +27,33 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.TimePicker;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.component.CalendarPickerView;
+import com.luyuan.mobile.model.DayData;
+import com.luyuan.mobile.model.DayInfo;
+import com.luyuan.mobile.model.LocationData;
+import com.luyuan.mobile.model.ScheduleData;
+import com.luyuan.mobile.model.SubordinateData;
+import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.service.LocationService;
+import com.luyuan.mobile.util.GsonRequest;
+import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.RequestManager;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,12 +65,15 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
     private AlertDialog theDialog;
     private CalendarPickerView dialogView;
     private Button buttonChooseDate;
-
+    private ProgressDialog dialog;
     private Calendar calendar = Calendar.getInstance();
 
     private int mYear;
     private int mMonth;
     private int mDay;
+    private int subordinatesIndex;
+
+    private SubordinateData subordinateData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +87,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         actionBar.setTitle(R.string.function_schedule_manager);
 
         setContentView(R.layout.schedule_manager_activity);
+
+        calendarPickerView = (CalendarPickerView) findViewById(R.id.calendar_view);
 
         calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
@@ -91,13 +113,10 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
         });
 
-        calendarPickerView = (CalendarPickerView) findViewById(R.id.calendar_view);
-        calendarPickerView.init(new Date(mYear - 1900, mMonth, mDay))
-                .inMode(CalendarPickerView.SelectionMode.SINGLE)
-                .withSelectedDate(new Date(mYear - 1900, mMonth, mDay));
+        initCalendar();
 
-        // get location
-        ((Button) findViewById(R.id.button_get_current_location)).setOnClickListener(new View.OnClickListener() {
+        // add location
+        ((Button) findViewById(R.id.button_add_location)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentFilter filter = new IntentFilter();
@@ -115,14 +134,90 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
         });
 
-
-        // my schedule
+        // show my schedule
         ((Button) findViewById(R.id.button_my_schedule)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                DialogFragment newFragment = ScheduleDialogFragment.newInstance(new ArrayList<String>());
+                DialogFragment newFragment = ScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate(), MyGlobal.getUser().getId(), "");
                 newFragment.show(fragmentTransaction, "dialog");
+            }
+
+        });
+
+        // show others schedule
+        ((Button) findViewById(R.id.button_view_others_schedule)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
+
+                    GsonRequest gsonObjRequest = new GsonRequest<SubordinateData>(Request.Method.GET, MyGlobal.API_FETCH_SUBORDINATE + "&userId=" + MyGlobal.getUser().getId(),
+                            SubordinateData.class, new Response.Listener<SubordinateData>() {
+
+                        @Override
+                        public void onResponse(SubordinateData response) {
+
+                            if (response != null && response.getSuccess().equals("true")) {
+                                subordinateData = response;
+                                int count = response.getSubordinateInfos().size();
+                                if (count == 1) {
+                                    subordinatesIndex = 0;
+                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                    DialogFragment newFragment = ScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate(), subordinateData.getSubordinateInfos().get(subordinatesIndex).getUserId(), "");
+                                    newFragment.show(fragmentTransaction, "dialog");
+
+                                } else if (count > 1) {
+                                    CharSequence[] list = new CharSequence[response.getSubordinateInfos().size()];
+                                    for (int i = 0; i < count; i++) {
+                                        list[i] = response.getSubordinateInfos().get(i).getUsername();
+                                    }
+
+                                    new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                            .setTitle(R.string.dialog_choose_material)
+                                            .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    subordinatesIndex = which;
+                                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                                    DialogFragment newFragment = ScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate(), subordinateData.getSubordinateInfos().get(subordinatesIndex).getUserId(), "");
+                                                    newFragment.show(fragmentTransaction, "dialog");
+                                                }
+                                            })
+                                            .setPositiveButton(R.string.cancel, null)
+                                            .create()
+                                            .show();
+                                } else {
+                                    new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                            .setMessage(R.string.fetch_data_empty)
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                            .create()
+                                            .show();
+                                }
+                            } else {
+                                new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                    );
+
+                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }
             }
         });
 
@@ -131,12 +226,10 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                DialogFragment newFragment = AddScheduleDialogFragment.newInstance(new ArrayList<String>());
+                DialogFragment newFragment = AddScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate());
                 newFragment.show(fragmentTransaction, "dialog");
             }
         });
-
-
     }
 
     @Override
@@ -156,25 +249,95 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
     }
 
     public boolean onQueryTextSubmit(String query) {
-        // rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH + "&query=" + query);
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        DialogFragment newFragment = ScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate(), MyGlobal.getUser().getId(), query);
+        newFragment.show(fragmentTransaction, "dialog");
 
         return true;
+    }
+
+    public void initCalendar() {
+        if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
+
+            dialog = new ProgressDialog(ScheduleManagerActivity.this);
+            dialog.setMessage(getText(R.string.loading));
+            dialog.setCancelable(true);
+            dialog.show();
+
+            StringBuilder url = new StringBuilder();
+            url.append(MyGlobal.API_FETCH_DAYS);
+            url.append("&userId=" + MyGlobal.getUser().getId());
+            url.append("&date=" + MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(mYear - 1900, mMonth, 1)));
+
+            GsonRequest gsonObjRequest = new GsonRequest<DayData>(Request.Method.GET, url.toString(),
+                    DayData.class, new Response.Listener<DayData>() {
+
+                @Override
+                public void onResponse(DayData response) {
+                    dialog.dismiss();
+                    if (response != null && response.getSuccess().equals("true")) {
+                        List<DayInfo> dayInfos = response.getDayInfos();
+                        ArrayList<Date> selectedDates = new ArrayList<Date>();
+                        for (DayInfo day : dayInfos) {
+                            selectedDates.add(new Date(mYear - 1900, mMonth, day.getDay()));
+                        }
+
+                        calendarPickerView.init(new Date(mYear - 1900, mMonth, mDay))
+                                .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                                .withSelectedDate(new Date(mYear - 1900, mMonth, mDay))
+                                .withHighlightedDates(selectedDates);
+                    } else {
+                        new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                .setMessage(R.string.interact_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+
+                        calendarPickerView.init(new Date(mYear - 1900, mMonth, mDay))
+                                .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                                .withSelectedDate(new Date());
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dialog.dismiss();
+                    new AlertDialog.Builder(ScheduleManagerActivity.this)
+                            .setMessage(R.string.interact_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+
+                    calendarPickerView.init(new Date(mYear - 1900, mMonth, mDay))
+                            .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                            .withSelectedDate(new Date());
+                }
+            }
+            );
+
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+        }
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            if (mYear == year && mMonth == monthOfYear) {
+                return;
+            }
+
             mYear = year;
             mMonth = monthOfYear;
-            mDay = dayOfMonth;
 
             buttonChooseDate.setText(new StringBuilder()
                     .append(mYear).append(getText(R.string.cross))
                     .append(mMonth + 1).append(getText(R.string.month)));
 
-            calendarPickerView.init(new Date(mYear - 1900, mMonth, mDay))
-                    .inMode(CalendarPickerView.SelectionMode.SINGLE)
-                    .withSelectedDate(new Date(mYear - 1900, mMonth, mDay));
+            initCalendar();
         }
     };
 
@@ -195,8 +358,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         }
     }
 
-    private ProgressDialog dialog;
-
     private class LocationBroadcastReceiver extends BroadcastReceiver {
 
         @Override
@@ -208,11 +369,63 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             try {
                 List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
                 String location = list.get(0).getAddressLine(0).toString();
-                Toast.makeText(ScheduleManagerActivity.this, location, Toast.LENGTH_LONG).show();
+                // Toast.makeText(ScheduleManagerActivity.this, location, Toast.LENGTH_LONG).show();
+
+                StringBuilder url = new StringBuilder();
+                url.append(MyGlobal.API_ADD_LOCATION);
+                url.append("&userId=" + MyGlobal.getUser().getId());
+                try {
+                    url.append("&location=" + URLEncoder.encode(location, "utf-8"));
+                } catch (UnsupportedEncodingException e) {
+                }
+
+                if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
+
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
+                            SuccessData.class, new Response.Listener<SuccessData>() {
+
+                        @Override
+                        public void onResponse(SuccessData response) {
+                            dialog.dismiss();
+
+                            if (response != null && response.getSuccess().equals("true")) {
+                                new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                        .setMessage(R.string.located_success)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+
+                            } else {
+                                new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
+
+                            new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                    );
+
+                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }
+
             } catch (IOException e) {
             }
 
-            dialog.dismiss();
             unregisterReceiver(this);
         }
     }
@@ -220,17 +433,22 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
     public static class ScheduleDialogFragment extends DialogFragment {
 
-        ScheduleListAdapter scheduleListAdapter;
-        LayoutInflater layoutInflater;
+        private ScheduleListAdapter scheduleListAdapter;
+        private LayoutInflater layoutInflater;
+        private ListView listViewSchedule;
+        private ListView listViewLocation;
+        private ScheduleData scheduleData;
+        private LocationData locationData;
 
-        static ScheduleDialogFragment newInstance(ArrayList<String> params) {
+        private static Date date;
+        private static String userId;
+        private static String query;
+
+        public static ScheduleDialogFragment newInstance(Date date, String userId, String query) {
             ScheduleDialogFragment fragment = new ScheduleDialogFragment();
-
-            Bundle args = new Bundle();
-            // TODO
-            // args.putInt("num", num);
-            fragment.setArguments(args);
-
+            ScheduleDialogFragment.date = date;
+            ScheduleDialogFragment.userId = userId;
+            ScheduleDialogFragment.query = query;
             return fragment;
         }
 
@@ -242,20 +460,77 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             layoutInflater = inflater;
             View view = inflater.inflate(R.layout.schedule_manager_info_fragment_dialog, container, false);
-            ListView listViewSchedule = ((ListView) view.findViewById(R.id.listview_schedule_list));
-            scheduleListAdapter = new ScheduleListAdapter(getActivity());
-            listViewSchedule.setAdapter(scheduleListAdapter);
-            listViewSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            listViewSchedule = ((ListView) view.findViewById(R.id.listview_schedule_list));
+            listViewLocation = ((ListView) view.findViewById(R.id.listview_location_list));
+
+            if (MyGlobal.checkNetworkConnection(getActivity())) {
+
+                StringBuilder url = new StringBuilder();
+                url.append(MyGlobal.API_FETCH_SCHEDULE);
+                url.append("&userId=" + userId);
+                url.append("&date=" + MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                if (query != null && !query.isEmpty()) {
+                    try {
+                        url.append("&query=" + URLEncoder.encode(query, "utf-8"));
+                    } catch (UnsupportedEncodingException e) {
+                    }
+                }
+
+                GsonRequest gsonObjRequest = new GsonRequest<ScheduleData>(Request.Method.GET, url.toString(),
+                        ScheduleData.class, new Response.Listener<ScheduleData>() {
+
+                    @Override
+                    public void onResponse(ScheduleData response) {
+                        if (response != null && response.getSuccess().equals("true")) {
+                            scheduleData = response;
+                            locationData = new LocationData();
+                            locationData.setLocationInfos(scheduleData.getLocationInfos());
+                            scheduleListAdapter = new ScheduleListAdapter(getActivity());
+                            listViewSchedule.setAdapter(scheduleListAdapter);
+                            listViewSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    scheduleListAdapter.toggle(i);
+                                }
+                            });
+
+                            listViewLocation.setAdapter(new LocationListAdapter(getActivity()));
+
+                        } else {
+                            new AlertDialog.Builder(getActivity())
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        new AlertDialog.Builder(getActivity())
+                                .setMessage(R.string.interact_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+                    }
+                }
+                );
+
+                RequestManager.getRequestQueue().add(gsonObjRequest);
+            }
+
+            ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    scheduleListAdapter.toggle(i);
+                public void onClick(View view) {
+                    ScheduleDialogFragment.this.dismiss();
                 }
             });
-
-            ListView listViewLocation = ((ListView) view.findViewById(R.id.listview_location_list));
-            listViewLocation.setAdapter(new LocationListAdapter(getActivity()));
 
             return view;
         }
@@ -263,12 +538,11 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         private class ScheduleListAdapter extends BaseAdapter {
 
             public ScheduleListAdapter(Context context) {
-                mContext = context;
+                this.context = context;
             }
 
-
             public int getCount() {
-                return mTitles.length;
+                return scheduleData.getScheduleInfos().size();
             }
 
             public Object getItem(int position) {
@@ -280,251 +554,39 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
 
             public View getView(int position, View convertView, ViewGroup parent) {
+                String startTime = scheduleData.getScheduleInfos().get(position).getStartTime();
+                String endTime = scheduleData.getScheduleInfos().get(position).getEndTime();
+                String content = scheduleData.getScheduleInfos().get(position).getContent();
+                Boolean expanded = scheduleData.getScheduleInfos().get(position).getExpanded();
+
+                String title = "";
+                if (query != null && !query.isEmpty()) {
+                    title = startTime + " - " + endTime;
+                    expanded = true;
+                } else {
+                    title = startTime + " - " + endTime + "   " + (content.length() > 12 ? content.substring(0, 12) + "..." : content);
+                }
+
                 ScheduleView sv;
                 if (convertView == null) {
-                    sv = new ScheduleView(mContext, mTitles[position], mDialogue[position], mExpanded[position]);
+                    sv = new ScheduleView(context, title, content, expanded);
                 } else {
                     sv = (ScheduleView) convertView;
-                    sv.setTitle(mTitles[position]);
-                    sv.setDialogue(mDialogue[position]);
-                    sv.setExpanded(mExpanded[position]);
+                    sv.setTitle(title);
+                    sv.setDialogue(content);
+                    sv.setExpanded(expanded);
                 }
 
                 return sv;
             }
 
             public void toggle(int position) {
-                mExpanded[position] = !mExpanded[position];
+                scheduleData.getScheduleInfos().get(position).setExpanded(!scheduleData.getScheduleInfos().get(position).getExpanded());
                 notifyDataSetChanged();
             }
 
-            private Context mContext;
+            private Context context;
 
-            private String[] mTitles =
-                    {
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它...",
-                            "12:00:00 - 14:00:00 待办事项是今天搞定它..."
-                    };
-
-            private String[] mDialogue =
-                    {
-                            "So shaken as we are, so wan with care," +
-                                    "Find we a time for frighted peace to pant," +
-                                    "And breathe short-winded accents of new broils" +
-                                    "To be commenced in strands afar remote." +
-                                    "No more the thirsty entrance of this soil" +
-                                    "Shall daub her lips with her own children's blood;" +
-                                    "Nor more shall trenching war channel her fields," +
-                                    "Nor bruise her flowerets with the armed hoofs" +
-                                    "Of hostile paces: those opposed eyes," +
-                                    "Which, like the meteors of a troubled heaven," +
-                                    "All of one nature, of one substance bred," +
-                                    "Did lately meet in the intestine shock" +
-                                    "And furious close of civil butchery" +
-                                    "Shall now, in mutual well-beseeming ranks," +
-                                    "March all one way and be no more opposed" +
-                                    "Against acquaintance, kindred and allies:" +
-                                    "The edge of war, like an ill-sheathed knife," +
-                                    "No more shall cut his master. Therefore, friends," +
-                                    "As far as to the sepulchre of Christ," +
-                                    "Whose soldier now, under whose blessed cross" +
-                                    "We are impressed and engaged to fight," +
-                                    "Forthwith a power of English shall we levy;" +
-                                    "Whose arms were moulded in their mothers' womb" +
-                                    "To chase these pagans in those holy fields" +
-                                    "Over whose acres walk'd those blessed feet" +
-                                    "Which fourteen hundred years ago were nail'd" +
-                                    "For our advantage on the bitter cross." +
-                                    "But this our purpose now is twelve month old," +
-                                    "And bootless 'tis to tell you we will go:" +
-                                    "Therefore we meet not now. Then let me hear" +
-                                    "Of you, my gentle cousin Westmoreland," +
-                                    "What yesternight our council did decree" +
-                                    "In forwarding this dear expedience.",
-
-                            "Hear him but reason in divinity," +
-                                    "And all-admiring with an inward wish" +
-                                    "You would desire the king were made a prelate:" +
-                                    "Hear him debate of commonwealth affairs," +
-                                    "You would say it hath been all in all his study:" +
-                                    "List his discourse of war, and you shall hear" +
-                                    "A fearful battle render'd you in music:" +
-                                    "Turn him to any cause of policy," +
-                                    "The Gordian knot of it he will unloose," +
-                                    "Familiar as his garter: that, when he speaks," +
-                                    "The air, a charter'd libertine, is still," +
-                                    "And the mute wonder lurketh in men's ears," +
-                                    "To steal his sweet and honey'd sentences;" +
-                                    "So that the art and practic part of life" +
-                                    "Must be the mistress to this theoric:" +
-                                    "Which is a wonder how his grace should glean it," +
-                                    "Since his addiction was to courses vain," +
-                                    "His companies unletter'd, rude and shallow," +
-                                    "His hours fill'd up with riots, banquets, sports," +
-                                    "And never noted in him any study," +
-                                    "Any retirement, any sequestration" +
-                                    "From open haunts and popularity.",
-
-                            "I come no more to make you laugh: things now," +
-                                    "That bear a weighty and a serious brow," +
-                                    "Sad, high, and working, full of state and woe," +
-                                    "Such noble scenes as draw the eye to flow," +
-                                    "We now present. Those that can pity, here" +
-                                    "May, if they think it well, let fall a tear;" +
-                                    "The subject will deserve it. Such as give" +
-                                    "Their money out of hope they may believe," +
-                                    "May here find truth too. Those that come to see" +
-                                    "Only a show or two, and so agree" +
-                                    "The play may pass, if they be still and willing," +
-                                    "I'll undertake may see away their shilling" +
-                                    "Richly in two short hours. Only they" +
-                                    "That come to hear a merry bawdy play," +
-                                    "A noise of targets, or to see a fellow" +
-                                    "In a long motley coat guarded with yellow," +
-                                    "Will be deceived; for, gentle hearers, know," +
-                                    "To rank our chosen truth with such a show" +
-                                    "As fool and fight is, beside forfeiting" +
-                                    "Our own brains, and the opinion that we bring," +
-                                    "To make that only true we now intend," +
-                                    "Will leave us never an understanding friend." +
-                                    "Therefore, for goodness' sake, and as you are known" +
-                                    "The first and happiest hearers of the town," +
-                                    "Be sad, as we would make ye: think ye see" +
-                                    "The very persons of our noble story" +
-                                    "As they were living; think you see them great," +
-                                    "And follow'd with the general throng and sweat" +
-                                    "Of thousand friends; then in a moment, see" +
-                                    "How soon this mightiness meets misery:" +
-                                    "And, if you can be merry then, I'll say" +
-                                    "A man may weep upon his wedding-day.",
-
-                            "First, heaven be the record to my speech!" +
-                                    "In the devotion of a subject's love," +
-                                    "Tendering the precious safety of my prince," +
-                                    "And free from other misbegotten hate," +
-                                    "Come I appellant to this princely presence." +
-                                    "Now, Thomas Mowbray, do I turn to thee," +
-                                    "And mark my greeting well; for what I speak" +
-                                    "My body shall make good upon this earth," +
-                                    "Or my divine soul answer it in heaven." +
-                                    "Thou art a traitor and a miscreant," +
-                                    "Too good to be so and too bad to live," +
-                                    "Since the more fair and crystal is the sky," +
-                                    "The uglier seem the clouds that in it fly." +
-                                    "Once more, the more to aggravate the note," +
-                                    "With a foul traitor's name stuff I thy throat;" +
-                                    "And wish, so please my sovereign, ere I move," +
-                                    "What my tongue speaks my right drawn sword may prove.",
-
-                            "Now is the winter of our discontent" +
-                                    "Made glorious summer by this sun of York;" +
-                                    "And all the clouds that lour'd upon our house" +
-                                    "In the deep bosom of the ocean buried." +
-                                    "Now are our brows bound with victorious wreaths;" +
-                                    "Our bruised arms hung up for monuments;" +
-                                    "Our stern alarums changed to merry meetings," +
-                                    "Our dreadful marches to delightful measures." +
-                                    "Grim-visaged war hath smooth'd his wrinkled front;" +
-                                    "And now, instead of mounting barded steeds" +
-                                    "To fright the souls of fearful adversaries," +
-                                    "He capers nimbly in a lady's chamber" +
-                                    "To the lascivious pleasing of a lute." +
-                                    "But I, that am not shaped for sportive tricks," +
-                                    "Nor made to court an amorous looking-glass;" +
-                                    "I, that am rudely stamp'd, and want love's majesty" +
-                                    "To strut before a wanton ambling nymph;" +
-                                    "I, that am curtail'd of this fair proportion," +
-                                    "Cheated of feature by dissembling nature," +
-                                    "Deformed, unfinish'd, sent before my time" +
-                                    "Into this breathing world, scarce half made up," +
-                                    "And that so lamely and unfashionable" +
-                                    "That dogs bark at me as I halt by them;" +
-                                    "Why, I, in this weak piping time of peace," +
-                                    "Have no delight to pass away the time," +
-                                    "Unless to spy my shadow in the sun" +
-                                    "And descant on mine own deformity:" +
-                                    "And therefore, since I cannot prove a lover," +
-                                    "To entertain these fair well-spoken days," +
-                                    "I am determined to prove a villain" +
-                                    "And hate the idle pleasures of these days." +
-                                    "Plots have I laid, inductions dangerous," +
-                                    "By drunken prophecies, libels and dreams," +
-                                    "To set my brother Clarence and the king" +
-                                    "In deadly hate the one against the other:" +
-                                    "And if King Edward be as true and just" +
-                                    "As I am subtle, false and treacherous," +
-                                    "This day should Clarence closely be mew'd up," +
-                                    "About a prophecy, which says that 'G'" +
-                                    "Of Edward's heirs the murderer shall be." +
-                                    "Dive, thoughts, down to my soul: here" +
-                                    "Clarence comes.",
-
-                            "To bait fish withal: if it will feed nothing else," +
-                                    "it will feed my revenge. He hath disgraced me, and" +
-                                    "hindered me half a million; laughed at my losses," +
-                                    "mocked at my gains, scorned my nation, thwarted my" +
-                                    "bargains, cooled my friends, heated mine" +
-                                    "enemies; and what's his reason? I am a Jew. Hath" +
-                                    "not a Jew eyes? hath not a Jew hands, organs," +
-                                    "dimensions, senses, affections, passions? fed with" +
-                                    "the same food, hurt with the same weapons, subject" +
-                                    "to the same diseases, healed by the same means," +
-                                    "warmed and cooled by the same winter and summer, as" +
-                                    "a Christian is? If you prick us, do we not bleed?" +
-                                    "if you tickle us, do we not laugh? if you poison" +
-                                    "us, do we not die? and if you wrong us, shall we not" +
-                                    "revenge? If we are like you in the rest, we will" +
-                                    "resemble you in that. If a Jew wrong a Christian," +
-                                    "what is his humility? Revenge. If a Christian" +
-                                    "wrong a Jew, what should his sufferance be by" +
-                                    "Christian example? Why, revenge. The villany you" +
-                                    "teach me, I will execute, and it shall go hard but I" +
-                                    "will better the instruction.",
-
-                            "Virtue! a fig! 'tis in ourselves that we are thus" +
-                                    "or thus. Our bodies are our gardens, to the which" +
-                                    "our wills are gardeners: so that if we will plant" +
-                                    "nettles, or sow lettuce, set hyssop and weed up" +
-                                    "thyme, supply it with one gender of herbs, or" +
-                                    "distract it with many, either to have it sterile" +
-                                    "with idleness, or manured with industry, why, the" +
-                                    "power and corrigible authority of this lies in our" +
-                                    "wills. If the balance of our lives had not one" +
-                                    "scale of reason to poise another of sensuality, the" +
-                                    "blood and baseness of our natures would conduct us" +
-                                    "to most preposterous conclusions: but we have" +
-                                    "reason to cool our raging motions, our carnal" +
-                                    "stings, our unbitted lusts, whereof I take this that" +
-                                    "you call love to be a sect or scion.",
-
-                            "Blow, winds, and crack your cheeks! rage! blow!" +
-                                    "You cataracts and hurricanoes, spout" +
-                                    "Till you have drench'd our steeples, drown'd the cocks!" +
-                                    "You sulphurous and thought-executing fires," +
-                                    "Vaunt-couriers to oak-cleaving thunderbolts," +
-                                    "Singe my white head! And thou, all-shaking thunder," +
-                                    "Smite flat the thick rotundity o' the world!" +
-                                    "Crack nature's moulds, an germens spill at once," +
-                                    "That make ingrateful man!"
-                    };
-
-            private boolean[] mExpanded =
-                    {
-                            false,
-                            false,
-                            false,
-                            false,
-                            false,
-                            false,
-                            false,
-                            false
-                    };
         }
 
         private class ScheduleView extends LinearLayout {
@@ -534,31 +596,32 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
                 this.setOrientation(VERTICAL);
 
-                mTitle = new TextView(context);
-                mTitle.setText(title);
-                addView(mTitle, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                this.title = new TextView(context);
+                this.title.setText(title);
+                this.title.setPadding(0, 15, 0, 0);
+                addView(this.title, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-                mDialogue = new TextView(context);
-                mDialogue.setText(dialogue);
-                addView(mDialogue, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                content = new TextView(context);
+                content.setText(dialogue);
+                addView(content, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-                mDialogue.setVisibility(expanded ? VISIBLE : GONE);
+                content.setVisibility(expanded ? VISIBLE : GONE);
             }
 
             public void setTitle(String title) {
-                mTitle.setText(title);
+                this.title.setText(title);
             }
 
             public void setDialogue(String words) {
-                mDialogue.setText(words);
+                content.setText(words);
             }
 
             public void setExpanded(boolean expanded) {
-                mDialogue.setVisibility(expanded ? VISIBLE : GONE);
+                content.setVisibility(expanded ? VISIBLE : GONE);
             }
 
-            private TextView mTitle;
-            private TextView mDialogue;
+            private TextView title;
+            private TextView content;
         }
 
         private class LocationListAdapter extends BaseAdapter {
@@ -570,7 +633,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
 
             public int getCount() {
-                return 12;
+                return locationData.getLocationInfos().size();
             }
 
             public Object getItem(int position) {
@@ -587,8 +650,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 TextView textViewDateTime = (TextView) view.findViewById(R.id.textview_datetime);
                 TextView textViewLocation = (TextView) view.findViewById(R.id.textview_location);
 
-                textViewDateTime.setText("2014-05-04 14:00:00");
-                textViewLocation.setText("浙江省金华市石城街168号");
+                textViewDateTime.setText(locationData.getLocationInfos().get(position).getDatetime());
+                textViewLocation.setText(locationData.getLocationInfos().get(position).getLocation());
 
                 return view;
             }
@@ -597,22 +660,28 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
     public static class AddScheduleDialogFragment extends DialogFragment {
 
-        Calendar calendar = Calendar.getInstance();
-        int year;
-        int month;
-        int day;
-        int hour;
-        int min;
+        private static Date date;
+        private Calendar calendar;
+        private int year;
+        private int month;
+        private int day;
+        private int hour;
+        private int min;
 
-        static AddScheduleDialogFragment newInstance(ArrayList<String> params) {
-            AddScheduleDialogFragment fragment = new AddScheduleDialogFragment();
+        private ProgressDialog dialog;
+        private Button buttonStartDate;
+        private Button buttonEndDate;
+        private Button buttonStartTime;
+        private Button buttonEndTime;
+        private EditText editTextContent;
+        private Switch switchPush;
 
-            Bundle args = new Bundle();
-            // TODO
-            // args.putInt("num", num);
-            fragment.setArguments(args);
+        private Date startDate = new Date();
+        private Date endDate = new Date();
 
-            return fragment;
+        static AddScheduleDialogFragment newInstance(Date date) {
+            AddScheduleDialogFragment.date = date;
+            return new AddScheduleDialogFragment();
         }
 
         @Override
@@ -626,46 +695,201 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             View view = inflater.inflate(R.layout.schedule_manager_add_fragment_dialog, container, false);
 
             calendar = Calendar.getInstance();
+            calendar.setTime(date);
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
             day = calendar.get(Calendar.DAY_OF_MONTH);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            min = calendar.get(Calendar.MINUTE);
 
-            ((Button) view.findViewById(R.id.button_start_date)).setOnClickListener(new View.OnClickListener() {
+            editTextContent = (EditText) view.findViewById(R.id.edittext_content);
+            switchPush = (Switch) view.findViewById(R.id.notification_switch);
+
+            buttonStartDate = (Button) view.findViewById(R.id.button_start_date);
+            buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+            buttonStartDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), null, year, month, day);
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), onStartDateSetListener, year, month, day);
                     datePickerDialog.show();
                 }
             });
 
-            ((Button) view.findViewById(R.id.button_start_time)).setOnClickListener(new View.OnClickListener() {
+            buttonStartTime = (Button) view.findViewById(R.id.button_start_time);
+            buttonStartTime.setText("00" + getText(R.string.colon) + "00");
+            buttonStartTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), null, hour, min, true);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onStartTimeSetListener, hour, min, true);
                     timePickerDialog.show();
                 }
             });
 
-            ((Button) view.findViewById(R.id.button_end_date)).setOnClickListener(new View.OnClickListener() {
+            buttonEndDate = (Button) view.findViewById(R.id.button_end_date);
+            buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+            buttonEndDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), null, year, month, day);
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), onEndDateSetListener, year, month, day);
                     datePickerDialog.show();
                 }
             });
 
-            ((Button) view.findViewById(R.id.button_end_time)).setOnClickListener(new View.OnClickListener() {
+            buttonEndTime = (Button) view.findViewById(R.id.button_end_time);
+            buttonEndTime.setText("00" + getText(R.string.colon) + "00");
+            buttonEndTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), null, hour, min, true);
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onEndTimeSetListener, hour, min, true);
                     timePickerDialog.show();
+                }
+            });
+
+            ((Button) view.findViewById(R.id.button_save)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (startDate.after(endDate)) {
+                        new AlertDialog.Builder(getActivity())
+                                .setMessage(R.string.hint_enddate_after_startdate)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+
+                        return;
+                    }
+
+                    if (editTextContent.getText().toString().trim().isEmpty()) {
+                        new AlertDialog.Builder(getActivity())
+                                .setMessage(R.string.hint_schedule_empty)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+
+                        return;
+                    }
+
+                    if (MyGlobal.checkNetworkConnection(getActivity())) {
+
+                        dialog = new ProgressDialog(getActivity());
+                        dialog.setMessage(getText(R.string.submitting));
+                        dialog.setCancelable(true);
+                        dialog.show();
+
+                        StringBuilder url = new StringBuilder();
+                        url.append(MyGlobal.API_ADD_SCHEDULE);
+                        url.append("&userId=" + MyGlobal.getUser().getId());
+                        try {
+                            url.append("&startTime=" + buttonStartDate.getText().toString().trim() + URLEncoder.encode(" ", "utf-8") + buttonStartTime.getText().toString().trim());
+                            url.append("&endTime=" + buttonEndDate.getText().toString().trim() + URLEncoder.encode(" ", "utf-8") + buttonEndTime.getText().toString().trim());
+                            url.append("&content=" + URLEncoder.encode(editTextContent.getText().toString().trim(), "utf-8"));
+                        } catch (UnsupportedEncodingException e) {
+                        }
+                        url.append("&push=" + (switchPush.isChecked() ? "yes" : "no"));
+                        GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
+                                SuccessData.class, new Response.Listener<SuccessData>() {
+
+                            @Override
+                            public void onResponse(SuccessData response) {
+                                dialog.dismiss();
+                                if (response != null && response.getSuccess().equals("true")) {
+
+                                    editTextContent.setText("");
+                                    switchPush.setChecked(false);
+                                    buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                                    buttonStartTime.setText("00" + getText(R.string.colon) + "00");
+                                    buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                                    buttonEndTime.setText("00" + getText(R.string.colon) + "00");
+
+
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage(R.string.submitted_success)
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                            .create()
+                                            .show();
+
+                                } else {
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage(R.string.interact_data_error)
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                            .create()
+                                            .show();
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                dialog.dismiss();
+                                new AlertDialog.Builder(getActivity())
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+
+                            }
+                        }
+                        );
+
+                        RequestManager.getRequestQueue().add(gsonObjRequest);
+                    }
+                }
+            });
+
+            ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddScheduleDialogFragment.this.dismiss();
                 }
             });
 
             return view;
         }
+
+
+        private DatePickerDialog.OnDateSetListener onStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
+                startDate.setYear(i - 1900);
+                startDate.setMonth(i2);
+                startDate.setDate(i3);
+            }
+        };
+
+        private DatePickerDialog.OnDateSetListener onEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
+                endDate.setYear(i - 1900);
+                endDate.setMonth(i2);
+                endDate.setDate(i3);
+            }
+        };
+
+        private TimePickerDialog.OnTimeSetListener onStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                buttonStartTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
+                startDate.setHours(i);
+                startDate.setMinutes(i2);
+            }
+        };
+
+        private TimePickerDialog.OnTimeSetListener onEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                buttonEndTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
+                endDate.setHours(i);
+                endDate.setMinutes(i2);
+            }
+        };
     }
 
 }

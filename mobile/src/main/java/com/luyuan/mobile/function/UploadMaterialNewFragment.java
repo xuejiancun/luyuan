@@ -3,7 +3,6 @@ package com.luyuan.mobile.function;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,7 +44,6 @@ public class UploadMaterialNewFragment extends Fragment {
     private HttpMultipartPost post;
     private Gallery gallery;
     private Uri imageUri;
-    private ProgressDialog dialog;
 
     private String channel = "";
 
@@ -84,7 +82,7 @@ public class UploadMaterialNewFragment extends Fragment {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
-                                    String name = "IMG_" + MyGlobal.sdf.format(new Date()) + ".jpg";
+                                    String name = "IMG_" + MyGlobal.SIMPLE_DATE_FORMAT_WITH_TIME.format(new Date()) + ".jpg";
                                     File dir = new File(MyGlobal.CAMERA_PATH);
                                     if (!dir.exists()) {
                                         dir.mkdirs();

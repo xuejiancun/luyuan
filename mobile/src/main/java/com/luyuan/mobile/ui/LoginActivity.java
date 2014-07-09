@@ -69,11 +69,14 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        username = "xuejiancun";
-        password = "qwerT5%5";
+//        username = "xuejiancun";
+//        password = "qwerT5%5";
 //
 //        username = "ceshi2";
 //        password = "Xx8888..";
+
+//        username = "123";
+//        password = "Wlwdsa12";
 
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)
@@ -160,7 +163,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
                                                     new AlertDialog.Builder(LoginActivity.this)
-                                                            .setMessage(R.string.fetch_data_error)
+                                                            .setMessage(R.string.interact_data_error)
                                                             .setTitle(R.string.dialog_hint)
                                                             .setPositiveButton(R.string.dialog_confirm, null)
                                                             .create()
@@ -195,7 +198,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                                 .show();
                     } else {
                         new AlertDialog.Builder(LoginActivity.this)
-                                .setMessage(R.string.fetch_data_error)
+                                .setMessage(R.string.interact_data_error)
                                 .setTitle(R.string.dialog_hint)
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
@@ -208,7 +211,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                     dialog.dismiss();
 
                     new AlertDialog.Builder(LoginActivity.this)
-                            .setMessage(R.string.fetch_data_error)
+                            .setMessage(R.string.interact_data_error)
                             .setTitle(R.string.dialog_hint)
                             .setPositiveButton(R.string.dialog_confirm, null)
                             .create()

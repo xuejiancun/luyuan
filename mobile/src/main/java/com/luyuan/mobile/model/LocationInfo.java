@@ -1,6 +1,6 @@
 package com.luyuan.mobile.model;
 
-public class Location {
+public class LocationInfo {
 
     private String userId = "";
     private String username = "";

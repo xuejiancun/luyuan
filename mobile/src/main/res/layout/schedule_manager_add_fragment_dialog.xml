@@ -31,7 +31,6 @@
                     android:layout_height="50dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:text="@string/sample_date"
                     android:textSize="20dp"
                     android:background="#FFEDEDED" />
 
@@ -40,7 +39,6 @@
                     android:layout_height="50dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="@string/sample_time"
                     android:textSize="20dp"
                     android:background="#FFEDEDED" />
 
@@ -60,7 +58,6 @@
                     android:layout_height="50dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:text="@string/sample_date"
                     android:textSize="20dp"
                     android:background="#FFEDEDED" />
 
@@ -69,7 +66,6 @@
                     android:layout_height="50dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="@string/sample_time"
                     android:textSize="20dp"
                     android:background="#FFEDEDED" />
 
