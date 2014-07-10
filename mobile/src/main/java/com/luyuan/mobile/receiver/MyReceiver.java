@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.luyuan.mobile.function.NotificationActivity;
 import com.luyuan.mobile.ui.MainActivity;
-import com.luyuan.mobile.ui.TestActivity;
 import com.luyuan.mobile.util.PushUtil;
 
 import org.json.JSONException;
@@ -50,7 +50,7 @@ public class MyReceiver extends BroadcastReceiver {
             JPushInterface.reportNotificationOpened(context, bundle.getString(JPushInterface.EXTRA_MSG_ID));
 
             //打开自定义的Activity
-            Intent i = new Intent(context, TestActivity.class);
+            Intent i = new Intent(context, NotificationActivity.class);
             i.putExtras(bundle);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);

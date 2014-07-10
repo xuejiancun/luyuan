@@ -699,6 +699,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
             day = calendar.get(Calendar.DAY_OF_MONTH);
+            hour = 12;
+            min = 0;
 
             editTextContent = (EditText) view.findViewById(R.id.edittext_content);
             switchPush = (Switch) view.findViewById(R.id.notification_switch);
@@ -714,7 +716,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             });
 
             buttonStartTime = (Button) view.findViewById(R.id.button_start_time);
-            buttonStartTime.setText("00" + getText(R.string.colon) + "00");
+            buttonStartTime.setText("12" + getText(R.string.colon) + "00");
             buttonStartTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -734,7 +736,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             });
 
             buttonEndTime = (Button) view.findViewById(R.id.button_end_time);
-            buttonEndTime.setText("00" + getText(R.string.colon) + "00");
+            buttonEndTime.setText("12" + getText(R.string.colon) + "00");
             buttonEndTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -853,6 +855,10 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                year = i;
+                month = i2;
+                day = i3;
+
                 buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
                 startDate.setYear(i - 1900);
                 startDate.setMonth(i2);
@@ -864,6 +870,10 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                year = i;
+                month = i2;
+                day = i3;
+
                 buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
                 endDate.setYear(i - 1900);
                 endDate.setMonth(i2);
@@ -875,6 +885,9 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                hour = i;
+                min = i2;
+
                 buttonStartTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
                 startDate.setHours(i);
                 startDate.setMinutes(i2);
@@ -885,6 +898,9 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                hour = i;
+                min = i2;
+
                 buttonEndTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
                 endDate.setHours(i);
                 endDate.setMinutes(i2);

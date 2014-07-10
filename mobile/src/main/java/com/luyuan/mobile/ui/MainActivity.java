@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -19,12 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.PushUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -47,7 +52,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         CookieSyncManager.getInstance().sync();
 
         final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
 
@@ -62,6 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // important!!! init jpush service
         JPushInterface.init(this);
         registerMessageReceiver();
+        setTag();
 
     }
 
@@ -183,10 +189,115 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void setCostomMsg(String msg) {
-//        if (null != msgText) {
-//            msgText.setText(msg);
-//            msgText.setVisibility(android.view.View.VISIBLE);
-//        }
     }
+
+    @Override
+    protected void onResume() {
+        isForeground = true;
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
+    }
+
+    private void setTag() {
+        String tag = MD5Util.encode(MyGlobal.getUser().getId());
+
+        // ","隔开的多个 转换成 Set
+        Set<String> tagSet = new LinkedHashSet<String>();
+        if (!PushUtil.isValidTagAndAlias(tag)) {
+            return;
+        }
+        tagSet.add(tag);
+
+        //调用JPush API设置Tag
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
+
+    }
+
+    private void setAlias() {
+        String alias = MyGlobal.getUser().getId();
+
+        //调用JPush API设置Alias
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, MD5Util.encode(alias)));
+    }
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs;
+            switch (code) {
+                case 0:
+                    // set tag and alias success
+                    break;
+
+                case 6002:
+                    // failed to set alias and tags due to timeout. Try again after 60s.
+                    if (PushUtil.isConnected(getApplicationContext())) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    } else {
+                        // no network
+                    }
+                    break;
+
+                default:
+                    // failed with errorCode = code
+            }
+
+        }
+
+    };
+
+    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            switch (code) {
+                case 0:
+                    break;
+
+                case 6002:
+                    if (PushUtil.isConnected(getApplicationContext())) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_TAGS, tags), 1000 * 60);
+                    } else {
+                    }
+                    break;
+
+                default:
+            }
+        }
+
+    };
+
+    private static final int MSG_SET_ALIAS = 1001;
+    private static final int MSG_SET_TAGS = 1002;
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    JPushInterface.setAliasAndTags(getApplicationContext(), (String) msg.obj, null, mAliasCallback);
+                    break;
+
+                case MSG_SET_TAGS:
+                    JPushInterface.setAliasAndTags(getApplicationContext(), null, (Set<String>) msg.obj, mTagsCallback);
+                    break;
+
+                default:
+            }
+        }
+    };
 
 }

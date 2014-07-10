@@ -7,6 +7,8 @@ import android.os.Handler;
 
 import com.luyuan.mobile.R;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 public class WelcomeActivity extends Activity {
 
@@ -26,4 +28,15 @@ public class WelcomeActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 }
