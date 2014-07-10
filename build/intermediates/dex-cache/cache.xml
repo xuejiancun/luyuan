@@ -14,6 +14,12 @@
         revision="19.1.0"
         sha1="ed8b5ee0167cb27dea55851259eb34b609f31df0"/>
     <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/jpush-sdk-release1.6.3-a14ff07953b4824302bcd4fc2bddc2783649e333.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/jpush-sdk-release1.6.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="bae1dc39123e97b8bb1eb893c62c3f7b310c76c7"/>
+    <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/gson-2.2.4-25231ff3c4985ece4cdc225d9a492d75908ddb38.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/gson-2.2.4.jar"
         jumboMode="false"

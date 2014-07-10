@@ -69,8 +69,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-//        username = "xuejiancun";
-//        password = "qwerT5%5";
+        username = "xuejiancun";
+        password = "qwerT5%5";
 //
 //        username = "ceshi2";
 //        password = "Xx8888..";

@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.MarketResearchActivity;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
@@ -95,6 +96,8 @@ public class MyGlobal {
             clz = UploadMaterialActivity.class;
         } else if (functionCode.equals("schedule")) {
             clz = ScheduleManagerActivity.class;
+        } else if (functionCode.equals("research")) {
+            clz = MarketResearchActivity.class;
         }
 
         return clz;

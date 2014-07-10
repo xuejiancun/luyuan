@@ -90,6 +90,12 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         functionInfo9.setDesc("schedule description");
         functionInfos.add(functionInfo9);
 
+        FunctionInfo functionInfo10 = new FunctionInfo();
+        functionInfo10.setCode("research");
+        functionInfo10.setName(getText(R.string.function_market_research).toString());
+        functionInfo10.setDesc("research description");
+        functionInfos.add(functionInfo10);
+
         functionData.setFunctionInfos(functionInfos);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);

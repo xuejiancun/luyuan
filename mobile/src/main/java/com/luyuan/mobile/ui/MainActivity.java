@@ -4,6 +4,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,12 +20,16 @@ import android.widget.TextView;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.PushUtil;
 
 import java.util.ArrayList;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private int tabSeletedIndex;
+    public static boolean isForeground = false;
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
     private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
@@ -50,6 +58,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         FunctionFragment functionFragment = new FunctionFragment();
         replaceTabContent(functionFragment);
         changeTabSelectedStyle(2);
+
+        // important!!! init jpush service
+        JPushInterface.init(this);
+        registerMessageReceiver();
 
     }
 
@@ -136,6 +148,45 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 tabTextViewList.get(i).setTextColor(Color.parseColor(MyGlobal.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
+    }
+
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                String messge = intent.getStringExtra(KEY_MESSAGE);
+                String extras = intent.getStringExtra(KEY_EXTRAS);
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                if (!PushUtil.isEmpty(extras)) {
+                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                }
+                setCostomMsg(showMsg.toString());
+            }
+        }
+    }
+
+    private void setCostomMsg(String msg) {
+//        if (null != msgText) {
+//            msgText.setText(msg);
+//            msgText.setVisibility(android.view.View.VISIBLE);
+//        }
     }
 
 }

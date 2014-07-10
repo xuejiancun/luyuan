@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string-array name="select_dialog_items2">
-        <item>Map</item>
-        <item>Satellite</item>
-        <item>Traffic</item>
-        <item>Street view</item>
+    <string-array name="no1_1">
+        <item>空白</item>
+        <item>价格</item>
+        <item>动力</item>
+        <item>速度</item>
+        <item>里程</item>
+        <item>品牌</item>
+        <item>品质（耐用）</item>
+        <item>外观</item>
+        <item>漆水贴花</item>
+        <item>配置</item>
+        <item>安全性</item>
+        <item>售后</item>
+        <item>载重性能</item>
+        <item>舒适性</item>
+        <item>科技感</item>
     </string-array>
 
 </resources>

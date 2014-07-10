@@ -51,11 +51,11 @@
     <string name="order_unit">供应单位</string>
     <string name="choose_warehouse">选择入库仓库</string>
 
+    <string name="prev">上一步</string>
     <string name="next">下一步</string>
     <string name="save">保存</string>
     <string name="check">送检</string>
 
-    <string name="function_upload_material">资料上传管理</string>
     <string name="loading">正在加载...</string>
     <string name="enter">进入</string>
     <string name="choose_channel">选择自定义通道</string>
@@ -91,7 +91,9 @@
     <string name="function_strategy_report">销售战报战略版</string>
     <string name="function_payroll_query">薪资查询</string>
     <string name="function_train_manager">培训管理</string>
+    <string name="function_upload_material">资料上传</string>
     <string name="function_schedule_manager">日程管理</string>
+    <string name="function_market_research">市场调查</string>
 
     <string name="month">月</string>
     <string name="cross">-</string>
@@ -111,12 +113,10 @@
     <string name="hint_enter_query">请输入关键字</string>
     <string name="hint_enddate_after_startdate">结束时间应该迟于开始时间</string>
     <string name="hint_schedule_empty">请输入日程内容</string>
-
     <string name="start_time">开始时间</string>
     <string name="end_time">结束时间</string>
     <string name="content">日程内容</string>
     <string name="notification">是否提醒</string>
-
     <string name="location">定位</string>
     <string name="locating">正在定位...</string>
     <string name="located_success">定位成功</string>
