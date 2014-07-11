@@ -176,11 +176,11 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
             ImageView imageview_function_icon = (ImageView) view.findViewById(R.id.imageview_function_icon);
             TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
-            TextView textview_funciton_desc = (TextView) view.findViewById(R.id.textview_funciton_desc);
+            // TextView textview_funciton_desc = (TextView) view.findViewById(R.id.textview_funciton_desc);
 
             imageview_function_icon.setImageResource(MyGlobal.getFunctionIcon(functionData.getFunctionInfos().get(position).getCode()));
             textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
-            textview_funciton_desc.setText(functionData.getFunctionInfos().get(position).getDesc());
+            // textview_funciton_desc.setText(functionData.getFunctionInfos().get(position).getDesc());
 
             return view;
         }

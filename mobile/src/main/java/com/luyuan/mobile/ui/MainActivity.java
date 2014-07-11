@@ -65,9 +65,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         changeTabSelectedStyle(2);
 
         // important!!! init jpush service
-        JPushInterface.init(this);
         registerMessageReceiver();
-        setTag();
+        // setTag();
+        setAlias();
 
     }
 
@@ -235,10 +235,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-            String logs;
             switch (code) {
                 case 0:
                     // set tag and alias success
+                    // JPushInterface.resumePush(getApplicationContext());
                     break;
 
                 case 6002:
@@ -264,6 +264,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         public void gotResult(int code, String alias, Set<String> tags) {
             switch (code) {
                 case 0:
+                    // JPushInterface.resumePush(getApplicationContext());
                     break;
 
                 case 6002:

@@ -13,11 +13,12 @@ import com.luyuan.mobile.ui.LoginActivity;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
-public class NotificationUpdateFragment extends Fragment {
+public class NotificationScheduleFragment extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.notification_update_fragment, null);
+        View view = inflater.inflate(R.layout.notification_schedule_fragment, null);
 
         ((Button) view.findViewById(R.id.button_enter)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +31,7 @@ public class NotificationUpdateFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
+
             }
         });
 

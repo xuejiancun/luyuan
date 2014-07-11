@@ -3,6 +3,8 @@ package com.luyuan.mobile.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -22,6 +24,7 @@ public class WebViewActivity extends Activity {
 
     private WebView webview;
     private String function = "";
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,67 +51,85 @@ public class WebViewActivity extends Activity {
 
         setContentView(R.layout.webview_fragment);
 
-        webview = (WebView) findViewById(R.id.webview);
-        WebSettings settings = webview.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAllowFileAccess(true);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webview.addJavascriptInterface(this, "android");
-        webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                if (url.contains("jquery-ui.css")) {
-                    return getCssWebResourceResponseFromAsset("jquery-ui.css");
-                } else if (url.contains("jquery.mobile-1.0a1.min.css")) {
-                    return getCssWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.css");
-                } else if (url.contains("jquery.mobile-1.3.2.min.css")) {
-                    return getCssWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.css");
-                } else if (url.contains("jquery-1.4.3.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery-1.4.3.min.js");
-                } else if (url.contains("jquery-1.7.2.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery-1.7.2.min.js");
-                } else if (url.contains("jquery.mobile-1.0a1.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.js");
-                } else if (url.contains("jquery-1.10.2.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery-1.10.2.js");
-                } else if (url.contains("1.10.4jquery-ui.js")) {
-                    return getJsWebResourceResponseFromAsset("1.10.4jquery-ui.js");
-                } else if (url.contains("jquery-1.8.3.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery-1.8.3.min.js");
-                } else if (url.contains("jquery.mobile-1.3.2.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.js");
-                } else if (url.contains("jquery-1.9.1.min.js")) {
-                    return getJsWebResourceResponseFromAsset("jquery-1.9.1.min.js");
-                } else {
-                    return super.shouldInterceptRequest(view, url);
+        if (MyGlobal.checkNetworkConnection(WebViewActivity.this)) {
+
+            webview = (WebView) findViewById(R.id.webview);
+            WebSettings settings = webview.getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setJavaScriptCanOpenWindowsAutomatically(true);
+            settings.setDomStorageEnabled(true);
+            settings.setAllowFileAccess(true);
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+            webview.addJavascriptInterface(this, "android");
+            webview.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+                    if (url.contains("jquery-ui.css")) {
+                        return getCssWebResourceResponseFromAsset("jquery-ui.css");
+                    } else if (url.contains("jquery.mobile-1.0a1.min.css")) {
+                        return getCssWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.css");
+                    } else if (url.contains("jquery.mobile-1.3.2.min.css")) {
+                        return getCssWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.css");
+                    } else if (url.contains("jquery-1.4.3.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery-1.4.3.min.js");
+                    } else if (url.contains("jquery-1.7.2.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery-1.7.2.min.js");
+                    } else if (url.contains("jquery.mobile-1.0a1.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.js");
+                    } else if (url.contains("jquery-1.10.2.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery-1.10.2.js");
+                    } else if (url.contains("1.10.4jquery-ui.js")) {
+                        return getJsWebResourceResponseFromAsset("1.10.4jquery-ui.js");
+                    } else if (url.contains("jquery-1.8.3.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery-1.8.3.min.js");
+                    } else if (url.contains("jquery.mobile-1.3.2.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.js");
+                    } else if (url.contains("jquery-1.9.1.min.js")) {
+                        return getJsWebResourceResponseFromAsset("jquery-1.9.1.min.js");
+                    } else {
+                        return super.shouldInterceptRequest(view, url);
+                    }
                 }
-            }
 
-            private WebResourceResponse getCssWebResourceResponseFromAsset(String filename) {
-                InputStream input = null;
-                try {
-                    input = getAssets().open(filename);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                private WebResourceResponse getCssWebResourceResponseFromAsset(String filename) {
+                    InputStream input = null;
+                    try {
+                        input = getAssets().open(filename);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return new WebResourceResponse("text/css", "UTF-8", input);
                 }
-                return new WebResourceResponse("text/css", "UTF-8", input);
-            }
 
-            private WebResourceResponse getJsWebResourceResponseFromAsset(String filename) {
-                InputStream input = null;
-                try {
-                    input = getAssets().open(filename);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                private WebResourceResponse getJsWebResourceResponseFromAsset(String filename) {
+                    InputStream input = null;
+                    try {
+                        input = getAssets().open(filename);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return new WebResourceResponse("text/javascript", "UTF-8", input);
                 }
-                return new WebResourceResponse("text/javascript", "UTF-8", input);
-            }
 
-        });
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    dialog = new ProgressDialog(WebViewActivity.this);
+                    dialog.setMessage(getText(R.string.loading));
+                    dialog.setCancelable(true);
+                    dialog.show();
+                }
 
-        webview.loadUrl(getFunctionUrl(function));
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    dialog.dismiss();
+                }
+            });
+
+            webview.loadUrl(getFunctionUrl(function));
+        }
+
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

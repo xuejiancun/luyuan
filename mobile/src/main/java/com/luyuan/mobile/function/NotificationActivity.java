@@ -14,6 +14,10 @@ import cn.jpush.android.api.JPushInterface;
 
 public class NotificationActivity extends Activity {
 
+    private String key = "";
+    private String title = "";
+    private String content = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,19 +27,31 @@ public class NotificationActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.version_update);
+        actionBar.setTitle(R.string.notification_push);
 
         Intent intent = getIntent();
         if (null != intent) {
             Bundle bundle = getIntent().getExtras();
-            String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-            String content = bundle.getString(JPushInterface.EXTRA_ALERT);
+            title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+            content = bundle.getString(JPushInterface.EXTRA_ALERT);
+            key = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
         }
-        // addContentView(tv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         setContentView(R.layout.notification_activity);
 
-        Fragment fragment = new NotificationUpdateFragment();
+        Fragment fragment = null;
+        if (key.contains("schedule")) {
+            fragment = new NotificationScheduleFragment();
+        } else if (key.contains("update")) {
+            fragment = new NotificationUpdateFragment();
+        } else if (key.contains("notice")) {
+            fragment = new NotificationNewsFragment();
+        } else {
+            // TODO default
+            return;
+        }
+
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         fragmentTransaction.replace(R.id.frame_content_notification, fragment);

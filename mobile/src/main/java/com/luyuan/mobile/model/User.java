@@ -7,6 +7,7 @@ public class User {
     private String username = "";
     private String password = "";
     private String sessionId = "";
+    private String stId = "";
 
     public String getId() {
         return id;
@@ -46,5 +47,13 @@ public class User {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public String getStId() {
+        return stId;
+    }
+
+    public void setStId(String stId) {
+        this.stId = stId;
     }
 }

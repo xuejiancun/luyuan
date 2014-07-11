@@ -78,6 +78,9 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
 //        username = "123";
 //        password = "Wlwdsa12";
 
+//        username = "adminhh";
+//        password = "654321";
+
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)
                     .setMessage(R.string.username_empty)
@@ -131,6 +134,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
                             String stId = jobData.getJobInfos().get(0).getStId();
+                            MyGlobal.getUser().setStId(stId);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("stId", stId);
                             startActivity(intent);
