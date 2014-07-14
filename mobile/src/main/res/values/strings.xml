@@ -4,7 +4,7 @@
     <string name="app_name">掌上绿源</string>
 
     <string name="sob">帐套</string>
-    <string name="username">用户</string>
+    <string name="account">用户</string>
     <string name="password">密码</string>
     <string name="login">立即登录</string>
     <string name="reset_password">重置密码</string>
@@ -21,7 +21,7 @@
     <string name="home">主页</string>
     <string name="function">功能</string>
     <string name="explore">探索</string>
-    <string name="account">账户</string>
+    <string name="exploring">正在探索</string>
 
     <string name="delete">删除</string>
     <string name="top">置顶</string>
@@ -94,8 +94,8 @@
     <string name="function_train_manager">培训管理</string>
     <string name="function_upload_material">资料上传</string>
     <string name="function_schedule_manager">日程管理</string>
-    <string name="function_market_research">市场调查</string>
-
+    <string name="function_market_research_native">市场调查 (Native)</string>
+    <string name="function_market_research_web">市场调查 (Web)</string>
 
     <string name="month">月</string>
     <string name="cross">-</string>
@@ -122,5 +122,17 @@
     <string name="location">定位</string>
     <string name="locating">正在定位...</string>
     <string name="located_success">定位成功</string>
+
+    <string name="function_about_me">关于我</string>
+    <string name="function_notification_history">提醒历史</string>
+    <string name="function_change_password">修改密码</string>
+    <string name="function_login_histroy">登录历史</string>
+    <string name="contact">电话</string>
+    <string name="email">邮箱</string>
+    <string name="webchat">微信</string>
+    <string name="job">岗位</string>
+    <string name="modify">修改</string>
+    <string name="modifiable">（可修改）</string>
+
 
 </resources>

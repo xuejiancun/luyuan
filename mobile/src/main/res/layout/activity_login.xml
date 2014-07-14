@@ -68,7 +68,7 @@
 
                 <TextView
                     android:id="@+id/textview_username"
-                    android:text="@string/username"
+                    android:text="@string/account"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:textSize="20dp"

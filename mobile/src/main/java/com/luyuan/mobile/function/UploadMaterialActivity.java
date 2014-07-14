@@ -8,9 +8,11 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.Material;
 import com.luyuan.mobile.model.MaterialData;
+import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
@@ -34,6 +37,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     private ProgressDialog dialog;
     private MaterialData materialData;
     private int materialIndex;
+    private String tab = "home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,11 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         actionBar.setTitle(R.string.function_upload_material);
 
         setContentView(R.layout.activity_upload_material);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("tab") != null) {
+            tab = intent.getStringExtra("tab");
+        }
 
         Fragment fragment = new UploadMaterialChannelFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -182,4 +191,16 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         fragmentTransaction.commit();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("stId", MyGlobal.getUser().getStId());
+            intent.putExtra("tab", tab);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

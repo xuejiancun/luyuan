@@ -38,6 +38,7 @@ public class MyGlobal {
     public static final String API_ADD_SCHEDULE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addschedule";
     public static final String API_FETCH_SUBORDINATE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchsubordinate";
     public static final String API_ADD_LOCATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addlocation";
+    public static final String API_RECORD_LOCATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=loginlocation";
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
 
     public static final String WEBVIEW_URL_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
@@ -46,6 +47,11 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
     public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
     public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.aspx";
+
+    public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/marketResearch.html";
+    public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
+    public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
+    public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
 
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
@@ -96,8 +102,10 @@ public class MyGlobal {
             clz = UploadMaterialActivity.class;
         } else if (functionCode.equals("schedule")) {
             clz = ScheduleManagerActivity.class;
-        } else if (functionCode.equals("research")) {
+        } else if (functionCode.equals("research_native")) {
             clz = MarketResearchActivity.class;
+        } else if (functionCode.equals("research")) {
+            clz = WebViewActivity.class;
         }
 
         return clz;

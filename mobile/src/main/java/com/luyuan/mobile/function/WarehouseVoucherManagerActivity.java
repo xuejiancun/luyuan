@@ -3,16 +3,21 @@ package com.luyuan.mobile.function;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.SearchView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
 public class WarehouseVoucherManagerActivity extends Activity implements SearchView.OnQueryTextListener {
+
+    private String tab = "home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,11 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         actionBar.setTitle(R.string.function_voucher_manager);
 
         setContentView(R.layout.activity_warehouse_voucher_manager);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("tab") != null) {
+            tab = intent.getStringExtra("tab");
+        }
     }
 
     @Override
@@ -61,6 +71,19 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
 
         fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherSearchFragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("stId", MyGlobal.getUser().getStId());
+            intent.putExtra("tab", tab);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -91,10 +91,16 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         functionInfos.add(functionInfo9);
 
         FunctionInfo functionInfo10 = new FunctionInfo();
-        functionInfo10.setCode("research");
-        functionInfo10.setName(getText(R.string.function_market_research).toString());
+        functionInfo10.setCode("research_native");
+        functionInfo10.setName(getText(R.string.function_market_research_native).toString());
         functionInfo10.setDesc("research description");
         functionInfos.add(functionInfo10);
+
+        FunctionInfo functionInfo11 = new FunctionInfo();
+        functionInfo11.setCode("research");
+        functionInfo11.setName(getText(R.string.function_market_research_web).toString());
+        functionInfo11.setDesc("research description");
+        functionInfos.add(functionInfo11);
 
         functionData.setFunctionInfos(functionInfos);
 
@@ -164,6 +170,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyGlobal.getFunctionActivity(functionData.getFunctionInfos().get(i).getCode()));
         intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+        intent.putExtra("tab", "function");
 
         startActivity(intent);
     }

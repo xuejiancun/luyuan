@@ -1,19 +1,23 @@
 package com.luyuan.mobile.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.AccountAboutMeActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.FunctionInfo;
+import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.MyGlobal;
 
 import java.util.ArrayList;
@@ -59,16 +63,60 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         listView.setAdapter(new FunctionAdapter());
         listView.setOnItemClickListener(this);
 
+        ((Button) view.findViewById(R.id.button_logout)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent = new Intent();
+                intent.setClass(getActivity(), LoginActivity.class);
+
+                MyGlobal.setUser(new User());
+
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        Intent intent = new Intent();
-//        intent.setClass(getActivity(), MyGlobal.getFunctionActivity(functionData.getFunctionInfos().get(i).getCode()));
-//        intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
-//
-//        startActivity(intent);
+        Intent intent = new Intent();
+        switch (i) {
+            case 0:
+                intent = new Intent();
+                intent.setClass(getActivity(), AccountAboutMeActivity.class);
+                intent.putExtra("tab", "account");
+
+                startActivity(intent);
+                break;
+            case 1:
+                intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.putExtra("tab", "account");
+
+                startActivity(intent);
+                break;
+            case 2:
+                intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.putExtra("tab", "account");
+
+                startActivity(intent);
+                break;
+            case 3:
+                intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.putExtra("tab", "account");
+
+                startActivity(intent);
+                break;
+        }
+
+
     }
 
     public class FunctionAdapter extends BaseAdapter {

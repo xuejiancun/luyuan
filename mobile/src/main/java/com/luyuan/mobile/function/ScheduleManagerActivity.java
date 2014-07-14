@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -47,6 +48,7 @@ import com.luyuan.mobile.model.ScheduleData;
 import com.luyuan.mobile.model.SubordinateData;
 import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.service.LocationService;
+import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
@@ -74,6 +76,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
     private int subordinatesIndex;
 
     private SubordinateData subordinateData;
+    private String tab = "home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,12 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         actionBar.setTitle(R.string.function_schedule_manager);
 
         setContentView(R.layout.schedule_manager_activity);
+
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("tab") != null) {
+            tab = intent.getStringExtra("tab");
+        }
 
         calendarPickerView = (CalendarPickerView) findViewById(R.id.calendar_view);
 
@@ -908,4 +917,16 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         };
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("stId", MyGlobal.getUser().getStId());
+            intent.putExtra("tab", tab);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -70,8 +70,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
 //        username = "xuejiancun";
-//        password = "qwerT5%5";
-//
+//        password = "123456";
+
 //        username = "ceshi2";
 //        password = "Xx8888..";
 
@@ -137,6 +137,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                             MyGlobal.getUser().setStId(stId);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("stId", stId);
+                            intent.putExtra("tab", "home");
+                            intent.putExtra("location", "true");
                             startActivity(intent);
 
                         } else if (count > 1) {
@@ -180,6 +182,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
 
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("stId", stId);
+                                            intent.putExtra("tab", "home");
+                                            intent.putExtra("location", "true");
                                             startActivity(intent);
                                         }
                                     })

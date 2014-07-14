@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview_login_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/home_banner"
+            android:scaleType="fitCenter" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_account"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_contact"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:text="@string/modifiable"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_email"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/webchat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_webchat"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/job"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_job"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_modify"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/modify"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
+                android:background="#46C50C"
+                android:onClick="login" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

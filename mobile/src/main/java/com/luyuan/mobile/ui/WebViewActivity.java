@@ -4,9 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceResponse;
@@ -24,6 +26,7 @@ public class WebViewActivity extends Activity {
 
     private WebView webview;
     private String function = "";
+    private String tab = "";
     private ProgressDialog dialog;
 
     @Override
@@ -41,7 +44,13 @@ public class WebViewActivity extends Activity {
             return;
         }
 
-        function = getIntent().getStringExtra("function");
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("function") != null) {
+            function = intent.getStringExtra("function");
+        }
+        if (intent != null && intent.getStringExtra("tab") != null) {
+            tab = intent.getStringExtra("tab");
+        }
 
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -173,6 +182,14 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_tactical_report).toString();
         } else if (function.equals("train")) {
             result = getText(R.string.function_train_manager).toString();
+        } else if (function.equals("research")) {
+            result = getText(R.string.function_market_research_web).toString();
+        } else if (function.equals("login_histroy")) {
+            result = getText(R.string.function_login_histroy).toString();
+        } else if (function.equals("change_password")) {
+            result = getText(R.string.function_change_password).toString();
+        } else if (function.equals("notification_history")) {
+            result = getText(R.string.function_notification_history).toString();
         }
 
         return result;
@@ -192,9 +209,30 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_TACTICAL;
         } else if (function.equals("train")) {
             result = MyGlobal.WEBVIEW_URL_TRAIN;
+        } else if (function.equals("research")) {
+            result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
+        } else if (function.equals("login_histroy")) {
+            result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
+        } else if (function.equals("change_password")) {
+            result = MyGlobal.WEBVIEW_URL_CHANGE_PASSWORD;
+        } else if (function.equals("notification_history")) {
+            result = MyGlobal.WEBVIEW_URL_NOTIFICATION_HISTORY;
         }
 
         return result;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("stId", MyGlobal.getUser().getStId());
+            intent.putExtra("tab", tab);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

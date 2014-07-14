@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MyGlobal.getFunctionActivity(shortcuts.get(i).getCode()));
                 intent.putExtra("function", shortcuts.get(i).getCode());
+                intent.putExtra("tab", "home");
 
                 startActivity(intent);
             }

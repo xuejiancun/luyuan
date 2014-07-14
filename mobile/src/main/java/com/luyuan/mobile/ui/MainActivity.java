@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -19,13 +21,23 @@ import android.webkit.CookieSyncManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.SuccessData;
+import com.luyuan.mobile.service.LocationService;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.PushUtil;
+import com.luyuan.mobile.util.RequestManager;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -60,9 +72,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         initTab();
 
-        FunctionFragment functionFragment = new FunctionFragment();
-        replaceTabContent(functionFragment);
-        changeTabSelectedStyle(2);
+        Intent intent = getIntent();
+        if (intent != null && intent.getStringExtra("tab") != null) {
+            replaceTabContent(intent.getStringExtra("tab"));
+        } else {
+            replaceTabContent("home");
+        }
+        if (intent != null && intent.getStringExtra("location") != null && intent.getStringExtra("location").equals("true")) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("locationAction");
+            registerReceiver(new LocationBroadcastReceiver(), filter);
+
+            Intent intentLocation = new Intent();
+            intentLocation.setClass(MainActivity.this, LocationService.class);
+            startService(intentLocation);
+        }
 
         // important!!! init jpush service
         registerMessageReceiver();
@@ -112,35 +136,49 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.layout_tab_home:
                 if (tabSeletedIndex != 1) {
-                    replaceTabContent(new HomeFragment());
-                    changeTabSelectedStyle(1);
+                    replaceTabContent("home");
                 }
                 break;
             case R.id.layout_tab_function:
                 if (tabSeletedIndex != 2) {
-                    replaceTabContent(new FunctionFragment());
-                    changeTabSelectedStyle(2);
+                    replaceTabContent("function");
                 }
                 break;
             case R.id.layout_tab_explore:
                 if (tabSeletedIndex != 3) {
-                    replaceTabContent(new ExploreFragment());
-                    changeTabSelectedStyle(3);
+                    replaceTabContent("explore");
                 }
                 break;
             case R.id.layout_tab_account:
                 if (tabSeletedIndex != 4) {
-                    replaceTabContent(new AccountFragment());
-                    changeTabSelectedStyle(4);
+                    replaceTabContent("account");
                 }
                 break;
         }
     }
 
-    private void replaceTabContent(Fragment fragment) {
+    private void replaceTabContent(String tab) {
+        int tabIndex = 1;
+        Fragment fragment = null;
+        if (tab.equals("home")) {
+            fragment = new HomeFragment();
+            tabIndex = 1;
+        } else if (tab.equals("function")) {
+            fragment = new FunctionFragment();
+            tabIndex = 2;
+        } else if (tab.equals("explore")) {
+            fragment = new ExploreFragment();
+            tabIndex = 3;
+        } else if (tab.equals("account")) {
+            fragment = new AccountFragment();
+            tabIndex = 4;
+        }
+
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
+
+        changeTabSelectedStyle(tabIndex);
     }
 
     private void changeTabSelectedStyle(int index) {
@@ -301,4 +339,42 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     };
 
+    private class LocationBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!intent.getAction().equals("locationAction")) return;
+            double latitude = intent.getDoubleExtra("latitude", 0.0d);
+            double longitude = intent.getDoubleExtra("longitude", 0.0d);
+            Geocoder geoCoder = new Geocoder(MainActivity.this);
+            try {
+                List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
+                String location = list.get(0).getAddressLine(0).toString();
+                // Toast.makeText(ScheduleManagerActivity.this, location, Toast.LENGTH_LONG).show();
+
+                StringBuilder url = new StringBuilder();
+                url.append(MyGlobal.API_RECORD_LOCATION);
+                url.append("&userId=" + MyGlobal.getUser().getId());
+                try {
+                    url.append("&location=" + URLEncoder.encode(location, "utf-8"));
+                } catch (UnsupportedEncodingException e) {
+                }
+
+                GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
+                        SuccessData.class, new Response.Listener<SuccessData>() {
+                    @Override
+                    public void onResponse(SuccessData successData) {
+                        successData.getSuccess();
+                    }
+                }, null
+                );
+
+                RequestManager.getRequestQueue().add(gsonObjRequest);
+
+            } catch (IOException e) {
+            }
+
+            unregisterReceiver(this);
+        }
+    }
 }
