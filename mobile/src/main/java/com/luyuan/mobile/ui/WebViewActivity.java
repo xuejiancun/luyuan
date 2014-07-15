@@ -181,7 +181,9 @@ public class WebViewActivity extends Activity {
         } else if (function.equals("tactical")) {
             result = getText(R.string.function_tactical_report).toString();
         } else if (function.equals("train")) {
-            result = getText(R.string.function_train_manager).toString();
+            result = getText(R.string.function_train_manage).toString();
+        } else if (function.equals("manual")) {
+            result = getText(R.string.function_manual_manage).toString();
         } else if (function.equals("research")) {
             result = getText(R.string.function_market_research_web).toString();
         } else if (function.equals("login_histroy")) {
@@ -190,6 +192,8 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_change_password).toString();
         } else if (function.equals("notification_history")) {
             result = getText(R.string.function_notification_history).toString();
+        } else if (function.equals("market_research")) {
+            result = getText(R.string.function_market_research).toString();
         }
 
         return result;
@@ -209,8 +213,12 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_TACTICAL;
         } else if (function.equals("train")) {
             result = MyGlobal.WEBVIEW_URL_TRAIN;
+        } else if (function.equals("manual")) {
+            result = MyGlobal.WEBVIEW_URL_MANUAL;
         } else if (function.equals("research")) {
             result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
+        } else if (function.equals("market_research")) {
+            result = MyGlobal.WEBVIEW_URL_RESEARCH_FEATURE_RANKING;
         } else if (function.equals("login_histroy")) {
             result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
         } else if (function.equals("change_password")) {

@@ -87,7 +87,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.function_schedule_manager);
+        actionBar.setTitle(R.string.function_schedule_manage);
 
         setContentView(R.layout.schedule_manager_activity);
 

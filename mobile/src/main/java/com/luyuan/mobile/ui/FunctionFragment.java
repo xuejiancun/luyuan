@@ -36,6 +36,12 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
         List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
 
+        //        FunctionInfo functionInfo7 = new FunctionInfo();
+//        functionInfo7.setCode("voucher");
+//        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
+//        functionInfo7.setDesc("voucher description");
+//        functionInfos.add(functionInfo7);
+
         FunctionInfo functionInfo1 = new FunctionInfo();
         functionInfo1.setCode("billboard");
         functionInfo1.setName(getText(R.string.function_billboard_report).toString());
@@ -68,15 +74,15 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
         FunctionInfo functionInfo6 = new FunctionInfo();
         functionInfo6.setCode("train");
-        functionInfo6.setName(getText(R.string.function_train_manager).toString());
+        functionInfo6.setName(getText(R.string.function_train_manage).toString());
         functionInfo6.setDesc("train description");
         functionInfos.add(functionInfo6);
 
-//        FunctionInfo functionInfo7 = new FunctionInfo();
-//        functionInfo7.setCode("voucher");
-//        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
-//        functionInfo7.setDesc("voucher description");
-//        functionInfos.add(functionInfo7);
+        FunctionInfo functionInfo7 = new FunctionInfo();
+        functionInfo7.setCode("manual");
+        functionInfo7.setName(getText(R.string.function_manual_manage).toString());
+        functionInfo7.setDesc("manual description");
+        functionInfos.add(functionInfo7);
 
         FunctionInfo functionInfo8 = new FunctionInfo();
         functionInfo8.setCode("upload");
@@ -86,7 +92,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
         FunctionInfo functionInfo9 = new FunctionInfo();
         functionInfo9.setCode("schedule");
-        functionInfo9.setName(getText(R.string.function_schedule_manager).toString());
+        functionInfo9.setName(getText(R.string.function_schedule_manage).toString());
         functionInfo9.setDesc("schedule description");
         functionInfos.add(functionInfo9);
 
@@ -101,6 +107,12 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         functionInfo11.setName(getText(R.string.function_market_research_web).toString());
         functionInfo11.setDesc("research description");
         functionInfos.add(functionInfo11);
+
+        FunctionInfo functionInfo12 = new FunctionInfo();
+        functionInfo12.setCode("market_research");
+        functionInfo12.setName(getText(R.string.function_market_research).toString());
+        functionInfo12.setDesc("market research description");
+        functionInfos.add(functionInfo12);
 
         functionData.setFunctionInfos(functionInfos);
 

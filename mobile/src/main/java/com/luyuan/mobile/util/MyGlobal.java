@@ -23,7 +23,8 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 
-    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
 
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_POST_JOB = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=chooserole4app";
@@ -46,7 +47,11 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
     public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
     public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
-    public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.aspx";
+    public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.html";
+    public static final String WEBVIEW_URL_MANUAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/TrainManual.html";
+
+    public static final String WEBVIEW_URL_RESEARCH_UNIT_GRADIENT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/UnitGradient.html";
+    public static final String WEBVIEW_URL_RESEARCH_FEATURE_RANKING = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/FeatureRanking.html";
 
     public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/marketResearch.html";
     public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
@@ -96,6 +101,8 @@ public class MyGlobal {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("train")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("manual")) {
+            clz = WebViewActivity.class;
         } else if (functionCode.equals("voucher")) {
             clz = WarehouseVoucherManagerActivity.class;
         } else if (functionCode.equals("upload")) {
@@ -105,6 +112,8 @@ public class MyGlobal {
         } else if (functionCode.equals("research_native")) {
             clz = MarketResearchActivity.class;
         } else if (functionCode.equals("research")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("market_research")) {
             clz = WebViewActivity.class;
         }
 
