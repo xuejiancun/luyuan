@@ -21,7 +21,7 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+    //        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
     public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
 

@@ -10,6 +10,7 @@ public class User {
     private String stId = "";
     private String email = "";
     private String contact = "";
+    private String deptname = "";
 
     public String getId() {
         return id;
@@ -73,5 +74,13 @@ public class User {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getDeptname() {
+        return deptname;
+    }
+
+    public void setDeptname(String deptname) {
+        this.deptname = deptname;
     }
 }

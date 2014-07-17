@@ -120,6 +120,7 @@ public class LoginActivity extends Activity {
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
                             MyGlobal.getUser().setStId(jobData.getJobInfos().get(0).getStId());
+                            MyGlobal.getUser().setDeptname(jobData.getJobInfos().get(0).getDeptName());
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("tab", "home");
                             intent.putExtra("location", "true");

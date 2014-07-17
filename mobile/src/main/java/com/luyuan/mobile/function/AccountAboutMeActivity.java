@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.model.Me;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
@@ -33,18 +32,11 @@ public class AccountAboutMeActivity extends Activity {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(R.string.function_about_me);
 
-        Me me = new Me();
-        me.setAccount(MyGlobal.getUser().getUsername());
-        me.setContact("1398765422");
-        me.setEmail("123456@qq.com");
-        me.setWebchat("osun2010");
-        me.setJob("XX公司/XX部分/XX岗位");
-
-        ((EditText) findViewById(R.id.edittext_account)).setText(me.getAccount());
-        ((EditText) findViewById(R.id.edittext_contact)).setText(me.getContact());
-        ((EditText) findViewById(R.id.edittext_email)).setText(me.getEmail());
-        ((EditText) findViewById(R.id.edittext_webchat)).setText(me.getWebchat());
-        ((EditText) findViewById(R.id.edittext_job)).setText(me.getJob());
+        ((EditText) findViewById(R.id.edittext_account)).setText(MyGlobal.getUser().getUsername());
+        ((EditText) findViewById(R.id.edittext_contact)).setText(MyGlobal.getUser().getContact());
+        ((EditText) findViewById(R.id.edittext_email)).setText(MyGlobal.getUser().getEmail());
+        ((EditText) findViewById(R.id.edittext_webchat)).setText("webchat2014");
+        ((EditText) findViewById(R.id.edittext_job)).setText(MyGlobal.getUser().getDeptname());
 
         ((Button) findViewById(R.id.button_modify)).setOnClickListener(new View.OnClickListener() {
             @Override
