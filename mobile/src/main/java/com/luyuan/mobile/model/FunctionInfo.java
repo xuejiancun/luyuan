@@ -6,7 +6,6 @@ public class FunctionInfo {
     private String parentId = "";
     private String code = "";
     private String name = "";
-    private String desc = "";
 
     public String getId() {
         return id;
@@ -38,14 +37,6 @@ public class FunctionInfo {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
 }

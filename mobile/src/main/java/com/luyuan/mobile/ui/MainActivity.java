@@ -13,7 +13,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.webkit.CookieManager;
@@ -45,11 +44,16 @@ import cn.jpush.android.api.TagAliasCallback;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private int tabSeletedIndex;
+    private int tabSelectIndex;
     public static boolean isForeground = false;
 
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
     private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
+
+    public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +92,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startService(intentLocation);
         }
 
-        // important!!! init jpush service
-        registerMessageReceiver();
         // setTag();
         setAlias();
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuItem actionItem = menu.add("Refresh");
-//        actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//        actionItem.setIcon(android.R.drawable.ic_notification_overlay);
-
-        return true;
     }
 
     private void initTab() {
@@ -135,22 +128,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_tab_home:
-                if (tabSeletedIndex != 1) {
+                if (tabSelectIndex != 1) {
                     replaceTabContent("home");
                 }
                 break;
             case R.id.layout_tab_function:
-                if (tabSeletedIndex != 2) {
+                if (tabSelectIndex != 2) {
                     replaceTabContent("function");
                 }
                 break;
             case R.id.layout_tab_explore:
-                if (tabSeletedIndex != 3) {
+                if (tabSelectIndex != 3) {
                     replaceTabContent("explore");
                 }
                 break;
             case R.id.layout_tab_account:
-                if (tabSeletedIndex != 4) {
+                if (tabSelectIndex != 4) {
                     replaceTabContent("account");
                 }
                 break;
@@ -182,7 +175,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void changeTabSelectedStyle(int index) {
-        tabSeletedIndex = index;
+        tabSelectIndex = index;
         for (int i = 0; i < tabLayoutList.size(); i++) {
             if (i == index - 1) {
                 tabLayoutList.get(i).setSelected(true);
@@ -192,41 +185,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 tabTextViewList.get(i).setTextColor(Color.parseColor(MyGlobal.COLOR_BOTTOM_TAB_UNSELECTED));
             }
         }
-    }
-
-    //for receive customer msg from jpush server
-    private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";
-
-    public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(MESSAGE_RECEIVED_ACTION);
-        registerReceiver(mMessageReceiver, filter);
-    }
-
-    public class MessageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-                String messge = intent.getStringExtra(KEY_MESSAGE);
-                String extras = intent.getStringExtra(KEY_EXTRAS);
-                StringBuilder showMsg = new StringBuilder();
-                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-                if (!PushUtil.isEmpty(extras)) {
-                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-                }
-                setCostomMsg(showMsg.toString());
-            }
-        }
-    }
-
-    private void setCostomMsg(String msg) {
     }
 
     @Override
@@ -243,7 +201,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
 

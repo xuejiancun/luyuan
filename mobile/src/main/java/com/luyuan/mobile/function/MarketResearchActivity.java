@@ -27,7 +27,7 @@ public class MarketResearchActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.function_market_research_native);
+        actionBar.setTitle(R.string.function_market_research);
 
         setContentView(R.layout.market_research_activity);
 
@@ -35,7 +35,7 @@ public class MarketResearchActivity extends Activity {
         if (intent != null && intent.getStringExtra("tab") != null) {
             tab = intent.getStringExtra("tab");
         }
-        
+
         Fragment fragment = new MarketResearch1Fragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content_market_research, fragment);

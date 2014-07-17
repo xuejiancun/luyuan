@@ -170,30 +170,30 @@ public class WebViewActivity extends Activity {
 
     public String getFunctionTitle(String function) {
         String result = "";
-        if (function.equals("payroll")) {
-            result = getText(R.string.function_payroll_query).toString();
-        } else if (function.equals("billboard")) {
-            result = getText(R.string.function_billboard_report).toString();
-        } else if (function.equals("personal")) {
-            result = getText(R.string.function_personal_report).toString();
-        } else if (function.equals("strategy")) {
-            result = getText(R.string.function_strategy_report).toString();
-        } else if (function.equals("tactical")) {
-            result = getText(R.string.function_tactical_report).toString();
-        } else if (function.equals("train")) {
-            result = getText(R.string.function_train_manage).toString();
-        } else if (function.equals("manual")) {
-            result = getText(R.string.function_manual_manage).toString();
-        } else if (function.equals("research")) {
-            result = getText(R.string.function_market_research_web).toString();
-        } else if (function.equals("login_histroy")) {
+        if (function.equals("report_billboard")) {
+            result = getText(R.string.function_report_billboard).toString();
+        } else if (function.equals("report_personal")) {
+            result = getText(R.string.function_report_personal).toString();
+        } else if (function.equals("report_strategy")) {
+            result = getText(R.string.function_report_strategy).toString();
+        } else if (function.equals("report_tactical")) {
+            result = getText(R.string.function_report_tactical).toString();
+        } else if (function.equals("query_payroll")) {
+            result = getText(R.string.function_query_payroll).toString();
+        } else if (function.equals("query_training")) {
+            result = getText(R.string.function_query_training).toString();
+        } else if (function.equals("query_manual")) {
+            result = getText(R.string.function_query_manual).toString();
+        } else if (function.equals("query_authorization")) {
+            result = getText(R.string.function_query_authorization).toString();
+        } else if (function.equals("market_research")) {
+            result = getText(R.string.function_market_research).toString();
+        } else if (function.equals("login_history")) {
             result = getText(R.string.function_login_histroy).toString();
         } else if (function.equals("change_password")) {
             result = getText(R.string.function_change_password).toString();
         } else if (function.equals("notification_history")) {
             result = getText(R.string.function_notification_history).toString();
-        } else if (function.equals("market_research")) {
-            result = getText(R.string.function_market_research).toString();
         }
 
         return result;
@@ -201,25 +201,25 @@ public class WebViewActivity extends Activity {
 
     public String getFunctionUrl(String function) {
         String result = "";
-        if (function.equals("payroll")) {
-            result = MyGlobal.WEBVIEW_URL_PAYROLL;
-        } else if (function.equals("billboard")) {
+        if (function.equals("report_billboard")) {
             result = MyGlobal.WEBVIEW_URL_BILLBOARD;
-        } else if (function.equals("personal")) {
+        } else if (function.equals("report_personal")) {
             result = MyGlobal.WEBVIEW_URL_PERSONAL;
-        } else if (function.equals("strategy")) {
+        } else if (function.equals("report_strategy")) {
             result = MyGlobal.WEBVIEW_URL_STRATEGY;
-        } else if (function.equals("tactical")) {
+        } else if (function.equals("report_tactical")) {
             result = MyGlobal.WEBVIEW_URL_TACTICAL;
-        } else if (function.equals("train")) {
+        } else if (function.equals("query_payroll")) {
+            result = MyGlobal.WEBVIEW_URL_PAYROLL;
+        } else if (function.equals("query_training")) {
             result = MyGlobal.WEBVIEW_URL_TRAIN;
-        } else if (function.equals("manual")) {
+        } else if (function.equals("query_manual")) {
             result = MyGlobal.WEBVIEW_URL_MANUAL;
-        } else if (function.equals("research")) {
+        } else if (function.equals("query_authorization")) {
             result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
         } else if (function.equals("market_research")) {
-            result = MyGlobal.WEBVIEW_URL_RESEARCH_FEATURE_RANKING;
-        } else if (function.equals("login_histroy")) {
+            result = MyGlobal.WEBVIEW_URL_RESEARCH_PRODUCT_FEATURE;
+        } else if (function.equals("login_history")) {
             result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
         } else if (function.equals("change_password")) {
             result = MyGlobal.WEBVIEW_URL_CHANGE_PASSWORD;

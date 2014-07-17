@@ -1,6 +1,8 @@
 package com.luyuan.mobile.ui;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,157 +16,156 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.FunctionData;
-import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.util.DatabaseHelper;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.luyuan.mobile.util.RequestManager;
 
 public class FunctionFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
     private ListView listView;
     private FunctionData functionData = new FunctionData();
+    private ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.fragment_function, null);
 
-        List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
-
-        //        FunctionInfo functionInfo7 = new FunctionInfo();
-//        functionInfo7.setCode("voucher");
-//        functionInfo7.setName(getText(R.string.function_voucher_manager).toString());
-//        functionInfo7.setDesc("voucher description");
+//        List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
+//
+//        FunctionInfo functionInfo1 = new FunctionInfo();
+//        functionInfo1.setCode("report_billboard");
+//        functionInfo1.setName(getText(R.string.function_billboard_report).toString());
+//        functionInfos.add(functionInfo1);
+//
+//        FunctionInfo functionInfo2 = new FunctionInfo();
+//        functionInfo2.setCode("report_personal");
+//        functionInfo2.setName(getText(R.string.function_personal_report).toString());
+//        functionInfos.add(functionInfo2);
+//
+//        FunctionInfo functionInfo3 = new FunctionInfo();
+//        functionInfo3.setCode("report_strategy");
+//        functionInfo3.setName(getText(R.string.function_strategy_report).toString());
+//        functionInfos.add(functionInfo3);
+//
+//        FunctionInfo functionInfo4 = new FunctionInfo();
+//        functionInfo4.setCode("report_tactical");
+//        functionInfo4.setName(getText(R.string.function_tactical_report).toString());
+//        functionInfos.add(functionInfo4);
+//
+//        FunctionInfo functionInfo5 = new FunctionInfo();
+//        functionInfo5.setCode("query_payroll");
+//        functionInfo5.setName(getText(R.string.function_payroll_query).toString());
+//        functionInfos.add(functionInfo5);
+//
+//        FunctionInfo functionInfo6 = new FunctionInfo();
+//        functionInfo6.setCode("query_training");
+//        functionInfo6.setName(getText(R.string.function_train_manage).toString());
+//        functionInfos.add(functionInfo6);
+//
+//        FunctionInfo functionInfo7 = new FunctionInfo();
+//        functionInfo7.setCode("query_manual");
+//        functionInfo7.setName(getText(R.string.function_manual_manage).toString());
 //        functionInfos.add(functionInfo7);
-
-        FunctionInfo functionInfo1 = new FunctionInfo();
-        functionInfo1.setCode("billboard");
-        functionInfo1.setName(getText(R.string.function_billboard_report).toString());
-        functionInfo1.setDesc("billboard description");
-        functionInfos.add(functionInfo1);
-
-        FunctionInfo functionInfo2 = new FunctionInfo();
-        functionInfo2.setCode("personal");
-        functionInfo2.setName(getText(R.string.function_personal_report).toString());
-        functionInfo2.setDesc("personal description");
-        functionInfos.add(functionInfo2);
-
-        FunctionInfo functionInfo3 = new FunctionInfo();
-        functionInfo3.setCode("strategy");
-        functionInfo3.setName(getText(R.string.function_strategy_report).toString());
-        functionInfo3.setDesc("strategy description");
-        functionInfos.add(functionInfo3);
-
-        FunctionInfo functionInfo4 = new FunctionInfo();
-        functionInfo4.setCode("tactical");
-        functionInfo4.setName(getText(R.string.function_tactical_report).toString());
-        functionInfo4.setDesc("tactical description");
-        functionInfos.add(functionInfo4);
-
-        FunctionInfo functionInfo5 = new FunctionInfo();
-        functionInfo5.setCode("payroll");
-        functionInfo5.setName(getText(R.string.function_payroll_query).toString());
-        functionInfo5.setDesc("payroll description");
-        functionInfos.add(functionInfo5);
-
-        FunctionInfo functionInfo6 = new FunctionInfo();
-        functionInfo6.setCode("train");
-        functionInfo6.setName(getText(R.string.function_train_manage).toString());
-        functionInfo6.setDesc("train description");
-        functionInfos.add(functionInfo6);
-
-        FunctionInfo functionInfo7 = new FunctionInfo();
-        functionInfo7.setCode("manual");
-        functionInfo7.setName(getText(R.string.function_manual_manage).toString());
-        functionInfo7.setDesc("manual description");
-        functionInfos.add(functionInfo7);
-
-        FunctionInfo functionInfo8 = new FunctionInfo();
-        functionInfo8.setCode("upload");
-        functionInfo8.setName(getText(R.string.function_upload_material).toString());
-        functionInfo8.setDesc("upload description");
-        functionInfos.add(functionInfo8);
-
-        FunctionInfo functionInfo9 = new FunctionInfo();
-        functionInfo9.setCode("schedule");
-        functionInfo9.setName(getText(R.string.function_schedule_manage).toString());
-        functionInfo9.setDesc("schedule description");
-        functionInfos.add(functionInfo9);
-
-        FunctionInfo functionInfo10 = new FunctionInfo();
-        functionInfo10.setCode("research_native");
-        functionInfo10.setName(getText(R.string.function_market_research_native).toString());
-        functionInfo10.setDesc("research description");
-        functionInfos.add(functionInfo10);
-
-        FunctionInfo functionInfo11 = new FunctionInfo();
-        functionInfo11.setCode("research");
-        functionInfo11.setName(getText(R.string.function_market_research_web).toString());
-        functionInfo11.setDesc("research description");
-        functionInfos.add(functionInfo11);
-
-        FunctionInfo functionInfo12 = new FunctionInfo();
-        functionInfo12.setCode("market_research");
-        functionInfo12.setName(getText(R.string.function_market_research).toString());
-        functionInfo12.setDesc("market research description");
-        functionInfos.add(functionInfo12);
-
-        functionData.setFunctionInfos(functionInfos);
+//
+//        FunctionInfo functionInfo8 = new FunctionInfo();
+//        functionInfo8.setCode("material_upload");
+//        functionInfo8.setName(getText(R.string.function_upload_material).toString());
+//        functionInfos.add(functionInfo8);
+//
+//        FunctionInfo functionInfo9 = new FunctionInfo();
+//        functionInfo9.setCode("schedule_manage");
+//        functionInfo9.setName(getText(R.string.function_schedule_manage).toString());
+//        functionInfos.add(functionInfo9);
+//
+//        FunctionInfo functionInfo10 = new FunctionInfo();
+//        functionInfo10.setCode("research_native");
+//        functionInfo10.setName(getText(R.string.function_market_research_native).toString());
+//        functionInfos.add(functionInfo10);
+//
+//        FunctionInfo functionInfo11 = new FunctionInfo();
+//        functionInfo11.setCode("research");
+//        functionInfo11.setName(getText(R.string.function_market_research_web).toString());
+//        functionInfos.add(functionInfo11);
+//
+//        FunctionInfo functionInfo12 = new FunctionInfo();
+//        functionInfo12.setCode("market_research");
+//        functionInfo12.setName(getText(R.string.function_market_research).toString());
+//        functionInfos.add(functionInfo12);
+//
+//        functionData.setFunctionInfos(functionInfos);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);
-        listView.setAdapter(new FunctionAdapter());
-        listView.setOnItemClickListener(this);
-        listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 1, 1, R.string.shortcut);
+
+        StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_FUNCTION);
+        url.append("&stId=" + MyGlobal.getUser().getStId());
+
+        functionData = MyGlobal.getFunctionData();
+
+        if (functionData.getFunctionInfos().size() > 0) {
+            listView.setAdapter(new FunctionAdapter());
+            listView.setOnItemClickListener(FunctionFragment.this);
+            listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                    contextMenu.add(0, 1, 1, R.string.shortcut);
+                }
+            });
+        } else if (MyGlobal.checkNetworkConnection(getActivity())) {
+
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage(getText(R.string.loading));
+            dialog.setCancelable(true);
+            dialog.show();
+
+            GsonRequest gsonObjRequest = new GsonRequest<FunctionData>(Request.Method.GET, url.toString(),
+                    FunctionData.class, new Response.Listener<FunctionData>() {
+                @Override
+                public void onResponse(FunctionData response) {
+                    dialog.dismiss();
+                    if (response != null && response.getSuccess().equals("true")) {
+                        functionData = response;
+                        MyGlobal.setFunctionData(functionData);
+                        listView.setAdapter(new FunctionAdapter());
+                        listView.setOnItemClickListener(FunctionFragment.this);
+                        listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                            @Override
+                            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                                contextMenu.add(0, 1, 1, R.string.shortcut);
+                            }
+                        });
+                    } else {
+                        new AlertDialog.Builder(getActivity())
+                                .setMessage(R.string.interact_data_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dialog.dismiss();
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.interact_data_error)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                }
             }
-        });
+            );
 
-        StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
-        url.append("&stId=" + MyGlobal.getJobInfo().getStId());
-
-//        if (MyGlobal.checkNetworkConnection(getActivity())) {
-//            GsonRequest gsonObjRequest = new GsonRequest<FunctionData>(Request.Method.GET, url.toString(),
-//                    FunctionData.class, new Response.Listener<FunctionData>() {
-//                @Override
-//                public void onResponse(FunctionData response) {
-//                    if (response != null && response.getSuccess().equals("true")) {
-//                        listView.setAdapter(new FunctionAdapter(getActivity()));
-//                        // TODO click item
-//                    } else {
-//                        new AlertDialog.Builder(getActivity())
-//                                .setMessage(R.string.fetch_data_error)
-//                                .setTitle(R.string.dialog_hint)
-//                                .setPositiveButton(R.string.dialog_confirm, null)
-//                                .create()
-//                                .show();
-//                    }
-//                }
-//            }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    new AlertDialog.Builder(getActivity())
-//                            .setMessage(R.string.fetch_data_error)
-//                            .setTitle(R.string.dialog_hint)
-//                            .setPositiveButton(R.string.dialog_confirm, null)
-//                            .create()
-//                            .show();
-//                }
-//            }
-//            );
-//
-//            RequestManager.getRequestQueue().add(gsonObjRequest);
-//            gsonObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                    MyGlobal.CONNECTION_TIMEOUT_MS,
-//                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        }
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+        }
 
         return view;
     }
@@ -195,11 +196,9 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
             ImageView imageview_function_icon = (ImageView) view.findViewById(R.id.imageview_function_icon);
             TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
-            // TextView textview_funciton_desc = (TextView) view.findViewById(R.id.textview_funciton_desc);
 
             imageview_function_icon.setImageResource(MyGlobal.getFunctionIcon(functionData.getFunctionInfos().get(position).getCode()));
             textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
-            // textview_funciton_desc.setText(functionData.getFunctionInfos().get(position).getDesc());
 
             return view;
         }

@@ -39,22 +39,22 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
 
         FunctionInfo functionInfo1 = new FunctionInfo();
         functionInfo1.setCode("about_me");
-        functionInfo1.setName("关于我");
+        functionInfo1.setName(getString(R.string.function_about_me));
         functionInfos.add(functionInfo1);
 
         FunctionInfo functionInfo2 = new FunctionInfo();
-        functionInfo2.setCode("login_histroy");
-        functionInfo2.setName("登录历史");
+        functionInfo2.setCode("login_history");
+        functionInfo2.setName(getString(R.string.function_login_histroy));
         functionInfos.add(functionInfo2);
 
         FunctionInfo functionInfo3 = new FunctionInfo();
         functionInfo3.setCode("change_password");
-        functionInfo3.setName("修改密码");
+        functionInfo3.setName(getString(R.string.function_change_password));
         functionInfos.add(functionInfo3);
 
         FunctionInfo functionInfo4 = new FunctionInfo();
         functionInfo4.setCode("notification_history");
-        functionInfo4.setName("提醒历史");
+        functionInfo4.setName(getString(R.string.function_notification_history));
         functionInfos.add(functionInfo4);
 
         functionData.setFunctionInfos(functionInfos);
@@ -62,6 +62,10 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         listView = (ListView) view.findViewById(R.id.listview_function_list);
         listView.setAdapter(new FunctionAdapter());
         listView.setOnItemClickListener(this);
+
+        ((TextView) view.findViewById(R.id.textview_username)).setText(MyGlobal.getUser().getUsername());
+        ((TextView) view.findViewById(R.id.textview_contact)).setText(MyGlobal.getUser().getContact());
+        ((TextView) view.findViewById(R.id.textview_email)).setText(MyGlobal.getUser().getEmail());
 
         ((Button) view.findViewById(R.id.button_logout)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,11 +131,9 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
 
             ImageView imageview_function_icon = (ImageView) view.findViewById(R.id.imageview_function_icon);
             TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
-            // TextView textview_funciton_desc = (TextView) view.findViewById(R.id.textview_funciton_desc);
 
             imageview_function_icon.setImageResource(MyGlobal.getFunctionIcon(functionData.getFunctionInfos().get(position).getCode()));
             textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
-            // textview_funciton_desc.setText(functionData.getFunctionInfos().get(position).getDesc());
 
             return view;
         }

@@ -8,11 +8,9 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.function.MarketResearchActivity;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
-import com.luyuan.mobile.function.WarehouseVoucherManagerActivity;
-import com.luyuan.mobile.model.JobInfo;
+import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.ui.WebViewActivity;
 
@@ -23,12 +21,13 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 
-    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
-//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
 
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_POST_JOB = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=chooserole4app";
-    public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=fetchfunction4app";
+    public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
     public static final String API_FETCH_CHANNEL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchchannels";
     public static final String API_UPLOAD_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=uploadmaterial";
@@ -50,8 +49,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.html";
     public static final String WEBVIEW_URL_MANUAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/TrainManual.html";
 
-    public static final String WEBVIEW_URL_RESEARCH_UNIT_GRADIENT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/UnitGradient.html";
-    public static final String WEBVIEW_URL_RESEARCH_FEATURE_RANKING = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/FeatureRanking.html";
+    public static final String WEBVIEW_URL_RESEARCH_PRODUCT_FEATURE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/Index.html";
 
     public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/marketResearch.html";
     public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
@@ -89,32 +87,28 @@ public class MyGlobal {
     public static Class getFunctionActivity(String functionCode) {
         Class clz = null;
 
-        if (functionCode.equals("billboard")) {
+        if (functionCode.equals("report_billboard")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("personal")) {
+        } else if (functionCode.equals("report_personal")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("strategy")) {
+        } else if (functionCode.equals("report_strategy")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("tactical")) {
+        } else if (functionCode.equals("report_tactical")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("payroll")) {
+        } else if (functionCode.equals("query_payroll")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("train")) {
+        } else if (functionCode.equals("query_training")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("manual")) {
+        } else if (functionCode.equals("query_manual")) {
             clz = WebViewActivity.class;
-        } else if (functionCode.equals("voucher")) {
-            clz = WarehouseVoucherManagerActivity.class;
-        } else if (functionCode.equals("upload")) {
-            clz = UploadMaterialActivity.class;
-        } else if (functionCode.equals("schedule")) {
-            clz = ScheduleManagerActivity.class;
-        } else if (functionCode.equals("research_native")) {
-            clz = MarketResearchActivity.class;
-        } else if (functionCode.equals("research")) {
+        } else if (functionCode.equals("query_authorization")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("market_research")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("material_upload")) {
+            clz = UploadMaterialActivity.class;
+        } else if (functionCode.equals("schedule_manage")) {
+            clz = ScheduleManagerActivity.class;
         }
 
         return clz;
@@ -133,7 +127,7 @@ public class MyGlobal {
     }
 
     private static User user = new User();
-    private static JobInfo jobInfo = new JobInfo();
+    private static FunctionData functionData = new FunctionData();
 
     public static User getUser() {
         return user;
@@ -143,12 +137,11 @@ public class MyGlobal {
         MyGlobal.user = user;
     }
 
-    public static JobInfo getJobInfo() {
-        return jobInfo;
+    public static FunctionData getFunctionData() {
+        return functionData;
     }
 
-    public static void setJobInfo(JobInfo jobInfo) {
-        MyGlobal.jobInfo = jobInfo;
+    public static void setFunctionData(FunctionData functionData) {
+        MyGlobal.functionData = functionData;
     }
-
 }

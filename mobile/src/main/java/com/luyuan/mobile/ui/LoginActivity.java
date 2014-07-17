@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.JobData;
 import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.User;
@@ -24,7 +24,7 @@ import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
-public class LoginActivity extends Activity implements View.OnTouchListener {
+public class LoginActivity extends Activity {
 
     private int jobIndex;
     private JobData jobData;
@@ -44,24 +44,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
 
         scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
 
-        findViewById(R.id.edittext_sob).setOnTouchListener(this);
-        findViewById(R.id.edittext_username).setOnTouchListener(this);
-        findViewById(R.id.edittext_password).setOnTouchListener(this);
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        changeScrollView();
-        return false;
-    }
-
-    private void changeScrollView() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                scrollView.scrollTo(0, scrollView.getHeight());
-//            }
-//        }, 300);
+        MyGlobal.setUser(new User());
+        MyGlobal.setFunctionData(new FunctionData());
     }
 
     public void login(View view) {
@@ -69,8 +53,8 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        username = "xuejiancun";
-        password = "Xjc5861802";
+//        username = "xuejiancun";
+//        password = "Xjc5861802";
 
 //        username = "ceshi2";
 //        password = "Xx8888..";
@@ -129,14 +113,14 @@ public class LoginActivity extends Activity implements View.OnTouchListener {
                         user.setUsername(username);
                         user.setPassword(password);
                         user.setSessionId(jobData.getSessionId());
+                        user.setEmail(jobData.getEmail());
+                        user.setContact(jobData.getContact());
                         MyGlobal.setUser(user);
 
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
-                            String stId = jobData.getJobInfos().get(0).getStId();
-                            MyGlobal.getUser().setStId(stId);
+                            MyGlobal.getUser().setStId(jobData.getJobInfos().get(0).getStId());
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("stId", stId);
                             intent.putExtra("tab", "home");
                             intent.putExtra("location", "true");
                             startActivity(intent);

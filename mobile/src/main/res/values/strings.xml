@@ -86,18 +86,17 @@
     <string name="compress_error">压缩附件的时候遇到错误</string>
     <string name="cancel_success">资料取消成功</string>
 
-    <string name="function_billboard_report">销售战报龙虎榜</string>
-    <string name="function_personal_report">销售战报个人版</string>
-    <string name="function_tactical_report">销售战报战术版</string>
-    <string name="function_strategy_report">销售战报战略版</string>
-    <string name="function_payroll_query">薪资查询</string>
-    <string name="function_train_manage">培训管理</string>
+    <string name="function_report_billboard">销售战报龙虎榜</string>
+    <string name="function_report_personal">销售战报个人版</string>
+    <string name="function_report_tactical">销售战报战术版</string>
+    <string name="function_report_strategy">销售战报战略版</string>
+    <string name="function_query_payroll">薪资查询</string>
+    <string name="function_query_training">培训管理</string>
     <string name="function_upload_material">资料上传</string>
     <string name="function_schedule_manage">日程管理</string>
-    <string name="function_market_research_native">市场调查 (Native)</string>
-    <string name="function_market_research_web">市场调查 (Web)</string>
     <string name="function_market_research">市场调查</string>
-    <string name="function_manual_manage">手册管理</string>
+    <string name="function_query_authorization">授权查询</string>
+    <string name="function_query_manual">手册管理</string>
 
     <string name="month">月</string>
     <string name="cross">-</string>
