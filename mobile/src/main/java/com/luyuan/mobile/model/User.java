@@ -10,7 +10,7 @@ public class User {
     private String stId = "";
     private String email = "";
     private String contact = "";
-    private String deptname = "";
+    private String job = "";
 
     public String getId() {
         return id;
@@ -76,11 +76,11 @@ public class User {
         this.contact = contact;
     }
 
-    public String getDeptname() {
-        return deptname;
+    public String getJob() {
+        return job;
     }
 
-    public void setDeptname(String deptname) {
-        this.deptname = deptname;
+    public void setJob(String job) {
+        this.job = job;
     }
 }

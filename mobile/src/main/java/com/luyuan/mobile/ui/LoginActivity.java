@@ -17,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.JobData;
-import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
@@ -119,8 +118,11 @@ public class LoginActivity extends Activity {
 
                         int count = jobData.getJobInfos().size();
                         if (count == 1) {
-                            MyGlobal.getUser().setStId(jobData.getJobInfos().get(0).getStId());
-                            MyGlobal.getUser().setDeptname(jobData.getJobInfos().get(0).getDeptName());
+                            jobIndex = 0;
+
+                            MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
+                            MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName() + jobData.getJobInfos().get(jobIndex).getJobName());
+
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("tab", "home");
                             intent.putExtra("location", "true");
@@ -141,32 +143,12 @@ public class LoginActivity extends Activity {
                                     })
                                     .setNegativeButton(R.string.cancel, null)
                                     .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            String stId = jobData.getJobInfos().get(jobIndex).getStId();
-
-                                            GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.POST, MyGlobal.API_POST_JOB + "&stID=" + stId,
-                                                    SuccessData.class, new Response.Listener<SuccessData>() {
-                                                @Override
-                                                public void onResponse(SuccessData response) {
-                                                    response.getSuccess();
-                                                }
-                                            }, new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    new AlertDialog.Builder(LoginActivity.this)
-                                                            .setMessage(R.string.interact_data_error)
-                                                            .setTitle(R.string.dialog_hint)
-                                                            .setPositiveButton(R.string.dialog_confirm, null)
-                                                            .create()
-                                                            .show();
-                                                }
-                                            }
-                                            );
-
-                                            RequestManager.getRequestQueue().add(gsonObjRequest);
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
+                                            MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName());
 
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            intent.putExtra("stId", stId);
                                             intent.putExtra("tab", "home");
                                             intent.putExtra("location", "true");
                                             startActivity(intent);
@@ -175,6 +157,8 @@ public class LoginActivity extends Activity {
                                     .create()
                                     .show();
                         }
+
+
                     } else if (response != null && response.getSuccess().equals("false_username_error")) {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.username_error)

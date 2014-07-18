@@ -128,12 +128,17 @@
     <string name="function_notification_history">提醒历史</string>
     <string name="function_change_password">修改密码</string>
     <string name="function_login_histroy">登录历史</string>
+    <string name="function_check_version">版本检查</string>
     <string name="contact">电话</string>
     <string name="email">邮箱</string>
     <string name="webchat">微信</string>
     <string name="job">岗位</string>
     <string name="modify">修改</string>
     <string name="modifiable">（可修改）</string>
+    <string name="already_latest_version">您的系统已经是最新版本</string>
 
+    <string name="schedule_remind">日程提醒</string>
+    <string name="news_remind">通知提醒</string>
+    <string name="version_remind">版本提醒</string>
 
 </resources>

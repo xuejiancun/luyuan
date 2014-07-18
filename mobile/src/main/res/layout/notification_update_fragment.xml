@@ -44,11 +44,11 @@
             android:textColor="#46C50C" />
 
         <TextView
+            android:id="@+id/textview_latest_version"
             android:layout_height="50dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="1.1"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="#46C50C" />
@@ -74,11 +74,11 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textview_current_version"
             android:layout_height="50dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="1.0"
             android:textSize="20dp"
             android:textStyle="bold" />
 

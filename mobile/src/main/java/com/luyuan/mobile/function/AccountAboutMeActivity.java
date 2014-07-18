@@ -2,6 +2,7 @@ package com.luyuan.mobile.function;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +12,15 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.ui.MainActivity;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.RequestManager;
 
 public class AccountAboutMeActivity extends Activity {
 
@@ -36,59 +43,64 @@ public class AccountAboutMeActivity extends Activity {
         ((EditText) findViewById(R.id.edittext_contact)).setText(MyGlobal.getUser().getContact());
         ((EditText) findViewById(R.id.edittext_email)).setText(MyGlobal.getUser().getEmail());
         ((EditText) findViewById(R.id.edittext_webchat)).setText("webchat2014");
-        ((EditText) findViewById(R.id.edittext_job)).setText(MyGlobal.getUser().getDeptname());
+        ((EditText) findViewById(R.id.edittext_job)).setText(MyGlobal.getUser().getJob());
 
         ((Button) findViewById(R.id.button_modify)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+
+                if (MyGlobal.checkNetworkConnection(AccountAboutMeActivity.this)) {
+
+                    dialog = new ProgressDialog(AccountAboutMeActivity.this);
+                    dialog.setMessage(getText(R.string.submitting));
+                    dialog.setCancelable(true);
+                    dialog.show();
+
+                    String url = MyGlobal.API_MODIFY_CONTACT + "&userid=" + MyGlobal.getUser().getId() + "&contract=" + ((EditText) findViewById(R.id.edittext_contact)).getText().toString().trim();
+
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url,
+                            SuccessData.class, new Response.Listener<SuccessData>() {
+                        @Override
+                        public void onResponse(SuccessData response) {
+                            dialog.dismiss();
+
+                            if (response != null && response.getSuccess().equals("true")) {
+                                MyGlobal.getUser().setContact(((EditText) findViewById(R.id.edittext_contact)).getText().toString().trim());
+                                new AlertDialog.Builder(AccountAboutMeActivity.this)
+                                        .setMessage(R.string.submitted_success)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+
+                            } else {
+                                new AlertDialog.Builder(AccountAboutMeActivity.this)
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
+
+                            new AlertDialog.Builder(AccountAboutMeActivity.this)
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                    );
+
+                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }
             }
         });
-
-//        if (MyGlobal.checkNetworkConnection(getActivity())) {
-//
-//            dialog = new ProgressDialog(getActivity());
-//            dialog.setMessage(getText(R.string.loading));
-//            dialog.setCancelable(true);
-//            dialog.show();
-//
-//            GsonRequest gsonObjRequest = new GsonRequest<ChannelData>(Request.Method.GET, MyGlobal.API_FETCH_CHANNEL,
-//                    ChannelData.class, new Response.Listener<ChannelData>() {
-//                @Override
-//                public void onResponse(ChannelData response) {
-//                    dialog.dismiss();
-//
-//                    if (response != null && response.getSuccess().equals("true")) {
-//                        channelData = response;
-//
-//                        // TODO
-//
-//                    } else {
-//                        new AlertDialog.Builder(getActivity())
-//                                .setMessage(R.string.interact_data_error)
-//                                .setTitle(R.string.dialog_hint)
-//                                .setPositiveButton(R.string.dialog_confirm, null)
-//                                .create()
-//                                .show();
-//                    }
-//                }
-//            }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    dialog.dismiss();
-//
-//                    new AlertDialog.Builder(getActivity())
-//                            .setMessage(R.string.interact_data_error)
-//                            .setTitle(R.string.dialog_hint)
-//                            .setPositiveButton(R.string.dialog_confirm, null)
-//                            .create()
-//                            .show();
-//                }
-//            }
-//            );
-//
-//            RequestManager.getRequestQueue().add(gsonObjRequest);
-//        }
 
     }
 

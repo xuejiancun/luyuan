@@ -15,8 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 public class NotificationActivity extends Activity {
 
     private String key = "";
-    private String title = "";
-    private String content = "";
+    private String function = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,31 +23,34 @@ public class NotificationActivity extends Activity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
         final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.notification_push);
 
         Intent intent = getIntent();
         if (null != intent) {
             Bundle bundle = getIntent().getExtras();
-            title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-            content = bundle.getString(JPushInterface.EXTRA_ALERT);
-            key = bundle.getString(JPushInterface.EXTRA_EXTRA);
-
+            key = (bundle.getString(JPushInterface.EXTRA_EXTRA) != null) ? bundle.getString(JPushInterface.EXTRA_EXTRA) : key;
+            function = (bundle.getString("function") != null ? bundle.getString("function") : function);
         }
 
         setContentView(R.layout.notification_activity);
 
         Fragment fragment = null;
-        if (key.contains("schedule")) {
+        if (function.equals("check_version")) {
+            fragment = new NotificationUpdateFragment();
+            actionBar.setTitle(R.string.function_check_version);
+        } else if (key.contains("schedule")) {
             fragment = new NotificationScheduleFragment();
+            actionBar.setTitle(R.string.schedule_remind);
         } else if (key.contains("update")) {
             fragment = new NotificationUpdateFragment();
+            actionBar.setTitle(R.string.version_remind);
         } else if (key.contains("notice")) {
             fragment = new NotificationNewsFragment();
+            actionBar.setTitle(R.string.news_remind);
         } else {
-            // TODO default
+            // TODO
             return;
         }
 

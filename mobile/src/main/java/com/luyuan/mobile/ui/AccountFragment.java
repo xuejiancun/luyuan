@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.function.AccountAboutMeActivity;
+import com.luyuan.mobile.function.NotificationActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.model.User;
@@ -56,6 +57,11 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         functionInfo4.setCode("notification_history");
         functionInfo4.setName(getString(R.string.function_notification_history));
         functionInfos.add(functionInfo4);
+
+        FunctionInfo functionInfo5 = new FunctionInfo();
+        functionInfo5.setCode("check_version");
+        functionInfo5.setName(getString(R.string.function_check_version));
+        functionInfos.add(functionInfo5);
 
         functionData.setFunctionInfos(functionInfos);
 
@@ -115,6 +121,13 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
                 intent.putExtra("tab", "account");
+
+                startActivity(intent);
+                break;
+            case 4:
+                intent = new Intent();
+                intent.setClass(getActivity(), NotificationActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
 
                 startActivity(intent);
                 break;

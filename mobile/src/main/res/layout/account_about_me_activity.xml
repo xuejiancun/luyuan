@@ -17,7 +17,7 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="240dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:stretchColumns="2"
@@ -123,8 +123,7 @@
                 <TextView
                     android:text="@string/job"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:gravity="bottom"
+                    android:layout_height="75dp"
                     android:textSize="16dp"
                     android:paddingLeft="5dp" />
 
@@ -132,12 +131,10 @@
                     android:id="@+id/edittext_job"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="75dp"
                     android:enabled="false"
-                    android:gravity="bottom"
                     android:paddingLeft="20dp"
-                    android:textSize="10dp"
-                    android:singleLine="true" />
+                    android:textSize="12dp"/>
 
             </TableRow>
 
