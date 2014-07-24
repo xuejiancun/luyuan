@@ -24,6 +24,7 @@
     <string name="exploring">正在探索</string>
 
     <string name="delete">删除</string>
+    <string name="deleted_success">删除成功</string>
     <string name="top">置顶</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
@@ -77,9 +78,9 @@
     <string name="submit">提交</string>
     <string name="back">返回</string>
     <string name="submitting">正在提交...</string>
-    <string name="submitted_success">资料提交成功</string>
+    <string name="submitted_success">提交成功</string>
     <string name="upload_error">附件上传失败，请稍后再试。</string>
-    <string name="submitted_error">资料提交失败，请稍后再试。</string>
+    <string name="submitted_error">提交失败，请稍后再试。</string>
     <string name="material_name_empty">请填写资料名称</string>
     <string name="material_files_empty">请添加附件</string>
     <string name="compressing">正在压缩附件...</string>
@@ -120,9 +121,10 @@
     <string name="end_time">结束时间</string>
     <string name="content">日程内容</string>
     <string name="notification">是否提醒</string>
-    <string name="location">定位</string>
-    <string name="locating">正在定位...</string>
-    <string name="located_success">定位成功</string>
+    <string name="location">考勤</string>
+    <string name="locating">正在考勤...</string>
+    <string name="located_success">考勤成功</string>
+    <string name="refresh">刷新</string>
 
     <string name="function_about_me">关于我</string>
     <string name="function_notification_history">提醒历史</string>

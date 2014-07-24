@@ -45,6 +45,7 @@ import com.luyuan.mobile.model.DayData;
 import com.luyuan.mobile.model.DayInfo;
 import com.luyuan.mobile.model.LocationData;
 import com.luyuan.mobile.model.ScheduleData;
+import com.luyuan.mobile.model.ScheduleInfo;
 import com.luyuan.mobile.model.SubordinateData;
 import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.service.LocationService;
@@ -235,7 +236,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                DialogFragment newFragment = AddScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate());
+                DialogFragment newFragment = UpdateScheduleDialogFragment.newInstance("add", calendarPickerView.getSelectedDate());
                 newFragment.show(fragmentTransaction, "dialog");
             }
         });
@@ -448,6 +449,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         private ListView listViewLocation;
         private ScheduleData scheduleData;
         private LocationData locationData;
+        private ProgressDialog dialog;
 
         private static Date date;
         private static String userId;
@@ -476,6 +478,34 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             listViewSchedule = ((ListView) view.findViewById(R.id.listview_schedule_list));
             listViewLocation = ((ListView) view.findViewById(R.id.listview_location_list));
 
+            dialog = new ProgressDialog(getActivity());
+            loadScheduleData();
+
+            ((Button) view.findViewById(R.id.button_refresh)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadScheduleData();
+                }
+            });
+
+            ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ScheduleDialogFragment.this.dismiss();
+                }
+            });
+
+            return view;
+        }
+
+        private void loadScheduleData() {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            dialog.setMessage(getText(R.string.loading));
+            dialog.setCancelable(true);
+            dialog.show();
+
             if (MyGlobal.checkNetworkConnection(getActivity())) {
 
                 StringBuilder url = new StringBuilder();
@@ -494,6 +524,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
                     @Override
                     public void onResponse(ScheduleData response) {
+                        dialog.dismiss();
                         if (response != null && response.getSuccess().equals("true")) {
                             scheduleData = response;
                             locationData = new LocationData();
@@ -506,7 +537,15 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                                     scheduleListAdapter.toggle(i);
                                 }
                             });
-
+                            listViewSchedule.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                    DialogFragment newFragment = UpdateScheduleDialogFragment.newInstance("update", scheduleData.getScheduleInfos().get(i));
+                                    newFragment.show(fragmentTransaction, "dialog");
+                                    return true;
+                                }
+                            });
                             listViewLocation.setAdapter(new LocationListAdapter(getActivity()));
 
                         } else {
@@ -521,6 +560,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        dialog.dismiss();
+
                         new AlertDialog.Builder(getActivity())
                                 .setMessage(R.string.interact_data_error)
                                 .setTitle(R.string.dialog_hint)
@@ -533,15 +574,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
                 RequestManager.getRequestQueue().add(gsonObjRequest);
             }
-
-            ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ScheduleDialogFragment.this.dismiss();
-                }
-            });
-
-            return view;
         }
 
         private class ScheduleListAdapter extends BaseAdapter {
@@ -667,9 +699,11 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         }
     }
 
-    public static class AddScheduleDialogFragment extends DialogFragment {
+    public static class UpdateScheduleDialogFragment extends DialogFragment {
 
+        private static String flag;
         private static Date date;
+        private static ScheduleInfo scheduleInfo;
         private Calendar calendar;
         private int year;
         private int month;
@@ -688,9 +722,17 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         private Date startDate = new Date();
         private Date endDate = new Date();
 
-        static AddScheduleDialogFragment newInstance(Date date) {
-            AddScheduleDialogFragment.date = date;
-            return new AddScheduleDialogFragment();
+        static UpdateScheduleDialogFragment newInstance(String flag, Date date) {
+            UpdateScheduleDialogFragment.flag = flag;
+            UpdateScheduleDialogFragment.date = date;
+            return new UpdateScheduleDialogFragment();
+        }
+
+        static UpdateScheduleDialogFragment newInstance(String flag, ScheduleInfo scheduleInfo) {
+            UpdateScheduleDialogFragment.flag = flag;
+            UpdateScheduleDialogFragment.date = new Date();
+            UpdateScheduleDialogFragment.scheduleInfo = scheduleInfo;
+            return new UpdateScheduleDialogFragment();
         }
 
         @Override
@@ -701,7 +743,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.schedule_manager_add_fragment_dialog, container, false);
+            View view = inflater.inflate(R.layout.schedule_manager_update_fragment_dialog, container, false);
 
             calendar = Calendar.getInstance();
             calendar.setTime(date);
@@ -713,9 +755,25 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             editTextContent = (EditText) view.findViewById(R.id.edittext_content);
             switchPush = (Switch) view.findViewById(R.id.notification_switch);
-
             buttonStartDate = (Button) view.findViewById(R.id.button_start_date);
-            buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+            buttonStartTime = (Button) view.findViewById(R.id.button_start_time);
+            buttonEndDate = (Button) view.findViewById(R.id.button_end_date);
+            buttonEndTime = (Button) view.findViewById(R.id.button_end_time);
+
+            if (flag.equals("add")) {
+                buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                buttonStartTime.setText("12" + getText(R.string.colon) + "00");
+                buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                buttonEndTime.setText("12" + getText(R.string.colon) + "00");
+            } else if (flag.equals("update")) {
+                buttonStartDate.setText(scheduleInfo.getStartDate().substring(0, 10));
+                buttonStartTime.setText(scheduleInfo.getStartDate().substring(11, 16));
+                buttonEndDate.setText(scheduleInfo.getEndDate().substring(0, 10));
+                buttonEndTime.setText(scheduleInfo.getEndDate().substring(11, 16));
+                editTextContent.setText(scheduleInfo.getContent());
+                switchPush.setChecked(scheduleInfo.getPush().equals("yes"));
+            }
+
             buttonStartDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -724,8 +782,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }
             });
 
-            buttonStartTime = (Button) view.findViewById(R.id.button_start_time);
-            buttonStartTime.setText("12" + getText(R.string.colon) + "00");
             buttonStartTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -734,8 +790,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }
             });
 
-            buttonEndDate = (Button) view.findViewById(R.id.button_end_date);
-            buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
             buttonEndDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -744,8 +798,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }
             });
 
-            buttonEndTime = (Button) view.findViewById(R.id.button_end_time);
-            buttonEndTime.setText("12" + getText(R.string.colon) + "00");
             buttonEndTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -754,7 +806,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }
             });
 
-            ((Button) view.findViewById(R.id.button_save)).setOnClickListener(new View.OnClickListener() {
+            ((Button) view.findViewById(R.id.button_update)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (startDate.after(endDate)) {
@@ -787,7 +839,12 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                         dialog.show();
 
                         StringBuilder url = new StringBuilder();
-                        url.append(MyGlobal.API_ADD_SCHEDULE);
+                        url.append(MyGlobal.API_UPDATE_SCHEDULE);
+                        if (flag.equals("add")) {
+                            url.append("&id=");
+                        } else if (flag.equals("update")) {
+                            url.append("&id=" + scheduleInfo.getId());
+                        }
                         url.append("&userId=" + MyGlobal.getUser().getId());
                         try {
                             url.append("&startTime=" + buttonStartDate.getText().toString().trim() + URLEncoder.encode(" ", "utf-8") + buttonStartTime.getText().toString().trim());
@@ -804,13 +861,16 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                                 dialog.dismiss();
                                 if (response != null && response.getSuccess().equals("true")) {
 
-                                    editTextContent.setText("");
-                                    switchPush.setChecked(false);
-                                    buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
-                                    buttonStartTime.setText("00" + getText(R.string.colon) + "00");
-                                    buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
-                                    buttonEndTime.setText("00" + getText(R.string.colon) + "00");
-
+                                    if (flag.equals("add")) {
+                                        editTextContent.setText("");
+                                        switchPush.setChecked(false);
+                                        buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                                        buttonStartTime.setText("00" + getText(R.string.colon) + "00");
+                                        buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(date));
+                                        buttonEndTime.setText("00" + getText(R.string.colon) + "00");
+                                    } else if (flag.equals("update")) {
+                                        UpdateScheduleDialogFragment.this.dismiss();
+                                    }
 
                                     new AlertDialog.Builder(getActivity())
                                             .setMessage(R.string.submitted_success)
@@ -849,12 +909,68 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 }
             });
 
-            ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
+            ((Button) view.findViewById(R.id.button_delete)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AddScheduleDialogFragment.this.dismiss();
+
+                    if (MyGlobal.checkNetworkConnection(getActivity())) {
+
+                        dialog = new ProgressDialog(getActivity());
+                        dialog.setMessage(getText(R.string.submitting));
+                        dialog.setCancelable(true);
+                        dialog.show();
+
+                        GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, MyGlobal.API_DELETE_SCHEDULE + "&id=" + scheduleInfo.getId() + "&userid=" + MyGlobal.getUser().getId(),
+                                SuccessData.class, new Response.Listener<SuccessData>() {
+
+                            @Override
+                            public void onResponse(SuccessData response) {
+                                dialog.dismiss();
+                                if (response != null && response.getSuccess().equals("true")) {
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage(R.string.deleted_success)
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                            .create()
+                                            .show();
+
+                                } else {
+                                    new AlertDialog.Builder(getActivity())
+                                            .setMessage(R.string.interact_data_error)
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                            .create()
+                                            .show();
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                dialog.dismiss();
+                                new AlertDialog.Builder(getActivity())
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+
+                            }
+                        }
+                        );
+
+                        RequestManager.getRequestQueue().add(gsonObjRequest);
+                    }
                 }
             });
+
+            if (flag.equals("add")) {
+                ((Button) view.findViewById(R.id.button_update)).setVisibility(View.VISIBLE);
+                ((Button) view.findViewById(R.id.button_delete)).setVisibility(View.INVISIBLE);
+            } else if (flag.equals("update")) {
+                ((Button) view.findViewById(R.id.button_update)).setVisibility(View.VISIBLE);
+                ((Button) view.findViewById(R.id.button_delete)).setVisibility(View.VISIBLE);
+            }
 
             return view;
         }

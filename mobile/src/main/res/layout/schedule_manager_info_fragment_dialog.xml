@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:orientation="vertical">
@@ -59,10 +59,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="90dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <ListView
@@ -72,6 +71,23 @@
             android:layout_height="match_parent"
             android:smoothScrollbar="true"
             android:scrollbars="none" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_refresh"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/refresh"
+            android:textSize="20dp"
+            android:background="#46C50C" />
 
     </LinearLayout>
 

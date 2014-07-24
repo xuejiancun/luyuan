@@ -64,7 +64,7 @@ public class GsonRequest<T> extends Request<T> {
         this.mListener = listener;
         mGson = new Gson();
 
-        setRetryPolicy(new DefaultRetryPolicy(10000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        setRetryPolicy(new DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     }
 

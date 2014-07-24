@@ -120,7 +120,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_save"
+                android:id="@+id/button_update"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -141,13 +141,13 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_back"
+                android:id="@+id/button_delete"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="@string/back"
+                android:text="@string/delete"
                 android:textSize="20dp"
-                android:background="#FFEDEDED" />
+                android:background="#DF3E3E" />
 
         </LinearLayout>
 
