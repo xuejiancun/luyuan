@@ -927,6 +927,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                             public void onResponse(SuccessData response) {
                                 dialog.dismiss();
                                 if (response != null && response.getSuccess().equals("true")) {
+                                    UpdateScheduleDialogFragment.this.dismiss();
                                     new AlertDialog.Builder(getActivity())
                                             .setMessage(R.string.deleted_success)
                                             .setTitle(R.string.dialog_hint)

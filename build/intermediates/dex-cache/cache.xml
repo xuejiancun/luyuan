@@ -8,6 +8,18 @@
         revision="19.1.0"
         sha1="089ca8147c0216f1917d676855d3d3d9cac65cdd"/>
     <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/httpmime-4.1.2-b5820799e9fae1df21c70b7f91e06e676ee6b655.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/httpmime-4.1.2.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="ed8b5ee0167cb27dea55851259eb34b609f31df0"/>
+    <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/support-v4-19.1.0-da0118b3368a38a78a32168eced9f19d2f3d69ae.jar"
+        jar="/Users/jackxue/Downloads/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/jpush-sdk-release1.6.1-c2d7497c5da400ed9fceda4e755e8110098418f4.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/jpush-sdk-release1.6.1.jar"
         jumboMode="false"
@@ -25,11 +37,5 @@
         jumboMode="false"
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
 
 </pre-dex-items>
