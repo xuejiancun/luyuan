@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -24,10 +25,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.SuccessData;
-import com.luyuan.mobile.service.LocationService;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.MyLocation;
 import com.luyuan.mobile.util.PushUtil;
 import com.luyuan.mobile.util.RequestManager;
 
@@ -44,16 +45,79 @@ import cn.jpush.android.api.TagAliasCallback;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private int tabSelectIndex;
-    public static boolean isForeground = false;
-
-    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
-    private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
-
     public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
+    private static final int MSG_SET_ALIAS = 1001;
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
 
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            switch (code) {
+                case 0:
+                    // set tag and alias success
+                    // JPushInterface.resumePush(getApplicationContext());
+                    break;
+
+                case 6002:
+                    // failed to set alias and tags due to timeout. Try again after 60s.
+                    if (PushUtil.isConnected(getApplicationContext())) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    } else {
+                        // no network
+                    }
+                    break;
+
+                default:
+                    // failed with errorCode = code
+            }
+
+        }
+
+    };
+    private static final int MSG_SET_TAGS = 1002;
+    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            switch (code) {
+                case 0:
+                    // JPushInterface.resumePush(getApplicationContext());
+                    break;
+
+                case 6002:
+                    if (PushUtil.isConnected(getApplicationContext())) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_TAGS, tags), 1000 * 60);
+                    } else {
+                    }
+                    break;
+
+                default:
+            }
+        }
+
+    };
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    JPushInterface.setAliasAndTags(getApplicationContext(), (String) msg.obj, null, mAliasCallback);
+                    break;
+
+                case MSG_SET_TAGS:
+                    JPushInterface.setAliasAndTags(getApplicationContext(), null, (Set<String>) msg.obj, mTagsCallback);
+                    break;
+
+                default:
+            }
+        }
+    };
+    public static boolean isForeground = false;
+    private int tabSelectIndex;
+    private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
+    private ArrayList<TextView> tabTextViewList = new ArrayList<TextView>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +145,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             replaceTabContent(intent.getStringExtra("tab"));
         } else {
             replaceTabContent("home");
-        }
-        if (intent != null && intent.getStringExtra("location") != null && intent.getStringExtra("location").equals("true")) {
-            IntentFilter filter = new IntentFilter();
-            filter.addAction("locationAction");
-            registerReceiver(new LocationBroadcastReceiver(), filter);
-
-            Intent intentLocation = new Intent();
-            intentLocation.setClass(MainActivity.this, LocationService.class);
-            startService(intentLocation);
         }
 
         // setTag();
@@ -226,112 +281,4 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, MD5Util.encode(alias)));
     }
 
-    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
-
-        @Override
-        public void gotResult(int code, String alias, Set<String> tags) {
-            switch (code) {
-                case 0:
-                    // set tag and alias success
-                    // JPushInterface.resumePush(getApplicationContext());
-                    break;
-
-                case 6002:
-                    // failed to set alias and tags due to timeout. Try again after 60s.
-                    if (PushUtil.isConnected(getApplicationContext())) {
-                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
-                    } else {
-                        // no network
-                    }
-                    break;
-
-                default:
-                    // failed with errorCode = code
-            }
-
-        }
-
-    };
-
-    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
-
-        @Override
-        public void gotResult(int code, String alias, Set<String> tags) {
-            switch (code) {
-                case 0:
-                    // JPushInterface.resumePush(getApplicationContext());
-                    break;
-
-                case 6002:
-                    if (PushUtil.isConnected(getApplicationContext())) {
-                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_TAGS, tags), 1000 * 60);
-                    } else {
-                    }
-                    break;
-
-                default:
-            }
-        }
-
-    };
-
-    private static final int MSG_SET_ALIAS = 1001;
-    private static final int MSG_SET_TAGS = 1002;
-
-    private final Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_SET_ALIAS:
-                    JPushInterface.setAliasAndTags(getApplicationContext(), (String) msg.obj, null, mAliasCallback);
-                    break;
-
-                case MSG_SET_TAGS:
-                    JPushInterface.setAliasAndTags(getApplicationContext(), null, (Set<String>) msg.obj, mTagsCallback);
-                    break;
-
-                default:
-            }
-        }
-    };
-
-    private class LocationBroadcastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!intent.getAction().equals("locationAction")) return;
-            double latitude = intent.getDoubleExtra("latitude", 0.0d);
-            double longitude = intent.getDoubleExtra("longitude", 0.0d);
-            Geocoder geoCoder = new Geocoder(MainActivity.this);
-            try {
-                List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                String location = list.get(0).getAddressLine(0).toString();
-                // Toast.makeText(ScheduleManagerActivity.this, location, Toast.LENGTH_LONG).show();
-
-                StringBuilder url = new StringBuilder();
-                url.append(MyGlobal.API_RECORD_LOCATION);
-                url.append("&userId=" + MyGlobal.getUser().getId());
-                try {
-                    url.append("&location=" + URLEncoder.encode(location, "utf-8"));
-                } catch (UnsupportedEncodingException e) {
-                }
-
-                GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
-                        SuccessData.class, new Response.Listener<SuccessData>() {
-                    @Override
-                    public void onResponse(SuccessData successData) {
-                        successData.getSuccess();
-                    }
-                }, null
-                );
-
-                RequestManager.getRequestQueue().add(gsonObjRequest);
-
-            } catch (IOException e) {
-            }
-
-            unregisterReceiver(this);
-        }
-    }
 }

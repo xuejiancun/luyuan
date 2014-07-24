@@ -15,6 +15,8 @@ import cn.jpush.android.api.JPushInterface;
 public class NotificationActivity extends Activity {
 
     private String key = "";
+    private String title = "";
+    private String content = "";
     private String function = "";
 
     @Override
@@ -31,6 +33,8 @@ public class NotificationActivity extends Activity {
         if (null != intent) {
             Bundle bundle = getIntent().getExtras();
             key = (bundle.getString(JPushInterface.EXTRA_EXTRA) != null) ? bundle.getString(JPushInterface.EXTRA_EXTRA) : key;
+            title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+            content = bundle.getString(JPushInterface.EXTRA_ALERT);
             function = (bundle.getString("function") != null ? bundle.getString("function") : function);
         }
 
@@ -56,6 +60,11 @@ public class NotificationActivity extends Activity {
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("content", content);
+        fragment.setArguments(bundle);
+        
         fragmentTransaction.replace(R.id.frame_content_notification, fragment);
         fragmentTransaction.commit();
     }

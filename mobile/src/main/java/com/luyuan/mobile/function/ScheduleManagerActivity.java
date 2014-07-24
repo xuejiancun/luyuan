@@ -8,14 +8,13 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,10 +47,10 @@ import com.luyuan.mobile.model.ScheduleData;
 import com.luyuan.mobile.model.ScheduleInfo;
 import com.luyuan.mobile.model.SubordinateData;
 import com.luyuan.mobile.model.SuccessData;
-import com.luyuan.mobile.service.LocationService;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.MyLocation;
 import com.luyuan.mobile.util.RequestManager;
 
 import java.io.IOException;
@@ -73,9 +72,25 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
     private int mYear;
     private int mMonth;
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            if (mYear == year && mMonth == monthOfYear) {
+                return;
+            }
+
+            mYear = year;
+            mMonth = monthOfYear;
+
+            buttonChooseDate.setText(new StringBuilder()
+                    .append(mYear).append(getText(R.string.cross))
+                    .append(mMonth + 1).append(getText(R.string.month)));
+
+            initCalendar();
+        }
+    };
     private int mDay;
     private int subordinatesIndex;
-
     private SubordinateData subordinateData;
     private String tab = "home";
 
@@ -129,18 +144,86 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         ((Button) findViewById(R.id.button_add_location)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentFilter filter = new IntentFilter();
-                filter.addAction("locationAction");
-                registerReceiver(new LocationBroadcastReceiver(), filter);
-
-                Intent intent = new Intent();
-                intent.setClass(ScheduleManagerActivity.this, LocationService.class);
-                startService(intent);
-
                 dialog = new ProgressDialog(ScheduleManagerActivity.this);
                 dialog.setMessage(getText(R.string.locating));
                 dialog.setCancelable(true);
                 dialog.show();
+
+                MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
+                    @Override
+                    public void gotLocation(Location location) {
+                        //Got the location!
+                        dialog.dismiss();
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+
+                        Geocoder geoCoder = new Geocoder(ScheduleManagerActivity.this);
+                        try {
+                            List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
+                            String loc = list.get(0).getAddressLine(0).toString();
+//                            Toast.makeText(ScheduleManagerActivity.this, loc, Toast.LENGTH_LONG).show();
+
+                            StringBuilder url = new StringBuilder();
+                            url.append(MyGlobal.API_ADD_LOCATION);
+                            url.append("&userId=" + MyGlobal.getUser().getId());
+                            try {
+                                url.append("&location=" + URLEncoder.encode(loc, "utf-8"));
+                            } catch (UnsupportedEncodingException e) {
+                            }
+
+                            if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
+
+                                GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
+                                        SuccessData.class, new Response.Listener<SuccessData>() {
+
+                                    @Override
+                                    public void onResponse(SuccessData response) {
+                                        dialog.dismiss();
+
+                                        if (response != null && response.getSuccess().equals("true")) {
+                                            new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                                    .setMessage(R.string.located_success)
+                                                    .setTitle(R.string.dialog_hint)
+                                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                                    .create()
+                                                    .show();
+
+                                        } else {
+                                            new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                                    .setMessage(R.string.interact_data_error)
+                                                    .setTitle(R.string.dialog_hint)
+                                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                                    .create()
+                                                    .show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        dialog.dismiss();
+
+                                        new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                                .setMessage(R.string.interact_data_error)
+                                                .setTitle(R.string.dialog_hint)
+                                                .setPositiveButton(R.string.dialog_confirm, null)
+                                                .create()
+                                                .show();
+                                    }
+                                }
+                                );
+
+                                RequestManager.getRequestQueue().add(gsonObjRequest);
+                            }
+
+                        } catch (IOException e) {
+                        }
+
+
+                    }
+                };
+                MyLocation myLocation = new MyLocation();
+                myLocation.getLocation(ScheduleManagerActivity.this, locationResult);
+
             }
         });
 
@@ -333,24 +416,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         }
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            if (mYear == year && mMonth == monthOfYear) {
-                return;
-            }
-
-            mYear = year;
-            mMonth = monthOfYear;
-
-            buttonChooseDate.setText(new StringBuilder()
-                    .append(mYear).append(getText(R.string.cross))
-                    .append(mMonth + 1).append(getText(R.string.month)));
-
-            initCalendar();
-        }
-    };
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         boolean applyFixes = theDialog != null && theDialog.isShowing();
@@ -368,81 +433,24 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         }
     }
 
-    private class LocationBroadcastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!intent.getAction().equals("locationAction")) return;
-            double latitude = intent.getDoubleExtra("latitude", 0.0d);
-            double longitude = intent.getDoubleExtra("longitude", 0.0d);
-            Geocoder geoCoder = new Geocoder(ScheduleManagerActivity.this);
-            try {
-                List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                String location = list.get(0).getAddressLine(0).toString();
-                // Toast.makeText(ScheduleManagerActivity.this, location, Toast.LENGTH_LONG).show();
-
-                StringBuilder url = new StringBuilder();
-                url.append(MyGlobal.API_ADD_LOCATION);
-                url.append("&userId=" + MyGlobal.getUser().getId());
-                try {
-                    url.append("&location=" + URLEncoder.encode(location, "utf-8"));
-                } catch (UnsupportedEncodingException e) {
-                }
-
-                if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
-
-                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
-                            SuccessData.class, new Response.Listener<SuccessData>() {
-
-                        @Override
-                        public void onResponse(SuccessData response) {
-                            dialog.dismiss();
-
-                            if (response != null && response.getSuccess().equals("true")) {
-                                new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                        .setMessage(R.string.located_success)
-                                        .setTitle(R.string.dialog_hint)
-                                        .setPositiveButton(R.string.dialog_confirm, null)
-                                        .create()
-                                        .show();
-
-                            } else {
-                                new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                        .setMessage(R.string.interact_data_error)
-                                        .setTitle(R.string.dialog_hint)
-                                        .setPositiveButton(R.string.dialog_confirm, null)
-                                        .create()
-                                        .show();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            dialog.dismiss();
-
-                            new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                    .setMessage(R.string.interact_data_error)
-                                    .setTitle(R.string.dialog_hint)
-                                    .setPositiveButton(R.string.dialog_confirm, null)
-                                    .create()
-                                    .show();
-                        }
-                    }
-                    );
-
-                    RequestManager.getRequestQueue().add(gsonObjRequest);
-                }
-
-            } catch (IOException e) {
-            }
-
-            unregisterReceiver(this);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("stId", MyGlobal.getUser().getStId());
+            intent.putExtra("tab", tab);
+            startActivity(intent);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
-
 
     public static class ScheduleDialogFragment extends DialogFragment {
 
+        private static Date date;
+        private static String userId;
+        private static String query;
         private ScheduleListAdapter scheduleListAdapter;
         private LayoutInflater layoutInflater;
         private ListView listViewSchedule;
@@ -450,10 +458,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         private ScheduleData scheduleData;
         private LocationData locationData;
         private ProgressDialog dialog;
-
-        private static Date date;
-        private static String userId;
-        private static String query;
 
         public static ScheduleDialogFragment newInstance(Date date, String userId, String query) {
             ScheduleDialogFragment fragment = new ScheduleDialogFragment();
@@ -578,6 +582,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         private class ScheduleListAdapter extends BaseAdapter {
 
+            private Context context;
+
             public ScheduleListAdapter(Context context) {
                 this.context = context;
             }
@@ -626,11 +632,12 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
                 notifyDataSetChanged();
             }
 
-            private Context context;
-
         }
 
         private class ScheduleView extends LinearLayout {
+
+            private TextView title;
+            private TextView content;
 
             public ScheduleView(Context context, String title, String dialogue, boolean expanded) {
                 super(context);
@@ -660,9 +667,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             public void setExpanded(boolean expanded) {
                 content.setVisibility(expanded ? VISIBLE : GONE);
             }
-
-            private TextView title;
-            private TextView content;
         }
 
         private class LocationListAdapter extends BaseAdapter {
@@ -721,6 +725,58 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         private Date startDate = new Date();
         private Date endDate = new Date();
+        private DatePickerDialog.OnDateSetListener onStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                year = i;
+                month = i2;
+                day = i3;
+
+                buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
+                startDate.setYear(i - 1900);
+                startDate.setMonth(i2);
+                startDate.setDate(i3);
+            }
+        };
+        private DatePickerDialog.OnDateSetListener onEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+                year = i;
+                month = i2;
+                day = i3;
+
+                buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
+                endDate.setYear(i - 1900);
+                endDate.setMonth(i2);
+                endDate.setDate(i3);
+            }
+        };
+        private TimePickerDialog.OnTimeSetListener onStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                hour = i;
+                min = i2;
+
+                buttonStartTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
+                startDate.setHours(i);
+                startDate.setMinutes(i2);
+            }
+        };
+        private TimePickerDialog.OnTimeSetListener onEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i2) {
+                hour = i;
+                min = i2;
+
+                buttonEndTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
+                endDate.setHours(i);
+                endDate.setMinutes(i2);
+            }
+        };
 
         static UpdateScheduleDialogFragment newInstance(String flag, Date date) {
             UpdateScheduleDialogFragment.flag = flag;
@@ -975,75 +1031,6 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
             return view;
         }
-
-
-        private DatePickerDialog.OnDateSetListener onStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-                year = i;
-                month = i2;
-                day = i3;
-
-                buttonStartDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
-                startDate.setYear(i - 1900);
-                startDate.setMonth(i2);
-                startDate.setDate(i3);
-            }
-        };
-
-        private DatePickerDialog.OnDateSetListener onEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-                year = i;
-                month = i2;
-                day = i3;
-
-                buttonEndDate.setText(MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(i - 1900, i2, i3)));
-                endDate.setYear(i - 1900);
-                endDate.setMonth(i2);
-                endDate.setDate(i3);
-            }
-        };
-
-        private TimePickerDialog.OnTimeSetListener onStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i2) {
-                hour = i;
-                min = i2;
-
-                buttonStartTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
-                startDate.setHours(i);
-                startDate.setMinutes(i2);
-            }
-        };
-
-        private TimePickerDialog.OnTimeSetListener onEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i2) {
-                hour = i;
-                min = i2;
-
-                buttonEndTime.setText((i < 10 ? "0" : "") + String.valueOf(i) + getText(R.string.colon) + (i2 < 10 ? "0" : "") + String.valueOf(i2));
-                endDate.setHours(i);
-                endDate.setMinutes(i2);
-            }
-        };
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("stId", MyGlobal.getUser().getStId());
-            intent.putExtra("tab", tab);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
