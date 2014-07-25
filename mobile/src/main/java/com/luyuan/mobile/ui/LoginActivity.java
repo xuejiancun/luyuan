@@ -52,8 +52,8 @@ public class LoginActivity extends Activity {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-//        username = "xuejiancun";
-//        password = "Xjc5861802";
+        username = "xuejiancun";
+        password = "Xjc5861802";
 
 //        username = "ceshi2";
 //        password = "Xx8888..";
@@ -169,6 +169,13 @@ public class LoginActivity extends Activity {
                     } else if (response != null && response.getSuccess().equals("false_password_error")) {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.password_error)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+                    } else if (response != null && response.getSuccess().equals("false_account_10nlatter")) {
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.account_10nlatter)
                                 .setTitle(R.string.dialog_hint)
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
