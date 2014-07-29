@@ -53,6 +53,17 @@ public class UploadMaterialChannelFragment extends Fragment {
             }
         });
 
+        ((Button) view.findViewById(R.id.button_dedicated)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new UploadMaterialDedicatedFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+                fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
         if (MyGlobal.checkNetworkConnection(getActivity())) {
 
             dialog = new ProgressDialog(getActivity());

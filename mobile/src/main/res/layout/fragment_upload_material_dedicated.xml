@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/location_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_location_place"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:enabled="false"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_area"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <Spinner
+                    android:id="@+id/spin_brand"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/udf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_brand"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_submit_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_submit_date"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/material_submit_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_submit_by"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:editable="false"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <Gallery
+                android:id="@+id/gallery_attach_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_attach"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/attach_file"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+            <Button
+                android:id="@+id/button_location"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="@string/location2"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/submit"
+                android:textSize="20dp"
+                android:background="#46C50C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_back"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/back"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

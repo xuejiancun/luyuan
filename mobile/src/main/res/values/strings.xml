@@ -61,6 +61,8 @@
 
     <string name="loading">正在加载...</string>
     <string name="enter">进入</string>
+    <string name="enter_udf_channel">进入自定义通道</string>
+    <string name="dedicated_channel">门店基础资料通道</string>
     <string name="choose_channel">选择自定义通道</string>
     <string name="material_name">资料名称</string>
     <string name="material_remarks">资料备注</string>
@@ -68,7 +70,15 @@
     <string name="material_transact_state">办结状态</string>
     <string name="material_transact_date">办结时间</string>
     <string name="material_submit_date">提交时间</string>
+    <string name="material_submit_by">提交人</string>
     <string name="material_feedback">反馈内容</string>
+
+    <string name="location_place">定位地址</string>
+    <string name="area">面积</string>
+    <string name="brand">品牌</string>
+    <string name="udf">自定义</string>
+    <string name="location2">定位</string>
+    <string name="locating2">正在定位...</string>
 
     <string name="attach_file">附件</string>
     <string name="choose_file">选择文件</string>

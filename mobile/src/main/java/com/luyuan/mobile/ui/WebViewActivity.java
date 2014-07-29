@@ -210,15 +210,15 @@ public class WebViewActivity extends Activity {
         } else if (function.equals("report_tactical")) {
             result = MyGlobal.WEBVIEW_URL_TACTICAL;
         } else if (function.equals("query_payroll")) {
-            result = MyGlobal.WEBVIEW_URL_PAYROLL;
+            result = MyGlobal.WEBVIEW_URL_QUERY_PAYROLL;
         } else if (function.equals("query_training")) {
             result = MyGlobal.WEBVIEW_URL_TRAIN;
         } else if (function.equals("query_manual")) {
             result = MyGlobal.WEBVIEW_URL_MANUAL;
         } else if (function.equals("query_authorization")) {
-            result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
+            result = MyGlobal.WEBVIEW_URL_QUERY_AUTH;
         } else if (function.equals("market_research")) {
-            result = MyGlobal.WEBVIEW_URL_RESEARCH_PRODUCT_FEATURE;
+            result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
         } else if (function.equals("login_history")) {
             result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
         } else if (function.equals("change_password")) {
