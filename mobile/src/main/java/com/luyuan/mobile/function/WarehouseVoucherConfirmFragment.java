@@ -17,7 +17,7 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_warehouse_voucher_confirm, null);
+        View view = inflater.inflate(R.layout.warehouse_voucher_confirm_fragment, null);
 
         return view;
     }

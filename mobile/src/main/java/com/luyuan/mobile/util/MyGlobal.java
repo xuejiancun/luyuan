@@ -20,16 +20,19 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    //    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
+    public static final String API_QUERY_DEDICATED = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querydedicatedmaterial";
     public static final String API_FETCH_CHANNEL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchchannels";
     public static final String API_UPLOAD_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=uploadmaterial";
     public static final String API_SUBMIT_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=submitmaterial";
-    public static final String API_CANCEL_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=cancelmaterial";
+    public static final String API_SUBMIT_DEDICATED = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=submitdedicatedmaterial";
+    public static final String API_CANCEL_UDF_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=cancelmaterial";
+    public static final String API_CANCEL_DEDICATED_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=canceldedicatedmaterial";
     public static final String API_FETCH_DAYS = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchdays";
     public static final String API_FETCH_SCHEDULE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchschedules";
     public static final String API_UPDATE_SCHEDULE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addschedule";
@@ -48,8 +51,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_TRAIN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/Train.html";
     public static final String WEBVIEW_URL_MANUAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/TrainManual.html";
     public static final String WEBVIEW_URL_MARKET_STRATEGY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Strategy/Index.html";
-    // TODO FIX DEBUG
-    public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Strategy/Index.html";
+    public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/Index.html";
     public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
@@ -102,6 +104,8 @@ public class MyGlobal {
         } else if (functionCode.equals("query_authorization")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("market_research")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("market_strategy")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("material_upload")) {
             clz = UploadMaterialActivity.class;

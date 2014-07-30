@@ -20,14 +20,14 @@
             <TableRow>
 
                 <TextView
-                    android:id="@+id/textview_order_no_warehouse_voucher_search"
+                    android:id="@+id/textview_order_no"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textview_order_time_warehouse_voucher_search"
+                    android:id="@+id/textview_order_time"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
@@ -38,7 +38,7 @@
             <TableRow>
 
                 <TextView
-                    android:id="@+id/textview_order_unit_warehouse_voucher_search"
+                    android:id="@+id/textview_order_unit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 

@@ -24,7 +24,7 @@ public class ImagePreviewActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-        View view = View.inflate(this, R.layout.activity_image_preview, null);
+        View view = View.inflate(this, R.layout.image_preview_activity, null);
         imageView = (ImageView) view.findViewById(R.id.imageview_image_preview);
 
         if (getIntent() != null && getIntent().getStringExtra("filePath") != null) {

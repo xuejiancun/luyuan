@@ -16,7 +16,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.welcome_activity);
 
         new Handler().postDelayed(new Runnable() {
             public void run() {

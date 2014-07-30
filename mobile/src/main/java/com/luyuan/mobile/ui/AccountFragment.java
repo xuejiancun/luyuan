@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.function.AccountAboutMeActivity;
+import com.luyuan.mobile.function.AboutMeActivity;
 import com.luyuan.mobile.function.NotificationActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.FunctionInfo;
@@ -34,7 +34,7 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_account, null);
+        View view = inflater.inflate(R.layout.account_fragment, null);
 
         List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
 
@@ -95,7 +95,7 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         switch (i) {
             case 0:
                 intent = new Intent();
-                intent.setClass(getActivity(), AccountAboutMeActivity.class);
+                intent.setClass(getActivity(), AboutMeActivity.class);
                 intent.putExtra("tab", "account");
 
                 startActivity(intent);

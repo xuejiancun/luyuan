@@ -69,7 +69,7 @@ public class MarketResearch1Fragment extends Fragment {
                 Fragment fragment = new MarketResearch2Fragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-                fragmentTransaction.replace(R.id.frame_content_market_research, fragment);
+                fragmentTransaction.replace(R.id.frame_content, fragment);
                 fragmentTransaction.commit();
             }
         });

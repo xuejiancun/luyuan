@@ -23,11 +23,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.ImagePreviewActivity;
@@ -58,11 +60,14 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private Uri imageUri;
     private String channel = "";
     private EditText editTextLocation;
+    private EditText editTextArea;
+    private EditText editTextUdf;
+    private Spinner spinnerBrand;
     private ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_material_dedicated, null);
+        View view = inflater.inflate(R.layout.upload_material_dedicated_fragment, null);
 
 
         Bundle args = getArguments();
@@ -71,6 +76,14 @@ public class UploadMaterialDedicatedFragment extends Fragment {
         }
 
         editTextLocation = (EditText) view.findViewById(R.id.edittext_location_place);
+        editTextArea = (EditText) view.findViewById(R.id.edittext_area);
+        editTextUdf = (EditText) view.findViewById(R.id.edittext_brand);
+
+        spinnerBrand = (Spinner) view.findViewById(R.id.spin_brand);
+        String[] spinnerData = new String[]{"", "绿源", "爱玛", "雅迪", "自定义"};
+        spinnerBrand.setAdapter(new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, spinnerData));
+        spinnerBrand.setSelection(0, true);
 
         // add attachment
         ((Button) view.findViewById(R.id.button_attach)).setOnClickListener(new View.OnClickListener() {
@@ -120,11 +133,31 @@ public class UploadMaterialDedicatedFragment extends Fragment {
             public void onClick(View view) {
 
                 // create material
-                String name = "";
-                String remark = "";
-                if (name.isEmpty()) {
+                String location = editTextLocation.getText().toString().trim();
+                String area = editTextArea.getText().toString().trim();
+                String brand = spinnerBrand.getSelectedItem().toString().trim();
+                String udf = editTextUdf.getText().toString().trim();
+                if (location.isEmpty()) {
                     new AlertDialog.Builder(getActivity())
-                            .setMessage(R.string.material_name_empty)
+                            .setMessage(R.string.location_empty)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                    return;
+                }
+                if (area.isEmpty()) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.area_empty)
+                            .setTitle(R.string.dialog_hint)
+                            .setPositiveButton(R.string.dialog_confirm, null)
+                            .create()
+                            .show();
+                    return;
+                }
+                if (brand.isEmpty() || (brand.equals("自定义") && udf.isEmpty())) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.brand_empty)
                             .setTitle(R.string.dialog_hint)
                             .setPositiveButton(R.string.dialog_confirm, null)
                             .create()
@@ -142,11 +175,12 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 }
 
                 List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
-                pairs.add(new BasicNameValuePair("channel", channel));
-                pairs.add(new BasicNameValuePair("name", name));
-                pairs.add(new BasicNameValuePair("remark", remark));
+                pairs.add(new BasicNameValuePair("location", location));
+                pairs.add(new BasicNameValuePair("area", area));
+                pairs.add(new BasicNameValuePair("brand", brand));
+                pairs.add(new BasicNameValuePair("udf", udf));
 
-                post = new HttpMultipartPost(getActivity(), pairs, filePaths, getText(R.string.submitting).toString());
+                post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_DEDICATED, pairs, filePaths, getText(R.string.submitting).toString());
                 post.execute();
 
             }
@@ -187,7 +221,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_content_upload_material, new UploadMaterialChannelFragment());
+                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialChannelFragment());
                 fragmentTransaction.commit();
             }
         });

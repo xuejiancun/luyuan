@@ -35,7 +35,7 @@ public class UploadMaterialChannelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_material_channel, null);
+        View view = inflater.inflate(R.layout.upload_material_channel_fragment, null);
         listView = (ListView) view.findViewById(R.id.listview_channel_list);
 
         ((Button) view.findViewById(R.id.button_enter)).setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,7 @@ public class UploadMaterialChannelFragment extends Fragment {
                 args.putString("channel", channelData.getChannelInfos().get(channelIndex).getId());
                 fragment.setArguments(args);
 
-                fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+                fragmentTransaction.replace(R.id.frame_content, fragment);
                 fragmentTransaction.commit();
             }
         });
@@ -59,7 +59,7 @@ public class UploadMaterialChannelFragment extends Fragment {
                 Fragment fragment = new UploadMaterialDedicatedFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-                fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+                fragmentTransaction.replace(R.id.frame_content, fragment);
                 fragmentTransaction.commit();
             }
         });

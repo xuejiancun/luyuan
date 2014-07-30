@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
         loadShortCuts();
 
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        View view = inflater.inflate(R.layout.home_fragment, null);
         gridView = (GridView) view.findViewById(R.id.gridview_shortcut_list);
         gridView.setAdapter(new ShortCutAdapter(getActivity()));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

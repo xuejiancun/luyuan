@@ -31,7 +31,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(R.string.function_voucher_manager);
 
-        setContentView(R.layout.activity_warehouse_voucher_manager);
+        setContentView(R.layout.warehouse_voucher_activity);
 
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("tab") != null) {
@@ -69,7 +69,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         args.putString("api", api);
         warehouseVoucherSearchFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherSearchFragment);
+        fragmentTransaction.replace(R.id.frame_content, warehouseVoucherSearchFragment);
         fragmentTransaction.commit();
     }
 

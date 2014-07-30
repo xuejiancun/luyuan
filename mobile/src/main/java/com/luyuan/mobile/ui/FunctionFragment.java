@@ -36,71 +36,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater;
-        View view = inflater.inflate(R.layout.fragment_function, null);
-
-//        List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
-//
-//        FunctionInfo functionInfo1 = new FunctionInfo();
-//        functionInfo1.setCode("report_billboard");
-//        functionInfo1.setName(getText(R.string.function_billboard_report).toString());
-//        functionInfos.add(functionInfo1);
-//
-//        FunctionInfo functionInfo2 = new FunctionInfo();
-//        functionInfo2.setCode("report_personal");
-//        functionInfo2.setName(getText(R.string.function_personal_report).toString());
-//        functionInfos.add(functionInfo2);
-//
-//        FunctionInfo functionInfo3 = new FunctionInfo();
-//        functionInfo3.setCode("report_strategy");
-//        functionInfo3.setName(getText(R.string.function_strategy_report).toString());
-//        functionInfos.add(functionInfo3);
-//
-//        FunctionInfo functionInfo4 = new FunctionInfo();
-//        functionInfo4.setCode("report_tactical");
-//        functionInfo4.setName(getText(R.string.function_tactical_report).toString());
-//        functionInfos.add(functionInfo4);
-//
-//        FunctionInfo functionInfo5 = new FunctionInfo();
-//        functionInfo5.setCode("query_payroll");
-//        functionInfo5.setName(getText(R.string.function_payroll_query).toString());
-//        functionInfos.add(functionInfo5);
-//
-//        FunctionInfo functionInfo6 = new FunctionInfo();
-//        functionInfo6.setCode("query_training");
-//        functionInfo6.setName(getText(R.string.function_train_manage).toString());
-//        functionInfos.add(functionInfo6);
-//
-//        FunctionInfo functionInfo7 = new FunctionInfo();
-//        functionInfo7.setCode("query_manual");
-//        functionInfo7.setName(getText(R.string.function_manual_manage).toString());
-//        functionInfos.add(functionInfo7);
-//
-//        FunctionInfo functionInfo8 = new FunctionInfo();
-//        functionInfo8.setCode("material_upload");
-//        functionInfo8.setName(getText(R.string.function_upload_material).toString());
-//        functionInfos.add(functionInfo8);
-//
-//        FunctionInfo functionInfo9 = new FunctionInfo();
-//        functionInfo9.setCode("schedule_manage");
-//        functionInfo9.setName(getText(R.string.function_schedule_manage).toString());
-//        functionInfos.add(functionInfo9);
-//
-//        FunctionInfo functionInfo10 = new FunctionInfo();
-//        functionInfo10.setCode("research_native");
-//        functionInfo10.setName(getText(R.string.function_market_research_native).toString());
-//        functionInfos.add(functionInfo10);
-//
-//        FunctionInfo functionInfo11 = new FunctionInfo();
-//        functionInfo11.setCode("research");
-//        functionInfo11.setName(getText(R.string.function_market_research_web).toString());
-//        functionInfos.add(functionInfo11);
-//
-//        FunctionInfo functionInfo12 = new FunctionInfo();
-//        functionInfo12.setCode("market_research");
-//        functionInfo12.setName(getText(R.string.function_market_research).toString());
-//        functionInfos.add(functionInfo12);
-//
-//        functionData.setFunctionInfos(functionInfos);
+        View view = inflater.inflate(R.layout.function_fragment, null);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);
 
@@ -180,6 +116,9 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (functionData.getFunctionInfos().get(i).getCode().equals("#")) {
+            return;
+        }
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyGlobal.getFunctionActivity(functionData.getFunctionInfos().get(i).getCode()));
         intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
@@ -188,17 +127,31 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
         startActivity(intent);
     }
 
+    private void createShortCuts(String code, String name) {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        instance.removeShortcut(code);
+        instance.createShortcut(code, name);
+    }
+
     public class FunctionAdapter extends BaseAdapter {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = layoutInflater.inflate(R.layout.item_function, null);
+            View view;
 
-            ImageView imageview_function_icon = (ImageView) view.findViewById(R.id.imageview_function_icon);
-            TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
+            if (functionData.getFunctionInfos().get(position).getCode().equals("#")) {
+                view = layoutInflater.inflate(R.layout.item_blank, null);
+                TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
 
-            imageview_function_icon.setImageResource(MyGlobal.getFunctionIcon(functionData.getFunctionInfos().get(position).getCode()));
-            textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
+                textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
+            } else {
+                view = layoutInflater.inflate(R.layout.item_function, null);
+                ImageView imageview_function_icon = (ImageView) view.findViewById(R.id.imageview_function_icon);
+                TextView textview_funciton_name = (TextView) view.findViewById(R.id.textview_funciton_name);
+
+                imageview_function_icon.setImageResource(MyGlobal.getFunctionIcon(functionData.getFunctionInfos().get(position).getCode()));
+                textview_funciton_name.setText(functionData.getFunctionInfos().get(position).getName());
+            }
 
             return view;
         }
@@ -218,12 +171,6 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
             return functionData.getFunctionInfos().size();
         }
 
-    }
-
-    private void createShortCuts(String code, String name) {
-        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
-        instance.removeShortcut(code);
-        instance.createShortcut(code, name);
     }
 
 }

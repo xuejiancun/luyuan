@@ -41,29 +41,25 @@ import java.util.List;
 
 public class UploadMaterialNewFragment extends Fragment {
 
-    private HttpMultipartPost post;
-    private Gallery gallery;
-    private Uri imageUri;
-
-    private String channel = "";
-
-    private EditText editTextName;
-    private EditText editTextRemark;
-
     private final ArrayList<String> filePaths = new ArrayList<String>();
     private final ArrayList<Bitmap> fileThumbs = new ArrayList<Bitmap>();
-
     private final int FROM_CAMERA = 1;
     private final int FROM_PHOTO = 2;
     private final int FROM_VIDEO = 3;
     private final int FROM_AUDIO = 4;
+    private HttpMultipartPost post;
+    private Gallery gallery;
+    private Uri imageUri;
+    private String channel = "";
+    private EditText editTextName;
+    private EditText editTextRemark;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_material_new, null);
+        View view = inflater.inflate(R.layout.upload_material_new_fragment, null);
 
-        editTextName = (EditText) view.findViewById(R.id.edittext_material_name_upload_material);
-        editTextRemark = (EditText) view.findViewById(R.id.edittext_material_remark_upload_material);
+        editTextName = (EditText) view.findViewById(R.id.edittext_material_name);
+        editTextRemark = (EditText) view.findViewById(R.id.edittext_material_remark);
 
         Bundle args = getArguments();
         if (args != null && args.getString("channel") != null) {
@@ -71,7 +67,7 @@ public class UploadMaterialNewFragment extends Fragment {
         }
 
         // add attachment
-        ((Button) view.findViewById(R.id.button_attach_file_upload_material)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.button_attach_file)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final CharSequence[] items = new CharSequence[]{getText(R.string.from_camera), getText(R.string.from_photo)
@@ -113,7 +109,7 @@ public class UploadMaterialNewFragment extends Fragment {
         });
 
         // submit material
-        ((Button) view.findViewById(R.id.button_submit_material_upload_material)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.button_submit_material)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -144,7 +140,7 @@ public class UploadMaterialNewFragment extends Fragment {
                 pairs.add(new BasicNameValuePair("name", name));
                 pairs.add(new BasicNameValuePair("remark", remark));
 
-                post = new HttpMultipartPost(getActivity(), pairs, filePaths, getText(R.string.submitting).toString());
+                post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_MATERIAL, pairs, filePaths, getText(R.string.submitting).toString());
                 post.execute();
 
             }
@@ -155,12 +151,12 @@ public class UploadMaterialNewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_content_upload_material, new UploadMaterialChannelFragment());
+                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialChannelFragment());
                 fragmentTransaction.commit();
             }
         });
 
-        gallery = (Gallery) view.findViewById(R.id.gallery_attach_file_upload_material);
+        gallery = (Gallery) view.findViewById(R.id.gallery_attach_file);
         gallery.setAdapter(new ImageAdapter(getActivity()));
 
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {

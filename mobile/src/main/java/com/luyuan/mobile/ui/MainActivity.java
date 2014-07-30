@@ -4,14 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,23 +15,13 @@ import android.webkit.CookieSyncManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.model.SuccessData;
-import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
-import com.luyuan.mobile.util.MyLocation;
 import com.luyuan.mobile.util.PushUtil;
-import com.luyuan.mobile.util.RequestManager;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -136,7 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         initTab();
 

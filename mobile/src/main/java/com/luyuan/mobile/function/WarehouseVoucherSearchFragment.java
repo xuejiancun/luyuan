@@ -27,8 +27,8 @@ public class WarehouseVoucherSearchFragment extends Fragment implements AdapterV
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater;
-        View view = layoutInflater.inflate(R.layout.fragment_warehouse_voucher_search, null);
-        final ListView listView = (ListView) view.findViewById(R.id.listview_warehouse_voucher_search_list);
+        View view = layoutInflater.inflate(R.layout.warehouse_voucher_search_fragment, null);
+        final ListView listView = (ListView) view.findViewById(R.id.listview_search_list);
 
         // testing code
         warehouseVoucherData = new WarehouseVoucherData();
@@ -124,7 +124,7 @@ public class WarehouseVoucherSearchFragment extends Fragment implements AdapterV
         warehouseVoucherMakeFragment.setArguments(args);
 
 
-        fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherMakeFragment);
+        fragmentTransaction.replace(R.id.frame_content, warehouseVoucherMakeFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -139,9 +139,9 @@ public class WarehouseVoucherSearchFragment extends Fragment implements AdapterV
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = layoutInflater.inflate(R.layout.item_warehouse_voucher_search, null);
 
-            ((TextView) view.findViewById(R.id.textview_order_no_warehouse_voucher_search)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getCode());
-            ((TextView) view.findViewById(R.id.textview_order_time_warehouse_voucher_search)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getPreparedTime());
-            ((TextView) view.findViewById(R.id.textview_order_unit_warehouse_voucher_search)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getUnitName());
+            ((TextView) view.findViewById(R.id.textview_order_no)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getCode());
+            ((TextView) view.findViewById(R.id.textview_order_time)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getPreparedTime());
+            ((TextView) view.findViewById(R.id.textview_order_unit)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getUnitName());
 
             return view;
         }

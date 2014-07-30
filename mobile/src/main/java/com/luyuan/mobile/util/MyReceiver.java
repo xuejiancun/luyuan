@@ -1,4 +1,4 @@
-package com.luyuan.mobile.receiver;
+package com.luyuan.mobile.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

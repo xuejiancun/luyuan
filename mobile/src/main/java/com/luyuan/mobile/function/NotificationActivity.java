@@ -65,7 +65,7 @@ public class NotificationActivity extends Activity {
         bundle.putString("content", content);
         fragment.setArguments(bundle);
         
-        fragmentTransaction.replace(R.id.frame_content_notification, fragment);
+        fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
     }
 

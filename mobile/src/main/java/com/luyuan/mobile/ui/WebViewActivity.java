@@ -219,6 +219,8 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_QUERY_AUTH;
         } else if (function.equals("market_research")) {
             result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
+        } else if (function.equals("market_strategy")) {
+            result = MyGlobal.WEBVIEW_URL_MARKET_STRATEGY;
         } else if (function.equals("login_history")) {
             result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
         } else if (function.equals("change_password")) {

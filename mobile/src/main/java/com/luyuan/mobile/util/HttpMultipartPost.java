@@ -34,12 +34,14 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
     private String hint;
     private ProgressDialog pd;
     private long totalSize;
+    private String postUrl;
 
-    public HttpMultipartPost(Context context, List<BasicNameValuePair> pairs, ArrayList<String> filePaths, String hint) {
+    public HttpMultipartPost(Context context, String postUrl, List<BasicNameValuePair> pairs, ArrayList<String> filePaths, String hint) {
         this.pairs = pairs;
         this.context = context;
         this.filePaths = filePaths;
         this.hint = hint;
+        this.postUrl = postUrl;
     }
 
     @Override
@@ -103,7 +105,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
 
             pairs.add(new BasicNameValuePair("filepath", serverResponse));
 
-            HttpPost httpPostData = new HttpPost(MyGlobal.API_SUBMIT_MATERIAL);
+            HttpPost httpPostData = new HttpPost(postUrl);
             httpPostData.setEntity(new UrlEncodedFormEntity(pairs, HTTP.UTF_8));
             httpPostData.setHeader("Cookie", "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
             response = httpClient.execute(httpPostData, httpContext);

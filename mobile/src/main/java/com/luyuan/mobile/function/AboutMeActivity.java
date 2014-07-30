@@ -22,7 +22,7 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
-public class AccountAboutMeActivity extends Activity {
+public class AboutMeActivity extends Activity {
 
     private ProgressDialog dialog;
 
@@ -31,7 +31,7 @@ public class AccountAboutMeActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
-        setContentView(R.layout.account_about_me_activity);
+        setContentView(R.layout.about_me_activity);
 
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,9 +49,9 @@ public class AccountAboutMeActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                if (MyGlobal.checkNetworkConnection(AccountAboutMeActivity.this)) {
+                if (MyGlobal.checkNetworkConnection(AboutMeActivity.this)) {
 
-                    dialog = new ProgressDialog(AccountAboutMeActivity.this);
+                    dialog = new ProgressDialog(AboutMeActivity.this);
                     dialog.setMessage(getText(R.string.submitting));
                     dialog.setCancelable(true);
                     dialog.show();
@@ -66,7 +66,7 @@ public class AccountAboutMeActivity extends Activity {
 
                             if (response != null && response.getSuccess().equals("true")) {
                                 MyGlobal.getUser().setContact(((EditText) findViewById(R.id.edittext_contact)).getText().toString().trim());
-                                new AlertDialog.Builder(AccountAboutMeActivity.this)
+                                new AlertDialog.Builder(AboutMeActivity.this)
                                         .setMessage(R.string.submitted_success)
                                         .setTitle(R.string.dialog_hint)
                                         .setPositiveButton(R.string.dialog_confirm, null)
@@ -74,7 +74,7 @@ public class AccountAboutMeActivity extends Activity {
                                         .show();
 
                             } else {
-                                new AlertDialog.Builder(AccountAboutMeActivity.this)
+                                new AlertDialog.Builder(AboutMeActivity.this)
                                         .setMessage(R.string.interact_data_error)
                                         .setTitle(R.string.dialog_hint)
                                         .setPositiveButton(R.string.dialog_confirm, null)
@@ -87,7 +87,7 @@ public class AccountAboutMeActivity extends Activity {
                         public void onErrorResponse(VolleyError error) {
                             dialog.dismiss();
 
-                            new AlertDialog.Builder(AccountAboutMeActivity.this)
+                            new AlertDialog.Builder(AboutMeActivity.this)
                                     .setMessage(R.string.interact_data_error)
                                     .setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null)

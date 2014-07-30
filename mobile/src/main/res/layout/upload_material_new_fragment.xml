@@ -27,7 +27,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_name_upload_material"
+                    android:id="@+id/edittext_material_name"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -48,7 +48,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_remark_upload_material"
+                    android:id="@+id/edittext_material_remark"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -68,7 +68,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_transact_state_upload_material"
+                    android:id="@+id/edittext_material_transact_state"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -90,7 +90,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_transact_date_upload_material"
+                    android:id="@+id/edittext_material_transact_date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -112,7 +112,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_submit_date_upload_material"
+                    android:id="@+id/edittext_material_submit_date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -134,7 +134,7 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_feedback_upload_material"
+                    android:id="@+id/edittext_material_feedback"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
@@ -153,7 +153,7 @@
             android:orientation="vertical">
 
             <Gallery
-                android:id="@+id/gallery_attach_file_upload_material"
+                android:id="@+id/gallery_attach_file"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -168,7 +168,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_attach_file_upload_material"
+                android:id="@+id/button_attach_file"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -187,7 +187,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_submit_material_upload_material"
+                android:id="@+id/button_submit_material"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"

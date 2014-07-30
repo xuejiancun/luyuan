@@ -21,9 +21,9 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_warehouse_voucher_make, null);
+        View view = inflater.inflate(R.layout.warehouse_voucher_make_fragment, null);
         listView = (ListView) view.findViewById(R.id.listview_warehouse_choose_list);
-        ((Button) view.findViewById(R.id.button_next_warehouse_voucher_make)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.button_next)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WarehouseVoucherConfirmFragment warehouseVoucherConfirmFragment = new WarehouseVoucherConfirmFragment();
@@ -32,7 +32,7 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
                 // TODO
                 // pass the args to warehouseVoucherConfirmFragment
 
-                fragmentTransaction.replace(R.id.frame_content_warehouse_voucher_manager, warehouseVoucherConfirmFragment);
+                fragmentTransaction.replace(R.id.frame_content, warehouseVoucherConfirmFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -41,9 +41,9 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
         Bundle args = getArguments();
         if (args != null && args.getBundle("data") != null) {
             Bundle data = args.getBundle("data");
-            ((TextView) view.findViewById(R.id.textview_order_no_warehouse_voucher_make)).setText(data.getString("code"));
-            ((TextView) view.findViewById(R.id.textview_order_by_warehouse_voucher_make)).setText(data.getString("preparedBy"));
-            ((TextView) view.findViewById(R.id.textview_order_unit_warehouse_voucher_make)).setText(data.getString("unitName"));
+            ((TextView) view.findViewById(R.id.textview_order_no)).setText(data.getString("code"));
+            ((TextView) view.findViewById(R.id.textview_order_by)).setText(data.getString("preparedBy"));
+            ((TextView) view.findViewById(R.id.textview_order_unit)).setText(data.getString("unitName"));
         }
 
         String[] values = new String[]{"Warehouse 1", "Warehouse 2", "Warehouse 3",

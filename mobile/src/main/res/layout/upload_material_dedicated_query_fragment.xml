@@ -20,21 +20,21 @@
             <TableRow>
 
                 <TextView
-                    android:text="@string/material_name"
+                    android:text="@string/location_place"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_name"
+                    android:id="@+id/edittext_location_place"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
                     android:gravity="bottom"
-                    android:paddingLeft="20dp"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:editable="false"
                     android:singleLine="true" />
 
             </TableRow>
@@ -42,42 +42,20 @@
             <TableRow>
 
                 <TextView
-                    android:text="@string/material_remarks"
+                    android:text="@string/area"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_remark"
+                    android:id="@+id/edittext_area"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
                     android:gravity="bottom"
-                    android:paddingLeft="20dp"
-                    android:singleLine="true" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:text="@string/material_transact_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:gravity="bottom"
-                    android:paddingLeft="5dp" />
-
-                <EditText
-                    android:id="@+id/edittext_material_transact_state"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
-                    android:gravity="bottom"
-                    android:paddingLeft="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:editable="false"
                     android:singleLine="true" />
 
             </TableRow>
@@ -85,21 +63,42 @@
             <TableRow>
 
                 <TextView
-                    android:text="@string/material_transact_date"
+                    android:text="@string/brand"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_transact_date"
+                    android:id="@+id/edittext_spinner_brand"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
                     android:gravity="bottom"
-                    android:paddingLeft="20dp"
+                    android:editable="false"
+                    android:singleLine="true" />
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/udf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edittext_udf_brand"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:editable="false"
                     android:singleLine="true" />
 
             </TableRow>
@@ -114,14 +113,13 @@
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_submit_date"
+                    android:id="@+id/edittext_submit_date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
+                    android:editable="false"
                     android:gravity="bottom"
-                    android:paddingLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:singleLine="true" />
 
             </TableRow>
@@ -129,23 +127,24 @@
             <TableRow>
 
                 <TextView
-                    android:text="@string/material_feedback"
+                    android:text="@string/material_submit_by"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="bottom"
                     android:paddingLeft="5dp" />
 
                 <EditText
-                    android:id="@+id/edittext_material_feedback"
+                    android:id="@+id/edittext_submit_by"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:textSize="20dp"
-                    android:enabled="false"
+                    android:editable="false"
                     android:gravity="bottom"
-                    android:paddingLeft="20dp" />
+                    android:layout_marginLeft="10dp"
+                    android:singleLine="true" />
 
             </TableRow>
+
 
         </TableLayout>
 
@@ -173,7 +172,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_cancel_upload_material_query"
+                android:id="@+id/button_cancel"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -192,7 +191,7 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/button_back_upload_material_query"
+                android:id="@+id/button_back"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"

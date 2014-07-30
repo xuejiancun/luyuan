@@ -23,6 +23,7 @@
     <string name="function">功能</string>
     <string name="explore">探索</string>
     <string name="exploring">正在探索</string>
+    <string name="usesage">使用说明：功能列表 -> 选择某个功能 -> 长按 -> 添加到主页</string>
 
     <string name="delete">删除</string>
     <string name="deleted_success">删除成功</string>
@@ -79,6 +80,10 @@
     <string name="udf">自定义</string>
     <string name="location2">定位</string>
     <string name="locating2">正在定位...</string>
+    <string name="location_empty">请定位您的当前地址</string>
+    <string name="area_empty">请填写面积</string>
+    <string name="brand_empty">请选择品牌，如果是自定义品牌，需要填写品牌名称。</string>
+    <string name="choose_query_type">请选择通道类型</string>
 
     <string name="attach_file">附件</string>
     <string name="choose_file">选择文件</string>

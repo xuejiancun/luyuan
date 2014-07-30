@@ -84,7 +84,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
-            android:name=".function.AccountAboutMeActivity"
+            android:name=".function.AboutMeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
@@ -167,7 +167,7 @@
 
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name="com.luyuan.mobile.receiver.MyReceiver"
+            android:name=".util.MyReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />

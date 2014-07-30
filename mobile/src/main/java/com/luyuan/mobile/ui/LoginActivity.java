@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity);
 
         scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
 
@@ -52,8 +52,8 @@ public class LoginActivity extends Activity {
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
-        username = "xuejiancun";
-        password = "Xjc5861802";
+//        username = "xuejiancun";
+//        password = "Xjc5861802";
 
 //        username = "ceshi2";
 //        password = "Xx8888..";
@@ -61,8 +61,8 @@ public class LoginActivity extends Activity {
 //        username = "123";
 //        password = "Wlwdsa12";
 
-//        username = "adminhh";
-//        password = "654321";
+        username = "adminhh";
+        password = "654321";
 
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)

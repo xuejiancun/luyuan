@@ -21,6 +21,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.DedicatedData;
+import com.luyuan.mobile.model.DedicatedInfo;
 import com.luyuan.mobile.model.Material;
 import com.luyuan.mobile.model.MaterialData;
 import com.luyuan.mobile.ui.MainActivity;
@@ -37,7 +39,12 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     private ProgressDialog dialog;
     private MaterialData materialData;
     private int materialIndex;
+    private DedicatedData dedicatedData;
+    private int dedicatedIndex;
     private String tab = "home";
+    private int choose = 0;
+    private String url = "";
+    private String queryInfo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(R.string.function_upload_material);
 
-        setContentView(R.layout.activity_upload_material);
+        setContentView(R.layout.upload_material_activity);
 
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("tab") != null) {
@@ -59,7 +66,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
 
         Fragment fragment = new UploadMaterialChannelFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
+        fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
     }
 
@@ -80,115 +87,236 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     }
 
     public boolean onQueryTextSubmit(String query) {
-        String url = "";
-        try {
-            url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString() + "&query=" + URLEncoder.encode(query, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-        }
+        String[] options = new String[]{"自定义通道", "门店基础资料通道"};
+        this.queryInfo = query;
 
-        if (MyGlobal.checkNetworkConnection(this)) {
+        new AlertDialog.Builder(UploadMaterialActivity.this)
+                .setTitle(R.string.choose_query_type)
+                .setSingleChoiceItems(options, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        choose = which;
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (choose == 0) {
+                            url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString();
+                        } else if (choose == 1) {
+                            url = new StringBuffer(MyGlobal.API_QUERY_DEDICATED).toString();
+                        }
+                        try {
+                            url = url + "&query=" + URLEncoder.encode(queryInfo, "utf-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
 
-            dialog = new ProgressDialog(this);
-            dialog.setMessage(getText(R.string.loading));
-            dialog.setCancelable(true);
-            dialog.show();
+                        if (MyGlobal.checkNetworkConnection(UploadMaterialActivity.this)) {
 
-            GsonRequest gsonObjRequest = new GsonRequest<MaterialData>(Request.Method.GET, url,
-                    MaterialData.class, new Response.Listener<MaterialData>() {
+                            dialog = new ProgressDialog(UploadMaterialActivity.this);
+                            dialog.setMessage(getText(R.string.loading));
+                            dialog.setCancelable(true);
+                            dialog.show();
 
-                @Override
-                public void onResponse(MaterialData response) {
-                    dialog.dismiss();
+                            if (choose == 0) {
+                                GsonRequest gsonObjRequest = new GsonRequest<MaterialData>(Request.Method.GET, url,
+                                        MaterialData.class, new Response.Listener<MaterialData>() {
 
-                    if (response != null && response.getSuccess().equals("true")) {
+                                    @Override
+                                    public void onResponse(MaterialData response) {
+                                        dialog.dismiss();
 
-                        materialData = response;
-                        int count = materialData.getMaterials().size();
-                        if (count == 1) {
-                            materialIndex = 0;
-                            replaceContentForQuery();
+                                        if (response != null && response.getSuccess().equals("true")) {
+                                            materialData = response;
+                                            int count = materialData.getMaterials().size();
+                                            if (count == 1) {
+                                                materialIndex = 0;
+                                                replaceContentForQuery();
 
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
-                        } else if (count > 1) {
-                            CharSequence[] list = new CharSequence[materialData.getMaterials().size()];
-                            for (int i = 0; i < count; i++) {
-                                list[i] = materialData.getMaterials().get(i).getName();
+                                            } else if (count > 1) {
+                                                CharSequence[] list = new CharSequence[materialData.getMaterials().size()];
+                                                for (int i = 0; i < count; i++) {
+                                                    list[i] = materialData.getMaterials().get(i).getName();
+                                                }
+
+                                                new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                        .setTitle(R.string.dialog_choose_material)
+                                                        .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                materialIndex = which;
+                                                            }
+                                                        })
+                                                        .setNegativeButton(R.string.cancel, null)
+                                                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                replaceContentForQuery();
+                                                            }
+                                                        })
+                                                        .create()
+                                                        .show();
+                                            } else {
+                                                new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                        .setMessage(R.string.fetch_data_empty)
+                                                        .setTitle(R.string.dialog_hint)
+                                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                                        .create()
+                                                        .show();
+                                            }
+                                        } else {
+                                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                    .setMessage(R.string.interact_data_error)
+                                                    .setTitle(R.string.dialog_hint)
+                                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                                    .create()
+                                                    .show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        dialog.dismiss();
+
+                                        new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                .setMessage(R.string.interact_data_error)
+                                                .setTitle(R.string.dialog_hint)
+                                                .setPositiveButton(R.string.dialog_confirm, null)
+                                                .create()
+                                                .show();
+                                    }
+                                }
+                                );
+
+                                RequestManager.getRequestQueue().add(gsonObjRequest);
+                            } else if (choose == 1) {
+                                GsonRequest gsonObjRequest = new GsonRequest<DedicatedData>(Request.Method.GET, url,
+                                        DedicatedData.class, new Response.Listener<DedicatedData>() {
+
+                                    @Override
+                                    public void onResponse(DedicatedData response) {
+                                        dialog.dismiss();
+
+                                        if (response != null && response.getSuccess().equals("true")) {
+                                            dedicatedData = response;
+                                            int count = dedicatedData.getDedicatedInfos().size();
+                                            if (count == 1) {
+                                                dedicatedIndex = 0;
+                                                replaceContentForQuery();
+
+                                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
+                                            } else if (count > 1) {
+                                                CharSequence[] list = new CharSequence[dedicatedData.getDedicatedInfos().size()];
+                                                for (int i = 0; i < count; i++) {
+                                                    list[i] = dedicatedData.getDedicatedInfos().get(i).getLocation();
+                                                }
+
+                                                new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                        .setTitle(R.string.dialog_choose_material)
+                                                        .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dedicatedIndex = which;
+                                                            }
+                                                        })
+                                                        .setNegativeButton(R.string.cancel, null)
+                                                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                replaceContentForQuery();
+                                                            }
+                                                        })
+                                                        .create()
+                                                        .show();
+                                            } else {
+                                                new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                        .setMessage(R.string.fetch_data_empty)
+                                                        .setTitle(R.string.dialog_hint)
+                                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                                        .create()
+                                                        .show();
+                                            }
+                                        } else {
+                                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                    .setMessage(R.string.interact_data_error)
+                                                    .setTitle(R.string.dialog_hint)
+                                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                                    .create()
+                                                    .show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        dialog.dismiss();
+
+                                        new AlertDialog.Builder(UploadMaterialActivity.this)
+                                                .setMessage(R.string.interact_data_error)
+                                                .setTitle(R.string.dialog_hint)
+                                                .setPositiveButton(R.string.dialog_confirm, null)
+                                                .create()
+                                                .show();
+                                    }
+                                }
+                                );
+
+                                RequestManager.getRequestQueue().add(gsonObjRequest);
                             }
 
-                            new AlertDialog.Builder(UploadMaterialActivity.this)
-                                    .setTitle(R.string.dialog_choose_material)
-                                    .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            materialIndex = which;
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.cancel, null)
-                                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            replaceContentForQuery();
-                                        }
-                                    })
-                                    .create()
-                                    .show();
-                        } else {
-                            new AlertDialog.Builder(UploadMaterialActivity.this)
-                                    .setMessage(R.string.fetch_data_empty)
-                                    .setTitle(R.string.dialog_hint)
-                                    .setPositiveButton(R.string.dialog_confirm, null)
-                                    .create()
-                                    .show();
                         }
-                    } else {
-                        new AlertDialog.Builder(UploadMaterialActivity.this)
-                                .setMessage(R.string.interact_data_error)
-                                .setTitle(R.string.dialog_hint)
-                                .setPositiveButton(R.string.dialog_confirm, null)
-                                .create()
-                                .show();
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    dialog.dismiss();
-
-                    new AlertDialog.Builder(UploadMaterialActivity.this)
-                            .setMessage(R.string.interact_data_error)
-                            .setTitle(R.string.dialog_hint)
-                            .setPositiveButton(R.string.dialog_confirm, null)
-                            .create()
-                            .show();
-                }
-            }
-            );
-
-            RequestManager.getRequestQueue().add(gsonObjRequest);
-        }
+                })
+                .setCancelable(false)
+                .create()
+                .show();
 
         return true;
     }
 
     private void replaceContentForQuery() {
-        Fragment fragment = new UploadMaterialQueryFragment();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        if (choose == 0) {
+            Fragment fragment = new UploadMaterialUDFQueryFragment();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        Material material = materialData.getMaterials().get(materialIndex);
+            Material material = materialData.getMaterials().get(materialIndex);
 
-        Bundle args = new Bundle();
-        args.putString("id", material.getId());
-        args.putString("name", material.getName());
-        args.putString("remark", material.getRemark());
-        args.putString("transactsate", material.getTransactState());
-        args.putString("transactdate", material.getTransactDate());
-        args.putString("submitdate", material.getSubmitDate());
-        args.putString("feedback", material.getFeedback());
-        args.putString("attachment", material.getAttachment());
-        fragment.setArguments(args);
+            Bundle args = new Bundle();
+            args.putString("id", material.getId());
+            args.putString("name", material.getName());
+            args.putString("remark", material.getRemark());
+            args.putString("transactsate", material.getTransactState());
+            args.putString("transactdate", material.getTransactDate());
+            args.putString("submitdate", material.getSubmitDate());
+            args.putString("feedback", material.getFeedback());
+            args.putString("attachment", material.getAttachment());
+            fragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.frame_content_upload_material, fragment);
-        fragmentTransaction.commit();
+            fragmentTransaction.replace(R.id.frame_content, fragment);
+            fragmentTransaction.commit();
+        } else if (choose == 1) {
+            Fragment fragment = new UploadMaterialDedicatedQueryFragment();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+            DedicatedInfo dedicatedInfo = dedicatedData.getDedicatedInfos().get(dedicatedIndex);
+
+            Bundle args = new Bundle();
+            args.putString("id", dedicatedInfo.getId());
+            args.putString("location", dedicatedInfo.getLocation());
+            args.putString("area", dedicatedInfo.getArea());
+            args.putString("brand", dedicatedInfo.getBrand());
+            args.putString("udf", dedicatedInfo.getUdf());
+            args.putString("submitDate", dedicatedInfo.getSubmitDate());
+            args.putString("submitBy", dedicatedInfo.getSubmitBy());
+            args.putString("attachment", dedicatedInfo.getAttachment());
+            args.putString("status", dedicatedInfo.getStatus());
+            fragment.setArguments(args);
+
+            fragmentTransaction.replace(R.id.frame_content, fragment);
+            fragmentTransaction.commit();
+        }
+
     }
 
     @Override

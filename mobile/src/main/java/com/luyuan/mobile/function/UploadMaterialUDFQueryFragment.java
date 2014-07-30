@@ -21,7 +21,7 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
-public class UploadMaterialQueryFragment extends Fragment {
+public class UploadMaterialUDFQueryFragment extends Fragment {
 
     private String CANCELED = "已取消";
 
@@ -40,7 +40,7 @@ public class UploadMaterialQueryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upload_material_query, null);
+        View view = inflater.inflate(R.layout.upload_material_udf_query_fragment, null);
 
         Bundle args = getArguments();
         id = args.getString("id");
@@ -62,7 +62,7 @@ public class UploadMaterialQueryFragment extends Fragment {
         ((TextView) view.findViewById(R.id.textview_material_attachment)).setText(attachment);
 
         // cancel material
-        buttonCancel = (Button) view.findViewById(R.id.button_cancel_upload_material_query);
+        buttonCancel = (Button) view.findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +73,7 @@ public class UploadMaterialQueryFragment extends Fragment {
                     dialog.setCancelable(true);
                     dialog.show();
 
-                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, MyGlobal.API_CANCEL_MATERIAL + "&id=" + id,
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, MyGlobal.API_CANCEL_UDF_MATERIAL + "&id=" + id,
                             SuccessData.class, new Response.Listener<SuccessData>() {
 
                         @Override
@@ -122,11 +122,11 @@ public class UploadMaterialQueryFragment extends Fragment {
         });
 
         // back to new material fragment
-        ((Button) view.findViewById(R.id.button_back_upload_material_query)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_content_upload_material, new UploadMaterialChannelFragment());
+                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialChannelFragment());
                 fragmentTransaction.commit();
             }
         });
