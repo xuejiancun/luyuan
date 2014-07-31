@@ -84,6 +84,7 @@
     <string name="area_empty">请填写面积</string>
     <string name="brand_empty">请选择品牌，如果是自定义品牌，需要填写品牌名称。</string>
     <string name="choose_query_type">请选择通道类型</string>
+    <string name="check_material_exists">系统已经存在一条记录与您当前的定位地址距离在100米以内，是否继续提交？</string>
 
     <string name="attach_file">附件</string>
     <string name="choose_file">选择文件</string>

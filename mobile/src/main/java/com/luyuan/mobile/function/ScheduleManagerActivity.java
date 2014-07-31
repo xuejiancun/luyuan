@@ -114,11 +114,15 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             public void onReceiveLocation(BDLocation bdLocation) {
                 dialog.dismiss();
                 mLocationClient.stop();
+                String latitude = String.valueOf(bdLocation.getLatitude());
+                String longitude = String.valueOf(bdLocation.getLongitude());
                 String mLocationResult = bdLocation.getAddrStr();
 
                 StringBuilder url = new StringBuilder();
                 url.append(MyGlobal.API_ADD_LOCATION);
                 url.append("&userId=" + MyGlobal.getUser().getId());
+                url.append("&latitude=" + latitude);
+                url.append("&longitude=" + longitude);
                 try {
                     url.append("&location=" + URLEncoder.encode(mLocationResult, "utf-8"));
                 } catch (UnsupportedEncodingException e) {

@@ -28,20 +28,28 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
+import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.HttpMultipartPost;
 import com.luyuan.mobile.util.MyGlobal;
+import com.luyuan.mobile.util.RequestManager;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +63,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private final int FROM_AUDIO = 4;
     private LocationClient mLocationClient;
     private HttpMultipartPost post;
+    private List<BasicNameValuePair> pairs;
     private Gallery gallery;
     private Uri imageUri;
     private String channel = "";
@@ -76,8 +85,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
             public void onReceiveLocation(BDLocation bdLocation) {
                 dialog.dismiss();
                 mLocationClient.stop();
-                String mLocationResult = bdLocation.getAddrStr();
-                editTextLocation.setText(mLocationResult);
+                latitude = bdLocation.getLatitude();
+                longitude = bdLocation.getLongitude();
+                editTextLocation.setText(bdLocation.getAddrStr());
             }
         });
 
@@ -185,7 +195,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                     return;
                 }
 
-                List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
+                pairs = new ArrayList<BasicNameValuePair>();
                 pairs.add(new BasicNameValuePair("location", location));
                 pairs.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
                 pairs.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
@@ -193,8 +203,67 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 pairs.add(new BasicNameValuePair("brand", brand));
                 pairs.add(new BasicNameValuePair("udf", udf));
 
-                post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_DEDICATED, pairs, filePaths, getText(R.string.submitting).toString());
-                post.execute();
+                if (MyGlobal.checkNetworkConnection(getActivity())) {
+
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage(getText(R.string.loading));
+                    dialog.setCancelable(true);
+                    dialog.show();
+
+                    String url = "";
+                    try {
+                        url = MyGlobal.API_CHECK_DEDICATED
+                                + "&brand=" + URLEncoder.encode(brand, "utf-8")
+                                + "&udf=" + URLEncoder.encode(udf, "utf-8")
+                                + "&latitude=" + String.valueOf(latitude)
+                                + "&longitude=" + String.valueOf(longitude);
+
+                    } catch (UnsupportedEncodingException e) {
+                    }
+
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url,
+                            SuccessData.class, new Response.Listener<SuccessData>() {
+
+                        @Override
+                        public void onResponse(SuccessData response) {
+                            dialog.dismiss();
+
+                            if (response != null && response.getSuccess().equals("true")) {
+                                new AlertDialog.Builder(getActivity())
+                                        .setMessage(R.string.check_material_exists)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setNegativeButton(R.string.cancel, null)
+                                        .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_DEDICATED, pairs, filePaths, getText(R.string.submitting).toString());
+                                                post.execute();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
+                            } else {
+                                post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_DEDICATED, pairs, filePaths, getText(R.string.submitting).toString());
+                                post.execute();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
+
+                            new AlertDialog.Builder(getActivity())
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                    );
+
+                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }
 
             }
         });
