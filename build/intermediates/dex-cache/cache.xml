@@ -14,6 +14,12 @@
         revision="19.1.0"
         sha1="ed8b5ee0167cb27dea55851259eb34b609f31df0"/>
     <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/locSDK_4.2-c36a56ad4a95320b460c3d7ff572f669f06186c6.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/locSDK_4.2.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="41b93335a2753c93f8b8f56741615cb81ea72437"/>
+    <item
         dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/jpush-sdk-release1.6.1-c2d7497c5da400ed9fceda4e755e8110098418f4.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/jpush-sdk-release1.6.1.jar"
         jumboMode="false"

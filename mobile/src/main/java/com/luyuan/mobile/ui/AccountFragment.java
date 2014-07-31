@@ -80,8 +80,6 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 intent = new Intent();
                 intent.setClass(getActivity(), LoginActivity.class);
 
-                MyGlobal.setUser(new User());
-
                 startActivity(intent);
             }
         });

@@ -12,9 +12,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +35,10 @@ import android.widget.TimePicker;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.component.CalendarPickerView;
 import com.luyuan.mobile.model.DayData;
@@ -50,10 +51,8 @@ import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
-import com.luyuan.mobile.util.MyLocation;
 import com.luyuan.mobile.util.RequestManager;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -94,6 +93,8 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
     private SubordinateData subordinateData;
     private String tab = "home";
 
+    private LocationClient mLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,67 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         setContentView(R.layout.schedule_manager_activity);
 
+        mLocationClient = new LocationClient(ScheduleManagerActivity.this);
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                dialog.dismiss();
+                mLocationClient.stop();
+                String mLocationResult = bdLocation.getAddrStr();
+
+                StringBuilder url = new StringBuilder();
+                url.append(MyGlobal.API_ADD_LOCATION);
+                url.append("&userId=" + MyGlobal.getUser().getId());
+                try {
+                    url.append("&location=" + URLEncoder.encode(mLocationResult, "utf-8"));
+                } catch (UnsupportedEncodingException e) {
+                }
+
+                if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
+
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
+                            SuccessData.class, new Response.Listener<SuccessData>() {
+
+                        @Override
+                        public void onResponse(SuccessData response) {
+                            dialog.dismiss();
+
+                            if (response != null && response.getSuccess().equals("true")) {
+                                new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                        .setMessage(R.string.located_success)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+
+                            } else {
+                                new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                        .setMessage(R.string.interact_data_error)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setPositiveButton(R.string.dialog_confirm, null)
+                                        .create()
+                                        .show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
+
+                            new AlertDialog.Builder(ScheduleManagerActivity.this)
+                                    .setMessage(R.string.interact_data_error)
+                                    .setTitle(R.string.dialog_hint)
+                                    .setPositiveButton(R.string.dialog_confirm, null)
+                                    .create()
+                                    .show();
+                        }
+                    }
+                    );
+
+                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("tab") != null) {
@@ -145,85 +207,13 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             @Override
             public void onClick(View view) {
                 dialog = new ProgressDialog(ScheduleManagerActivity.this);
-                dialog.setMessage(getText(R.string.locating));
+                dialog.setMessage(getText(R.string.locating2));
                 dialog.setCancelable(true);
                 dialog.show();
 
-                MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
-                    @Override
-                    public void gotLocation(Location location) {
-                        //Got the location!
-                        dialog.dismiss();
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-
-                        Geocoder geoCoder = new Geocoder(ScheduleManagerActivity.this);
-                        try {
-                            List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                            String loc = list.get(0).getAddressLine(0).toString();
-//                            Toast.makeText(ScheduleManagerActivity.this, loc, Toast.LENGTH_LONG).show();
-
-                            StringBuilder url = new StringBuilder();
-                            url.append(MyGlobal.API_ADD_LOCATION);
-                            url.append("&userId=" + MyGlobal.getUser().getId());
-                            try {
-                                url.append("&location=" + URLEncoder.encode(loc, "utf-8"));
-                            } catch (UnsupportedEncodingException e) {
-                            }
-
-                            if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
-
-                                GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(),
-                                        SuccessData.class, new Response.Listener<SuccessData>() {
-
-                                    @Override
-                                    public void onResponse(SuccessData response) {
-                                        dialog.dismiss();
-
-                                        if (response != null && response.getSuccess().equals("true")) {
-                                            new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                                    .setMessage(R.string.located_success)
-                                                    .setTitle(R.string.dialog_hint)
-                                                    .setPositiveButton(R.string.dialog_confirm, null)
-                                                    .create()
-                                                    .show();
-
-                                        } else {
-                                            new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                                    .setMessage(R.string.interact_data_error)
-                                                    .setTitle(R.string.dialog_hint)
-                                                    .setPositiveButton(R.string.dialog_confirm, null)
-                                                    .create()
-                                                    .show();
-                                        }
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        dialog.dismiss();
-
-                                        new AlertDialog.Builder(ScheduleManagerActivity.this)
-                                                .setMessage(R.string.interact_data_error)
-                                                .setTitle(R.string.dialog_hint)
-                                                .setPositiveButton(R.string.dialog_confirm, null)
-                                                .create()
-                                                .show();
-                                    }
-                                }
-                                );
-
-                                RequestManager.getRequestQueue().add(gsonObjRequest);
-                            }
-
-                        } catch (IOException e) {
-                        }
-
-
-                    }
-                };
-                MyLocation myLocation = new MyLocation();
-                myLocation.getLocation(ScheduleManagerActivity.this, locationResult);
-
+                // 开启定位
+                InitLocation();
+                mLocationClient.start();
             }
         });
 
@@ -444,6 +434,22 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStop() {
+        mLocationClient.stop();
+        super.onDestroy();
+    }
+
+    private void InitLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
+        option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
+        option.setScanSpan(5000);//设置发起定位请求的间隔时间为5000ms
+        option.setIsNeedAddress(true);//返回的定位结果包含地址信息
+        option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
+        mLocationClient.setLocOption(option);
     }
 
     public static class ScheduleDialogFragment extends DialogFragment {

@@ -59,7 +59,6 @@ public class MyGlobal {
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITH_TIME = new SimpleDateFormat("yyyyMMdd_HHmmss");
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
-    public static boolean REMEMBER_IF_NEED_UPDATE = true;
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;
     private static User user = new User();

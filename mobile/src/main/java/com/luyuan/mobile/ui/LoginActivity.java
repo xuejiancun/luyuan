@@ -42,12 +42,13 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_activity);
 
         scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
-
-        MyGlobal.setUser(new User());
-        MyGlobal.setFunctionData(new FunctionData());
     }
 
     public void login(View view) {
+        // clear user data
+        MyGlobal.setUser(new User());
+        MyGlobal.setFunctionData(new FunctionData());
+
         sob = ((EditText) findViewById(R.id.edittext_sob)).getText().toString().trim();
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
@@ -61,8 +62,8 @@ public class LoginActivity extends Activity {
 //        username = "123";
 //        password = "Wlwdsa12";
 
-        username = "adminhh";
-        password = "654321";
+//        username = "adminhh";
+//        password = "654321";
 
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)
@@ -125,7 +126,6 @@ public class LoginActivity extends Activity {
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("tab", "home");
-                            intent.putExtra("location", "true");
                             startActivity(intent);
 
                         } else if (count > 1) {

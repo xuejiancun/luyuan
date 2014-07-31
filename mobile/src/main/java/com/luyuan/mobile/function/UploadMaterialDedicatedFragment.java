@@ -11,9 +11,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,30 +28,32 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.ImagePreviewActivity;
 import com.luyuan.mobile.util.FileUtilities;
 import com.luyuan.mobile.util.HttpMultipartPost;
 import com.luyuan.mobile.util.MyGlobal;
-import com.luyuan.mobile.util.MyLocation;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class UploadMaterialDedicatedFragment extends Fragment {
-
     private final ArrayList<String> filePaths = new ArrayList<String>();
     private final ArrayList<Bitmap> fileThumbs = new ArrayList<Bitmap>();
     private final int FROM_CAMERA = 1;
     private final int FROM_PHOTO = 2;
     private final int FROM_VIDEO = 3;
     private final int FROM_AUDIO = 4;
+    private LocationClient mLocationClient;
     private HttpMultipartPost post;
     private Gallery gallery;
     private Uri imageUri;
@@ -64,11 +63,23 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private EditText editTextUdf;
     private Spinner spinnerBrand;
     private ProgressDialog dialog;
+    private double latitude;
+    private double longitude;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.upload_material_dedicated_fragment, null);
 
+        mLocationClient = new LocationClient(getActivity().getApplicationContext());
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                dialog.dismiss();
+                mLocationClient.stop();
+                String mLocationResult = bdLocation.getAddrStr();
+                editTextLocation.setText(mLocationResult);
+            }
+        });
 
         Bundle args = getArguments();
         if (args != null && args.getString("channel") != null) {
@@ -176,6 +187,8 @@ public class UploadMaterialDedicatedFragment extends Fragment {
 
                 List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>();
                 pairs.add(new BasicNameValuePair("location", location));
+                pairs.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
+                pairs.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
                 pairs.add(new BasicNameValuePair("area", area));
                 pairs.add(new BasicNameValuePair("brand", brand));
                 pairs.add(new BasicNameValuePair("udf", udf));
@@ -195,24 +208,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 dialog.setCancelable(true);
                 dialog.show();
 
-                MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
-                    @Override
-                    public void gotLocation(Location location) {
-                        //Got the location!
-                        dialog.dismiss();
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-
-                        Geocoder geoCoder = new Geocoder(getActivity());
-                        try {
-                            List<Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                            editTextLocation.setText(list.get(0).getAddressLine(0).toString());
-                        } catch (IOException e) {
-                        }
-                    }
-                };
-                MyLocation myLocation = new MyLocation();
-                myLocation.getLocation(getActivity(), locationResult);
+                // 开启定位
+                InitLocation();
+                mLocationClient.start();
             }
         });
 
@@ -324,6 +322,22 @@ public class UploadMaterialDedicatedFragment extends Fragment {
         gallery.setAdapter(new ImageAdapter(getActivity()));
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onStop() {
+        mLocationClient.stop();
+        super.onDestroy();
+    }
+
+    private void InitLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
+        option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
+        option.setScanSpan(5000);//设置发起定位请求的间隔时间为5000ms
+        option.setIsNeedAddress(true);//返回的定位结果包含地址信息
+        option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
+        mLocationClient.setLocOption(option);
     }
 
     public class ImageAdapter extends BaseAdapter {
