@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -47,6 +49,7 @@ import com.luyuan.mobile.util.RequestManager;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -65,7 +68,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private HttpMultipartPost post;
     private List<BasicNameValuePair> pairs;
     private Gallery gallery;
-    private Uri imageUri;
+    private Uri mCapturedImageURI;
     private String channel = "";
     private EditText editTextLocation;
     private EditText editTextArea;
@@ -119,15 +122,27 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (which == 0) {
                                     String name = "IMG_" + MyGlobal.SIMPLE_DATE_FORMAT_WITH_TIME.format(new Date()) + ".jpg";
-                                    File dir = new File(MyGlobal.CAMERA_PATH);
-                                    if (!dir.exists()) {
-                                        dir.mkdirs();
-                                    }
-                                    File file = new File(dir, name);
-                                    imageUri = Uri.fromFile(file);
                                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                    if (hasImageCaptureBug()) {
+                                        File file = new File(MyGlobal.CAMERA_PATH + name);
+                                        try {
+                                            if (!file.exists()) {
+                                                file.getParentFile().mkdirs();
+                                                file.createNewFile();
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        mCapturedImageURI = Uri.fromFile(file);
+                                    } else {
+                                        ContentValues values = new ContentValues();
+                                        values.put(MediaStore.Images.Media.TITLE, name);
+                                        mCapturedImageURI = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                    }
+
+                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
                                     startActivityForResult(intent, FROM_CAMERA);
+
                                 } else if (which == 1) {
                                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                     intent.setType("image/*");
@@ -342,8 +357,17 @@ public class UploadMaterialDedicatedFragment extends Fragment {
 
         switch (requestCode) {
             case FROM_CAMERA:
-                filePath = imageUri.getPath();
-                bitmap = BitmapFactory.decodeFile(filePath, options);
+                if (hasImageCaptureBug()) {
+                    filePath = mCapturedImageURI.getPath();
+                    bitmap = BitmapFactory.decodeFile(filePath, options);
+                } else {
+                    String[] projection = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().managedQuery(mCapturedImageURI, projection, null, null, null);
+                    int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    filePath = cursor.getString(column_index_data);
+                    bitmap = BitmapFactory.decodeFile(filePath, options);
+                }
                 break;
 
             case FROM_PHOTO:
@@ -407,6 +431,20 @@ public class UploadMaterialDedicatedFragment extends Fragment {
         option.setIsNeedAddress(true);//返回的定位结果包含地址信息
         option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
         mLocationClient.setLocOption(option);
+    }
+
+    public boolean hasImageCaptureBug() {
+        // list of known devices that have the bug
+        ArrayList<String> devices = new ArrayList<String>();
+        devices.add("android-devphone1/dream_devphone/dream");
+        devices.add("generic/sdk/generic");
+        devices.add("vodafone/vfpioneer/sapphire");
+        devices.add("tmobile/kila/dream");
+        devices.add("verizon/voles/sholes");
+        devices.add("google_ion/google_ion/sapphire");
+
+        return devices.contains(android.os.Build.BRAND + "/" + android.os.Build.PRODUCT + "/"
+                + android.os.Build.DEVICE);
     }
 
     public class ImageAdapter extends BaseAdapter {
