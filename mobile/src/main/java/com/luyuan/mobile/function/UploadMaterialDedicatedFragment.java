@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -357,6 +358,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
 
         switch (requestCode) {
             case FROM_CAMERA:
+                if (mCapturedImageURI == null) {
+                    return;
+                }
                 if (hasImageCaptureBug()) {
                     filePath = mCapturedImageURI.getPath();
                     bitmap = BitmapFactory.decodeFile(filePath, options);
@@ -371,10 +375,11 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 break;
 
             case FROM_PHOTO:
-                uri = data.getData();
-                if (uri == null) {
+                if (data == null || uri == null) {
                     return;
                 }
+                uri = data.getData();
+
                 try {
                     filePath = FileUtilities.getPath(getActivity(), uri);
                 } catch (URISyntaxException e) {

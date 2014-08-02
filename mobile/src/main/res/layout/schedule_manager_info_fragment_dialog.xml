@@ -1,112 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:text="@string/schedule_info"
-            android:textSize="20dp"
-            android:background="#FFEDEDED" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:layout_marginTop="10dp"
-            android:id="@+id/listview_schedule_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:smoothScrollbar="true"
-            android:scrollbars="none" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:text="@string/location_info"
-            android:textSize="20dp"
-            android:background="#FFEDEDED" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:orientation="vertical">
-
-        <ListView
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:id="@+id/listview_location_list"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/schedule_info"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:smoothScrollbar="true"
-            android:scrollbars="none" />
+            android:layout_height="220dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/listview_schedule_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:smoothScrollbar="true"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/location_info"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/listview_location_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:smoothScrollbar="true"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_refresh"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/refresh"
+                android:textSize="20dp"
+                android:background="#46C50C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_back"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/back"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_refresh"
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="@string/refresh"
-            android:textSize="20dp"
-            android:background="#46C50C" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_back"
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="@string/back"
-            android:textSize="20dp"
-            android:background="#FFEDEDED" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

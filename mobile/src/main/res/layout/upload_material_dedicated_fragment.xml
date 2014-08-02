@@ -55,8 +55,9 @@
                     android:layout_height="40dp"
                     android:gravity="bottom"
                     android:layout_marginLeft="10dp"
+                    android:numeric="integer"
                     android:singleLine="true" />
-                
+
             </TableRow>
 
             <TableRow>
@@ -73,7 +74,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="40dp" />
+                    android:layout_height="40dp"/>
 
             </TableRow>
 

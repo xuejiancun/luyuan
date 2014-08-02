@@ -18,7 +18,6 @@ import com.luyuan.mobile.function.AboutMeActivity;
 import com.luyuan.mobile.function.NotificationActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.FunctionInfo;
-import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.MyGlobal;
 
 import java.util.ArrayList;
@@ -38,30 +37,30 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
 
         List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
 
+        FunctionInfo functionInfo5 = new FunctionInfo();
+        functionInfo5.setCode("check_version");
+        functionInfo5.setName(getString(R.string.function_check_version));
+        functionInfos.add(functionInfo5);
+
         FunctionInfo functionInfo1 = new FunctionInfo();
         functionInfo1.setCode("about_me");
         functionInfo1.setName(getString(R.string.function_about_me));
         functionInfos.add(functionInfo1);
-
-        FunctionInfo functionInfo2 = new FunctionInfo();
-        functionInfo2.setCode("login_history");
-        functionInfo2.setName(getString(R.string.function_login_histroy));
-        functionInfos.add(functionInfo2);
 
         FunctionInfo functionInfo3 = new FunctionInfo();
         functionInfo3.setCode("change_password");
         functionInfo3.setName(getString(R.string.function_change_password));
         functionInfos.add(functionInfo3);
 
+        FunctionInfo functionInfo2 = new FunctionInfo();
+        functionInfo2.setCode("login_history");
+        functionInfo2.setName(getString(R.string.function_login_histroy));
+        functionInfos.add(functionInfo2);
+
         FunctionInfo functionInfo4 = new FunctionInfo();
         functionInfo4.setCode("notification_history");
         functionInfo4.setName(getString(R.string.function_notification_history));
         functionInfos.add(functionInfo4);
-
-        FunctionInfo functionInfo5 = new FunctionInfo();
-        functionInfo5.setCode("check_version");
-        functionInfo5.setName(getString(R.string.function_check_version));
-        functionInfos.add(functionInfo5);
 
         functionData.setFunctionInfos(functionInfos);
 
@@ -93,15 +92,14 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         switch (i) {
             case 0:
                 intent = new Intent();
-                intent.setClass(getActivity(), AboutMeActivity.class);
-                intent.putExtra("tab", "account");
+                intent.setClass(getActivity(), NotificationActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
 
                 startActivity(intent);
                 break;
             case 1:
                 intent = new Intent();
-                intent.setClass(getActivity(), WebViewActivity.class);
-                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.setClass(getActivity(), AboutMeActivity.class);
                 intent.putExtra("tab", "account");
 
                 startActivity(intent);
@@ -124,8 +122,9 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 break;
             case 4:
                 intent = new Intent();
-                intent.setClass(getActivity(), NotificationActivity.class);
+                intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.putExtra("tab", "account");
 
                 startActivity(intent);
                 break;

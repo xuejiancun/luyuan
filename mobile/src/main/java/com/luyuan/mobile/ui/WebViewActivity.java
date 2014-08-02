@@ -188,6 +188,8 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_query_authorization).toString();
         } else if (function.equals("market_research")) {
             result = getText(R.string.function_market_research).toString();
+        } else if (function.equals("market_strategy")) {
+            result = getText(R.string.function_market_strategy).toString();
         } else if (function.equals("login_history")) {
             result = getText(R.string.function_login_histroy).toString();
         } else if (function.equals("change_password")) {

@@ -1,128 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:stretchColumns="2"
-        android:background="#FFEDEDED">
-
-        <TableRow>
-
-            <TextView
-                android:text="@string/order_no"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="bottom"
-                android:paddingLeft="5dp" />
-
-            <TextView
-                android:text="@string/order_unit"
-                android:id="@+id/textview_order_no"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="bottom"
-                android:paddingLeft="20dp"
-                android:singleLine="true" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:text="@string/order_by"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="bottom"
-                android:paddingLeft="5dp" />
-
-            <TextView
-                android:text="@string/order_unit"
-                android:id="@+id/textview_order_by"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="bottom"
-                android:paddingLeft="20dp"
-                android:singleLine="true" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:text="@string/order_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:gravity="bottom"
-                android:paddingLeft="5dp" />
-
-            <TextView
-                android:text="@string/order_unit"
-                android:id="@+id/textview_order_unit"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textStyle="bold"
-                android:gravity="bottom"
-                android:paddingLeft="20dp"
-                android:singleLine="true" />
-        </TableRow>
-
-    </TableLayout>
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:text="@string/choose_warehouse"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="bottom"
-            android:paddingLeft="5dp" />
-
-        <ListView
-            android:layout_marginTop="10dp"
-            android:id="@+id/listview_warehouse_choose_list"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:smoothScrollbar="true"
-            android:scrollbars="none" />
+            android:layout_height="180dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/order_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:text="@string/order_unit"
+                    android:id="@+id/textview_order_no"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/order_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:text="@string/order_unit"
+                    android:id="@+id/textview_order_by"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/order_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:text="@string/order_unit"
+                    android:id="@+id/textview_order_unit"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textStyle="bold"
+                    android:gravity="bottom"
+                    android:paddingLeft="20dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="@string/choose_warehouse"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="bottom"
+                android:paddingLeft="5dp" />
+
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/listview_warehouse_choose_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:smoothScrollbar="true"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_next"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/next"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
+                android:background="#46C50C" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_next"
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="@string/next"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:background="#46C50C" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
