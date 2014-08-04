@@ -196,6 +196,8 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_change_password).toString();
         } else if (function.equals("notification_history")) {
             result = getText(R.string.function_notification_history).toString();
+        } else if (function.equals("query_warrant")) {
+            result = getText(R.string.function_query_warrant).toString();
         }
 
         return result;
@@ -229,6 +231,8 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_CHANGE_PASSWORD;
         } else if (function.equals("notification_history")) {
             result = MyGlobal.WEBVIEW_URL_NOTIFICATION_HISTORY;
+        } else if (function.equals("query_warrant")) {
+            result = MyGlobal.WEBVIEW_URL_QUERY_WARRANT;
         }
 
         return result;

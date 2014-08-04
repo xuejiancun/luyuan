@@ -104,12 +104,13 @@
     <string name="compress_error">压缩附件的时候遇到错误</string>
     <string name="cancel_success">资料取消成功</string>
 
-    <string name="function_report_billboard">销售战报龙虎榜</string>
-    <string name="function_report_personal">销售战报个人版</string>
-    <string name="function_report_tactical">销售战报战术版</string>
-    <string name="function_report_strategy">销售战报战略版</string>
+    <string name="function_report_billboard">销售战报-龙虎榜</string>
+    <string name="function_report_personal">销售战报-个人版</string>
+    <string name="function_report_tactical">销售战报-战术版</string>
+    <string name="function_report_strategy">销售战报-战略版</string>
     <string name="function_query_payroll">薪资查询</string>
     <string name="function_query_training">培训管理</string>
+    <string name="function_query_warrant">担保明细</string>
     <string name="function_upload_material">资料上传</string>
     <string name="function_schedule_manage">日程管理</string>
     <string name="function_market_research">市场调查</string>

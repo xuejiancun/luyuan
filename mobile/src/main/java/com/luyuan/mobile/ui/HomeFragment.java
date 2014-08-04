@@ -78,6 +78,25 @@ public class HomeFragment extends Fragment {
         return true;
     }
 
+    private void updateShortCuts() {
+        removeShortcuts();
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        for (Shortcut shortcut : this.shortcuts) {
+            instance.createShortcut(shortcut.getCode(), shortcut.getName());
+        }
+    }
+
+    private void loadShortCuts() {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        List<Shortcut> shortcuts = instance.loadShortcuts();
+        this.shortcuts = shortcuts;
+    }
+
+    private void removeShortcuts() {
+        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
+        instance.removeShortcuts();
+    }
+
     public class ShortCutAdapter extends BaseAdapter {
 
         private Context mContext;
@@ -103,7 +122,7 @@ public class HomeFragment extends Fragment {
             View view = layoutInflater.inflate(R.layout.item_shortcut, null);
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageview_shortcut);
-            imageView.setImageResource(R.drawable.function_item_sales);
+            imageView.setImageResource(MyGlobal.getFunctionIcon(shortcuts.get(position).getCode()));
 
             TextView textView = (TextView) view.findViewById(R.id.textview_shortcut);
             textView.setTextSize(12);
@@ -113,25 +132,6 @@ public class HomeFragment extends Fragment {
 
             return view;
         }
-    }
-
-    private void updateShortCuts() {
-        removeShortcuts();
-        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
-        for (Shortcut shortcut : this.shortcuts) {
-            instance.createShortcut(shortcut.getCode(), shortcut.getName());
-        }
-    }
-
-    private void loadShortCuts() {
-        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
-        List<Shortcut> shortcuts = instance.loadShortcuts();
-        this.shortcuts = shortcuts;
-    }
-
-    private void removeShortcuts() {
-        DatabaseHelper instance = DatabaseHelper.getInstance(getActivity());
-        instance.removeShortcuts();
     }
 
 }

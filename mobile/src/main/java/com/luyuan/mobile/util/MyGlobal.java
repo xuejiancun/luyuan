@@ -53,6 +53,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_MANUAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/TrainManual.html";
     public static final String WEBVIEW_URL_MARKET_STRATEGY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Strategy/Index.html";
     public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/Index.html";
+    public static final String WEBVIEW_URL_QUERY_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WarrantManage/warrantDetail.html";
     public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
@@ -111,6 +112,8 @@ public class MyGlobal {
             clz = UploadMaterialActivity.class;
         } else if (functionCode.equals("schedule_manage")) {
             clz = ScheduleManagerActivity.class;
+        } else if (functionCode.equals("query_warrant")) {
+            clz = WebViewActivity.class;
         }
 
         return clz;
@@ -119,10 +122,32 @@ public class MyGlobal {
     public static int getFunctionIcon(String functionCode) {
         int resId = R.drawable.function_item_sales;
 
-        if (functionCode.equals("billboard")) {
-            resId = R.drawable.function_item_sales;
-        } else {
-            // TODO
+        if (functionCode.equals("report_billboard")) {
+            resId = R.drawable.icon_report_billboard;
+        } else if (functionCode.equals("report_personal")) {
+            resId = R.drawable.icon_report_personal;
+        } else if (functionCode.equals("report_strategy")) {
+            resId = R.drawable.icon_report_strategy;
+        } else if (functionCode.equals("report_tactical")) {
+            resId = R.drawable.icon_report_tactical;
+        } else if (functionCode.equals("query_payroll")) {
+            resId = R.drawable.icon_query_payroll;
+        } else if (functionCode.equals("query_training")) {
+            resId = R.drawable.icon_query_training;
+        } else if (functionCode.equals("query_manual")) {
+            resId = R.drawable.icon_query_manual;
+        } else if (functionCode.equals("query_authorization")) {
+            resId = R.drawable.icon_query_authorization;
+        } else if (functionCode.equals("market_research")) {
+            resId = R.drawable.icon_market_research;
+        } else if (functionCode.equals("market_strategy")) {
+            resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("material_upload")) {
+            resId = R.drawable.icon_material_upload;
+        } else if (functionCode.equals("schedule_manage")) {
+            resId = R.drawable.icon_schedule_manage;
+        } else if (functionCode.equals("query_warrant")) {
+            resId = R.drawable.icon_query_warrant;
         }
 
         return resId;
