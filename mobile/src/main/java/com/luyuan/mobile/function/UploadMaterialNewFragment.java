@@ -58,6 +58,20 @@ public class UploadMaterialNewFragment extends Fragment {
     private EditText editTextRemark;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mCapturedImageURI = savedInstanceState.getParcelable("imageURI");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("imageURI", mCapturedImageURI);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.upload_material_new_fragment, null);
 

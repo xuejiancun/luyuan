@@ -23,24 +23,19 @@ import java.util.Map;
  */
 public class GsonRequest<T> extends Request<T> {
 
-    private Map<String, String> headers = new HashMap<String, String>();
-
     /**
      * Gson parser
      */
     private final Gson mGson;
-
     /**
      * Class type for the response
      */
     private final Class<T> mClass;
-
-
     /**
      * Callback for response delivery
      */
     private final Listener<T> mListener;
-
+    private Map<String, String> headers = new HashMap<String, String>();
     /**
      * Priority for the request
      */
@@ -64,8 +59,7 @@ public class GsonRequest<T> extends Request<T> {
         this.mListener = listener;
         mGson = new Gson();
 
-        setRetryPolicy(new DefaultRetryPolicy(15000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
+        setRetryPolicy(new DefaultRetryPolicy(20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     @Override
