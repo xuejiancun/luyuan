@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.ContextMenu;
@@ -158,9 +159,15 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                                     startActivityForResult(intent, FROM_CAMERA);
 
                                 } else if (which == 1) {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select image"), FROM_PHOTO);
+                                    if(Build.VERSION.SDK_INT <19){
+                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                        intent.setType("image/*");
+                                        startActivityForResult(Intent.createChooser(intent, "Select image"), FROM_PHOTO);
+                                    } else {
+                                        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(intent, FROM_PHOTO);
+                                    }
+
                                 } else if (which == 2) {
                                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                     intent.setType("video/*");

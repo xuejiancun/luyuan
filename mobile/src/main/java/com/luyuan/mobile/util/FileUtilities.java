@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -123,15 +124,16 @@ public class FileUtilities {
     public static String getPath(Context mContext, Uri uri)
             throws URISyntaxException {
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {"_data"};
+            String[] projection = {MediaStore.MediaColumns.DATA};
             Cursor cursor = null;
 
             try {
                 cursor = mContext.getContentResolver().query(uri, projection,
                         null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
                 if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
+                    String result = cursor.getString(column_index);
+                    return result;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

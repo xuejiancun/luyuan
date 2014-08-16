@@ -75,9 +75,7 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         ((Button) view.findViewById(R.id.button_logout)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent = new Intent();
-                intent.setClass(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
 
                 startActivity(intent);
             }
