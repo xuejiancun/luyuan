@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:text="进入主页"
+                android:text="进入查看"
                 android:textSize="20dp"
                 android:textColor="#FFFFFF"
                 android:background="#46C50C" />

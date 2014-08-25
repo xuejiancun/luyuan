@@ -115,8 +115,13 @@
     <string name="function_schedule_manage">日程管理</string>
     <string name="function_market_research">市场调查</string>
     <string name="function_market_strategy">竞争策略</string>
+    <string name="function_research_verify">问卷审核</string>
+    <string name="function_verification_detail">核销明细</string>
     <string name="function_query_authorization">授权查询</string>
     <string name="function_query_manual">手册管理</string>
+    <string name="function_market_paper_1">市场特征白皮书</string>
+    <string name="function_market_paper_2">媒体特征白皮书</string>
+    <string name="function_market_paper_3">产品特征白皮书</string>
 
     <string name="month">月</string>
     <string name="cross">-</string>
@@ -159,7 +164,7 @@
     <string name="already_latest_version">您的系统已经是最新版本</string>
 
     <string name="schedule_remind">日程提醒</string>
-    <string name="news_remind">通知提醒</string>
+    <string name="approve_remind">审核提醒</string>
     <string name="version_remind">版本提醒</string>
 
 </resources>

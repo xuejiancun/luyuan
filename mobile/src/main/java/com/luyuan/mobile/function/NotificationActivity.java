@@ -50,9 +50,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("update")) {
             fragment = new NotificationUpdateFragment();
             actionBar.setTitle(R.string.version_remind);
-        } else if (key.contains("notice")) {
-            fragment = new NotificationNewsFragment();
-            actionBar.setTitle(R.string.news_remind);
+        } else if (key.contains("approve")) {
+            fragment = new NotificationApproveFragment();
+            actionBar.setTitle(R.string.approve_remind);
         } else {
             // TODO
             return;
@@ -64,7 +64,7 @@ public class NotificationActivity extends Activity {
         bundle.putString("title", title);
         bundle.putString("content", content);
         fragment.setArguments(bundle);
-        
+
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
     }

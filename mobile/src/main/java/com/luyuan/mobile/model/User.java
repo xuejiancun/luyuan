@@ -11,6 +11,7 @@ public class User {
     private String email = "";
     private String contact = "";
     private String job = "";
+    private String unitId = "";
 
     public String getId() {
         return id;
@@ -82,5 +83,13 @@ public class User {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public String getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(String unitId) {
+        this.unitId = unitId;
     }
 }

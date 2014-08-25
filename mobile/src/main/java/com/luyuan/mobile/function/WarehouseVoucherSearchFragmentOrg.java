@@ -18,7 +18,7 @@ import com.luyuan.mobile.model.WarehouseVoucherInfo;
 
 import java.util.ArrayList;
 
-public class WarehouseVoucherSearchFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class WarehouseVoucherSearchFragmentOrg extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
     private ListView listView;

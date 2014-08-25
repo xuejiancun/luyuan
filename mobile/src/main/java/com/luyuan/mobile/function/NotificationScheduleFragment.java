@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.LoginActivity;
-import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
 public class NotificationScheduleFragment extends Fragment {
@@ -29,13 +28,12 @@ public class NotificationScheduleFragment extends Fragment {
             ((TextView) view.findViewById(R.id.textview_endtime)).setText(list[2]);
         }
 
-
         ((Button) view.findViewById(R.id.button_enter)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!MyGlobal.getUser().getSessionId().isEmpty()) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra("stId", MyGlobal.getUser().getStId());
+                    Intent intent = new Intent(getActivity(), ScheduleManagerActivity.class);
+                    intent.putExtra("tab", "function");
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);

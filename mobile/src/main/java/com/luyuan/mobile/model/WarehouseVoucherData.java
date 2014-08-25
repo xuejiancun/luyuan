@@ -20,8 +20,8 @@ public class WarehouseVoucherData {
         return warehouseVoucherInfos;
     }
 
-    public void setWarehouseVoucherInfos(List<WarehouseVoucherInfo> warehouseVoucherInfos) {
-        this.warehouseVoucherInfos = warehouseVoucherInfos;
+    public void setWarehouseVoucherInfos(List<WarehouseVoucherInfo> data) {
+        this.warehouseVoucherInfos = data;
     }
-    
+
 }

@@ -190,6 +190,16 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_market_research).toString();
         } else if (function.equals("market_strategy")) {
             result = getText(R.string.function_market_strategy).toString();
+        } else if (function.equals("research_verify")) {
+            result = getText(R.string.function_research_verify).toString();
+        } else if (function.equals("verification_detail")) {
+            result = getText(R.string.function_verification_detail).toString();
+        } else if (function.equals("market_paper_1")) {
+            result = getText(R.string.function_market_paper_1).toString();
+        } else if (function.equals("market_paper_2")) {
+            result = getText(R.string.function_market_paper_2).toString();
+        } else if (function.equals("market_paper_3")) {
+            result = getText(R.string.function_market_paper_3).toString();
         } else if (function.equals("login_history")) {
             result = getText(R.string.function_login_histroy).toString();
         } else if (function.equals("change_password")) {
@@ -225,6 +235,16 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_MARKET_RESEARCH;
         } else if (function.equals("market_strategy")) {
             result = MyGlobal.WEBVIEW_URL_MARKET_STRATEGY;
+        } else if (function.equals("research_verify")) {
+            result = MyGlobal.WEBVIEW_URL_RESEARCH_VERIFY;
+        } else if (function.equals("verification_detail")) {
+            result = MyGlobal.WEBVIEW_URL_VERIFICATION_DETAIL;
+        } else if (function.equals("market_paper_1")) {
+            result = MyGlobal.WEBVIEW_URL_MARKET_PAPER_1;
+        } else if (function.equals("market_paper_2")) {
+            result = MyGlobal.WEBVIEW_URL_MARKET_PAPER_2;
+        } else if (function.equals("market_paper_3")) {
+            result = MyGlobal.WEBVIEW_URL_MARKET_PAPER_3;
         } else if (function.equals("login_history")) {
             result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
         } else if (function.equals("change_password")) {

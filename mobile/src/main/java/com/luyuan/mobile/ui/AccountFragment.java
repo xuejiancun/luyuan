@@ -62,6 +62,11 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         functionInfo4.setName(getString(R.string.function_notification_history));
         functionInfos.add(functionInfo4);
 
+        FunctionInfo functionInfo6 = new FunctionInfo();
+        functionInfo6.setCode("warehouse_voucher");
+        functionInfo6.setName(getString(R.string.function_voucher_manager));
+        functionInfos.add(functionInfo6);
+
         functionData.setFunctionInfos(functionInfos);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);

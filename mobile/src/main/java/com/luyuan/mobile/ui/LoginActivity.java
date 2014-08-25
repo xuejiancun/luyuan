@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
 
 //        username = "xuejiancun";
-//        password = "Xjc5861802";
+//        password = "123456";
 
 //        username = "ceshi2";
 //        password = "Xx8888..";
@@ -123,6 +123,7 @@ public class LoginActivity extends Activity {
 
                             MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
                             MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName() + jobData.getJobInfos().get(jobIndex).getJobName());
+                            MyGlobal.getUser().setUnitId(jobData.getJobInfos().get(jobIndex).getUnitId());
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("tab", "home");
@@ -147,6 +148,7 @@ public class LoginActivity extends Activity {
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
                                             MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName());
+                                            MyGlobal.getUser().setUnitId(jobData.getJobInfos().get(jobIndex).getUnitId());
 
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("tab", "home");

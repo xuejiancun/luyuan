@@ -12,6 +12,7 @@ public class WarehouseVoucherInfo {
     private String unitLongName = "";
     private String preparedBy = "";
     private String preparedTime = "";
+    private String wareHouseName = "";
 
     public String getId() {
         return id;
@@ -91,6 +92,14 @@ public class WarehouseVoucherInfo {
 
     public void setPreparedTime(String preparedTime) {
         this.preparedTime = preparedTime;
+    }
+
+    public String getwareHouseName() {
+        return wareHouseName;
+    }
+
+    public void setwareHouseName(String warehouseName) {
+        this.wareHouseName = warehouseName;
     }
 
 }

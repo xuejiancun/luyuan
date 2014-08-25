@@ -21,8 +21,9 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
-//  public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    // public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
@@ -43,7 +44,9 @@ public class MyGlobal {
     public static final String API_WAREHOUSE_VOUCHER_SEARCH = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
     public static final String API_CHECK_VERSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchversion";
     public static final String API_MODIFY_CONTACT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=modifycontract";
-    public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
+
+    public static final String API_WAREHOUSE_PURCHASEORDER_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=purchaseorderquery";
+
     public static final String WEBVIEW_URL_QUERY_AUTH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/QueryAuth.aspx";
     public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
     public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
@@ -53,10 +56,16 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_MANUAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/HRTrain/TrainManual.html";
     public static final String WEBVIEW_URL_MARKET_STRATEGY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Strategy/Index.html";
     public static final String WEBVIEW_URL_MARKET_RESEARCH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Research/Index.html";
+    public static final String WEBVIEW_URL_RESEARCH_VERIFY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/ResearchMag/verify.html";
+    public static final String WEBVIEW_URL_VERIFICATION_DETAIL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WarrantManage/verificationDetail.html";
+    public static final String WEBVIEW_URL_MARKET_PAPER_1 = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WhitePaper/Paper_1.html";
+    public static final String WEBVIEW_URL_MARKET_PAPER_2 = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WhitePaper/Paper_2.html";
+    public static final String WEBVIEW_URL_MARKET_PAPER_3 = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WhitePaper/Paper_3.html";
     public static final String WEBVIEW_URL_QUERY_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WarrantManage/warrantDetail.html";
     public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
+    public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITH_TIME = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -108,6 +117,16 @@ public class MyGlobal {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("market_strategy")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("research_verify")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("verification_detail")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("market_paper_1")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("market_paper_2")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("market_paper_3")) {
+            clz = WebViewActivity.class;
         } else if (functionCode.equals("material_upload")) {
             clz = UploadMaterialActivity.class;
         } else if (functionCode.equals("schedule_manage")) {
@@ -142,6 +161,21 @@ public class MyGlobal {
             resId = R.drawable.icon_market_research;
         } else if (functionCode.equals("market_strategy")) {
             resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("research_verify")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("verification_detail")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("market_paper_1")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("market_paper_2")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
+        } else if (functionCode.equals("market_paper_3")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
         } else if (functionCode.equals("material_upload")) {
             resId = R.drawable.icon_material_upload;
         } else if (functionCode.equals("schedule_manage")) {
