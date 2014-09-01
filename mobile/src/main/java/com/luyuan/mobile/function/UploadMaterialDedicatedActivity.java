@@ -22,8 +22,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.model.Material;
-import com.luyuan.mobile.model.MaterialData;
+import com.luyuan.mobile.model.DedicatedData;
+import com.luyuan.mobile.model.DedicatedInfo;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
@@ -32,12 +32,12 @@ import com.luyuan.mobile.util.RequestManager;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class UploadMaterialActivity extends Activity implements SearchView.OnQueryTextListener {
+public class UploadMaterialDedicatedActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;
     private ProgressDialog dialog;
-    private MaterialData materialData;
-    private int materialIndex;
+    private DedicatedData dedicatedData;
+    private int dedicatedIndex;
     private String tab = "home";
     private String url = "";
 
@@ -50,9 +50,9 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.function_upload_material);
+        actionBar.setTitle(R.string.function_upload_dedicated_material);
 
-        setContentView(R.layout.upload_material_activity);
+        setContentView(R.layout.upload_material_dedicated_activity);
 
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("tab") != null) {
@@ -60,7 +60,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         }
 
         if (savedInstanceState == null) {
-            Fragment fragment = new UploadMaterialChannelFragment();
+            Fragment fragment = new UploadMaterialDedicatedFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame_content, fragment);
             fragmentTransaction.commit();
@@ -84,48 +84,49 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     }
 
     public boolean onQueryTextSubmit(String query) {
-        url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString();
+        url = new StringBuffer(MyGlobal.API_QUERY_DEDICATED).toString();
         try {
             url = url + "&query=" + URLEncoder.encode(query, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        if (MyGlobal.checkNetworkConnection(UploadMaterialActivity.this)) {
+        if (MyGlobal.checkNetworkConnection(UploadMaterialDedicatedActivity.this)) {
 
-            dialog = new ProgressDialog(UploadMaterialActivity.this);
+            dialog = new ProgressDialog(UploadMaterialDedicatedActivity.this);
             dialog.setMessage(getText(R.string.loading));
             dialog.setCancelable(true);
             dialog.show();
 
-            GsonRequest gsonObjRequest = new GsonRequest<MaterialData>(Request.Method.GET, url,
-                    MaterialData.class, new Response.Listener<MaterialData>() {
+
+            GsonRequest gsonObjRequest = new GsonRequest<DedicatedData>(Request.Method.GET, url,
+                    DedicatedData.class, new Response.Listener<DedicatedData>() {
 
                 @Override
-                public void onResponse(MaterialData response) {
+                public void onResponse(DedicatedData response) {
                     dialog.dismiss();
 
                     if (response != null && response.getSuccess().equals("true")) {
-                        materialData = response;
-                        int count = materialData.getMaterials().size();
+                        dedicatedData = response;
+                        int count = dedicatedData.getDedicatedInfos().size();
                         if (count == 1) {
-                            materialIndex = 0;
+                            dedicatedIndex = 0;
                             replaceContentForQuery();
 
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
 
                         } else if (count > 1) {
-                            CharSequence[] list = new CharSequence[materialData.getMaterials().size()];
+                            CharSequence[] list = new CharSequence[dedicatedData.getDedicatedInfos().size()];
                             for (int i = 0; i < count; i++) {
-                                list[i] = materialData.getMaterials().get(i).getName();
+                                list[i] = dedicatedData.getDedicatedInfos().get(i).getLocation();
                             }
 
-                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                            new AlertDialog.Builder(UploadMaterialDedicatedActivity.this)
                                     .setTitle(R.string.dialog_choose_material)
                                     .setSingleChoiceItems(list, 0, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            materialIndex = which;
+                                            dedicatedIndex = which;
                                         }
                                     })
                                     .setNegativeButton(R.string.cancel, null)
@@ -137,7 +138,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                                     .create()
                                     .show();
                         } else {
-                            new AlertDialog.Builder(UploadMaterialActivity.this)
+                            new AlertDialog.Builder(UploadMaterialDedicatedActivity.this)
                                     .setMessage(R.string.fetch_data_empty)
                                     .setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null)
@@ -145,7 +146,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                                     .show();
                         }
                     } else {
-                        new AlertDialog.Builder(UploadMaterialActivity.this)
+                        new AlertDialog.Builder(UploadMaterialDedicatedActivity.this)
                                 .setMessage(R.string.interact_data_error)
                                 .setTitle(R.string.dialog_hint)
                                 .setPositiveButton(R.string.dialog_confirm, null)
@@ -158,7 +159,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
                 public void onErrorResponse(VolleyError error) {
                     dialog.dismiss();
 
-                    new AlertDialog.Builder(UploadMaterialActivity.this)
+                    new AlertDialog.Builder(UploadMaterialDedicatedActivity.this)
                             .setMessage(R.string.interact_data_error)
                             .setTitle(R.string.dialog_hint)
                             .setPositiveButton(R.string.dialog_confirm, null)
@@ -175,20 +176,21 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     }
 
     private void replaceContentForQuery() {
-        Fragment fragment = new UploadMaterialUDFQueryFragment();
+        Fragment fragment = new UploadMaterialDedicatedQueryFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        Material material = materialData.getMaterials().get(materialIndex);
+        DedicatedInfo dedicatedInfo = dedicatedData.getDedicatedInfos().get(dedicatedIndex);
 
         Bundle args = new Bundle();
-        args.putString("id", material.getId());
-        args.putString("name", material.getName());
-        args.putString("remark", material.getRemark());
-        args.putString("transactsate", material.getTransactState());
-        args.putString("transactdate", material.getTransactDate());
-        args.putString("submitdate", material.getSubmitDate());
-        args.putString("feedback", material.getFeedback());
-        args.putString("attachment", material.getAttachment());
+        args.putString("id", dedicatedInfo.getId());
+        args.putString("location", dedicatedInfo.getLocation());
+        args.putString("area", dedicatedInfo.getArea());
+        args.putString("brand", dedicatedInfo.getBrand());
+        args.putString("udf", dedicatedInfo.getUdf());
+        args.putString("submitDate", dedicatedInfo.getSubmitDate());
+        args.putString("submitBy", dedicatedInfo.getSubmitBy());
+        args.putString("attachment", dedicatedInfo.getAttachment());
+        args.putString("status", dedicatedInfo.getStatus());
         fragment.setArguments(args);
 
         fragmentTransaction.replace(R.id.frame_content, fragment);

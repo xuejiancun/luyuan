@@ -74,7 +74,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"/>
+                    android:layout_height="40dp" />
 
             </TableRow>
 
@@ -200,25 +200,6 @@
                 android:text="@string/submit"
                 android:textSize="20dp"
                 android:background="#46C50C" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/button_back"
-                android:layout_height="50dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="@string/back"
-                android:textSize="20dp"
-                android:background="#FFEDEDED" />
 
         </LinearLayout>
 

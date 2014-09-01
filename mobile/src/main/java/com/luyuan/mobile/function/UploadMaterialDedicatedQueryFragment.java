@@ -120,12 +120,11 @@ public class UploadMaterialDedicatedQueryFragment extends Fragment {
             }
         });
 
-        // back to new material fragment
         ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialChannelFragment());
+                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialDedicatedFragment());
                 fragmentTransaction.commit();
             }
         });

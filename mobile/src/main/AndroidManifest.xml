@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.luyuan.mobile"
-    android:versionCode="5"
-    android:versionName="2.0.4">
+    android:versionCode="6"
+    android:versionName="2.0.5">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -84,6 +84,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".function.UploadMaterialActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".function.UploadMaterialDedicatedActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"></activity>

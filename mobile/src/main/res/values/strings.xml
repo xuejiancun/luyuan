@@ -36,7 +36,7 @@
     <string name="dialog_choose_material">请选择资料</string>
 
     <string name="network_disconnected">没有连接网络，请稍后再试。</string>
-    <string name="interact_data_error">应用程序与服务器通讯遇到错误。</string>
+    <string name="interact_data_error">应用程序与服务器通讯遇到错误，请检查您的网络连接是否通畅。</string>
     <string name="fetch_data_empty">没有查询到资料</string>
     <string name="app_param_error">页面参数错误，请稍后再试。</string>
     <string name="notification_push">消息提醒</string>
@@ -112,6 +112,7 @@
     <string name="function_query_training">培训管理</string>
     <string name="function_query_warrant">担保明细</string>
     <string name="function_upload_material">资料上传</string>
+    <string name="function_upload_dedicated_material">门店打点</string>
     <string name="function_schedule_manage">日程管理</string>
     <string name="function_market_research">市场调查</string>
     <string name="function_market_strategy">竞争策略</string>

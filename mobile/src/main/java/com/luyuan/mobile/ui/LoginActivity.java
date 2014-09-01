@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.ScrollView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,7 +26,6 @@ public class LoginActivity extends Activity {
 
     private int jobIndex;
     private JobData jobData;
-    private ScrollView scrollView;
     private ProgressDialog dialog;
 
     private String sob;
@@ -40,8 +38,6 @@ public class LoginActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
-        scrollView = (ScrollView) findViewById(R.id.scrollview_login_page);
     }
 
     public void login(View view) {

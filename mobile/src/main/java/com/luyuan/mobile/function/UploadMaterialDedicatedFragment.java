@@ -2,7 +2,6 @@ package com.luyuan.mobile.function;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -159,12 +158,12 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                                     startActivityForResult(intent, FROM_CAMERA);
 
                                 } else if (which == 1) {
-                                    if(Build.VERSION.SDK_INT <19){
+                                    if (Build.VERSION.SDK_INT < 19) {
                                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                         intent.setType("image/*");
                                         startActivityForResult(Intent.createChooser(intent, "Select image"), FROM_PHOTO);
                                     } else {
-                                        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                         startActivityForResult(intent, FROM_PHOTO);
                                     }
 
@@ -316,16 +315,6 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 // 开启定位
                 InitLocation();
                 mLocationClient.start();
-            }
-        });
-
-        // back to channel
-        ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_content, new UploadMaterialChannelFragment());
-                fragmentTransaction.commit();
             }
         });
 

@@ -2,43 +2,43 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/locSDK_4.2-c36a56ad4a95320b460c3d7ff572f669f06186c6.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/locSDK_4.2-c36a56ad4a95320b460c3d7ff572f669f06186c6.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/locSDK_4.2.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="41b93335a2753c93f8b8f56741615cb81ea72437"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/jpush-sdk-release1.6.1-c2d7497c5da400ed9fceda4e755e8110098418f4.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/jpush-sdk-release1.6.1-c2d7497c5da400ed9fceda4e755e8110098418f4.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/jpush-sdk-release1.6.1.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="94f2933cb07ffc693d622bde739e3dd314c1c799"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/gson-2.2.4-25231ff3c4985ece4cdc225d9a492d75908ddb38.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/gson-2.2.4-25231ff3c4985ece4cdc225d9a492d75908ddb38.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/gson-2.2.4.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/classes-bd5f3f23ccd778fbd92170719f9ff86b67f587ce.jar"
-        jar="/Users/jackxue/Documents/src/luyuan/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
         jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/volley-9c67f33a2bd9339fa2736aceeeda0b3c7448053f.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/classes-bd5f3f23ccd778fbd92170719f9ff86b67f587ce.jar"
+        jar="/Users/jackxue/Documents/src/luyuan/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/volley-9c67f33a2bd9339fa2736aceeeda0b3c7448053f.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/volley.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="089ca8147c0216f1917d676855d3d3d9cac65cdd"/>
     <item
-        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/debug/httpmime-4.1.2-b5820799e9fae1df21c70b7f91e06e676ee6b655.jar"
+        dex="/Users/jackxue/Documents/src/luyuan/mobile/build/intermediates/pre-dexed/release/httpmime-4.1.2-b5820799e9fae1df21c70b7f91e06e676ee6b655.jar"
         jar="/Users/jackxue/Documents/src/luyuan/mobile/libs/httpmime-4.1.2.jar"
         jumboMode="false"
         revision="19.1.0"

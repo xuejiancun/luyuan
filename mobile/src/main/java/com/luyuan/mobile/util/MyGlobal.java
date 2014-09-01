@@ -10,6 +10,7 @@ import android.os.Environment;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
+import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.ui.WebViewActivity;
@@ -22,8 +23,8 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
-    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-    // public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
@@ -129,6 +130,8 @@ public class MyGlobal {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("material_upload")) {
             clz = UploadMaterialActivity.class;
+        } else if (functionCode.equals("material_upload_dedicated")) {
+            clz = UploadMaterialDedicatedActivity.class;
         } else if (functionCode.equals("schedule_manage")) {
             clz = ScheduleManagerActivity.class;
         } else if (functionCode.equals("query_warrant")) {
@@ -178,6 +181,9 @@ public class MyGlobal {
             // resId = R.drawable.icon_market_strategy;
         } else if (functionCode.equals("material_upload")) {
             resId = R.drawable.icon_material_upload;
+        } else if (functionCode.equals("material_upload_dedicated")) {
+            // TODO fix icon
+            // resId = R.drawable.icon_market_strategy;
         } else if (functionCode.equals("schedule_manage")) {
             resId = R.drawable.icon_schedule_manage;
         } else if (functionCode.equals("query_warrant")) {
