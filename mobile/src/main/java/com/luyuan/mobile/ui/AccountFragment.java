@@ -81,7 +81,7 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
