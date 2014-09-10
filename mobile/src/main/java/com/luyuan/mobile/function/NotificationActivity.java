@@ -53,6 +53,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("approve")) {
             fragment = new NotificationApproveFragment();
             actionBar.setTitle(R.string.approve_remind);
+        } else if (key.contains("training")) {
+            fragment = new NotificationTrainingFragment();
+            actionBar.setTitle(R.string.training_remind);
         } else {
             // TODO
             return;

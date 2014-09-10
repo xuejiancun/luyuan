@@ -11,28 +11,27 @@ import android.widget.TextView;
 
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.LoginActivity;
+import com.luyuan.mobile.ui.WebViewActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
-public class NotificationScheduleFragment extends Fragment {
+public class NotificationTrainingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.notification_schedule_fragment, null);
+        View view = inflater.inflate(R.layout.notification_training_fragment, null);
 
         Bundle args = getArguments();
         if (args != null && args.getString("content") != null) {
             String content = args.getString("content");
-            String[] list = content.split("#");
-            ((TextView) view.findViewById(R.id.textview_content)).setText(list[0]);
-            ((TextView) view.findViewById(R.id.textview_starttime)).setText(list[1]);
-            ((TextView) view.findViewById(R.id.textview_endtime)).setText(list[2]);
+            ((TextView) view.findViewById(R.id.textview_content)).setText(content);
         }
 
         ((Button) view.findViewById(R.id.button_enter)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!MyGlobal.getUser().getSessionId().isEmpty()) {
-                    Intent intent = new Intent(getActivity(), ScheduleManagerActivity.class);
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra("function", "query_manual");
                     intent.putExtra("tab", "function");
                     startActivity(intent);
                 } else {

@@ -69,7 +69,6 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private List<BasicNameValuePair> pairs;
     private Gallery gallery;
     private Uri mCapturedImageURI;
-    private String channel = "";
     private EditText editTextLocation;
     private EditText editTextArea;
     private EditText editTextUdf;
@@ -107,11 +106,6 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 editTextLocation.setText(bdLocation.getAddrStr());
             }
         });
-
-        Bundle args = getArguments();
-        if (args != null && args.getString("channel") != null) {
-            channel = args.getString("channel");
-        }
 
         editTextLocation = (EditText) view.findViewById(R.id.edittext_location_place);
         editTextArea = (EditText) view.findViewById(R.id.edittext_area);

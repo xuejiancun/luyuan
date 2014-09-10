@@ -165,25 +165,19 @@ public class MyGlobal {
         } else if (functionCode.equals("market_strategy")) {
             resId = R.drawable.icon_market_strategy;
         } else if (functionCode.equals("research_verify")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_research_verify;
         } else if (functionCode.equals("verification_detail")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_verification_detail;
         } else if (functionCode.equals("market_paper_1")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_market_paper_1;
         } else if (functionCode.equals("market_paper_2")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_market_paper_2;
         } else if (functionCode.equals("market_paper_3")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_market_paper_3;
         } else if (functionCode.equals("material_upload")) {
             resId = R.drawable.icon_material_upload;
         } else if (functionCode.equals("material_upload_dedicated")) {
-            // TODO fix icon
-            // resId = R.drawable.icon_market_strategy;
+            resId = R.drawable.icon_material_upload_dedicated;
         } else if (functionCode.equals("schedule_manage")) {
             resId = R.drawable.icon_schedule_manage;
         } else if (functionCode.equals("query_warrant")) {

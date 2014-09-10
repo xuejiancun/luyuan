@@ -43,6 +43,7 @@
     <string name="dialog_hint">提示</string>
     <string name="dialog_confirm">确定</string>
     <string name="dialog_cancel">取消</string>
+    <string name="press_again_exit_application">再按一次退出程序</string>
 
     <string name="dialog_hint_new_version">系统有新版本发布，需要现在更新？</string>
     <string name="dialog_downloading_file">正在下载更新文件...</string>
@@ -167,5 +168,6 @@
     <string name="schedule_remind">日程提醒</string>
     <string name="approve_remind">审核提醒</string>
     <string name="version_remind">版本提醒</string>
+    <string name="training_remind">培训通知</string>
 
 </resources>

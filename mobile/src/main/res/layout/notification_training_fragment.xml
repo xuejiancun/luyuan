@@ -23,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="审核提醒"
+                android:text="培训通知"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
