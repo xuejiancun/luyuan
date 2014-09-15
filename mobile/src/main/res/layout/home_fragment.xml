@@ -10,14 +10,14 @@
         android:background="@drawable/home_banner"
         android:scaleType="fitCenter" />
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:gravity="center"-->
-        <!--android:editable="false"-->
-        <!--android:text="@string/usesage"-->
-        <!--android:textSize="12dp"-->
-        <!--android:background="#FFEDEDED" />-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:editable="false"
+        android:text="@string/usesage"
+        android:textSize="12dp"
+        android:background="#FFEDEDED" />
 
     <GridView
         android:id="@+id/gridview_shortcut_list"

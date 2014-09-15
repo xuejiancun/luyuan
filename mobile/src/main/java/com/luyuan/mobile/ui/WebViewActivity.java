@@ -200,8 +200,8 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_market_paper_2).toString();
         } else if (function.equals("market_paper_3")) {
             result = getText(R.string.function_market_paper_3).toString();
-        } else if (function.equals("login_history")) {
-            result = getText(R.string.function_login_histroy).toString();
+        } else if (function.equals("follow_someone")) {
+            result = getText(R.string.function_follow_someone).toString();
         } else if (function.equals("change_password")) {
             result = getText(R.string.function_change_password).toString();
         } else if (function.equals("notification_history")) {
@@ -245,8 +245,8 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_MARKET_PAPER_2;
         } else if (function.equals("market_paper_3")) {
             result = MyGlobal.WEBVIEW_URL_MARKET_PAPER_3;
-        } else if (function.equals("login_history")) {
-            result = MyGlobal.WEBVIEW_URL_LOGIN_HISTORY;
+        } else if (function.equals("follow_someone")) {
+            result = MyGlobal.WEBVIEW_URL_FOLLOWING_SOMEONE;
         } else if (function.equals("change_password")) {
             result = MyGlobal.WEBVIEW_URL_CHANGE_PASSWORD;
         } else if (function.equals("notification_history")) {

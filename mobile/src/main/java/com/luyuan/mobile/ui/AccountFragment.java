@@ -37,45 +37,36 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
 
         List<FunctionInfo> functionInfos = new ArrayList<FunctionInfo>();
 
-        FunctionInfo functionInfo5 = new FunctionInfo();
-        functionInfo5.setCode("check_version");
-        functionInfo5.setName(getString(R.string.function_check_version));
-        functionInfos.add(functionInfo5);
-
         FunctionInfo functionInfo1 = new FunctionInfo();
-        functionInfo1.setCode("about_me");
-        functionInfo1.setName(getString(R.string.function_about_me));
+        functionInfo1.setCode("check_version");
+        functionInfo1.setName(getString(R.string.function_check_version));
         functionInfos.add(functionInfo1);
 
-        FunctionInfo functionInfo3 = new FunctionInfo();
-        functionInfo3.setCode("change_password");
-        functionInfo3.setName(getString(R.string.function_change_password));
-        functionInfos.add(functionInfo3);
-
         FunctionInfo functionInfo2 = new FunctionInfo();
-        functionInfo2.setCode("login_history");
-        functionInfo2.setName(getString(R.string.function_login_histroy));
+        functionInfo2.setCode("about_me");
+        functionInfo2.setName(getString(R.string.function_about_me));
         functionInfos.add(functionInfo2);
 
+        FunctionInfo functionInfo3 = new FunctionInfo();
+        functionInfo3.setCode("follow_someone");
+        functionInfo3.setName(getString(R.string.function_follow_someone));
+        functionInfos.add(functionInfo3);
+
         FunctionInfo functionInfo4 = new FunctionInfo();
-        functionInfo4.setCode("notification_history");
-        functionInfo4.setName(getString(R.string.function_notification_history));
+        functionInfo4.setCode("change_password");
+        functionInfo4.setName(getString(R.string.function_change_password));
         functionInfos.add(functionInfo4);
 
-        FunctionInfo functionInfo6 = new FunctionInfo();
-        functionInfo6.setCode("warehouse_voucher");
-        functionInfo6.setName(getString(R.string.function_voucher_manager));
-        functionInfos.add(functionInfo6);
+        FunctionInfo functionInfo5 = new FunctionInfo();
+        functionInfo5.setCode("notification_history");
+        functionInfo5.setName(getString(R.string.function_notification_history));
+        functionInfos.add(functionInfo5);
 
         functionData.setFunctionInfos(functionInfos);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);
         listView.setAdapter(new FunctionAdapter());
         listView.setOnItemClickListener(this);
-
-        ((TextView) view.findViewById(R.id.textview_username)).setText(MyGlobal.getUser().getUsername());
-        ((TextView) view.findViewById(R.id.textview_contact)).setText(MyGlobal.getUser().getContact());
-        ((TextView) view.findViewById(R.id.textview_email)).setText(MyGlobal.getUser().getEmail());
 
         ((Button) view.findViewById(R.id.button_logout)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +123,6 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 startActivity(intent);
                 break;
         }
-
 
     }
 

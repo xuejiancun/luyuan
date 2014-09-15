@@ -42,7 +42,6 @@ public class AboutMeActivity extends Activity {
         ((EditText) findViewById(R.id.edittext_account)).setText(MyGlobal.getUser().getUsername());
         ((EditText) findViewById(R.id.edittext_contact)).setText(MyGlobal.getUser().getContact());
         ((EditText) findViewById(R.id.edittext_email)).setText(MyGlobal.getUser().getEmail());
-        ((EditText) findViewById(R.id.edittext_webchat)).setText("webchat2014");
         ((EditText) findViewById(R.id.edittext_job)).setText(MyGlobal.getUser().getJob());
 
         ((Button) findViewById(R.id.button_modify)).setOnClickListener(new View.OnClickListener() {

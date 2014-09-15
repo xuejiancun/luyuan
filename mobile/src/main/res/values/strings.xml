@@ -23,7 +23,7 @@
     <string name="function">功能</string>
     <string name="explore">探索</string>
     <string name="exploring">正在探索</string>
-    <string name="usesage">使用说明：功能列表 -> 选择某个功能 -> 长按 -> 添加到主页</string>
+    <string name="usesage">使用说明：功能列表 -> 长按某个功能 -> 添加到主页</string>
 
     <string name="delete">删除</string>
     <string name="deleted_success">删除成功</string>
@@ -152,10 +152,10 @@
     <string name="located_success">考勤成功</string>
     <string name="refresh">刷新</string>
 
-    <string name="function_about_me">关于我</string>
-    <string name="function_notification_history">提醒历史</string>
+    <string name="function_about_me">我的资料</string>
+    <string name="function_notification_history">我的消息</string>
+    <string name="function_follow_someone">我的关注</string>
     <string name="function_change_password">修改密码</string>
-    <string name="function_login_histroy">登录历史</string>
     <string name="function_check_version">版本检查</string>
     <string name="contact">电话</string>
     <string name="email">邮箱</string>

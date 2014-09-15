@@ -21,7 +21,7 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
     public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
@@ -63,7 +63,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_MARKET_PAPER_2 = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WhitePaper/Paper_2.html";
     public static final String WEBVIEW_URL_MARKET_PAPER_3 = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WhitePaper/Paper_3.html";
     public static final String WEBVIEW_URL_QUERY_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/WarrantManage/warrantDetail.html";
-    public static final String WEBVIEW_URL_LOGIN_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/loginHistory.html";
+    public static final String WEBVIEW_URL_FOLLOWING_SOMEONE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/attention.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
     public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
