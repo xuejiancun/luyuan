@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 资料上传
 public class MaterialData {
 
     private String success = "";

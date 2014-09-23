@@ -23,7 +23,7 @@ import com.luyuan.mobile.util.MyGlobal;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// 用户Tab
 public class AccountFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;

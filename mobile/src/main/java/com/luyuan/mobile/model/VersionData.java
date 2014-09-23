@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 系统版本
 public class VersionData {
 
     private String success;

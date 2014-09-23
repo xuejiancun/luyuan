@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 下属
 public class SubordinateInfo {
 
     private String userId = "";

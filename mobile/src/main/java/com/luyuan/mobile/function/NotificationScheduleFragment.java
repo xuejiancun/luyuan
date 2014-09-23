@@ -13,6 +13,7 @@ import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.LoginActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
+// 日程提醒
 public class NotificationScheduleFragment extends Fragment {
 
     @Override

@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 成功
 public class SuccessData {
 
     private String success = "";

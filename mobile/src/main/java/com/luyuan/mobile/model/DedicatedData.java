@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 门店打点资料
 public class DedicatedData {
 
     private String success = "";

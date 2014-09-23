@@ -27,12 +27,18 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
+// 系统主功能：
+// 1. 主页Tab
+// 2. 功能Tab
+// 3. 探索Tab
+// 4. 用户Tab
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
     private static final int MSG_SET_ALIAS = 1001;
+
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
 
         @Override
@@ -132,7 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         // setTag();
-        setAlias();
+        setAlias(); // 设置别名，这样才可以实现单点推送
 
     }
 

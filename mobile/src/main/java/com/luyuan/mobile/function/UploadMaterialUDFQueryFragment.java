@@ -21,6 +21,7 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+// 资料上传自定义通道搜索结果页面
 public class UploadMaterialUDFQueryFragment extends Fragment {
 
     private String CANCELED = "已取消";
@@ -61,7 +62,7 @@ public class UploadMaterialUDFQueryFragment extends Fragment {
         ((EditText) view.findViewById(R.id.edittext_material_feedback)).setText(feedback);
         ((TextView) view.findViewById(R.id.textview_material_attachment)).setText(attachment);
 
-        // cancel material
+        // 资料状态变成取消
         buttonCancel = (Button) view.findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +122,7 @@ public class UploadMaterialUDFQueryFragment extends Fragment {
             }
         });
 
-        // back to new material fragment
+        // 返回新增资料
         ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

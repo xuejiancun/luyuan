@@ -60,6 +60,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+// 日程管理页面
 public class ScheduleManagerActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private CalendarPickerView calendarPickerView;
@@ -108,6 +109,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         setContentView(R.layout.schedule_manager_activity);
 
+        // 定位
         mLocationClient = new LocationClient(ScheduleManagerActivity.this);
         mLocationClient.registerLocationListener(new BDLocationListener() {
             @Override
@@ -206,7 +208,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         initCalendar();
 
-        // add location
+        // 考勤
         ((Button) findViewById(R.id.button_add_location)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,7 +223,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
         });
 
-        // show my schedule
+        // 我的日程
         ((Button) findViewById(R.id.button_my_schedule)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -232,7 +234,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
 
         });
 
-        // show others schedule
+        // 下属日程
         ((Button) findViewById(R.id.button_view_others_schedule)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +310,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
             }
         });
 
-        // add schedule
+        // 新增日程
         ((Button) findViewById(R.id.button_add)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -344,6 +346,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         return true;
     }
 
+    // 初始化日历组件
     public void initCalendar() {
         if (MyGlobal.checkNetworkConnection(ScheduleManagerActivity.this)) {
 
@@ -446,6 +449,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
         super.onDestroy();
     }
 
+    // 初始化定位设定
     private void InitLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式

@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+// 系统更新
 public class NotificationUpdateFragment extends Fragment {
 
     private ProgressDialog mProgressDialog;
@@ -116,8 +117,6 @@ public class NotificationUpdateFragment extends Fragment {
         });
 
         if (MyGlobal.checkNetworkConnection(getActivity())) {
-
-
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage(getText(R.string.loading));
             dialog.setCancelable(true);
@@ -165,6 +164,7 @@ public class NotificationUpdateFragment extends Fragment {
         return view;
     }
 
+    // 异步线程下载文件任务
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         private Context context;
@@ -190,7 +190,7 @@ public class NotificationUpdateFragment extends Fragment {
 
                 int fileLength = connection.getContentLength();
 
-                // download the file
+                // 下载文件
                 input = connection.getInputStream();
                 output = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pad.apk");
 
@@ -198,14 +198,13 @@ public class NotificationUpdateFragment extends Fragment {
                 long total = 0;
                 int count;
                 while ((count = input.read(data)) != -1) {
-                    // allow canceling with back button
                     if (isCancelled()) {
                         input.close();
                         return null;
                     }
                     total += count;
-                    // publishing the progress....
-                    if (fileLength > 0) // only if total length is known
+                    // 更新下载进度
+                    if (fileLength > 0)
                         publishProgress((int) (total * 100 / fileLength));
                     output.write(data, 0, count);
                 }

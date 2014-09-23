@@ -22,6 +22,7 @@ import com.luyuan.mobile.util.MyGlobal;
 import java.io.IOException;
 import java.io.InputStream;
 
+// Web页面嵌套进浏览器功能
 public class WebViewActivity extends Activity {
 
     private WebView webview;
@@ -71,6 +72,7 @@ public class WebViewActivity extends Activity {
             settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             webview.addJavascriptInterface(this, "android");
             webview.setWebViewClient(new WebViewClient() {
+                // 本地加载资源文件
                 @Override
                 public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
                     if (url.contains("jquery-ui.css")) {

@@ -32,6 +32,7 @@ import com.luyuan.mobile.util.RequestManager;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+// 资料上传页面
 public class UploadMaterialActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;
@@ -83,6 +84,7 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
         return true;
     }
 
+    // 搜索资料
     public boolean onQueryTextSubmit(String query) {
         url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString();
         try {

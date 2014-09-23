@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// 门店打点页面
 public class UploadMaterialDedicatedFragment extends Fragment {
     private final ArrayList<String> filePaths = new ArrayList<String>();
     private final ArrayList<Bitmap> fileThumbs = new ArrayList<Bitmap>();
@@ -95,6 +96,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.upload_material_dedicated_fragment, null);
 
+        // 定位
         mLocationClient = new LocationClient(getActivity().getApplicationContext());
         mLocationClient.registerLocationListener(new BDLocationListener() {
             @Override
@@ -113,11 +115,10 @@ public class UploadMaterialDedicatedFragment extends Fragment {
 
         spinnerBrand = (Spinner) view.findViewById(R.id.spin_brand);
         String[] spinnerData = new String[]{"", "绿源", "爱玛", "雅迪", "自定义"};
-        spinnerBrand.setAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, spinnerData));
+        spinnerBrand.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spinnerData));
         spinnerBrand.setSelection(0, true);
 
-        // add attachment
+        // 添加附件
         ((Button) view.findViewById(R.id.button_attach)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,12 +178,11 @@ public class UploadMaterialDedicatedFragment extends Fragment {
             }
         });
 
-        // submit material
+        // 上传门店资料
         ((Button) view.findViewById(R.id.button_submit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // create material
                 String location = editTextLocation.getText().toString().trim();
                 String area = editTextArea.getText().toString().trim();
                 String brand = spinnerBrand.getSelectedItem().toString().trim();
@@ -232,6 +232,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 pairs.add(new BasicNameValuePair("brand", brand));
                 pairs.add(new BasicNameValuePair("udf", udf));
 
+                // 检查是否100m以内有上传过相同的资料
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
 
                     dialog = new ProgressDialog(getActivity());
@@ -297,7 +298,7 @@ public class UploadMaterialDedicatedFragment extends Fragment {
             }
         });
 
-        // add location
+        // 定位
         ((Button) view.findViewById(R.id.button_location)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 岗位
 public class JobData {
 
     private String success = "";

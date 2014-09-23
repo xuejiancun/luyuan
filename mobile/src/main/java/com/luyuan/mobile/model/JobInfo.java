@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 岗位
 public class JobInfo {
 
     private String stId = "";

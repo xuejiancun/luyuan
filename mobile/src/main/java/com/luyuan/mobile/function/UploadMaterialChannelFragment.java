@@ -26,6 +26,7 @@ import com.luyuan.mobile.util.RequestManager;
 import java.util.ArrayList;
 import java.util.List;
 
+// 资料上传通道页面
 public class UploadMaterialChannelFragment extends Fragment {
 
     private ListView listView;

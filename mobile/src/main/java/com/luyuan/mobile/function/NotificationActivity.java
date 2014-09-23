@@ -12,6 +12,11 @@ import com.luyuan.mobile.R;
 
 import cn.jpush.android.api.JPushInterface;
 
+// 消息推送 主控制页面，具体显示页面分成四个：
+// 1. 系统更新
+// 2. 日程管理
+// 3. 问卷审批
+// 4. 培训通知
 public class NotificationActivity extends Activity {
 
     private String key = "";
@@ -56,11 +61,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("training")) {
             fragment = new NotificationTrainingFragment();
             actionBar.setTitle(R.string.training_remind);
-        } else {
-            // TODO
-            return;
         }
 
+        // 根据参数不同，显示对应的推送通知页面
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();

@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 日程
 public class ScheduleData {
 
     private String success = "";

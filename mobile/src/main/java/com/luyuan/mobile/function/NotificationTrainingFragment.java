@@ -14,6 +14,7 @@ import com.luyuan.mobile.ui.LoginActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
+// 培训通知
 public class NotificationTrainingFragment extends Fragment {
 
     @Override

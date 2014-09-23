@@ -14,6 +14,7 @@ import com.luyuan.mobile.ui.LoginActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
+// 审批提醒
 public class NotificationApproveFragment extends Fragment {
 
     @Override

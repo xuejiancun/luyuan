@@ -22,6 +22,7 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+// 帐户 -> 我的资料 页面
 public class AboutMeActivity extends Activity {
 
     private ProgressDialog dialog;
@@ -44,6 +45,7 @@ public class AboutMeActivity extends Activity {
         ((EditText) findViewById(R.id.edittext_email)).setText(MyGlobal.getUser().getEmail());
         ((EditText) findViewById(R.id.edittext_job)).setText(MyGlobal.getUser().getJob());
 
+        // 修改密码
         ((Button) findViewById(R.id.button_modify)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

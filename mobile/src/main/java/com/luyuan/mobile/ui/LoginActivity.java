@@ -24,6 +24,7 @@ import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+// 登录功能
 public class LoginActivity extends Activity {
 
     private int jobIndex;
@@ -44,7 +45,7 @@ public class LoginActivity extends Activity {
     }
 
     public void login(View view) {
-        // clear user data
+        // 置空 用户＋功能列表 数据
         MyGlobal.setUser(new User());
         MyGlobal.setFunctionData(new FunctionData());
 
@@ -106,6 +107,7 @@ public class LoginActivity extends Activity {
                     if (response != null && response.getSuccess().equals("true")) {
                         jobData = response;
 
+                        // 把用户信息缓存到MyGlobal
                         User user = new User();
                         user.setId(jobData.getUserId());
                         user.setSob(sob);
@@ -117,6 +119,7 @@ public class LoginActivity extends Activity {
                         MyGlobal.setUser(user);
 
                         int count = jobData.getJobInfos().size();
+                        // 如果用户对应只有一个岗位，直接登录系统
                         if (count == 1) {
                             jobIndex = 0;
 
@@ -128,6 +131,7 @@ public class LoginActivity extends Activity {
                             intent.putExtra("tab", "home");
                             startActivity(intent);
 
+                        // 否则，让用户选择岗位
                         } else if (count > 1) {
                             CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
                             for (int i = 0; i < count; i++) {
@@ -173,6 +177,7 @@ public class LoginActivity extends Activity {
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
                                 .show();
+                    // 无语!!!
                     } else if (response != null && response.getSuccess().equals("false_account_10nlatter")) {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.account_10nlatter)
@@ -209,10 +214,7 @@ public class LoginActivity extends Activity {
 
     }
 
-    public void reset(View view) {
-        // TODO
-    }
-
+    // 再按一次返回按键，退出应用程序
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {

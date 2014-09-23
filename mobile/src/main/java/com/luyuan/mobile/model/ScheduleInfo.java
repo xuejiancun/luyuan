@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 日程
 public class ScheduleInfo {
 
     private String userId = "";

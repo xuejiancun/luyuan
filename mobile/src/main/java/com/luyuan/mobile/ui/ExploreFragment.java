@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.luyuan.mobile.R;
 
+// 探索Tab <- 社交化功能？
 public class ExploreFragment extends Fragment {
 
     @Override

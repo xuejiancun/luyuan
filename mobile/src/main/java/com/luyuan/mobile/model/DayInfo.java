@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 设过日程的天
 public class DayInfo {
 
     private int day;

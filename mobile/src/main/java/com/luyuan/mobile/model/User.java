@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 用户
 public class User {
 
     private String id = "";

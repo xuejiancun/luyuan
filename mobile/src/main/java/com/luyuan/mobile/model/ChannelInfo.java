@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 资料上传通道
 public class ChannelInfo {
 
     private String id = "";

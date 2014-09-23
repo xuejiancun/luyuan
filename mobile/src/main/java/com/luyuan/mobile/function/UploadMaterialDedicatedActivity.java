@@ -32,6 +32,7 @@ import com.luyuan.mobile.util.RequestManager;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+// 门店打点功能
 public class UploadMaterialDedicatedActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;

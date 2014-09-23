@@ -9,7 +9,7 @@ import com.luyuan.mobile.R;
 
 import cn.jpush.android.api.JPushInterface;
 
-
+// 欢迎页面
 public class WelcomeActivity extends Activity {
 
     @Override

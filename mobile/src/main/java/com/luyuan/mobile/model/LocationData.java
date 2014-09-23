@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 地理位置
 public class LocationData {
 
     private String success = "";

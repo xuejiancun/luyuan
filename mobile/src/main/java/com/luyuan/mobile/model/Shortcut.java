@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 常用功能
 public class Shortcut {
 
     private Integer id;

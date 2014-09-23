@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 资料上传
 public class Material {
 
     private String channelId = "";

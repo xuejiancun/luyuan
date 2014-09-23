@@ -23,6 +23,7 @@ import com.luyuan.mobile.util.MyGlobal;
 import java.util.ArrayList;
 import java.util.List;
 
+// 主页Tab
 public class HomeFragment extends Fragment {
 
     private GridView gridView;

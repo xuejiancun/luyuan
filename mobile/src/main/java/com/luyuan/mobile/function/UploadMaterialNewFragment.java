@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// 资料上传－新增资料 页面
 public class UploadMaterialNewFragment extends Fragment {
 
     private final ArrayList<String> filePaths = new ArrayList<String>();
@@ -83,7 +84,7 @@ public class UploadMaterialNewFragment extends Fragment {
             channel = args.getString("channel");
         }
 
-        // add attachment
+        // 添加附件
         ((Button) view.findViewById(R.id.button_attach_file)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,12 +137,11 @@ public class UploadMaterialNewFragment extends Fragment {
             }
         });
 
-        // submit material
+        // 提交资料
         ((Button) view.findViewById(R.id.button_submit_material)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // create material
                 String name = editTextName.getText().toString().trim();
                 String remark = editTextRemark.getText().toString().trim();
                 if (name.isEmpty()) {
@@ -174,7 +174,7 @@ public class UploadMaterialNewFragment extends Fragment {
             }
         });
 
-        // back to channel
+        // 返回
         ((Button) view.findViewById(R.id.button_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

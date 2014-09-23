@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.luyuan.mobile.R;
 
-
+// 图片预览功能
 public class ImagePreviewActivity extends Activity {
 
     private static final int DELAY_MILLIS = 1000;

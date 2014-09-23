@@ -3,6 +3,7 @@ package com.luyuan.mobile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// 资料上传通道
 public class ChannelData {
 
     private String success = "";

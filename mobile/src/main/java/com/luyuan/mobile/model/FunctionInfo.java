@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 功能
 public class FunctionInfo {
 
     private String id = "";

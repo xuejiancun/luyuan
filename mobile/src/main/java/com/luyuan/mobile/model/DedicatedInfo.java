@@ -1,5 +1,6 @@
 package com.luyuan.mobile.model;
 
+// 门店打点资料
 public class DedicatedInfo {
 
     private String id = "";

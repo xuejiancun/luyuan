@@ -21,6 +21,7 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+// 门店资料搜索结果页面
 public class UploadMaterialDedicatedQueryFragment extends Fragment {
 
     private String CANCELED = "已取消";
@@ -61,7 +62,7 @@ public class UploadMaterialDedicatedQueryFragment extends Fragment {
         ((EditText) view.findViewById(R.id.edittext_submit_by)).setText(submitBy);
         ((TextView) view.findViewById(R.id.textview_material_attachment)).setText(attachment);
 
-        // cancel material
+        // 资料状态变成取消
         buttonCancel = (Button) view.findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
