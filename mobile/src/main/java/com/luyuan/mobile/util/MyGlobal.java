@@ -21,10 +21,11 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
+//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
@@ -67,6 +68,9 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
     public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
+    public static final String WEBVIEW_URL_EXPRESS = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/EnemyExpress/EnemyExpress.html";
+    public static final String WEBVIEW_URL_PRODUCT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/NewProduct/NewProduct.html";
+    public static final String WEBVIEW_URL_NOTIFICATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/ImportantNotification/ImportantNotification.html";
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITH_TIME = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -111,6 +115,12 @@ public class MyGlobal {
         } else if (functionCode.equals("query_training")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("query_manual")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("query_express")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("query_product")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("query_notification")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("query_authorization")) {
             clz = WebViewActivity.class;

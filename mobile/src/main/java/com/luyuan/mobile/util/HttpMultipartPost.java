@@ -57,7 +57,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... params) {
         String serverResponse = null;
 
-        // compress files
+        // 压缩文件
         File dir = new File(MyGlobal.COMPRESS_PATH);
         if (!dir.exists() || !dir.isDirectory()) {
             dir.mkdirs();

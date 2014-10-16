@@ -22,7 +22,6 @@ import com.luyuan.mobile.util.MyGlobal;
 import java.io.IOException;
 import java.io.InputStream;
 
-// Web页面嵌套进浏览器功能
 public class WebViewActivity extends Activity {
 
     private WebView webview;
@@ -72,54 +71,9 @@ public class WebViewActivity extends Activity {
             settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             webview.addJavascriptInterface(this, "android");
             webview.setWebViewClient(new WebViewClient() {
-                // 本地加载资源文件
                 @Override
                 public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                    if (url.contains("jquery-ui.css")) {
-                        return getCssWebResourceResponseFromAsset("jquery-ui.css");
-                    } else if (url.contains("jquery.mobile-1.0a1.min.css")) {
-                        return getCssWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.css");
-                    } else if (url.contains("jquery.mobile-1.3.2.min.css")) {
-                        return getCssWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.css");
-                    } else if (url.contains("jquery-1.4.3.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery-1.4.3.min.js");
-                    } else if (url.contains("jquery-1.7.2.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery-1.7.2.min.js");
-                    } else if (url.contains("jquery.mobile-1.0a1.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery.mobile-1.0a1.min.js");
-                    } else if (url.contains("jquery-1.10.2.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery-1.10.2.js");
-                    } else if (url.contains("1.10.4jquery-ui.js")) {
-                        return getJsWebResourceResponseFromAsset("1.10.4jquery-ui.js");
-                    } else if (url.contains("jquery-1.8.3.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery-1.8.3.min.js");
-                    } else if (url.contains("jquery.mobile-1.3.2.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery.mobile-1.3.2.min.js");
-                    } else if (url.contains("jquery-1.9.1.min.js")) {
-                        return getJsWebResourceResponseFromAsset("jquery-1.9.1.min.js");
-                    } else {
-                        return super.shouldInterceptRequest(view, url);
-                    }
-                }
-
-                private WebResourceResponse getCssWebResourceResponseFromAsset(String filename) {
-                    InputStream input = null;
-                    try {
-                        input = getAssets().open(filename);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return new WebResourceResponse("text/css", "UTF-8", input);
-                }
-
-                private WebResourceResponse getJsWebResourceResponseFromAsset(String filename) {
-                    InputStream input = null;
-                    try {
-                        input = getAssets().open(filename);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return new WebResourceResponse("text/javascript", "UTF-8", input);
+                    return super.shouldInterceptRequest(view, url);
                 }
 
                 @Override
@@ -186,6 +140,12 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_query_training).toString();
         } else if (function.equals("query_manual")) {
             result = getText(R.string.function_query_manual).toString();
+        } else if (function.equals("query_express")) {
+            result = getText(R.string.function_query_express).toString();
+        } else if (function.equals("query_product")) {
+            result = getText(R.string.function_query_product).toString();
+        } else if (function.equals("query_notification")) {
+            result = getText(R.string.function_query_notification).toString();
         } else if (function.equals("query_authorization")) {
             result = getText(R.string.function_query_authorization).toString();
         } else if (function.equals("market_research")) {
@@ -231,6 +191,12 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_TRAIN;
         } else if (function.equals("query_manual")) {
             result = MyGlobal.WEBVIEW_URL_MANUAL;
+        } else if (function.equals("query_express")) {
+            result = MyGlobal.WEBVIEW_URL_EXPRESS;
+        } else if (function.equals("query_product")) {
+            result = MyGlobal.WEBVIEW_URL_PRODUCT;
+        } else if (function.equals("query_notification")) {
+            result = MyGlobal.WEBVIEW_URL_NOTIFICATION;
         } else if (function.equals("query_authorization")) {
             result = MyGlobal.WEBVIEW_URL_QUERY_AUTH;
         } else if (function.equals("market_research")) {
