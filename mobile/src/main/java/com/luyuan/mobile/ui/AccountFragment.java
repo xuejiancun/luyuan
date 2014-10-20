@@ -1,7 +1,10 @@
 package com.luyuan.mobile.ui;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +31,8 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
 
     private LayoutInflater layoutInflater;
     private ListView listView;
+    private SharedPreferences sharedPreferences;
+    private Editor editor;
     private FunctionData functionData = new FunctionData();
 
     @Override
@@ -73,6 +78,13 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
+
+                editor.putString("username", "");
+                // editor.putString("password", "");
+                editor.commit();
+
                 startActivity(intent);
             }
         });

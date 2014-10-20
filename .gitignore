@@ -24,3 +24,10 @@ proguard/
 
 # Log Files
 *.log
+build/intermediates/model_data.bin
+
+mobile/mobile.iml
+
+pad/pad.iml
+
+.idea/workspace.xml

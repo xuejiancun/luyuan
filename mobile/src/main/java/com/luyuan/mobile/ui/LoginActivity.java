@@ -3,8 +3,11 @@ package com.luyuan.mobile.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,6 +38,8 @@ public class LoginActivity extends Activity {
     private String username;
     private String password;
     private long exitTime = 0;
+    private SharedPreferences sharedPreferences;
+    private Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,10 @@ public class LoginActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        ((EditText) findViewById(R.id.edittext_username)).setText(sharedPreferences.getString("username", ""));
+        // ((EditText) findViewById(R.id.edittext_password)).setText(sharedPreferences.getString("password", ""));
     }
 
     public void login(View view) {
@@ -52,6 +61,13 @@ public class LoginActivity extends Activity {
         sob = ((EditText) findViewById(R.id.edittext_sob)).getText().toString().trim();
         username = ((EditText) findViewById(R.id.edittext_username)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.edittext_password)).getText().toString().trim();
+
+        sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        editor.putString("username", username);
+        // editor.putString("password", password);
+        editor.commit();
 
 //        username = "xuejiancun";
 //        password = "123456";
@@ -64,6 +80,7 @@ public class LoginActivity extends Activity {
 
 //        username = "adminhh";
 //        password = "654321";
+
 
         if (username.isEmpty()) {
             new AlertDialog.Builder(LoginActivity.this)
@@ -131,7 +148,7 @@ public class LoginActivity extends Activity {
                             intent.putExtra("tab", "home");
                             startActivity(intent);
 
-                        // 否则，让用户选择岗位
+                            // 否则，让用户选择岗位
                         } else if (count > 1) {
                             CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
                             for (int i = 0; i < count; i++) {
@@ -177,7 +194,7 @@ public class LoginActivity extends Activity {
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
                                 .show();
-                    // 无语!!!
+                        // 无语!!!
                     } else if (response != null && response.getSuccess().equals("false_account_10nlatter")) {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.account_10nlatter)
