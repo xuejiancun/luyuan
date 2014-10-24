@@ -146,6 +146,8 @@ public class WebViewActivity extends Activity {
             result = getText(R.string.function_query_product).toString();
         } else if (function.equals("query_notification")) {
             result = getText(R.string.function_query_notification).toString();
+        } else if (function.equals("query_score")) {
+            result = getText(R.string.function_query_score).toString();
         } else if (function.equals("query_authorization")) {
             result = getText(R.string.function_query_authorization).toString();
         } else if (function.equals("market_research")) {
@@ -197,6 +199,8 @@ public class WebViewActivity extends Activity {
             result = MyGlobal.WEBVIEW_URL_PRODUCT;
         } else if (function.equals("query_notification")) {
             result = MyGlobal.WEBVIEW_URL_NOTIFICATION;
+        } else if (function.equals("query_score")) {
+            result = MyGlobal.WEBVIEW_URL_SCORE;
         } else if (function.equals("query_authorization")) {
             result = MyGlobal.WEBVIEW_URL_QUERY_AUTH;
         } else if (function.equals("market_research")) {
