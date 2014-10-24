@@ -21,11 +21,11 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+    //        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
-//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
+    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
@@ -71,6 +71,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_EXPRESS = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/EnemyExpress/EnemyExpress.html";
     public static final String WEBVIEW_URL_PRODUCT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/NewProduct/NewProduct.html";
     public static final String WEBVIEW_URL_NOTIFICATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/ImportantNotification/ImportantNotification.html";
+    public static final String WEBVIEW_URL_SCORE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Credit/list.html";
     public static final String CAMERA_PATH = Environment.getExternalStorageDirectory() + "/luyuan/camera/";
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITH_TIME = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -122,6 +123,8 @@ public class MyGlobal {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("query_notification")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("query_score")) {
+            clz = WebViewActivity.class;
         } else if (functionCode.equals("query_authorization")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("market_research")) {
@@ -168,6 +171,14 @@ public class MyGlobal {
             resId = R.drawable.icon_query_training;
         } else if (functionCode.equals("query_manual")) {
             resId = R.drawable.icon_query_manual;
+        } else if (functionCode.equals("query_express")) {
+            resId = R.drawable.icon_query_express;
+        } else if (functionCode.equals("query_product")) {
+            resId = R.drawable.icon_query_product;
+        } else if (functionCode.equals("query_notification")) {
+            resId = R.drawable.icon_query_notification;
+        } else if (functionCode.equals("query_score")) {
+            resId = R.drawable.icon_query_score;
         } else if (functionCode.equals("query_authorization")) {
             resId = R.drawable.icon_query_authorization;
         } else if (functionCode.equals("market_research")) {
