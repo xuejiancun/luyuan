@@ -45,7 +45,7 @@
     <string name="dialog_cancel">取消</string>
     <string name="press_again_exit_application">再按一次退出程序</string>
 
-    <string name="dialog_hint_new_version">系统有新版本发布，需要现在更新？</string>
+    <string name="dialog_hint_new_version">掌上绿源有新版本发布，去更新？</string>
     <string name="dialog_downloading_file">正在下载更新文件...</string>
     <string name="dialog_download_error">下载更新文件失败，请稍后再试。</string>
 
@@ -167,7 +167,7 @@
     <string name="job">岗位</string>
     <string name="modify">修改</string>
     <string name="modifiable">（可修改）</string>
-    <string name="already_latest_version">您的系统已经是最新版本</string>
+    <string name="already_latest_version">您的掌上绿源已经是最新版本</string>
 
     <string name="schedule_remind">日程提醒</string>
     <string name="approve_remind">审核提醒</string>

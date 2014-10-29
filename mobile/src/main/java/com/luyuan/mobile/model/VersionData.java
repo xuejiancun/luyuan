@@ -7,6 +7,8 @@ public class VersionData {
     private int code;
     private String version;
     private String url;
+    private int need;
+    private float size;
 
     public String getSuccess() {
         return success;
@@ -38,5 +40,21 @@ public class VersionData {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getNeed() {
+        return need;
+    }
+
+    public void setNeed(int need) {
+        this.need = need;
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
     }
 }

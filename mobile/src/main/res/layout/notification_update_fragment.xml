@@ -23,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="版本信息"
+                android:text="版本检查"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="left"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="#46C50C" />
@@ -83,7 +83,65 @@
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:text="更新等级"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_need"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="更新大小"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_size"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 

@@ -19,9 +19,6 @@ import android.webkit.WebViewClient;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.util.MyGlobal;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class WebViewActivity extends Activity {
 
     private WebView webview;

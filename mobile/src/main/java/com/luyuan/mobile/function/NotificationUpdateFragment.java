@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,12 +47,17 @@ public class NotificationUpdateFragment extends Fragment {
     private ProgressDialog dialog;
     private TextView textview_latest_version;
     private TextView textview_current_version;
+    private TextView textview_need;
+    private TextView textview_size;
     private Button button_update;
+    private Button button_enter;
 
     private int current_code;
     private int latest_code;
     private String latest_version = "";
     private String current_version = "";
+    private int need;
+    private float size;
     private String download_url = "";
 
     @Override
@@ -60,7 +66,10 @@ public class NotificationUpdateFragment extends Fragment {
 
         textview_latest_version = (TextView) view.findViewById(R.id.textview_latest_version);
         textview_current_version = (TextView) view.findViewById(R.id.textview_current_version);
+        textview_need = (TextView) view.findViewById(R.id.textview_need);
+        textview_size = (TextView) view.findViewById(R.id.textview_size);
         button_update = (Button) view.findViewById(R.id.button_update);
+        button_enter = (Button) view.findViewById(R.id.button_enter);
 
         try {
             PackageInfo packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
@@ -78,9 +87,11 @@ public class NotificationUpdateFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     intent.putExtra("stId", MyGlobal.getUser().getStId());
                     startActivity(intent);
+                    getActivity().finish();
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -122,7 +133,7 @@ public class NotificationUpdateFragment extends Fragment {
             dialog.setCancelable(true);
             dialog.show();
 
-            GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION,
+            GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION + "&versionCode=" + current_code,
                     VersionData.class, new Response.Listener<VersionData>() {
                 @Override
                 public void onResponse(final VersionData response) {
@@ -132,7 +143,22 @@ public class NotificationUpdateFragment extends Fragment {
                         download_url = response.getUrl();
                         latest_code = response.getCode();
                         latest_version = response.getVersion();
+                        need = response.getNeed();
+                        size = response.getSize();
                         textview_latest_version.setText(latest_version);
+                        textview_size.setText(String.valueOf(size) + " MB");
+                        String needText = "";
+                        if (need == 0) {
+                            if (latest_code > current_code) {
+                                textview_need.setTextColor(Color.parseColor("#46C50C"));
+                                needText = "可选";
+                            }
+                        } else if (need == 1) {
+                            button_enter.setVisibility(View.GONE);
+                            textview_need.setTextColor(Color.parseColor("#FF0000"));
+                            needText = "必须";
+                        }
+                        textview_need.setText(needText);
                     } else {
                         new AlertDialog.Builder(getActivity())
                                 .setMessage(R.string.interact_data_error)

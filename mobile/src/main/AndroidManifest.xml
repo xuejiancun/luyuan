@@ -174,8 +174,7 @@
 
         <!-- 状态通知栏，需要打开的Activity -->
         <activity
-            android:name=".function.NotificationActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".function.NotificationActivity">
             <intent-filter>
                 <action android:name="jpush.testAction" />
                 <category android:name="jpush.testCategory" />
