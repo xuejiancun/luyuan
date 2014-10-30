@@ -61,6 +61,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("training")) {
             fragment = new NotificationTrainingFragment();
             actionBar.setTitle(R.string.training_remind);
+        } else if (key.contains("notification")) {
+            fragment = new NotificationNotificationFragment();
+            actionBar.setTitle(R.string.notification_remind);
         }
 
         // 根据参数不同，显示对应的推送通知页面

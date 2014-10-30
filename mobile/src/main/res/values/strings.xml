@@ -173,5 +173,6 @@
     <string name="approve_remind">审核提醒</string>
     <string name="version_remind">版本提醒</string>
     <string name="training_remind">培训通知</string>
+    <string name="notification_remind">重要事项通知</string>
 
 </resources>
