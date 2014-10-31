@@ -47,7 +47,9 @@ public class NotificationUpdateFragment extends Fragment {
     private ProgressDialog dialog;
     private TextView textview_latest_version;
     private TextView textview_current_version;
+    private TextView textview_need_title;
     private TextView textview_need;
+    private TextView textview_size_title;
     private TextView textview_size;
     private Button button_update;
     private Button button_enter;
@@ -66,7 +68,9 @@ public class NotificationUpdateFragment extends Fragment {
 
         textview_latest_version = (TextView) view.findViewById(R.id.textview_latest_version);
         textview_current_version = (TextView) view.findViewById(R.id.textview_current_version);
+        textview_need_title = (TextView) view.findViewById(R.id.textview_need_title);
         textview_need = (TextView) view.findViewById(R.id.textview_need);
+        textview_size_title = (TextView) view.findViewById(R.id.textview_size_title);
         textview_size = (TextView) view.findViewById(R.id.textview_size);
         button_update = (Button) view.findViewById(R.id.button_update);
         button_enter = (Button) view.findViewById(R.id.button_enter);
@@ -143,22 +147,28 @@ public class NotificationUpdateFragment extends Fragment {
                         download_url = response.getUrl();
                         latest_code = response.getCode();
                         latest_version = response.getVersion();
+                        textview_latest_version.setText(latest_version);
                         need = response.getNeed();
                         size = response.getSize();
-                        textview_latest_version.setText(latest_version);
-                        textview_size.setText(String.valueOf(size) + " MB");
-                        String needText = "";
-                        if (need == 0) {
-                            if (latest_code > current_code) {
+                        if (latest_code <= current_code) {
+                            textview_need_title.setVisibility(View.GONE);
+                            textview_need.setVisibility(View.GONE);
+                            textview_size_title.setVisibility(View.GONE);
+                            textview_size.setVisibility(View.GONE);
+                        } else {
+                            String needText = "";
+                            if (need == 0) {
                                 textview_need.setTextColor(Color.parseColor("#46C50C"));
                                 needText = "可选";
+                            } else if (need == 1) {
+                                button_enter.setVisibility(View.GONE);
+                                textview_need.setTextColor(Color.parseColor("#FF0000"));
+                                needText = "必须";
                             }
-                        } else if (need == 1) {
-                            button_enter.setVisibility(View.GONE);
-                            textview_need.setTextColor(Color.parseColor("#FF0000"));
-                            needText = "必须";
+                            textview_need.setText(needText);
+                            textview_size.setText(String.valueOf(size) + " MB");
                         }
-                        textview_need.setText(needText);
+
                     } else {
                         new AlertDialog.Builder(getActivity())
                                 .setMessage(R.string.interact_data_error)

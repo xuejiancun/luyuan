@@ -99,6 +99,7 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/textview_need_title"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -128,6 +129,7 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/textview_size_title"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
