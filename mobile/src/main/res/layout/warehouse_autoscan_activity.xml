@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical" >
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center" >
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<EditText
+				android:id="@+id/editText_shaomiao"
+				android:layout_width="315dp"
+				android:layout_height="6dp"
+				android:background="@null"
+				android:ems="15"
+				android:singleLine="false" >
+
+				<requestFocus />
+			</EditText>
+
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+
+			<TextView
+				android:id="@+id/TextView_show1"
+				android:layout_width="315dp"
+				android:layout_height="wrap_content"
+				android:ems="25"
+				android:background="@null"
+				android:singleLine="true"
+				>
+
+			</TextView>
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical" >
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="219dp" >
+
+			<ScrollView
+				android:id="@+id/scrollView"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:scrollbarStyle="outsideOverlay" >
+
+				<TextView
+					android:id="@+id/editText_baocuo"
+					android:layout_width="fill_parent"
+					android:layout_height="match_parent" />
+			</ScrollView>
+		</LinearLayout>
+
+
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="177dp" >
+
+			<ScrollView
+				android:id="@+id/scrollView1"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:scrollbarStyle="outsideOverlay" >
+
+				<TextView
+					android:id="@+id/TextView_shiporder"
+					android:layout_width="fill_parent"
+					android:layout_height="match_parent" />
+			</ScrollView>
+
+		</LinearLayout>
+	</LinearLayout>
+
+</LinearLayout>

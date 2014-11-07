@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		<TableLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TableRow>
+		<TextView
+
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:text="入库单号:"
+			android:layout_alignParentLeft="true" />
+		<TextView
+					android:id="@+id/textView_whpcode"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow>
+			<TextView
+
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:text="供货单位:"
+				android:layout_alignParentLeft="true" />
+			<TextView
+				android:id="@+id/textView_unitname"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:layout_alignParentLeft="true" />
+		</TableRow>
+			<TableRow>
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="入库仓库:"
+					android:layout_alignParentLeft="true" />
+				<TextView
+					android:id="@+id/textView_warehouse"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+		</TableLayout>
+	</RelativeLayout>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/navbg"
+		>
+
+
+		<TextView
+			android:id="@+id/textView_qty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:text="实收数"
+			android:textSize="18sp" />
+
+		<TextView
+			android:id="@+id/textView_badqty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:text="不合格数"
+			android:textSize="18sp" />
+
+		<TextView
+			android:id="@+id/textView_examineqty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/textView_badqty"
+			android:layout_alignBottom="@+id/textView_badqty"
+			android:layout_marginRight="14dp"
+			android:layout_toLeftOf="@+id/textView_badqty"
+			android:text="检验数"
+			android:textSize="18sp" />
+
+		<TextView
+			android:id="@+id/textView_actqty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/textView_qty"
+			android:layout_alignBottom="@+id/textView_qty"
+			android:layout_toLeftOf="@+id/textView_examineqty"
+			android:text="合格数"
+			android:textSize="18sp" />
+
+	</RelativeLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="400dp">
+	<ListView
+		android:id="@+id/listView_information"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+	</ListView>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:paddingLeft="30dp"
+		android:paddingRight="30dp"
+		android:orientation="horizontal"
+		android:gravity="center">
+
+		<Button
+			android:id="@+id/button_warehouse_voucher_examine"
+			android:layout_height="40dp"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:text="@string/examine"
+			android:textSize="20dp"
+			android:textColor="#FFFFFF"
+			android:background="#46C50C" />
+
+	</LinearLayout>
+
+</LinearLayout>

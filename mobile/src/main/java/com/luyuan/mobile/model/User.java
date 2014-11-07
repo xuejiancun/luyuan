@@ -13,6 +13,7 @@ public class User {
     private String contact = "";
     private String job = "";
     private String unitId = "";
+    private String heId = "";
 
     public String getId() {
         return id;
@@ -92,5 +93,13 @@ public class User {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getHeId() {
+        return heId;
+    }
+
+    public void setHeId(String heId) {
+        this.heId = heId;
     }
 }

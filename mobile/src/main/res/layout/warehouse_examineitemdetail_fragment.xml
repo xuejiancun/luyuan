@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		<TableLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+		<TextView
+
+			android:layout_width="match_parent"
+			android:layout_height="30dp"
+			android:singleLine="true"
+			android:text="入库单号:"
+			android:textSize="20sp"
+			android:layout_alignParentLeft="true" />
+		<TextView
+					android:id="@+id/textView_whpcode"
+					android:layout_width="200dp"
+					android:layout_height="30dp"
+					android:singleLine="true"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+			<TextView
+
+				android:layout_width="match_parent"
+				android:layout_height="30dp"
+				android:singleLine="true"
+				android:text="供货单位:"
+				android:textSize="20sp"
+				android:layout_alignParentLeft="true" />
+			<TextView
+				android:id="@+id/textView_unitname"
+				android:layout_width="200dp"
+				android:layout_height="30dp"
+				android:textSize="20sp"
+				android:singleLine="true"
+				android:layout_alignParentLeft="true" />
+		</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="物料:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<Spinner android:layout_height="wrap_content"
+				         android:layout_width="match_parent"
+				         android:id="@+id/spinner_item"/>
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="备注:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/textView_remark"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="结论:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/textView_result"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<RadioButton
+					android:id="@+id/radio_good"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentLeft="true"
+					android:textSize="20sp"
+					android:text="合格" />
+
+				<RadioButton
+					android:id="@+id/radio_bad"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:text="不合格" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="重工:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/textView_zg"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="让步:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/textView_rb"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+			<TableRow android:layout_width="match_parent" android:layout_height="wrap_content">
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="退货:"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/textView_th"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="20sp"
+					android:layout_alignParentLeft="true" />
+			</TableRow>
+		</TableLayout>
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:paddingLeft="30dp"
+		android:paddingRight="30dp"
+		android:orientation="horizontal"
+		android:gravity="center">
+
+		<Button
+			android:id="@+id/button_warehouse_voucher_examine"
+			android:layout_height="40dp"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:text="@string/submit"
+			android:textSize="20dp"
+			android:textColor="#FFFFFF"
+			android:background="#46C50C" />
+
+	</LinearLayout>
+
+</LinearLayout>

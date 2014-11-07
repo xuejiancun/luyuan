@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:descendantFocusability="beforeDescendants">
+
+        <TableLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textview_warehouse_wbname"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold" />
+	            <TextView
+		            android:id="@+id/textview_warehouse_qty"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="match_parent"
+		            android:gravity="center"/>
+                <TextView
+                    android:id="@+id/textview_warehouse_freezeqty"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="right"/>
+            </TableRow>
+
+            <TableRow>
+
+	            <TextView
+		            android:id="@+id/textview_warehouse_productcode"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="match_parent" />
+	            <TextView
+		            android:id="@+id/textview_warehouse_spectype"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="match_parent"
+		            android:gravity="center"/>
+	            <TextView
+		            android:id="@+id/textview_warehouse_prefixname"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="match_parent"
+		            android:gravity="right"/>
+
+            </TableRow>
+	        <TableRow>
+		        <TextView
+			        android:id="@+id/textview_warehouse_wbid"
+			        android:layout_width="0dp"
+			        android:layout_weight="1"
+			        android:layout_height="match_parent"
+			        android:visibility="gone"/>
+		        <TextView
+			        android:id="@+id/textview_warehouse_wbiddetail"
+			        android:layout_width="0dp"
+			        android:layout_weight="1"
+			        android:layout_height="match_parent"
+			        android:visibility="gone"/>
+	        </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

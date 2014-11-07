@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.luyuan.mobile"
-    android:versionCode="7"
-    android:versionName="2.2.0">
+    android:versionCode="8"
+    android:versionName="2.2.1">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -70,9 +70,6 @@
             android:name=".ui.WebViewActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".function.WarehouseVoucherManagerActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".function.UploadMaterialActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="orientation|screenSize"
@@ -90,6 +87,54 @@
             android:name=".function.AboutMeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".production.WarehouseVoucherManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseVoucherCreateManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseInventoryManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseVoucherExamineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseVoucherExamineItemCreateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseLocationInventoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseLocationInventoryAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinSearchDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinLackManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinLackSearchDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseAutomaticScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinInventoryCheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".production.WarehouseBinInventoryCheckDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".production.WarehousePurOrderExamineActivity"
+            android:screenOrientation="portrait" />
+
 
         <service
             android:name="com.baidu.location.f"
@@ -173,8 +218,7 @@
         <!--  </>值来自开发者平台取得的AppKey-->
 
         <!-- 状态通知栏，需要打开的Activity -->
-        <activity
-            android:name=".function.NotificationActivity">
+        <activity android:name=".function.NotificationActivity">
             <intent-filter>
                 <action android:name="jpush.testAction" />
                 <category android:name="jpush.testCategory" />

@@ -13,6 +13,18 @@ import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.User;
+import com.luyuan.mobile.production.WarehouseAutomaticScanActivity;
+import com.luyuan.mobile.production.WarehouseBinInventoryCheckActivity;
+import com.luyuan.mobile.production.WarehouseBinLackManagerActivity;
+import com.luyuan.mobile.production.WarehouseBinManagerActivity;
+import com.luyuan.mobile.production.WarehouseInventoryManagerActivity;
+import com.luyuan.mobile.production.WarehouseLocationInventoryActivity;
+import com.luyuan.mobile.production.WarehouseLocationInventoryAddActivity;
+import com.luyuan.mobile.production.WarehousePurOrderExamineActivity;
+import com.luyuan.mobile.production.WarehouseVoucherCreateManagerActivity;
+import com.luyuan.mobile.production.WarehouseVoucherExamineActivity;
+import com.luyuan.mobile.production.WarehouseVoucherExamineItemCreateActivity;
+import com.luyuan.mobile.production.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +33,6 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
@@ -47,7 +58,31 @@ public class MyGlobal {
     public static final String API_CHECK_VERSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchversion";
     public static final String API_MODIFY_CONTACT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=modifycontract";
 
+    // Added by Fangyi  -- Start
+    public static final String API_WHINVENTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whInventoryBook.ashx?fn=getwhinventory";
+    public static final String API_WHINVENTORYDETAIL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whInventoryBook.ashx?fn=getwhinventorydetail";
+    public static final String API_WAREHOUSE_PURCHASEORDEREXAMINE_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getwhpsubmit";
+    public static final String API_WHPURCHASEDETAIL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getwhpdetail";
+    public static final String API_WHPUREXAMINE = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=finishexamin";
+    public static final String API_QUAPURCREATE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getquapursave";
+    public static final String API_EXAMINEITEM_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getexamineitem";
+    public static final String API_WAREHOUSE_LOCATIONINVENTORY_QUERY = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=getdetaillist";
+    public static final String API_WHLOCATIONINVENTORYDEL = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=ondel2";
+    public static final String API_WHGETPRODUCTDETAIL = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=getproductlist";
+    public static final String API_WHLOCATIONINVENTORYSAVE = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=onsave";
+    public static final String API_WHGETBIN = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=getwhbinlist";
+    public static final String API_WAREHOUSE_BINDETAILSEASRCH_QUERY = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinInventoryCheckHandler.ashx?fn=getsearchlist";
+    public static final String API_WAREHOUSE_BINLACKDETAILSEASRCH_QUERY = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinInventoryCheckHandler.ashx?fn=getnochecklist";
+    public static final String API_WAREHOUSE_BININVENTORYCHECK_DETAIL = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinInventoryCheckHandler.ashx?fn=getlist";
+    public static final String API_WAREHOUSE_PURCHASEORDERSUBMIT_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getwhpsubmit";
+    public static final String API_PURORDER_ADD = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=addnew";
+    public static final String API_PURORDER_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getordercode";
+    public static final String API_WHPURSUBMIT = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=submit";
+    public static final String API_WHPURSAVE = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=save";
+    public static final String API_WHPCODEITEMLIST_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getlist";
+    public static final String API_UNITNAME_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getunitname";
     public static final String API_WAREHOUSE_PURCHASEORDER_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=purchaseorderquery";
+    // Added by Fangyi  -- End
 
     public static final String WEBVIEW_URL_QUERY_AUTH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/QueryAuth.aspx";
     public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
@@ -149,6 +184,30 @@ public class MyGlobal {
             clz = ScheduleManagerActivity.class;
         } else if (functionCode.equals("query_warrant")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("warehouse_purvoucher_search")) {
+            clz = WarehouseVoucherManagerActivity.class;
+        } else if (functionCode.equals("warehouse_purvoucher_create")) {
+            clz = WarehouseVoucherCreateManagerActivity.class;
+        } else if (functionCode.equals("warehouse_inventorybook_search")) {
+            clz = WarehouseInventoryManagerActivity.class;
+        } else if (functionCode.equals("warehouse_voucher_examine_search")) {
+            clz = WarehouseVoucherExamineActivity.class;
+        } else if (functionCode.equals("warehouse_voucher_examineitem_create")) {
+            clz = WarehouseVoucherExamineItemCreateActivity.class;
+        } else if (functionCode.equals("warehouse_locationinventory_search")) {
+            clz = WarehouseLocationInventoryActivity.class;
+        } else if (functionCode.equals("warehouse_locationinventory_add")) {
+            clz = WarehouseLocationInventoryAddActivity.class;
+        } else if (functionCode.equals("warehouse_whbininfo_search")) {
+            clz = WarehouseBinManagerActivity.class;
+        } else if (functionCode.equals("warehouse_whbinlackinfo_search")) {
+            clz = WarehouseBinLackManagerActivity.class;
+        } else if (functionCode.equals("warehouse_automaticscan")) {
+            clz = WarehouseAutomaticScanActivity.class;
+        } else if (functionCode.equals("warehouse_bininventorycheck")) {
+            clz = WarehouseBinInventoryCheckActivity.class;
+        } else if (functionCode.equals("warehouse_puroederexamine_search")) {
+            clz = WarehousePurOrderExamineActivity.class;
         }
 
         return clz;

@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:Android="http://schemas.android.com/apk/res/android"
+                Android:layout_width="fill_parent"
+                Android:layout_height="fill_parent"
+                Android:minHeight="?android:attr/listPreferredItemHeight"
+                Android:orientation="horizontal" >
+
+	<LinearLayout
+		Android:id="@+id/linearLayout1"
+		Android:layout_width="wrap_content"
+		Android:layout_height="wrap_content"
+		Android:orientation="horizontal" >
+
+		<TextView
+			Android:id="@+id/wbNameItem1"
+			Android:layout_width="80dp"
+			Android:layout_height="wrap_content"
+			Android:text="目视库位"
+			Android:textSize="20sp" />
+
+		<TextView
+			Android:id="@+id/QtyItem1"
+			Android:layout_width="148dp"
+			Android:layout_height="wrap_content"
+			Android:text="库存"
+			Android:textSize="15sp" />
+
+		<TextView
+			Android:id="@+id/FreezeQtyItem1"
+			Android:layout_width="20dp"
+			Android:layout_height="wrap_content"
+			Android:text="冻结"
+			Android:textSize="15sp" />
+		<TextView
+			Android:id="@+id/wbCodeItem1"
+			Android:layout_width="20dp"
+			Android:layout_height="wrap_content"
+			Android:text="冻结"
+			Android:visibility="gone"
+			Android:textSize="15sp" />
+	</LinearLayout>
+
+	<LinearLayout
+		Android:id="@+id/linearLayout2"
+		Android:layout_width="wrap_content"
+		Android:layout_height="wrap_content"
+		Android:orientation="horizontal" >
+	</LinearLayout>
+
+	<TextView
+		Android:id="@+id/PrefixNameItem1"
+		Android:layout_width="100dp"
+		Android:layout_height="wrap_content"
+		Android:layout_alignBaseline="@+id/SpecTypeItem1"
+		Android:layout_alignBottom="@+id/SpecTypeItem1"
+		Android:layout_toRightOf="@+id/SpecTypeItem1"
+		Android:layout_weight="0.07"
+		Android:text="规格"
+		Android:textSize="15sp" />
+
+	<TextView
+		Android:id="@+id/SpecTypeItem1"
+		Android:layout_width="158dp"
+		Android:layout_height="wrap_content"
+		Android:layout_alignBaseline="@+id/ProductCodeItem1"
+		Android:layout_alignBottom="@+id/ProductCodeItem1"
+		Android:layout_toRightOf="@+id/ProductCodeItem1"
+		Android:layout_weight="0.07"
+		Android:text="cx名称"
+		Android:textSize="15sp" />
+
+	<TextView
+		Android:id="@+id/ProductCodeItem1"
+		Android:layout_width="70dp"
+		Android:layout_height="wrap_content"
+		Android:layout_alignParentLeft="true"
+		Android:layout_below="@+id/linearLayout1"
+		Android:layout_weight="0.07"
+		Android:text="zc编码"
+		Android:textSize="15sp" />
+
+</RelativeLayout>

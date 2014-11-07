@@ -48,6 +48,8 @@
     <string name="dialog_hint_new_version">掌上绿源有新版本发布，去更新？</string>
     <string name="dialog_downloading_file">正在下载更新文件...</string>
     <string name="dialog_download_error">下载更新文件失败，请稍后再试。</string>
+    <string name="update_latest_version">已最新</string>
+
 
     <string name="function_voucher_manager">采购入库单管理</string>
     <string name="hint_enter_purchase_order_no">请输入采购订单号</string>
@@ -174,5 +176,47 @@
     <string name="version_remind">版本提醒</string>
     <string name="training_remind">培训通知</string>
     <string name="notification_remind">重要事项通知</string>
+
+    <string name="searchvoucher">请输入单号</string>
+    <string name="search_loading">正在查询,请稍候...</string>
+    <string name="save_success">保存成功</string>
+    <string name="submit_success">提交成功</string>
+    <string name="function_voucher_create">采购入库单制单</string>
+    <string name="order_status">状态</string>
+    <string name="function_whinventorybook_search">台帐查询</string>
+    <string name="item_name">物料名称</string>
+    <string name="item_code">物料编码</string>
+    <string name="item_spec">物料规格</string>
+    <string name="warehouse_select">仓库名称</string>
+    <string name="function_voucher_examine_manage">进货检验单管理</string>
+    <string name="hint_enter_whpurchase_no">请输入采购入库单号</string>
+    <string name="examine">检验</string>
+    <string name="examine_success">检验完毕</string>
+    <string name="function_voucher_examine_create">送检单制单</string>
+    <string name="function_warehouse_locationinventory_search">整车库位调整查询</string>
+    <string name="function_warehouse_locationinventory_add">新增库位明细</string>
+    <string name="function_warehouse_whbininfo_search">盘点概况</string>
+    <string name="function_warehouse_whbinlackinfo_search">漏盘点库位调整查询</string>
+    <string name="ifdel">是否删除?</string>
+    <string name="delsuccess">删除成功</string>
+    <string name="delfail">删除失败</string>
+    <string name="do_loading">正在操作,请稍候...</string>
+    <string name="whbin">目视库位</string>
+    <string name="sysbin">系统库位</string>
+    <string name="product_qty">车型数量 </string>
+    <string name="product_code">车型编码</string>
+    <string name="product_name">车型名称</string>
+    <string name="product_spec">车型规格</string>
+    <string name="choose">选择</string>
+    <string name="begin_date">开始时间</string>
+    <string name="end_date">结束时间</string>
+    <string name="bincode">库位编码</string>
+    <string name="wbcode_empty">请输入库位号</string>
+    <string name="starttime_empty">请输入开始时间</string>
+    <string name="endtime_empty">请输入结束时间</string>
+    <string name="function_whautomaticscan">整车发货单扫描</string>
+    <string name="function_whbincheck">库位盘点</string>
+    <string name="close">关闭</string>
+    <string name="function_puroederexamine_search">采购送检单查询</string>
 
 </resources>

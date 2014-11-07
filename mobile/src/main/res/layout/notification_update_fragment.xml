@@ -34,27 +34,32 @@
             android:layout_height="50dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
             <TextView
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="最新版本"
-                android:textSize="20dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="我的版本"
+                android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="#46C50C" />
 
             <TextView
-                android:id="@+id/textview_latest_version"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textview_current_version"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:gravity="left"
-                android:textSize="20dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="#46C50C" />
 
@@ -65,27 +70,32 @@
             android:layout_height="50dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
             <TextView
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="当前版本"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="最新版本"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/textview_current_version"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textview_latest_version"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:gravity="left"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -102,17 +112,22 @@
                 android:id="@+id/textview_need_title"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="right"
                 android:text="更新等级"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+
+            <TextView
                 android:id="@+id/textview_need"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="left"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -132,17 +147,22 @@
                 android:id="@+id/textview_size_title"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_weight="2"
+                android:gravity="right"
                 android:text="更新大小"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+
+            <TextView
                 android:id="@+id/textview_size"
                 android:layout_height="50dp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="left"
                 android:textSize="20dp"
                 android:textStyle="bold" />

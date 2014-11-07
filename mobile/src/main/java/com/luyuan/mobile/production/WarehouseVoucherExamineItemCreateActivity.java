@@ -1,4 +1,4 @@
-package com.luyuan.mobile.function;
+package com.luyuan.mobile.production;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,7 +15,8 @@ import com.luyuan.mobile.R;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
-public class WarehouseVoucherManagerActivity extends Activity implements SearchView.OnQueryTextListener {
+
+public class WarehouseVoucherExamineItemCreateActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private String tab = "home";
 
@@ -29,7 +30,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(R.string.function_voucher_manager);
+        actionBar.setTitle(R.string.function_voucher_examine_create);
 
         setContentView(R.layout.warehouse_voucher_activity);
 
@@ -44,8 +45,8 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setQueryHint(getResources().getString(R.string.hint_enter_purchase_order_no));
+         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setQueryHint(getResources().getString(R.string.hint_enter_whpurchase_no));
         searchView.setOnQueryTextListener(this);
 
         return true;
@@ -56,25 +57,24 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
     }
 
     public boolean onQueryTextSubmit(String query) {
-        rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH + "&query=" + query);
-
+        rePlaceTabContentForSearch(query);
         return true;
     }
 
     private void rePlaceTabContentForSearch(String api) {
-        WarehouseVoucherSearchFragment warehouseVoucherSearchFragment = new WarehouseVoucherSearchFragment();
+        WarehouseVoucherExamineItemCreateFragment warehouseVoucherExamineItemCreateFragment = new
+		        WarehouseVoucherExamineItemCreateFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString("api", api);
-        warehouseVoucherSearchFragment.setArguments(args);
-
-        fragmentTransaction.replace(R.id.frame_content, warehouseVoucherSearchFragment);
+	    warehouseVoucherExamineItemCreateFragment.setArguments(args);
+        fragmentTransaction.replace(R.id.frame_content, warehouseVoucherExamineItemCreateFragment);
         fragmentTransaction.commit();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected( MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

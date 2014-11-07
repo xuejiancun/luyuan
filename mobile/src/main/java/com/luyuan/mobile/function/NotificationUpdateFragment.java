@@ -151,10 +151,8 @@ public class NotificationUpdateFragment extends Fragment {
                         need = response.getNeed();
                         size = response.getSize();
                         if (latest_code <= current_code) {
-                            textview_need_title.setVisibility(View.GONE);
-                            textview_need.setVisibility(View.GONE);
-                            textview_size_title.setVisibility(View.GONE);
-                            textview_size.setVisibility(View.GONE);
+                            textview_need.setText(R.string.update_latest_version);
+                            textview_size.setText(R.string.update_latest_version);
                         } else {
                             String needText = "";
                             if (need == 0) {

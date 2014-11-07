@@ -1,89 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE LinearLayout [
+	<!ELEMENT LinearLayout (LinearLayout|CheckBox|TableLayout|EditText)*>
+	<!ATTLIST LinearLayout
+		android:descendantFocusability CDATA #IMPLIED
+		android:layout_height CDATA #REQUIRED
+		android:layout_width CDATA #REQUIRED
+		android:orientation CDATA #IMPLIED
+		xmlns:android CDATA #IMPLIED>
+	<!ELEMENT CheckBox (#PCDATA)>
+	<!ATTLIST CheckBox
+		android:id CDATA #REQUIRED
+		android:layout_height CDATA #REQUIRED
+		android:layout_width CDATA #REQUIRED
+		android:layout_weight CDATA #REQUIRED>
+	<!ELEMENT TableLayout (TableRow)*>
+	<!ATTLIST TableLayout
+		android:layout_height CDATA #REQUIRED
+		android:layout_width CDATA #REQUIRED
+		android:layout_weight CDATA #REQUIRED
+		android:layout_gravity CDATA #REQUIRED
+		android:stretchColumns CDATA #REQUIRED>
+	<!ELEMENT TableRow (TextView)*>
+	<!ELEMENT TextView (#PCDATA)>
+	<!ATTLIST TextView
+		android:id CDATA #IMPLIED
+		android:layout_height CDATA #IMPLIED
+		android:layout_weight CDATA #IMPLIED
+		android:layout_width CDATA #IMPLIED
+		android:text CDATA #IMPLIED
+		android:textStyle CDATA #IMPLIED>
+	<!ELEMENT EditText (#PCDATA)>
+	<!ATTLIST EditText
+		android:id CDATA #REQUIRED
+		android:layout_weight CDATA #REQUIRED
+		android:layout_width CDATA #REQUIRED
+		android:layout_height CDATA #REQUIRED
+		android:textSize CDATA #REQUIRED
+		android:gravity CDATA #REQUIRED
+		android:singleLine CDATA #REQUIRED>
+	]>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:descendantFocusability="beforeDescendants">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="80dp"
+		android:orientation="horizontal"
+		android:descendantFocusability="beforeDescendants">
 
-        <CheckBox
-            android:id="@+id/checkbox_confirm_selection"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1" />
+		<CheckBox
+			android:id="@+id/checkbox_confirm_selection"
+			android:layout_height="match_parent"
+			android:layout_width="0dp"
+			android:layout_weight="1" />
 
-        <TableLayout
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_gravity="center"
-            android:stretchColumns="1">
+		<TableLayout
+			android:layout_height="match_parent"
+			android:layout_width="0dp"
+			android:layout_weight="4"
+			android:layout_gravity="center"
+			android:stretchColumns="1">
 
-            <TableRow>
+			<TableRow>
 
-                <TextView
-                    android:id="@+id/textview_item_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textStyle="bold"
-                    android:text="编号" />
+				<TextView
+					android:id="@+id/textview_item_code"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:textStyle="bold"
+					android:text="编号" />
+				<TextView
+					android:id="@+id/textview_item_id" />
+			</TableRow>
 
-            </TableRow>
+			<TableRow>
 
-            <TableRow>
+				<TextView
+					android:id="@+id/textview_item_spec"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:text="规格描述XXXXXXXXX" />
 
-                <TextView
-                    android:id="@+id/textview_item_spec"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="规格描述XXXXXXXXX" />
+			</TableRow>
 
-            </TableRow>
+			<TableRow>
 
-            <TableRow>
+				<TextView
+					android:layout_weight="1"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:text="订单数" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="订单数" />
+				<TextView
+					android:id="@+id/textview_order_num"
+					android:layout_weight="1"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:text="300" />
 
-                <TextView
-                    android:id="@+id/textview_order_num"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="300" />
+				<TextView
+					android:layout_weight="1"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:text="发货数" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="发货数" />
+				<TextView
+					android:id="@+id/textview_delivery_num"
+					android:layout_weight="1"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:text="300" />
 
-                <TextView
-                    android:id="@+id/textview_delivery_num"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="300" />
+			</TableRow>
 
-            </TableRow>
+		</TableLayout>
 
-        </TableLayout>
+		<EditText
+			android:id="@+id/edittext_confirm_num"
+			android:layout_weight="2"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:textSize="20dp"
+			android:gravity="bottom"
+			android:singleLine="true" />
 
-        <EditText
-            android:id="@+id/edittext_confirm_num"
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:textSize="20dp"
-            android:gravity="bottom"
-            android:singleLine="true" />
-
-    </LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>

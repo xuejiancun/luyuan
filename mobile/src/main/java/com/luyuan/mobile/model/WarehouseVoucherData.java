@@ -6,7 +6,7 @@ import java.util.List;
 public class WarehouseVoucherData {
 
     private String success = "";
-    private List<WarehouseVoucherInfo> warehouseVoucherInfos = new ArrayList<WarehouseVoucherInfo>();
+    private List<WarehouseVoucherInfo> data = new ArrayList<WarehouseVoucherInfo>();
 
     public String getSuccess() {
         return success;
@@ -17,11 +17,11 @@ public class WarehouseVoucherData {
     }
 
     public List<WarehouseVoucherInfo> getWarehouseVoucherInfos() {
-        return warehouseVoucherInfos;
+        return data;
     }
 
     public void setWarehouseVoucherInfos(List<WarehouseVoucherInfo> data) {
-        this.warehouseVoucherInfos = data;
+        this.data = data;
     }
 
 }
