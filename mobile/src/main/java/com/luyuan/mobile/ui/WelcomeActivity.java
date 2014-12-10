@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,9 +27,7 @@ import cn.jpush.android.api.JPushInterface;
 
 // 欢迎页面
 public class WelcomeActivity extends Activity {
-    private ProgressDialog dialog;
     private int current_code;
-    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class WelcomeActivity extends Activity {
                     e.printStackTrace();
                 }
 
-                GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION + "&versionCode=" + current_code,
+                GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION,
                         VersionData.class, new Response.Listener<VersionData>() {
                     @Override
                     public void onResponse(final VersionData response) {
@@ -115,5 +115,11 @@ public class WelcomeActivity extends Activity {
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
     }
 }

@@ -3,12 +3,12 @@ package com.luyuan.mobile.model;
 // 系统版本
 public class VersionData {
 
-    private String success;
-    private int code;
-    private String version;
-    private String url;
-    private int need;
-    private float size;
+    private String success = "";
+    private int code = 0;
+    private String version = "";
+    private String url = "";
+    private int need = 0;
+    private float size = 0;
 
     public String getSuccess() {
         return success;

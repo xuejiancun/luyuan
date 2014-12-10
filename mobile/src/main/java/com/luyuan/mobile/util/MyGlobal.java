@@ -25,7 +25,9 @@ import com.luyuan.mobile.production.WarehouseVoucherCreateManagerActivity;
 import com.luyuan.mobile.production.WarehouseVoucherExamineActivity;
 import com.luyuan.mobile.production.WarehouseVoucherExamineItemCreateActivity;
 import com.luyuan.mobile.production.WarehouseVoucherManagerActivity;
+import com.luyuan.mobile.production.WarehouseBinSearchDetailActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
+import com.luyuan.mobile.production.WarehouseBinExchangectivity;
 
 import java.text.SimpleDateFormat;
 
@@ -33,10 +35,10 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.101";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
+    // public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
-    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
@@ -82,6 +84,12 @@ public class MyGlobal {
     public static final String API_WHPCODEITEMLIST_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getlist";
     public static final String API_UNITNAME_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=getunitname";
     public static final String API_WAREHOUSE_PURCHASEORDER_QUERY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whPurchaseOrderQuery.ashx?fn=purchaseorderquery";
+    public static final String API_WAREHOUSE_AUTOMATIC_SCAN = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ProductApprovedHandler.ashx?fn=updateproductbarcode2gson";
+    public static final String API_WAREHOUSE_BININFO = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinInventoryCheckHandler.ashx?fn=actualqtychange4lwp";
+    public static final String API_WAREHOUSE_BINSAVE = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinInventoryCheckHandler.ashx?fn=savedata4lwp2gson";
+    public static final String API_WAREHOUSE_BININFOMODIFY = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/wbProductCheckHandler.ashx?fn=getdetaillist";
+    public static final String API_WAREHOUSE_BINEXCHANGE_QUERY = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinAdjustHandler.ashx?fn=onscancheck";
+    public static final String API_WAREHOUSE_BINEXCHANGE_SAVE = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/whBinAdjustHandler.ashx?fn=onsave";
     // Added by Fangyi  -- End
 
     public static final String WEBVIEW_URL_QUERY_AUTH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/QueryAuth.aspx";
@@ -111,28 +119,24 @@ public class MyGlobal {
     public static final String COMPRESS_PATH = Environment.getExternalStorageDirectory() + "/luyuan/compress/";
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITH_TIME = new SimpleDateFormat("yyyyMMdd_HHmmss");
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
-    private static boolean wifiConnected = false;
-    private static boolean mobileConnected = false;
+
     private static User user = new User();
     private static FunctionData functionData = new FunctionData();
 
     public static boolean checkNetworkConnection(Context context) {
-        boolean result = true;
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
-        if (activeInfo != null && activeInfo.isConnected()) {
-            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
-            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+        if (activeInfo != null && activeInfo.isConnected() && activeInfo.isAvailable()) {
+            return true;
         } else {
-            Dialog alertDialog = new AlertDialog.Builder(context)
+            new AlertDialog.Builder(context)
                     .setMessage(R.string.network_disconnected)
                     .setTitle(R.string.dialog_hint)
                     .setPositiveButton(R.string.dialog_confirm, null)
-                    .create();
-            alertDialog.show();
-            result = false;
+                    .create()
+                    .show();
+            return false;
         }
-        return result;
     }
 
     public static Class getFunctionActivity(String functionCode) {
@@ -208,8 +212,11 @@ public class MyGlobal {
             clz = WarehouseBinInventoryCheckActivity.class;
         } else if (functionCode.equals("warehouse_puroederexamine_search")) {
             clz = WarehousePurOrderExamineActivity.class;
+        } else if (functionCode.equals("warehouse_whbininfo_search")) {
+            clz = WarehouseBinSearchDetailActivity.class;
+        } else if (functionCode.equals("warehouse_whbinexchange")) {
+            clz = WarehouseBinExchangectivity.class;
         }
-
         return clz;
     }
 

@@ -3,12 +3,12 @@ package com.luyuan.mobile.model;
 public class WarehouseVoucheritemDetailList {
 
     private String itemName = "";
-    private String itemCode="";
-    private String itemSpec="";
-    private String InventoryUOM="";
-    private String ExamineQTY="";
-    private String QTY="";
-    private String itemID="";
+    private String itemCode = "";
+    private String itemSpec = "";
+    private String InventoryUOM = "";
+    private String ExamineQTY = "";
+    private String QTY = "";
+    private String itemID = "";
 
     private String getitemName() {
         return itemName;
@@ -25,7 +25,7 @@ public class WarehouseVoucheritemDetailList {
     public void setitemCode(String itemCode) {
         this.itemCode = itemCode;
     }
-    
+
     public String getitemSpec() {
         return itemSpec;
     }

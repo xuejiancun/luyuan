@@ -5,44 +5,44 @@ import java.util.Map;
 
 public class WarehouseBinInventoryCheckSave {
 
-	private String wbIDDetail;
-	private String wbName;
-	private String ProductBarCodes;
-	private String UnitID;
-	private String HeID;
-	private String tbl_LocationInventoryDetails;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	public String getHeID() {
-		return HeID;
-	}
+    private String wbIDDetail;
+    private String wbName;
+    private String ProductBarCodes;
+    private String UnitID;
+    private String HeID;
+    private String tbl_LocationInventoryDetails;
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-	public void setHeID(String HeID) {
-		this.HeID = HeID;
-	}
+    public String getHeID() {
+        return HeID;
+    }
 
-	public String getUnitID() {
-		return UnitID;
-	}
+    public void setHeID(String HeID) {
+        this.HeID = HeID;
+    }
 
-	public void setUnitID(String UnitID) {
-		this.UnitID = UnitID;
-	}
-	public String getWbName() {
-		return wbName;
-	}
+    public String getUnitID() {
+        return UnitID;
+    }
 
-	public void setWbName(String wbName) {
-		this.wbName = wbName;
-	}
+    public void setUnitID(String UnitID) {
+        this.UnitID = UnitID;
+    }
 
-	public String getProductBarCodes() {
-		return ProductBarCodes;
-	}
+    public String getWbName() {
+        return wbName;
+    }
 
-	public void setProductBarCodes(String ProductBarCodes) {
-		this.ProductBarCodes = ProductBarCodes;
-	}
+    public void setWbName(String wbName) {
+        this.wbName = wbName;
+    }
 
+    public String getProductBarCodes() {
+        return ProductBarCodes;
+    }
 
+    public void setProductBarCodes(String ProductBarCodes) {
+        this.ProductBarCodes = ProductBarCodes;
+    }
 
 }

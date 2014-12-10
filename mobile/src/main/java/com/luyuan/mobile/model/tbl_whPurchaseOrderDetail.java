@@ -3,33 +3,33 @@ package com.luyuan.mobile.model;
 public class tbl_whPurchaseOrderDetail {
 
     private String itemName = "";
-    private String itemCode="";
-    private String itemSpec="";
-    private String InventoryUOM="";
-    private String ExamineQTY="";
-    private String QTY="";
-    private String itemID="";
-    private String itemCount="";
-	private String ActualQTY="";
-	private String BADQTY="";
+    private String itemCode = "";
+    private String itemSpec = "";
+    private String InventoryUOM = "";
+    private String ExamineQTY = "";
+    private String QTY = "";
+    private String itemID = "";
+    private String itemCount = "";
+    private String ActualQTY = "";
+    private String BADQTY = "";
 
-	private String getActualQTY() {
-		return ActualQTY;
-	}
+    private String getActualQTY() {
+        return ActualQTY;
+    }
 
-	public void setActualQTY(String ActualQTY) {
-		this.ActualQTY = ActualQTY;
-	}
+    public void setActualQTY(String ActualQTY) {
+        this.ActualQTY = ActualQTY;
+    }
 
-	private String getBADQTY() {
-		return BADQTY;
-	}
+    private String getBADQTY() {
+        return BADQTY;
+    }
 
-	public void setBADQTY(String BADQTY) {
-		this.BADQTY = BADQTY;
-	}
+    public void setBADQTY(String BADQTY) {
+        this.BADQTY = BADQTY;
+    }
 
-	private String getitemName() {
+    private String getitemName() {
         return itemName;
     }
 
@@ -44,7 +44,7 @@ public class tbl_whPurchaseOrderDetail {
     public void setitemCode(String itemCode) {
         this.itemCode = itemCode;
     }
-    
+
     public String getitemSpec() {
         return itemSpec;
     }

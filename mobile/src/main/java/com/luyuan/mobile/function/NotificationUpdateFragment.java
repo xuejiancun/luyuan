@@ -226,7 +226,7 @@ public class NotificationUpdateFragment extends Fragment {
 
                 // 下载文件
                 input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pad.apk");
+                output = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/mobile.apk");
 
                 byte data[] = new byte[1024];
                 long total = 0;
@@ -290,7 +290,7 @@ public class NotificationUpdateFragment extends Fragment {
                         .create();
                 alertDialog.show();
             } else {
-                String fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/pad.apk";
+                String fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mobile.apk";
                 Uri uri = Uri.fromFile(new File(fileName));
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

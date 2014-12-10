@@ -24,5 +24,5 @@ public class ChannelData {
     public void setChannelInfos(List<ChannelInfo> channelInfos) {
         this.channelInfos = channelInfos;
     }
-    
+
 }

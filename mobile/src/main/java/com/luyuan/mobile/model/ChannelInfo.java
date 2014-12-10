@@ -21,5 +21,5 @@ public class ChannelInfo {
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

@@ -46,7 +46,7 @@ public class WarehouseLocationInventoryActivity extends Activity implements Sear
         inflater.inflate(R.menu.main, menu);
 
          SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setQueryHint(getResources().getString(R.string.hint_enter_purchase_order_no));
+        searchView.setQueryHint(getResources().getString(R.string.hint_enter_bin_no));
         searchView.setOnQueryTextListener(this);
 
         return true;

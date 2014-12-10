@@ -24,5 +24,5 @@ public class MaterialData {
     public void setMaterials(List<Material> materials) {
         this.materials = materials;
     }
-    
+
 }

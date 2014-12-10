@@ -3,127 +3,128 @@ package com.luyuan.mobile.model;
 
 public class WarehouseVoucherInfo {
 
-	private String id = "";
-	private String code = "";
-	private String name = "";
-	private String batch = "";
-	private String status = "";
-	private String unitId = "";
-	private String unitName = "";
-	private String unitLongName = "";
-	private String preparedBy = "";
-	private String preparedTime = "";
-	private String whName = "";
-	private String whID = "";
-	private String OrderCode="";
-	private String Delivery="";
-	public String getId() {
-		return id;
-	}
+    private String id = "";
+    private String code = "";
+    private String name = "";
+    private String batch = "";
+    private String status = "";
+    private String unitId = "";
+    private String unitName = "";
+    private String unitLongName = "";
+    private String preparedBy = "";
+    private String preparedTime = "";
+    private String whName = "";
+    private String whID = "";
+    private String OrderCode = "";
+    private String Delivery = "";
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getBatch() {
-		return batch;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBatch(String batch) {
-		this.batch = batch;
-	}
+    public String getBatch() {
+        return batch;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public String getUnitId() {
-		return unitId;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
+    public String getUnitId() {
+        return unitId;
+    }
 
-	public String getUnitName() {
-		return unitName;
-	}
+    public void setUnitId(String unitId) {
+        this.unitId = unitId;
+    }
 
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
+    public String getUnitName() {
+        return unitName;
+    }
 
-	public String getUnitLongName() {
-		return unitLongName;
-	}
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
-	public void setUnitLongName(String unitLongName) {
-		this.unitLongName = unitLongName;
-	}
+    public String getUnitLongName() {
+        return unitLongName;
+    }
 
-	public String getPreparedBy() {
-		return preparedBy;
-	}
+    public void setUnitLongName(String unitLongName) {
+        this.unitLongName = unitLongName;
+    }
 
-	public void setPreparedBy(String preparedBy) {
-		this.preparedBy = preparedBy;
-	}
+    public String getPreparedBy() {
+        return preparedBy;
+    }
 
-	public String getPreparedTime() {
-		return preparedTime;
-	}
+    public void setPreparedBy(String preparedBy) {
+        this.preparedBy = preparedBy;
+    }
 
-	public void setPreparedTime(String preparedTime) {
-		this.preparedTime = preparedTime;
-	}
+    public String getPreparedTime() {
+        return preparedTime;
+    }
 
-
-	public String getwhID() {
-		return whID;
-	}
-
-	public void setwhID(String whID) {
-		this.whID = whID;
-	}
-
-	public String getwhName() {
-		return whName;
-	}
-
-	public void setOrderCode(String OrderCode) {
-		this.OrderCode = OrderCode;
-	}
-
-	public String getOrderCode() {
-		return OrderCode;
-	}
+    public void setPreparedTime(String preparedTime) {
+        this.preparedTime = preparedTime;
+    }
 
 
-	public String getDelivery() {
-		return Delivery;
-	}
+    public String getwhID() {
+        return whID;
+    }
 
-	public void setDelivery(String Delivery) {
-		this.Delivery = Delivery;
-	}
+    public void setwhID(String whID) {
+        this.whID = whID;
+    }
+
+    public String getwhName() {
+        return whName;
+    }
+
+    public void setOrderCode(String OrderCode) {
+        this.OrderCode = OrderCode;
+    }
+
+    public String getOrderCode() {
+        return OrderCode;
+    }
+
+
+    public String getDelivery() {
+        return Delivery;
+    }
+
+    public void setDelivery(String Delivery) {
+        this.Delivery = Delivery;
+    }
 }

@@ -1,4 +1,5 @@
 package com.luyuan.mobile.production;
+
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.Dialog;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,17 +27,22 @@ import com.luyuan.mobile.model.tbl_whPurchaseOrderDetail;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
 import com.google.gson.Gson;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
 public class WarehouseVoucherConfirmFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
@@ -44,8 +51,8 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
     private String unitID;
     private ProgressDialog dialog;
     private LayoutInflater layoutInflater;
-    private WarehouseVoucheritemList warehouseVoucheritemList=new WarehouseVoucheritemList();
-  //  StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_PURCHASEORDER_QUERY);
+    private WarehouseVoucheritemList warehouseVoucheritemList = new WarehouseVoucheritemList();
+    //  StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_PURCHASEORDER_QUERY);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,30 +70,30 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
                 warehouseVouchersave.setwhID(whID);
                 warehouseVouchersave.setwhpCode(code);
                 warehouseVouchersave.setUnitID(unitID);
-                String[] part=code.split("-");
+                String[] part = code.split("-");
                 warehouseVouchersave.setOtherOrderCode(part[0]);
                 warehouseVouchersave.setBatch(part[1]);
-                for (int i=0;i< listView.getChildCount();i++)
-                {
+                for (int i = 0; i < listView.getChildCount(); i++) {
                     tbl_whPurchaseOrderDetail data = new tbl_whPurchaseOrderDetail();
-                    String itemID=((TextView) listView.getChildAt(i).findViewById(R.id.textview_item_id)).getText().toString();
-                    String ExamineQTY=((TextView) listView.getChildAt(i).findViewById(R.id.edittext_confirm_num)).getText().toString();
-                    String itemCount=((TextView) listView.getChildAt(i).findViewById(R.id.textview_order_num)).getText().toString();
+                    String itemID = ((TextView) listView.getChildAt(i).findViewById(R.id.textview_item_id)).getText().toString();
+                    String ExamineQTY = ((TextView) listView.getChildAt(i).findViewById(R.id.edittext_confirm_num)).getText().toString();
+                    String itemCount = ((TextView) listView.getChildAt(i).findViewById(R.id.textview_order_num)).getText().toString();
                     data.setExamineQTY(ExamineQTY);
                     data.setitemID(itemID);
                     data.setitemCount(itemCount);
-                    warehouseVouchersave.gettbl_whPurchaseOrderDetail().add(i,data);
+                    data.setQTY(itemCount);
+                    warehouseVouchersave.gettbl_whPurchaseOrderDetail().add(i, data);
                 }
-                String json= new Gson().toJson(warehouseVouchersave);
+                String json = new Gson().toJson(warehouseVouchersave);
                 StringBuffer url = new StringBuffer(MyGlobal.API_WHPURSAVE);
-                url.append("&json=" +json);
+                url.append("&json=" + json);
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
                     dialog = new ProgressDialog(getActivity());
                     dialog.setMessage(getText(R.string.search_loading));
                     dialog.setCancelable(true);
                     dialog.show();
 
-                   GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(), SuccessData.class,
+                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(), SuccessData.class,
                             new Response.Listener<SuccessData>() {
 
                                 @Override
@@ -96,9 +103,7 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
                                         new AlertDialog.Builder(getActivity()).setMessage(R.string.save_success).setTitle(R.string.dialog_hint)
                                                 .setPositiveButton(R.string.dialog_confirm, null).create().show();
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         new AlertDialog.Builder(getActivity()).setMessage(response.getData().get(0).getInfo()).setTitle(R.string.dialog_hint)
                                                 .setPositiveButton(R.string.dialog_confirm, null).create().show();
                                     }
@@ -106,9 +111,9 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
 
                             }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse( VolleyError error) {
+                        public void onErrorResponse(VolleyError error) {
                             dialog.dismiss();
-                            
+
                             new AlertDialog.Builder(getActivity()).setMessage(error.getMessage().toString()).setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null).create().show();
                         }
@@ -126,8 +131,8 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
         ((Button) view.findViewById(R.id.button_warehouse_voucher_check)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 StringBuffer url = new StringBuffer(MyGlobal.API_WHPURSUBMIT);
-                url.append("&whpCode=" +code);
+                StringBuffer url = new StringBuffer(MyGlobal.API_WHPURSUBMIT);
+                url.append("&whpCode=" + code);
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
                     dialog = new ProgressDialog(getActivity());
                     dialog.setMessage(getText(R.string.search_loading));
@@ -144,9 +149,7 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
                                         new AlertDialog.Builder(getActivity()).setMessage(R.string.submit_success).setTitle(R.string.dialog_hint)
                                                 .setPositiveButton(R.string.dialog_confirm, null).create().show();
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         new AlertDialog.Builder(getActivity()).setMessage(response.getInfo()).setTitle(R.string.dialog_hint)
                                                 .setPositiveButton(R.string.dialog_confirm, null).create().show();
                                     }
@@ -174,9 +177,9 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
         Bundle args = getArguments();
         if (args != null && args.getBundle("data") != null) {
             Bundle data = args.getBundle("data");
-            code=data.getString("code");
-            whID=data.getString("whID");
-            unitID=data.getString("unitID");
+            code = data.getString("code");
+            whID = data.getString("whID");
+            unitID = data.getString("unitID");
         }
         StringBuffer url = new StringBuffer(MyGlobal.API_WHPCODEITEMLIST_QUERY);
         url.append("&whpCode=" + code);
@@ -186,20 +189,19 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
             dialog.setMessage(getText(R.string.search_loading));
             dialog.setCancelable(true);
             dialog.show();
-             GsonRequest gsonObjRequest = new GsonRequest<WarehouseVoucheritemList>(Request.Method.GET, url.toString(), WarehouseVoucheritemList.class,
+            GsonRequest gsonObjRequest = new GsonRequest<WarehouseVoucheritemList>(Request.Method.GET, url.toString(), WarehouseVoucheritemList.class,
                     new Response.Listener<WarehouseVoucheritemList>() {
 
                         @Override
-                        public void onResponse( WarehouseVoucheritemList response) {
+                        public void onResponse(WarehouseVoucheritemList response) {
                             dialog.dismiss();
 
                             if (response.getSuccess().equals("true")) {
-	                            if(response.getWarehouseVoucheritemDetailList().size()==0)
-	                            {
-		                            new AlertDialog.Builder(getActivity()).setMessage("当前单据返回数据有误")
-				                            .setTitle(R.string.dialog_hint)
-				                            .setPositiveButton(R.string.dialog_confirm, null).create().show();
-	                            }
+                                if (response.getWarehouseVoucheritemDetailList().size() == 0) {
+                                    new AlertDialog.Builder(getActivity()).setMessage("当前单据返回数据有误")
+                                            .setTitle(R.string.dialog_hint)
+                                            .setPositiveButton(R.string.dialog_confirm, null).create().show();
+                                }
                                 warehouseVoucheritemList = response;
 
                                 listView.setAdapter(new SearchListAdapter(getActivity()));
@@ -219,9 +221,10 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
         listView.setOnItemClickListener(this);
         return view;
     }
+
     public class SearchListAdapter extends ArrayAdapter<String> {
 
-        public SearchListAdapter( Context c) {
+        public SearchListAdapter(Context c) {
             super(c, R.layout.item_warehouse_voucher_search);
         }
 
@@ -244,6 +247,7 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
         }
 
     }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         listView.setItemChecked(i, true);

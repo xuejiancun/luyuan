@@ -23,7 +23,7 @@ public class PurchaseOrderQueryList {
     public void setwhName(String whName) {
         this.whName = whName;
     }
-    
+
     public String getUnitLongName() {
         return UnitLongName;
     }
@@ -31,7 +31,7 @@ public class PurchaseOrderQueryList {
     public void setUnitLongName(String UnitLongName) {
         this.UnitLongName = UnitLongName;
     }
-    
+
     public String getPreparedTime() {
         return PreparedTime;
     }
@@ -39,7 +39,7 @@ public class PurchaseOrderQueryList {
     public void setPreparedTime(String PreparedTime) {
         this.PreparedTime = PreparedTime;
     }
-    
+
     public String getStatus() {
         return Status;
     }

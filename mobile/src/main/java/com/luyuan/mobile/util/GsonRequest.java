@@ -16,38 +16,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Wrapper for Volley requests to facilitate parsing of json responses.
- *
- * @param <T>
- */
 public class GsonRequest<T> extends Request<T> {
 
-    /**
-     * Gson parser
-     */
-    private final Gson mGson;
-    /**
-     * Class type for the response
-     */
+    private final Gson mGson = new Gson();
     private final Class<T> mClass;
-    /**
-     * Callback for response delivery
-     */
     private final Listener<T> mListener;
-    private Map<String, String> headers = new HashMap<String, String>();
-    /**
-     * Priority for the request
-     */
-    private Priority priority = Priority.IMMEDIATE;
+    private Map<String, String> headers;
 
-    /**
-     * @param method        Request type.. Method.GET etc
-     * @param url           path for the requests
-     * @param objectClass   expected class type for the response. Used by gson for serialization.
-     * @param listener      handler for the response
-     * @param errorListener handler for errors
-     */
     public GsonRequest(int method
             , String url
             , Class<T> objectClass
@@ -57,7 +32,6 @@ public class GsonRequest<T> extends Request<T> {
         super(method, url, errorListener);
         this.mClass = objectClass;
         this.mListener = listener;
-        mGson = new Gson();
 
         setRetryPolicy(new DefaultRetryPolicy(20000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
@@ -81,27 +55,14 @@ public class GsonRequest<T> extends Request<T> {
     }
 
     @Override
-
-    public Priority getPriority() {
-        return priority;
-    }
-
-
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-    }
-
-    @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
+        if (headers == null) {
+            headers = new HashMap<String, String>();
+        }
         if (!MyGlobal.getUser().getSessionId().isEmpty()) {
             headers.put("Cookie", "ASP.NET_SessionId=" + MyGlobal.getUser().getSessionId());
         }
         return headers;
-    }
-
-    @Override
-    public String getBodyContentType() {
-        return "application/x-www-form-urlencoded; charset=UTF-8";
     }
 
 }

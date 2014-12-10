@@ -13,7 +13,7 @@ import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
 
-public class WarehouseLocationInventoryAddActivity extends Activity  {
+public class WarehouseLocationInventoryAddActivity extends Activity {
 
     private String tab = "home";
 
@@ -35,20 +35,25 @@ public class WarehouseLocationInventoryAddActivity extends Activity  {
         if (intent != null && intent.getStringExtra("tab") != null) {
             tab = intent.getStringExtra("tab");
         }
-	    WarehouseLocationInventoryAddFragment warehouseLocationInventoryAddFragment = new
-			    WarehouseLocationInventoryAddFragment();
-	    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        WarehouseLocationInventoryAddFragment warehouseLocationInventoryAddFragment = new
+                WarehouseLocationInventoryAddFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-	  //  Bundle args = new Bundle();
-	    //args.putString("api", api);
-	   // warehouseVoucherSearchFragment.setArguments(args);
-	    fragmentTransaction.replace(R.id.frame_content, warehouseLocationInventoryAddFragment);
-	    fragmentTransaction.commit();
+        //  Bundle args = new Bundle();
+        //args.putString("api", api);
+        // warehouseVoucherSearchFragment.setArguments(args);
+        fragmentTransaction.replace(R.id.frame_content, warehouseLocationInventoryAddFragment);
+        fragmentTransaction.commit();
     }
 
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+            return true;
+        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -57,6 +62,7 @@ public class WarehouseLocationInventoryAddActivity extends Activity  {
             startActivity(intent);
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -214,4 +214,10 @@ public class UploadMaterialActivity extends Activity implements SearchView.OnQue
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
+    }
 }

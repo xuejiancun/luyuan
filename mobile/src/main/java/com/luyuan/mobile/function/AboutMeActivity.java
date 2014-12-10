@@ -118,4 +118,10 @@ public class AboutMeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
+    }
+
 }

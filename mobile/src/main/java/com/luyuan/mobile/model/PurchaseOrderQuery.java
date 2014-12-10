@@ -16,6 +16,7 @@ public class PurchaseOrderQuery {
     public void setSuccess(String success) {
         this.success = success;
     }
+
     public String getInfo() {
         return info;
     }
@@ -31,5 +32,5 @@ public class PurchaseOrderQuery {
     public void setData(List<PurchaseOrderQueryList> data) {
         this.data = data;
     }
-    
+
 }

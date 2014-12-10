@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		<TableLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TableRow>
+		<TextView
+
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:text="调出库位:"
+			android:layout_alignParentLeft="true"
+            android:textSize="20sp"
+            />
+		<EditText
+					android:id="@+id/edittext_outbin"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:layout_alignParentLeft="true"
+
+                    android:layout_width="239dp"/>
+			</TableRow>
+			<TableRow>
+			<TextView
+
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:text="调入库位:"
+				android:layout_alignParentLeft="true"
+                android:textSize="20sp"/>
+			<EditText
+				android:id="@+id/edittext_inbin"
+				android:layout_width="239dp"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+
+				android:layout_alignParentLeft="true" />
+		</TableRow>
+			<TableRow>
+				<TextView
+
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+					android:text="整车条码:"
+                    android:textSize="20sp"
+
+					android:layout_alignParentLeft="true" />
+				<EditText
+					android:id="@+id/edittext_product"
+					android:layout_width="239dp"
+					android:layout_height="wrap_content"
+					android:singleLine="true"
+                    android:maxLength="16"
+					android:layout_alignParentLeft="true"
+                    android:hint="扫描整车条码或手动输入"
+                    />
+			</TableRow>
+		</TableLayout>
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="300dp">
+	<ListView
+		android:id="@+id/listView_information"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+	</ListView>
+	</LinearLayout>
+
+    <LinearLayout
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+		<Button
+			android:id="@+id/button_exchange"
+			android:layout_height="40dp"
+			android:layout_width="0dp"
+			android:layout_weight="1"
+			android:text="确认调整"
+			android:textSize="20dp"
+			android:textColor="#FFFFFF"
+			android:background="#46C50C" />
+
+
+
+	</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="重置"
+            android:textSize="20dp"
+            android:id="@+id/button_clear"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

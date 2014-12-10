@@ -19,6 +19,7 @@ import com.luyuan.mobile.R;
 import com.luyuan.mobile.util.MD5Util;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.PushUtil;
+import com.luyuan.mobile.util.RequestManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
     };
+
     private static final int MSG_SET_TAGS = 1002;
     private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
 
@@ -87,6 +89,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
     };
+
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -104,6 +107,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         }
     };
+
     public static boolean isForeground = false;
     private int tabSelectIndex;
     private ArrayList<LinearLayout> tabLayoutList = new ArrayList<LinearLayout>();
@@ -139,7 +143,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         // setTag();
         setAlias(); // 设置别名，这样才可以实现单点推送
-
     }
 
     private void initTab() {
@@ -269,6 +272,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         //调用JPush API设置Alias
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, MD5Util.encode(alias)));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
     }
 
 }

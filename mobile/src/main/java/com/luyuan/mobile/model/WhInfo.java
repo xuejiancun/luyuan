@@ -3,8 +3,8 @@ package com.luyuan.mobile.model;
 public class WhInfo {
 
     public String whName = "";
-    public String whCode="";
-    public String whID="";
+    public String whCode = "";
+    public String whID = "";
 
     public String getwhName() {
         return whName;
@@ -21,7 +21,7 @@ public class WhInfo {
     public void setwhCode(String whCode) {
         this.whCode = whCode;
     }
-    
+
     public String getwhID() {
         return whID;
     }

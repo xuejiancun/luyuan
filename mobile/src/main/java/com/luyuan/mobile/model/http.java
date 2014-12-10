@@ -19,80 +19,81 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class http {
-	/*
-	    * POST请求
-	    */
-	public static boolean DEBUG_MODE = false;
-	public static DefaultHttpClient  client=new DefaultHttpClient();
-	public static String serverUrl = MyGlobal.SERVER_URL_PREFIX;
-	//public static String serverUrl = "https://erp.luyuan.cn";
-	// public static String serverUrl = "http://192.168.10.100:8080";
-	//	public static String serverUrl = "http://192.168.10.90";
+    /*
+        * POST请求
+        */
+    public static boolean DEBUG_MODE = false;
+    public static DefaultHttpClient client = new DefaultHttpClient();
+    public static String serverUrl = MyGlobal.SERVER_URL_PREFIX;
+    //public static String serverUrl = "https://erp.luyuan.cn";
+    // public static String serverUrl = "http://192.168.10.100:8080";
+    //	public static String serverUrl = "http://192.168.10.90";
 //	public static String serverUrl = "http://192.168.10.60:801";
-	public static String PHPSESSID=null;
-	public static String PostData(List<BasicNameValuePair>  list,String urlString)throws Exception{
-		try {
-			HttpPost post = new HttpPost(serverUrl + urlString);
+    public static String PHPSESSID = null;
 
-			if (null != PHPSESSID) {
-				// post.setHeader("Cookie", "ASP.NET_SessionId=" + PHPSESSID);
-			}
-			HttpEntity httpEntity = new UrlEncodedFormEntity(list, HTTP.UTF_8);// 使用编码构建Post实体
-			post.setEntity(httpEntity);// 设置Post实体
+    public static String PostData(List<BasicNameValuePair> list, String urlString) throws Exception {
+        try {
+            HttpPost post = new HttpPost(serverUrl + urlString);
 
-			HttpResponse response = client.execute(post);// 执行Post方法
-			List<Cookie> cookies = client.getCookieStore().getCookies();
-			for (int i = 0; i < cookies.size(); i++) {
-				if (!DEBUG_MODE && "ASP.NET_SessionId".equals(cookies.get(i).getName())) {
-					PHPSESSID = cookies.get(i).getValue();
-					break;
-				} else if (DEBUG_MODE && serverUrl.contains(cookies.get(i).getDomain()) && "ASP.NET_SessionId".equals(cookies.get(i).getName())) {
-					PHPSESSID = cookies.get(i).getValue();
-				}
-			}
+            if (null != PHPSESSID) {
+                // post.setHeader("Cookie", "ASP.NET_SessionId=" + PHPSESSID);
+            }
+            HttpEntity httpEntity = new UrlEncodedFormEntity(list, HTTP.UTF_8);// 使用编码构建Post实体
+            post.setEntity(httpEntity);// 设置Post实体
 
-			return EntityUtils.toString(response.getEntity());
+            HttpResponse response = client.execute(post);// 执行Post方法
+            List<Cookie> cookies = client.getCookieStore().getCookies();
+            for (int i = 0; i < cookies.size(); i++) {
+                if (!DEBUG_MODE && "ASP.NET_SessionId".equals(cookies.get(i).getName())) {
+                    PHPSESSID = cookies.get(i).getValue();
+                    break;
+                } else if (DEBUG_MODE && serverUrl.contains(cookies.get(i).getDomain()) && "ASP.NET_SessionId".equals(cookies.get(i).getName())) {
+                    PHPSESSID = cookies.get(i).getValue();
+                }
+            }
 
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return e.getMessage();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return e.getMessage();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return e.getMessage();
-		}
-	}
+            return EntityUtils.toString(response.getEntity());
 
-	public static String GetData(String url){
-		HttpGet get=new HttpGet(serverUrl+url);
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
 
-		if(null != PHPSESSID){
-			//get.setHeader("Cookie", "ASP.NET_SessionId=" + PHPSESSID);
-		}
-		//HttpClient client=new DefaultHttpClient();
-		try {
-			HttpResponse response=client.execute(get);//执行Post方法
+    public static String GetData(String url) {
+        HttpGet get = new HttpGet(serverUrl + url);
 
-
-			List<Cookie> cookies = client.getCookieStore().getCookies();
-			for (int i = 0; i < cookies.size(); i++) {
-				if ("ASP.NET_SessionId".equals(cookies.get(i).getName())) {
-					PHPSESSID = cookies.get(i).getValue();
-					break;
-				}
-			}
+        if (null != PHPSESSID) {
+            //get.setHeader("Cookie", "ASP.NET_SessionId=" + PHPSESSID);
+        }
+        //HttpClient client=new DefaultHttpClient();
+        try {
+            HttpResponse response = client.execute(get);//执行Post方法
 
 
-			return EntityUtils.toString(response.getEntity());
-		} catch (Exception e) {
-			// TODO: handle exception
-			return e.getMessage();
-		}
-	}
+            List<Cookie> cookies = client.getCookieStore().getCookies();
+            for (int i = 0; i < cookies.size(); i++) {
+                if ("ASP.NET_SessionId".equals(cookies.get(i).getName())) {
+                    PHPSESSID = cookies.get(i).getValue();
+                    break;
+                }
+            }
+
+
+            return EntityUtils.toString(response.getEntity());
+        } catch (Exception e) {
+            // TODO: handle exception
+            return e.getMessage();
+        }
+    }
 
 }

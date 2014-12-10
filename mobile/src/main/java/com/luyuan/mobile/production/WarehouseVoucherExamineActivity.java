@@ -45,7 +45,7 @@ public class WarehouseVoucherExamineActivity extends Activity implements SearchV
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
 
-         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint(getResources().getString(R.string.hint_enter_whpurchase_no));
         searchView.setOnQueryTextListener(this);
 
@@ -63,18 +63,22 @@ public class WarehouseVoucherExamineActivity extends Activity implements SearchV
 
     private void rePlaceTabContentForSearch(String api) {
         WarehouseVoucherExamineSearchFragment warehouseVoucherExamineSearchFragment = new
-		        WarehouseVoucherExamineSearchFragment();
+                WarehouseVoucherExamineSearchFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();
         args.putString("api", api);
-	    warehouseVoucherExamineSearchFragment.setArguments(args);
+        warehouseVoucherExamineSearchFragment.setArguments(args);
         fragmentTransaction.replace(R.id.frame_content, warehouseVoucherExamineSearchFragment);
         fragmentTransaction.commit();
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+            return true;
+        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

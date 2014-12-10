@@ -84,5 +84,5 @@ public class JobInfo {
     public void setHeId(String heId) {
         this.heId = heId;
     }
-    
+
 }

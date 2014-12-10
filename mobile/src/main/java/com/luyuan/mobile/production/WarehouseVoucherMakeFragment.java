@@ -39,8 +39,9 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
     private String unitID;
     private String[] widValues;
     private String[] uidValues;
+
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.warehouse_voucher_make_fragment, null);
 
@@ -48,10 +49,10 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
         ((Button) view.findViewById(R.id.button_next)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 WarehouseVoucherConfirmFragment warehouseVoucherConfirmFragment = new WarehouseVoucherConfirmFragment();
+                WarehouseVoucherConfirmFragment warehouseVoucherConfirmFragment = new WarehouseVoucherConfirmFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                whID=widValues[wPosition];
-                unitID=uidValues[uPosition];
+                whID = widValues[wPosition];
+                unitID = uidValues[uPosition];
                 Bundle args = new Bundle();
                 Bundle data = new Bundle();
                 data.putString("code", code);
@@ -68,98 +69,94 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
             }
         });
 
-		Bundle args = getArguments();
+        Bundle args = getArguments();
         if (args != null && args.getBundle("data") != null) {
             Bundle data = args.getBundle("data");
-            code=data.getString("code");
+            code = data.getString("code");
             ((TextView) view.findViewById(R.id.textview_order_no)).setText(code);
             ((TextView) view.findViewById(R.id.textview_order_by)).setText(data.getString("preparedBy"));
             ((TextView) view.findViewById(R.id.textview_order_status)).setText(data.getString("status"));
-             unitName=data.getString("unitName");
-             whName=data.getString("whName");
-             unitID=data.getString("unitID");
-             whID=data.getString("whID");
+            unitName = data.getString("unitName");
+            whName = data.getString("whName");
+            unitID = data.getString("unitID");
+            whID = data.getString("whID");
         }
-        uspinner = (Spinner)view.findViewById(R.id. spinner_unit );
-        wspinner = (Spinner)view.findViewById(R.id. spinner_whname );
-		StringBuffer url = new StringBuffer(MyGlobal.API_UNITNAME_QUERY);
-	    url.append("&UnitID=" + MyGlobal.getUser().getUnitId());
-	    if (MyGlobal.checkNetworkConnection(getActivity())) {
-		    dialog = new ProgressDialog(getActivity());
-		    dialog.setMessage(getText(R.string.search_loading));
-		    dialog.setCancelable(true);
-		    dialog.show();
+        uspinner = (Spinner) view.findViewById(R.id.spinner_unit);
+        wspinner = (Spinner) view.findViewById(R.id.spinner_whname);
+        StringBuffer url = new StringBuffer(MyGlobal.API_UNITNAME_QUERY);
+        url.append("&UnitID=" + MyGlobal.getUser().getUnitId());
+        if (MyGlobal.checkNetworkConnection(getActivity())) {
+            dialog = new ProgressDialog(getActivity());
+            dialog.setMessage(getText(R.string.search_loading));
+            dialog.setCancelable(true);
+            dialog.show();
 
-		    GsonRequest gsonObjRequest = new GsonRequest<PurwhunitData>(Request.Method.GET, url.toString(), PurwhunitData.class,
-				    new Response.Listener<PurwhunitData>() {
+            GsonRequest gsonObjRequest = new GsonRequest<PurwhunitData>(Request.Method.GET, url.toString(), PurwhunitData.class,
+                    new Response.Listener<PurwhunitData>() {
 
-					    @Override
-					    public void onResponse(PurwhunitData response) {
-						    dialog.dismiss();
-						    whUnit = response;
-						    if (response.getSuccess().equals("true")) {
+                        @Override
+                        public void onResponse(PurwhunitData response) {
+                            dialog.dismiss();
+                            whUnit = response;
+                            if (response.getSuccess().equals("true")) {
 
-							    int size=response.getunitInfo().size();
-							    String[] values= new String[size];
-							    uidValues=new String[size];
-							    for(int i=0;i<size;i++)
-							    {
-								    values[i]=response.getunitInfo().get(i).unitName;
-								    uidValues[i]=response.getunitInfo().get(i).unitID;
-							    }
-							    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item ,values);
-							    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item );
-							    uspinner.setAdapter(adapter);
-							    uPosition=0;
-							    ArrayAdapter myAdap = (ArrayAdapter) uspinner.getAdapter();
-							    uPosition=myAdap.getPosition(unitName);
-							    uspinner.setSelection(uPosition);
+                                int size = response.getunitInfo().size();
+                                String[] values = new String[size];
+                                uidValues = new String[size];
+                                for (int i = 0; i < size; i++) {
+                                    values[i] = response.getunitInfo().get(i).unitName;
+                                    uidValues[i] = response.getunitInfo().get(i).unitID;
+                                }
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, values);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                uspinner.setAdapter(adapter);
+                                uPosition = 0;
+                                ArrayAdapter myAdap = (ArrayAdapter) uspinner.getAdapter();
+                                uPosition = myAdap.getPosition(unitName);
+                                uspinner.setSelection(uPosition);
 
-							    int sizew=response.getwhInfo().size();
-							    String[] valuesw= new String[sizew];
-							    widValues=new String[sizew];
-							    for(int i=0;i<sizew;i++)
-							    {
-								    valuesw[i]=response.getwhInfo().get(i).whName;
-								    widValues[i]=response.getwhInfo().get(i).whID;
-							    }
-							    ArrayAdapter<String> adapterw = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item ,valuesw);
-							    adapterw.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item );
-							    wspinner.setAdapter(adapterw);
-							    wPosition=0;
-							    ArrayAdapter wmyAdap = (ArrayAdapter) wspinner.getAdapter();
-							    if(whName.equals("")) wPosition=0;
-							    else
-								    wPosition=wmyAdap.getPosition(whName);
-							    wspinner.setSelection(wPosition);
+                                int sizew = response.getwhInfo().size();
+                                String[] valuesw = new String[sizew];
+                                widValues = new String[sizew];
+                                for (int i = 0; i < sizew; i++) {
+                                    valuesw[i] = response.getwhInfo().get(i).whName;
+                                    widValues[i] = response.getwhInfo().get(i).whID;
+                                }
+                                ArrayAdapter<String> adapterw = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, valuesw);
+                                adapterw.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                wspinner.setAdapter(adapterw);
+                                wPosition = 0;
+                                ArrayAdapter wmyAdap = (ArrayAdapter) wspinner.getAdapter();
+                                if (whName.equals("")) wPosition = 0;
+                                else
+                                    wPosition = wmyAdap.getPosition(whName);
+                                wspinner.setSelection(wPosition);
 
 
-						    }
-					    }
+                            }
+                        }
 
-				    }, new Response.ErrorListener() {
-			    @Override
-			    public void onErrorResponse(VolleyError error) {
-				    dialog.dismiss();
-			    }
-		    });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dialog.dismiss();
+                }
+            });
 
-		    RequestManager.getRequestQueue().add(gsonObjRequest);
-	    }
+            RequestManager.getRequestQueue().add(gsonObjRequest);
+        }
 
 
-        
-        
-       // ArrayAdapter<String> files = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, values);
+        // ArrayAdapter<String> files = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, values);
 
         //listView.setAdapter(files);
-       // listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        // listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         //listView.setOnItemClickListener(this);
 
         return view;
     }
 
-	@Override
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         listView.setItemChecked(i, true);
     }

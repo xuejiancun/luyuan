@@ -24,25 +24,25 @@ import com.luyuan.mobile.util.RequestManager;
 
 public class WarehousePurOrderExamineSearchFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-	private LayoutInflater layoutInflater;
-	private ListView listView;
-	private ProgressDialog dialog;
+    private LayoutInflater layoutInflater;
+    private ListView listView;
+    private ProgressDialog dialog;
     private String query;
-	private WarehouseVoucherData warehouseVoucherData;
+    private WarehouseVoucherData warehouseVoucherData;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		layoutInflater = inflater;
-		View view = layoutInflater.inflate(R.layout.warehouse_voucher_search_fragment, null);
-		final ListView listView = (ListView) view.findViewById(R.id.listview_search_list);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        layoutInflater = inflater;
+        View view = layoutInflater.inflate(R.layout.warehouse_voucher_search_fragment, null);
+        final ListView listView = (ListView) view.findViewById(R.id.listview_search_list);
 
         Bundle args = getArguments();
-        if (args != null ) {
-            query=args.getString("api");
+        if (args != null) {
+            query = args.getString("api");
         }
-		StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_PURCHASEORDERSUBMIT_QUERY);
-		//url.append("&UnitID="+MyGlobal.getUser().getunitId()+"&whpCode="+query);
-		if (MyGlobal.checkNetworkConnection(getActivity())) {
+        StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_PURCHASEORDERSUBMIT_QUERY);
+        url.append("&UnitID=" + MyGlobal.getUser().getUnitId() + "&whpCode=" + query);
+        if (MyGlobal.checkNetworkConnection(getActivity())) {
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage(getText(R.string.search_loading));
             dialog.setCancelable(true);
@@ -51,7 +51,7 @@ public class WarehousePurOrderExamineSearchFragment extends Fragment implements 
                     new Response.Listener<WarehouseVoucherData>() {
 
                         @Override
-                        public void onResponse( WarehouseVoucherData response) {
+                        public void onResponse(WarehouseVoucherData response) {
                             dialog.dismiss();
                             if (response.getSuccess().equals("true")) {
                                 warehouseVoucherData = response;
@@ -65,63 +65,64 @@ public class WarehousePurOrderExamineSearchFragment extends Fragment implements 
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     dialog.dismiss();
-	                
+
                 }
             });
 
             RequestManager.getRequestQueue().add(gsonObjRequest);
         }
-		listView.setOnItemClickListener(this);
-		return view;
-	}
+        listView.setOnItemClickListener(this);
+        return view;
+    }
 
-	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-		 WarehouseVoucherMakeFragment warehouseVoucherMakeFragment = new WarehouseVoucherMakeFragment();
-		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        WarehouseVoucherMakeFragment warehouseVoucherMakeFragment = new WarehouseVoucherMakeFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-		 Bundle args = new Bundle();
-		 Bundle data = new Bundle();
+        Bundle args = new Bundle();
+        Bundle data = new Bundle();
 
-		data.putString("code", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getCode());
-		data.putString("preparedBy", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getPreparedBy());
+        data.putString("code", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getCode());
+        data.putString("preparedBy", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getPreparedBy());
         data.putString("status", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getStatus());
-		data.putString("unitName", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getUnitLongName());
-		data.putString("whName", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getwhName());
+        data.putString("unitName", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getUnitLongName());
+        data.putString("whName", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getwhName());
 
         data.putString("unitID", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getUnitId());
         data.putString("whID", warehouseVoucherData.getWarehouseVoucherInfos().get(i).getwhID());
-		args.putBundle("data", data);
-		warehouseVoucherMakeFragment.setArguments(args);
+        args.putBundle("data", data);
+        warehouseVoucherMakeFragment.setArguments(args);
 
-		fragmentTransaction.replace(R.id.frame_content, warehouseVoucherMakeFragment);
-		fragmentTransaction.addToBackStack(null);
-		fragmentTransaction.commit();
-	}
+        fragmentTransaction.replace(R.id.frame_content, warehouseVoucherMakeFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
-	public class SearchListAdapter extends ArrayAdapter<String> {
+    public class SearchListAdapter extends ArrayAdapter<String> {
 
-		public SearchListAdapter( Context c) {
-			super(c, R.layout.item_warehouse_voucher_search);
-		}
+        public SearchListAdapter(Context c) {
+            super(c, R.layout.item_warehouse_voucher_search);
+        }
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = layoutInflater.inflate(R.layout.item_warehouse_voucher_search, null);
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = layoutInflater.inflate(R.layout.item_warehouse_voucher_search, null);
 
-			((TextView) view.findViewById(R.id.textview_order_no)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getCode());
-			((TextView) view.findViewById(R.id.textview_order_time)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getPreparedTime());
-			((TextView) view.findViewById(R.id.textview_order_unit)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getUnitLongName());
-			((TextView) view.findViewById(R.id.textview_order_wh)).setText(warehouseVoucherData
-					.getWarehouseVoucherInfos().get(position).getwhName());
-			return view;
-		}
+            ((TextView) view.findViewById(R.id.textview_order_no)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getCode());
+            ((TextView) view.findViewById(R.id.textview_order_time)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getPreparedTime());
+            ((TextView) view.findViewById(R.id.textview_order_unit)).setText(warehouseVoucherData.getWarehouseVoucherInfos().get(position).getUnitLongName());
+            ((TextView) view.findViewById(R.id.textview_order_wh)).setText(warehouseVoucherData
+                    .getWarehouseVoucherInfos().get(position).getwhName());
+            return view;
+        }
 
-		@Override
-		public int getCount() {
-			return warehouseVoucherData.getWarehouseVoucherInfos().size();
-		}
+        @Override
+        public int getCount() {
+            return warehouseVoucherData.getWarehouseVoucherInfos().size();
+        }
 
-	}
+    }
+
 
 }

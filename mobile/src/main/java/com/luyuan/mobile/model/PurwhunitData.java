@@ -6,8 +6,9 @@ import java.util.List;
 public class PurwhunitData {
 
     private String success = "";
-    private List<UnitInfo>unitInfo = new ArrayList<UnitInfo>();
-    private List<WhInfo>whInfo = new ArrayList<WhInfo>();
+    private List<UnitInfo> unitInfo = new ArrayList<UnitInfo>();
+    private List<WhInfo> whInfo = new ArrayList<WhInfo>();
+
     public String getSuccess() {
         return success;
     }
@@ -23,7 +24,7 @@ public class PurwhunitData {
     public void setunitInfo(List<UnitInfo> unitInfo) {
         this.unitInfo = unitInfo;
     }
-    
+
     public List<WhInfo> getwhInfo() {
         return whInfo;
     }

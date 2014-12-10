@@ -22,6 +22,8 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+import java.net.URLEncoder;
+
 public class WarehouseGetProductDetailFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
@@ -65,7 +67,7 @@ public class WarehouseGetProductDetailFragment extends Fragment implements Adapt
 	    }
 
         StringBuffer url = new StringBuffer(MyGlobal.API_WHGETPRODUCTDETAIL);
-        url.append("&ProductCode=" + itemCode +"&PrefixName="+itemName+"&SpecType="+itemSpec);
+        url.append("&ProductCode=" + itemCode +"&PrefixName="+ URLEncoder.encode(itemName)+"&SpecType="+URLEncoder.encode(itemSpec));
 
 	    if (MyGlobal.checkNetworkConnection(getActivity())) {
 		    dialog = new ProgressDialog(getActivity());

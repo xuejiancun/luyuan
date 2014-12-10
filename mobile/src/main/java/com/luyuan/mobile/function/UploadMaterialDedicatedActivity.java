@@ -215,4 +215,11 @@ public class UploadMaterialDedicatedActivity extends Activity implements SearchV
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
+    }
+
 }

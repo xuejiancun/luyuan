@@ -6,12 +6,13 @@ import java.util.List;
 public class WarehouseNewVoucherData {
 
     private String success = "";
-    private String info="";
+    private String info = "";
     private List<WarehouseNewVoucherDataInfo> data = new ArrayList<WarehouseNewVoucherDataInfo>();
 
     public String getSuccess() {
         return success;
     }
+
     public void setSuccess(String success) {
         this.success = success;
     }
@@ -19,6 +20,7 @@ public class WarehouseNewVoucherData {
     public String getInfo() {
         return info;
     }
+
     public void setInfo(String info) {
         this.info = info;
     }
@@ -31,5 +33,5 @@ public class WarehouseNewVoucherData {
     public void setData(List<WarehouseNewVoucherDataInfo> data) {
         this.data = data;
     }
-    
+
 }

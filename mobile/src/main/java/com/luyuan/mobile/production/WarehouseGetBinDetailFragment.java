@@ -22,6 +22,8 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+import java.net.URLEncoder;
+
 public class WarehouseGetBinDetailFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
@@ -63,7 +65,7 @@ public class WarehouseGetBinDetailFragment extends Fragment implements AdapterVi
 	    }
 
         StringBuffer url = new StringBuffer(MyGlobal.API_WHGETBIN);
-        url.append("&wbCode=" + sysbin +"&wbName="+whbin+"&UnitID="+ MyGlobal.getUser().getUnitId());
+        url.append("&wbCode=" + sysbin +"&wbName="+ URLEncoder.encode(whbin)+"&UnitID="+ MyGlobal.getUser().getUnitId());
 
 	    if (MyGlobal.checkNetworkConnection(getActivity())) {
 		    dialog = new ProgressDialog(getActivity());

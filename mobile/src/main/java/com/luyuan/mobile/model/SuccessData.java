@@ -8,7 +8,9 @@ public class SuccessData {
 
     private String success = "";
     private String info = "";
-    private List<RecieveInfo> data= new ArrayList<RecieveInfo>();
+    private String singleInfo = "";
+
+    private List<RecieveInfo> data = new ArrayList<RecieveInfo>();
 
     public String getInfo() {
         return info;
@@ -33,5 +35,14 @@ public class SuccessData {
     public void setData(List<RecieveInfo> data) {
         this.data = data;
     }
+
+    public String getsingleInfo() {
+        return singleInfo;
+    }
+
+    public void setsingleInfo(String singleInfo) {
+        this.singleInfo = singleInfo;
+    }
+
 
 }

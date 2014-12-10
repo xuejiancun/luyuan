@@ -45,7 +45,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
 
-         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint(getResources().getString(R.string.hint_enter_purchase_order_no));
         searchView.setOnQueryTextListener(this);
 
@@ -57,7 +57,7 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
     }
 
     public boolean onQueryTextSubmit(String query) {
-       // rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH + "&whpCode=" + query);
+        // rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH + "&whpCode=" + query);
         rePlaceTabContentForSearch(query);
         return true;
     }
@@ -74,7 +74,12 @@ public class WarehouseVoucherManagerActivity extends Activity implements SearchV
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+            return true;
+        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

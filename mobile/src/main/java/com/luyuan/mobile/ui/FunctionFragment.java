@@ -67,6 +67,7 @@ public class FunctionFragment extends Fragment implements AdapterView.OnItemClic
                 @Override
                 public void onResponse(FunctionData response) {
                     dialog.dismiss();
+
                     if (response != null && response.getSuccess().equals("true")) {
                         functionData = response;
                         MyGlobal.setFunctionData(functionData);

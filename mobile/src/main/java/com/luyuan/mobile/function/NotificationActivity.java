@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.util.RequestManager;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -64,6 +65,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("notification")) {
             fragment = new NotificationNotificationFragment();
             actionBar.setTitle(R.string.notification_remind);
+        } else if (key.contains("warrant")) {
+            fragment = new NotificationWarrantFragment();
+            actionBar.setTitle(R.string.warrant_remind);
         }
 
         // 根据参数不同，显示对应的推送通知页面
@@ -76,6 +80,12 @@ public class NotificationActivity extends Activity {
 
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
     }
 
 }

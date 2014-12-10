@@ -3,8 +3,8 @@ package com.luyuan.mobile.model;
 public class UnitInfo {
 
     public String unitName = "";
-    public String unitCode="";
-    public String unitID="";
+    public String unitCode = "";
+    public String unitID = "";
 
     public String getunitName() {
         return unitName;
@@ -21,7 +21,7 @@ public class UnitInfo {
     public void setunitCode(String unitCode) {
         this.unitCode = unitCode;
     }
-    
+
     public String getunitID() {
         return unitID;
     }

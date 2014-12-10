@@ -8,12 +8,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -40,6 +43,7 @@ public class LoginActivity extends Activity {
     private long exitTime = 0;
     private SharedPreferences sharedPreferences;
     private Editor editor;
+    private String currentVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,6 @@ public class LoginActivity extends Activity {
         sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
         ((EditText) findViewById(R.id.edittext_username)).setText(sharedPreferences.getString("username", ""));
-        // ((EditText) findViewById(R.id.edittext_password)).setText(sharedPreferences.getString("password", ""));
     }
 
     public void login(View view) {
@@ -66,7 +69,6 @@ public class LoginActivity extends Activity {
         editor = sharedPreferences.edit();
 
         editor.putString("username", username);
-        // editor.putString("password", password);
         editor.commit();
 
 //        username = "xuejiancun";
@@ -103,9 +105,15 @@ public class LoginActivity extends Activity {
 
             return;
         }
+        try {
+            PackageInfo packageInfo = LoginActivity.this.getPackageManager().getPackageInfo(LoginActivity.this.getPackageName(), 0);
+            currentVersion = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         StringBuffer url = new StringBuffer(MyGlobal.API_FETCH_LOGIN);
-        url.append("&sob=" + sob + "&username=" + username + "&password=" + MD5Util.encode(password + username + "089"));
+        url.append("&sob=" + sob + "&username=" + username + "&password=" + MD5Util.encode(password + username + "089") + "&currentversion=" + currentVersion);
 
         if (MyGlobal.checkNetworkConnection(this)) {
 
@@ -133,6 +141,7 @@ public class LoginActivity extends Activity {
                         user.setSessionId(jobData.getSessionId());
                         user.setEmail(jobData.getEmail());
                         user.setContact(jobData.getContact());
+
                         MyGlobal.setUser(user);
 
                         int count = jobData.getJobInfos().size();
@@ -143,7 +152,7 @@ public class LoginActivity extends Activity {
                             MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
                             MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName() + jobData.getJobInfos().get(jobIndex).getJobName());
                             MyGlobal.getUser().setUnitId(jobData.getJobInfos().get(jobIndex).getUnitId());
-
+                            MyGlobal.getUser().setHeId(jobData.getJobInfos().get(jobIndex).getHeId());
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("tab", "home");
                             startActivity(intent);
@@ -169,7 +178,7 @@ public class LoginActivity extends Activity {
                                             MyGlobal.getUser().setStId(jobData.getJobInfos().get(jobIndex).getStId());
                                             MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName());
                                             MyGlobal.getUser().setUnitId(jobData.getJobInfos().get(jobIndex).getUnitId());
-
+                                            MyGlobal.getUser().setHeId(jobData.getJobInfos().get(jobIndex).getHeId());
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("tab", "home");
                                             startActivity(intent);
@@ -178,7 +187,6 @@ public class LoginActivity extends Activity {
                                     .create()
                                     .show();
                         }
-
 
                     } else if (response != null && response.getSuccess().equals("false_username_error")) {
                         new AlertDialog.Builder(LoginActivity.this)
@@ -246,4 +254,11 @@ public class LoginActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestManager.getRequestQueue().cancelAll(this);
+    }
+
 }

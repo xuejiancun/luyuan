@@ -23,5 +23,5 @@ public class WarehouseVoucheritemList {
     public void setWarehouseVoucheritemDetailList(List<WarehouseVoucheritemDetailList> data) {
         this.data = data;
     }
-    
+
 }

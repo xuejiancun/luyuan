@@ -447,6 +447,7 @@ public class ScheduleManagerActivity extends Activity implements SearchView.OnQu
     public void onStop() {
         mLocationClient.stop();
         super.onDestroy();
+        RequestManager.getRequestQueue().cancelAll(this);
     }
 
     // 初始化定位设定

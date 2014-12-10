@@ -16,6 +16,7 @@ import com.luyuan.mobile.util.MyGlobal;
 public class WarehouseInventoryManagerActivity extends Activity  {
 
     private String tab = "home";
+    private int  flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class WarehouseInventoryManagerActivity extends Activity  {
 	  //  Bundle args = new Bundle();
 	    //args.putString("api", api);
 	   // warehouseVoucherSearchFragment.setArguments(args);
+        //getFragmentManager().beginTransaction().add(warehouseInventorySearchFragment,"1");
 	    fragmentTransaction.replace(R.id.frame_content, warehouseInventorySearchFragment);
 	    fragmentTransaction.commit();
     }
@@ -49,6 +51,11 @@ public class WarehouseInventoryManagerActivity extends Activity  {
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item) {
+
+        if(getFragmentManager().getBackStackEntryCount()>0) {
+            getFragmentManager().popBackStack();
+            return true;
+        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -57,6 +64,7 @@ public class WarehouseInventoryManagerActivity extends Activity  {
             startActivity(intent);
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

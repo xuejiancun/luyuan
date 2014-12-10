@@ -24,5 +24,5 @@ public class FunctionData {
     public void setFunctionInfos(List<FunctionInfo> functionInfos) {
         this.functionInfos = functionInfos;
     }
-    
+
 }

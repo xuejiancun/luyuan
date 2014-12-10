@@ -87,6 +87,7 @@ public class WebViewActivity extends Activity {
                     super.onPageFinished(view, url);
                     dialog.dismiss();
                 }
+
             });
 
             webview.loadUrl(getFunctionUrl(function));

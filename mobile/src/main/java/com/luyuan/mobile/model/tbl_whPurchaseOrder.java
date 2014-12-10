@@ -5,33 +5,35 @@ import java.util.List;
 
 public class tbl_whPurchaseOrder {
 
-    private String whpCode="";
-    private String InwhID="";
-    private String OutUnitID="";
-    private String OtherOrderCode="";
-    private String Batch="";
-    private String Preparedby="";
-    private String PreparedTime="";
-	private String ExamineBy="";
-	private String success="";
-	private String info = "";
+    private String whpCode = "";
+    private String InwhID = "";
+    private String OutUnitID = "";
+    private String OtherOrderCode = "";
+    private String Batch = "";
+    private String Preparedby = "";
+    private String PreparedTime = "";
+    private String ExamineBy = "";
+    private String success = "";
+    private String info = "";
+    private List<tbl_whPurchaseOrderDetail> tbl_whPurchaseOrderDetails = new ArrayList<tbl_whPurchaseOrderDetail>();
     private List<tbl_whPurchaseOrderDetail> data = new ArrayList<tbl_whPurchaseOrderDetail>();
 
-	public String getInfo() {
-		return info;
-	}
+    public String getInfo() {
+        return info;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
-	public String getSuccess() {
-		return success;
-	}
+    public String getSuccess() {
+        return success;
+    }
 
-	public void setSuccess(String success) {
-		this.success = success;
-	}
+    public void setSuccess(String success) {
+        this.success = success;
+    }
+
     public String getwhpCode() {
         return whpCode;
     }
@@ -90,19 +92,28 @@ public class tbl_whPurchaseOrder {
         this.PreparedTime = PreparedTime;
     }
 
-	public String getExamineBy() {
-		return ExamineBy;
-	}
+    public String getExamineBy() {
+        return ExamineBy;
+    }
 
-	public void setExamineBy(String ExamineBy) {
-		this.ExamineBy = ExamineBy;
-	}
+    public void setExamineBy(String ExamineBy) {
+        this.ExamineBy = ExamineBy;
+    }
+
     public List<tbl_whPurchaseOrderDetail> gettbl_whPurchaseOrderDetail() {
+        return tbl_whPurchaseOrderDetails;
+    }
+
+    public void settbl_whPurchaseOrderDetail(List<tbl_whPurchaseOrderDetail> tbl_whPurchaseOrderDetails) {
+        this.tbl_whPurchaseOrderDetails = tbl_whPurchaseOrderDetails;
+    }
+
+    public List<tbl_whPurchaseOrderDetail> getdata() {
         return data;
     }
 
-    public void settbl_whPurchaseOrderDetail(List<tbl_whPurchaseOrderDetail> data) {
+    public void setdata(List<tbl_whPurchaseOrderDetail> data) {
         this.data = data;
     }
-    
+
 }

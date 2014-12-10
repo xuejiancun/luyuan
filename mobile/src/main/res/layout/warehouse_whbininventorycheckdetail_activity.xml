@@ -75,7 +75,7 @@
 			android:layout_alignParentRight="true"
 			android:layout_below="@+id/imageView1" >
 
-			<com.luyuan.mobile.function.CustomLinearLayout
+			<com.luyuan.mobile.production.CustomLinearLayout
 				android:id="@+id/ly12"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -112,7 +112,6 @@
 		</TableRow>
 			<TableRow >
 				<TextView
-					android:id="@+id/textView_kuweihao"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"/>
 			</TableRow>

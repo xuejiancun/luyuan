@@ -36,7 +36,7 @@
     <string name="dialog_choose_material">请选择资料</string>
 
     <string name="network_disconnected">没有连接网络，请稍后再试。</string>
-    <string name="interact_data_error">应用程序与服务器通讯遇到错误，请检查您的网络连接是否通畅。</string>
+    <string name="interact_data_error">服务器出了一个错误，请找系统管理员帮忙。</string>
     <string name="fetch_data_empty">没有查询到资料</string>
     <string name="app_param_error">页面参数错误，请稍后再试。</string>
     <string name="notification_push">消息提醒</string>
@@ -176,6 +176,7 @@
     <string name="version_remind">版本提醒</string>
     <string name="training_remind">培训通知</string>
     <string name="notification_remind">重要事项通知</string>
+    <string name="warrant_remind">担保到期通知</string>
 
     <string name="searchvoucher">请输入单号</string>
     <string name="search_loading">正在查询,请稍候...</string>
@@ -216,7 +217,9 @@
     <string name="endtime_empty">请输入结束时间</string>
     <string name="function_whautomaticscan">整车发货单扫描</string>
     <string name="function_whbincheck">库位盘点</string>
+    <string name="function_whbinexchange">库位调整</string>
     <string name="close">关闭</string>
     <string name="function_puroederexamine_search">采购送检单查询</string>
+    <string name="hint_enter_bin_no">请输入整车库位号</string>
 
 </resources>

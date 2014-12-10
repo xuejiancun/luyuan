@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.SearchView;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.WarehousePurVoucherSearchFragment;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 
@@ -76,6 +77,11 @@ public class WarehouseVoucherCreateManagerActivity extends Activity implements S
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item) {
+        if(getFragmentManager().getBackStackEntryCount()>0) {
+            getFragmentManager().popBackStack();
+            return true;
+        }
+
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

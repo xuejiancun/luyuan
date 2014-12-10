@@ -8,7 +8,6 @@ public class Shortcut {
     private String name;
 
     public Shortcut(Integer id, String code, String name) {
-
         this.id = id;
         this.code = code;
         this.name = name;

@@ -3,68 +3,69 @@ package com.luyuan.mobile.model;
 
 public class WarehouseInventoryDataInfo {
 
-	private String itemID = "";
-	private String itemCode = "";
-	private String itemName = "";
-	private String whName = "";
-	private String whID = "";
-	private String Qty="";
-	private String InventoryUOM="";
-	public String getitemID() {
-		return itemID;
-	}
+    private String itemID = "";
+    private String itemCode = "";
+    private String itemName = "";
+    private String whName = "";
+    private String whID = "";
+    private String Qty = "";
+    private String InventoryUOM = "";
 
-	public void setitemID(String itemID) {
-		this.itemID = itemID;
-	}
+    public String getitemID() {
+        return itemID;
+    }
 
-	public String getitemCode() {
-		return itemCode;
-	}
+    public void setitemID(String itemID) {
+        this.itemID = itemID;
+    }
 
-	public void setitemCode(String itemCode) {
-		this.itemCode = itemCode;
-	}
+    public String getitemCode() {
+        return itemCode;
+    }
 
-	public String getitemName() {
-		return itemName;
-	}
+    public void setitemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
 
-	public void setitemName(String itemName) {
-		this.itemName = itemName;
-	}
+    public String getitemName() {
+        return itemName;
+    }
 
-	public String getwhID() {
-		return whID;
-	}
+    public void setitemName(String itemName) {
+        this.itemName = itemName;
+    }
 
-	public void setwhID(String whID) {
-		this.whID = whID;
-	}
+    public String getwhID() {
+        return whID;
+    }
 
-	public String getwhName() {
-		return whName;
-	}
+    public void setwhID(String whID) {
+        this.whID = whID;
+    }
 
-	public void setwhName(String whName) {
-		this.whName = whName;
-	}
+    public String getwhName() {
+        return whName;
+    }
 
-	public String getQty() {
-		return Qty;
-	}
+    public void setwhName(String whName) {
+        this.whName = whName;
+    }
 
-	public void setQty(String Qty) {
-		this.Qty = Qty;
-	}
+    public String getQty() {
+        return Qty;
+    }
+
+    public void setQty(String Qty) {
+        this.Qty = Qty;
+    }
 
 
-	public String getInventoryUOM() {
-		return InventoryUOM;
-	}
+    public String getInventoryUOM() {
+        return InventoryUOM;
+    }
 
-	public void setInventoryUOM(String InventoryUOM) {
-		this.InventoryUOM = InventoryUOM;
-	}
+    public void setInventoryUOM(String InventoryUOM) {
+        this.InventoryUOM = InventoryUOM;
+    }
 
 }
