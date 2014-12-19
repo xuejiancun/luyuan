@@ -57,6 +57,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".function.WarrantManageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
@@ -87,8 +92,6 @@
             android:name=".function.AboutMeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
-
-
 
         <activity
             android:name=".production.WarehouseBinExchangectivity"

@@ -41,3 +41,15 @@ pad/pad.iml
 .idea/vcs.xml
 
 .idea/libraries/appcompat_v7_19_1_0.xml
+.idea/gradle.xml
+.idea/misc.xml
+luyuan.iml
+.idea/gradle.xml
+.idea/libraries/disklrucache_2_0_1.xml
+.idea/libraries/fastjson_1_1_41.xml
+.idea/libraries/httpmime_4_1_2.xml
+.idea/libraries/jpush_sdk_release1_6_1.xml
+.idea/libraries/locSDK_4_2.xml
+.idea/libraries/support_v4_19_1_0.xml
+.idea/misc.xml
+pad/build.gradle

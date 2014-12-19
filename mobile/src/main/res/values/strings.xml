@@ -222,4 +222,20 @@
     <string name="function_puroederexamine_search">采购送检单查询</string>
     <string name="hint_enter_bin_no">请输入整车库位号</string>
 
+    <string name="warrant_manage">发起担保</string>
+    <string name="warrant_max">我的担保额度</string>
+    <string name="warrant_used">已担保</string>
+    <string name="warrant_available">还可担保</string>
+    <string name="province">省</string>
+    <string name="city">市</string>
+    <string name="dealer">经销商</string>
+    <string name="account_name">账户名</string>
+    <string name="warrant_amount">担保金额</string>
+    <string name="due_date">到期日期</string>
+    <string name="warrant_submit">发起担保</string>
+    <string name="hint_dealer_empty">请选择【经销商】</string>
+    <string name="hint_amount_empty">请填写【担保金额】</string>
+    <string name="hint_due_date_empty">请填写【到期日】</string>
+    <string name="hint_due_date_invalid">【到期日】不能早于今天</string>
+
 </resources>

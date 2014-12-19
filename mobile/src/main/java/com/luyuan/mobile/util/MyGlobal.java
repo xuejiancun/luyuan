@@ -1,7 +1,6 @@
 package com.luyuan.mobile.util;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,12 +10,16 @@ import com.luyuan.mobile.R;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
+import com.luyuan.mobile.function.WarrantManageActivity;
 import com.luyuan.mobile.model.FunctionData;
+import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.production.WarehouseAutomaticScanActivity;
+import com.luyuan.mobile.production.WarehouseBinExchangectivity;
 import com.luyuan.mobile.production.WarehouseBinInventoryCheckActivity;
 import com.luyuan.mobile.production.WarehouseBinLackManagerActivity;
 import com.luyuan.mobile.production.WarehouseBinManagerActivity;
+import com.luyuan.mobile.production.WarehouseBinSearchDetailActivity;
 import com.luyuan.mobile.production.WarehouseInventoryManagerActivity;
 import com.luyuan.mobile.production.WarehouseLocationInventoryActivity;
 import com.luyuan.mobile.production.WarehouseLocationInventoryAddActivity;
@@ -25,9 +28,7 @@ import com.luyuan.mobile.production.WarehouseVoucherCreateManagerActivity;
 import com.luyuan.mobile.production.WarehouseVoucherExamineActivity;
 import com.luyuan.mobile.production.WarehouseVoucherExamineItemCreateActivity;
 import com.luyuan.mobile.production.WarehouseVoucherManagerActivity;
-import com.luyuan.mobile.production.WarehouseBinSearchDetailActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
-import com.luyuan.mobile.production.WarehouseBinExchangectivity;
 
 import java.text.SimpleDateFormat;
 
@@ -35,8 +36,8 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
-    // public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
     //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
 //    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
@@ -56,9 +57,14 @@ public class MyGlobal {
     public static final String API_DELETE_SCHEDULE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=delschedule";
     public static final String API_FETCH_SUBORDINATE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchsubordinate";
     public static final String API_ADD_LOCATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addlocation";
-    public static final String API_WAREHOUSE_VOUCHER_SEARCH = SERVER_URL_PREFIX + "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=getlist";
     public static final String API_CHECK_VERSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchversion";
     public static final String API_MODIFY_CONTACT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=modifycontract";
+    public static final String API_FETCH_WARRANT_DETAIL = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=getwarrantdetail";
+    public static final String API_FETCH_PROVINCES = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchprovince";
+    public static final String API_FETCH_CITYS = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchcity";
+    public static final String API_FETCH_DEALERS = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealer";
+    public static final String API_FETCH_DEALER_ACCOUNT = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealeraccount";
+    public static final String API_SUBMIT_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addwarrant";
 
     // Added by Fangyi  -- Start
     public static final String API_WHINVENTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/whInventoryBook.ashx?fn=getwhinventory";
@@ -188,6 +194,8 @@ public class MyGlobal {
             clz = ScheduleManagerActivity.class;
         } else if (functionCode.equals("query_warrant")) {
             clz = WebViewActivity.class;
+        } else if (functionCode.equals("warrant_manage")) {
+            clz = WarrantManageActivity.class;
         } else if (functionCode.equals("warehouse_purvoucher_search")) {
             clz = WarehouseVoucherManagerActivity.class;
         } else if (functionCode.equals("warehouse_purvoucher_create")) {
@@ -283,6 +291,13 @@ public class MyGlobal {
     }
 
     public static FunctionData getFunctionData() {
+        if(functionData.getFunctionInfos().size() == 0){
+            FunctionInfo functionInfo = new FunctionInfo();
+            functionInfo.setCode("warrant_manage");
+            functionInfo.setName("发起担保");
+            functionData.getFunctionInfos().add(functionInfo);
+        }
+
         return functionData;
     }
 

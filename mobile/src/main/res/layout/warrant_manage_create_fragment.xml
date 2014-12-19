@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:stretchColumns="2"
+        android:background="#FFEDEDED">
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/warrant_max"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:gravity="bottom"
+                android:paddingLeft="5dp" />
+
+            <EditText
+                android:id="@+id/edit_warrant_max"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:enabled="false"
+                android:gravity="right"
+                android:numeric="decimal"
+                android:paddingLeft="20dp"
+                android:textStyle="bold"
+                android:singleLine="true" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/warrant_used"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:gravity="bottom"
+                android:paddingLeft="5dp" />
+
+            <EditText
+                android:id="@+id/edit_warrant_used"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:enabled="false"
+                android:gravity="right"
+                android:numeric="decimal"
+                android:paddingLeft="20dp"
+                android:textStyle="bold"
+                android:singleLine="true" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/warrant_available"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:gravity="bottom"
+                android:paddingLeft="5dp" />
+
+            <EditText
+                android:id="@+id/edit_warrant_available"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:enabled="false"
+                android:gravity="right"
+                android:numeric="decimal"
+                android:paddingLeft="20dp"
+                android:textStyle="bold"
+                android:singleLine="true" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:stretchColumns="2">
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/province"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="12dp"/>
+
+            <Spinner
+                android:id="@+id/spin_province"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/city"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="12dp"/>
+
+            <Spinner
+                android:id="@+id/spin_city"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/dealer"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="12dp"/>
+
+            <Spinner
+                android:id="@+id/spin_dealer"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/list_dealer_account"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#FFEDEDED"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:stretchColumns="2">
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/warrant_amount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp" />
+
+            <EditText
+                android:id="@+id/edit_warrant_amount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:numeric="decimal"
+                android:textSize="20dp"
+                android:textColor="#990000"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:singleLine="true" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/due_date"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="bottom"
+                android:paddingLeft="5dp" />
+
+            <Button
+                android:id="@+id/button_due_date"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="#FFEDEDED" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+        <Gallery
+            android:id="@+id/gallery_attach_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_attach_file"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/attach_file"
+            android:textSize="20dp"
+            android:background="#FFEDEDED" />
+
+        <Button
+            android:id="@+id/button_warrant_submit"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/warrant_submit"
+            android:textSize="20dp"
+            android:background="#46C50C" />
+
+    </LinearLayout>
+
+</LinearLayout>

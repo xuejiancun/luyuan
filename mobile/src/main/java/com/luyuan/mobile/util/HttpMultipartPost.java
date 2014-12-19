@@ -148,7 +148,7 @@ public class HttpMultipartPost extends AsyncTask<String, Integer, String> {
                     .setPositiveButton(R.string.dialog_confirm, null)
                     .create()
                     .show();
-        } else if (result.contains("compress_error")) {
+        } else if (result.contains("upload_compress_error")) {
             new AlertDialog.Builder(context)
                     .setMessage(R.string.compress_error)
                     .setTitle(R.string.dialog_hint)
