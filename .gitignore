@@ -53,3 +53,4 @@ luyuan.iml
 .idea/libraries/support_v4_19_1_0.xml
 .idea/misc.xml
 pad/build.gradle
+mobile/manifest-merger-release-report.txt

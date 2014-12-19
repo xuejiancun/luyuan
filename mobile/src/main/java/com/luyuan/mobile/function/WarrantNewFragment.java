@@ -180,7 +180,7 @@ public class WarrantNewFragment extends Fragment {
 
                                 editWarrantMax.setText(warrantData.getWarrantTotalAmount());
                                 editWarrantUsed.setText(warrantData.getWarrantNowAmount());
-                                editWarrantAvailable.setText("10");
+                                editWarrantAvailable.setText(warrantData.getSubAmount());
 
                                 if (MyGlobal.checkNetworkConnection(getActivity())) {
                                     dialog = new ProgressDialog(getActivity());
