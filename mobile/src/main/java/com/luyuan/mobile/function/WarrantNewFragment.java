@@ -39,6 +39,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.CityData;
+import com.luyuan.mobile.model.DealerAccount;
 import com.luyuan.mobile.model.DealerAccountData;
 import com.luyuan.mobile.model.DealerData;
 import com.luyuan.mobile.model.ProvinceData;
@@ -373,6 +374,13 @@ public class WarrantNewFragment extends Fragment {
 
                                     if (response != null && response.getSuccess().equals("true")) {
                                         dealerAccountData = response;
+                                        DealerAccount dealerAccount = new DealerAccount();
+                                        dealerAccount.setDealerCode("账户名称");
+                                        dealerAccount.setBalance("账户余额");
+                                        dealerAccount.setCreditLimit("信用额度");
+                                        dealerAccount.setAmount("已担保");
+                                        dealerAccount.setMoreTimes("逾期");
+                                        dealerAccountData.getDealeraccounts().add(0, dealerAccount);
                                         listDealerAccount.setAdapter(new DealerAccountAdapter());
                                     }
                                 }
@@ -466,7 +474,7 @@ public class WarrantNewFragment extends Fragment {
             public void onClick(View view) {
 
                 String dealerId = dealerData.getDealers().get(dealerIndex).getId();
-                double warrantAmount = Double.valueOf(editWarrantAmount.getText().toString());
+                String warrantAmount = editWarrantAmount.getText().toString();
                 String dueDate = MyGlobal.SIMPLE_DATE_FORMAT_WITHOUT_TIME.format(new Date(year - 1900, month, day));
                 if (dealerId.isEmpty()) {
                     new AlertDialog.Builder(getActivity())
@@ -477,7 +485,7 @@ public class WarrantNewFragment extends Fragment {
                             .show();
                     return;
                 }
-                if (warrantAmount <= 0) {
+                if (warrantAmount.isEmpty()) {
                     new AlertDialog.Builder(getActivity())
                             .setMessage(R.string.hint_amount_empty)
                             .setTitle(R.string.dialog_hint)
@@ -508,7 +516,7 @@ public class WarrantNewFragment extends Fragment {
                 pairs = new ArrayList<BasicNameValuePair>();
                 pairs.add(new BasicNameValuePair("dealerid", dealerId));
                 pairs.add(new BasicNameValuePair("enddate", dueDate));
-                pairs.add(new BasicNameValuePair("amount", String.valueOf(warrantAmount)));
+                pairs.add(new BasicNameValuePair("amount", editWarrantAmount.getText().toString()));
 
                 post = new HttpMultipartPost(getActivity(), MyGlobal.API_SUBMIT_WARRANT, pairs, filePaths, getText(R.string.submitting).toString());
                 post.execute();
@@ -704,9 +712,15 @@ public class WarrantNewFragment extends Fragment {
             View view = layoutInflater.inflate(R.layout.item_dealer_account, null);
             TextView text_account_name = (TextView) view.findViewById(R.id.text_account_name);
             TextView text_account_amount = (TextView) view.findViewById(R.id.text_account_amount);
+            TextView text_account_credit = (TextView) view.findViewById(R.id.text_account_credit);
+            TextView text_account_used = (TextView) view.findViewById(R.id.text_account_used);
+            TextView text_account_times = (TextView) view.findViewById(R.id.text_account_times);
 
             text_account_name.setText(dealerAccountData.getDealeraccounts().get(position).getDealerCode());
             text_account_amount.setText(dealerAccountData.getDealeraccounts().get(position).getBalance());
+            text_account_credit.setText(dealerAccountData.getDealeraccounts().get(position).getCreditLimit());
+            text_account_used.setText(dealerAccountData.getDealeraccounts().get(position).getAmount());
+            text_account_times.setText(dealerAccountData.getDealeraccounts().get(position).getMoreTimes());
 
             return view;
         }
