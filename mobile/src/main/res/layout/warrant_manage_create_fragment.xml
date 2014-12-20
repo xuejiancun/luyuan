@@ -83,7 +83,6 @@
                 android:singleLine="true" />
         </TableRow>
 
-
     </TableLayout>
 
     <TableLayout

@@ -485,7 +485,7 @@ public class WarrantNewFragment extends Fragment {
                             .show();
                     return;
                 }
-                if (warrantAmount.isEmpty()) {
+                if (warrantAmount.isEmpty() || Double.valueOf(warrantAmount) <= 0) {
                     new AlertDialog.Builder(getActivity())
                             .setMessage(R.string.hint_amount_empty)
                             .setTitle(R.string.dialog_hint)
