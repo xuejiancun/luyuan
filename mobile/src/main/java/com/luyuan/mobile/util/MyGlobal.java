@@ -12,7 +12,6 @@ import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
 import com.luyuan.mobile.function.WarrantManageActivity;
 import com.luyuan.mobile.model.FunctionData;
-import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.production.WarehouseAutomaticScanActivity;
 import com.luyuan.mobile.production.WarehouseBinExchangectivity;
@@ -37,8 +36,8 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
-    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-    //    public static final String SERVER_URL_PREFIX = "http://192.168.10.141:8080";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
+        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
 //    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
@@ -99,7 +98,8 @@ public class MyGlobal {
     // Added by Fangyi  -- End
 
     public static final String WEBVIEW_URL_QUERY_AUTH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/QueryAuth.aspx";
-    public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
+    // public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
+    public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/SalesrePort/Billboard.html";
     public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
     public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
     public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
@@ -291,12 +291,12 @@ public class MyGlobal {
     }
 
     public static FunctionData getFunctionData() {
-        if(functionData.getFunctionInfos().size() == 0){
-            FunctionInfo functionInfo = new FunctionInfo();
-            functionInfo.setCode("warrant_manage");
-            functionInfo.setName("发起担保");
-            functionData.getFunctionInfos().add(functionInfo);
-        }
+//        if(functionData.getFunctionInfos().size() == 0){
+//            FunctionInfo functionInfo = new FunctionInfo();
+//            functionInfo.setCode("warrant_manage");
+//            functionInfo.setName("发起担保");
+//            functionData.getFunctionInfos().add(functionInfo);
+//        }
 
         return functionData;
     }

@@ -36,7 +36,7 @@
     <string name="dialog_choose_material">请选择资料</string>
 
     <string name="network_disconnected">没有连接网络，请稍后再试。</string>
-    <string name="interact_data_error">服务器出了一个错误，请找系统管理员帮忙。</string>
+    <string name="interact_data_error">系统出错了，请把问题反馈给系统管理员。</string>
     <string name="fetch_data_empty">没有查询到资料</string>
     <string name="app_param_error">页面参数错误，请稍后再试。</string>
     <string name="notification_push">消息提醒</string>
@@ -228,6 +228,8 @@
     <string name="warrant_available">还可担保</string>
     <string name="province">省</string>
     <string name="city">市</string>
+    <string name="county">县</string>
+    <string name="town">乡镇</string>
     <string name="dealer">经销商</string>
     <string name="account_name">账户名</string>
     <string name="warrant_amount">担保金额</string>
@@ -237,5 +239,14 @@
     <string name="hint_amount_empty">请填写【担保金额】</string>
     <string name="hint_due_date_empty">请填写【到期日】</string>
     <string name="hint_due_date_invalid">【到期日】不能早于今天</string>
+
+    <string name="sales_area">经销区域</string>
+    <string name="detail_address">详细地址</string>
+    <string name="shop_address">主店面地址</string>
+    <string name="parent_dealer">上级经销商</string>
+    <string name="point_name">网店名称</string>
+    <string name="contract_num">签约量</string>
+    <string name="man_name">负责人姓名</string>
+    <string name="man_phone">负责人手机</string>
 
 </resources>

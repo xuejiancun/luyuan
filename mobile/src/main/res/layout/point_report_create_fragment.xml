@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview_login_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/sales_area"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:stretchColumns="2">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/province"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_province_sales"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/city"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_city_sales"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/detail_address"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_sales_address"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:stretchColumns="2"
+            android:background="#FFEDEDED">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/shop_address"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:stretchColumns="2">
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/province"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_province_shop"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/city"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_city_shop"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/county"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_county_shop"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/town"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_town_shop"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/detail_address"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_shop_address"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/parent_dealer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="12dp"/>
+
+                <Spinner
+                    android:id="@+id/spin_parent_dealer"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/point_name"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_point_name"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/contract_num"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_contract_num"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/man_name"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_man_name"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/man_phone"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/edit_man_phone"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <Gallery
+                android:id="@+id/gallery_attach_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_attach_file"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/attach_file"
+                android:textSize="20dp"
+                android:background="#FFEDEDED" />
+
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/submit"
+                android:textSize="20dp"
+                android:background="#46C50C" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
