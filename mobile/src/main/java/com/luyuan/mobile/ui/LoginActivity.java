@@ -9,14 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageInfo;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -24,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.FunctionData;
 import com.luyuan.mobile.model.JobData;
+import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MD5Util;
@@ -159,7 +159,7 @@ public class LoginActivity extends Activity {
 
                             // 否则，让用户选择岗位
                         } else if (count > 1) {
-                            CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
+                            final CharSequence[] jobList = new CharSequence[response.getJobInfos().size()];
                             for (int i = 0; i < count; i++) {
                                 jobList[i] = jobData.getJobInfos().get(i).getJobName();
                             }
@@ -179,9 +179,42 @@ public class LoginActivity extends Activity {
                                             MyGlobal.getUser().setJob(jobData.getJobInfos().get(jobIndex).getDeptName());
                                             MyGlobal.getUser().setUnitId(jobData.getJobInfos().get(jobIndex).getUnitId());
                                             MyGlobal.getUser().setHeId(jobData.getJobInfos().get(jobIndex).getHeId());
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            intent.putExtra("tab", "home");
-                                            startActivity(intent);
+
+                                            GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, MyGlobal.API_FETCH_ROLE+"&code=" + MyGlobal.getUser().getStId(),
+                                                    SuccessData.class, new Response.Listener<SuccessData>() {
+
+                                                @Override
+                                                public void onResponse(SuccessData response) {
+                                                    if (response != null && response.getSuccess().equals("true")) {
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        intent.putExtra("tab", "home");
+                                                        startActivity(intent);
+                                                    } else {
+                                                        new AlertDialog.Builder(LoginActivity.this)
+                                                                .setMessage(R.string.interact_data_error)
+                                                                .setTitle(R.string.dialog_hint)
+                                                                .setPositiveButton(R.string.dialog_confirm, null)
+                                                                .create()
+                                                                .show();
+                                                    }
+                                                }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    dialog.dismiss();
+
+                                                    new AlertDialog.Builder(LoginActivity.this)
+                                                            .setMessage(R.string.interact_data_error)
+                                                            .setTitle(R.string.dialog_hint)
+                                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                                            .create()
+                                                            .show();
+                                                }
+                                            }
+                                            );
+
+                                            RequestManager.getRequestQueue().add(gsonObjRequest);
+
                                         }
                                     })
                                     .create()

@@ -37,9 +37,10 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-        public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
-//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
+    public static final String API_FETCH_ROLE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=chooserole";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
     public static final String API_QUERY_DEDICATED = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querydedicatedmaterial";
@@ -57,6 +58,7 @@ public class MyGlobal {
     public static final String API_FETCH_SUBORDINATE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchsubordinate";
     public static final String API_ADD_LOCATION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addlocation";
     public static final String API_CHECK_VERSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchversion";
+    public static final String API_CHECK_VERSION_NEW = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchversionnew";
     public static final String API_MODIFY_CONTACT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=modifycontract";
     public static final String API_FETCH_WARRANT_DETAIL = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=getwarrantdetail";
     public static final String API_FETCH_PROVINCES = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchprovince";
@@ -98,8 +100,10 @@ public class MyGlobal {
     // Added by Fangyi  -- End
 
     public static final String WEBVIEW_URL_QUERY_AUTH = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/QueryAuth.aspx";
-    // public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
-    public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/SalesrePort/Billboard.html";
+    public static final String WEBVIEW_URL_BILLBOARD = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Billboard.aspx";
+    public static final String WEBVIEW_URL_BILLBOARD_MAN = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/SalesReport/Billboard.html";
+    public static final String WEBVIEW_URL_MY_PERFORMANCE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/SalesReport/MyPerformanceComplete.html";
+    public static final String WEBVIEW_URL_DEALER_PERFORMANCE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/SalesReport/DealerPerformanceMonth.html";
     public static final String WEBVIEW_URL_PERSONAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Personal.aspx";
     public static final String WEBVIEW_URL_STRATEGY = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Strategy.aspx";
     public static final String WEBVIEW_URL_TACTICAL = SERVER_URL_PREFIX + "/modules/An.SaleReport.Web/Tactical.aspx";
@@ -149,6 +153,12 @@ public class MyGlobal {
         Class clz = null;
 
         if (functionCode.equals("report_billboard")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("report_billboard_man")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("report_by_performance")) {
+            clz = WebViewActivity.class;
+        } else if (functionCode.equals("report_dealer_performance")) {
             clz = WebViewActivity.class;
         } else if (functionCode.equals("report_personal")) {
             clz = WebViewActivity.class;
@@ -233,6 +243,12 @@ public class MyGlobal {
 
         if (functionCode.equals("report_billboard")) {
             resId = R.drawable.icon_report_billboard;
+        } else if (functionCode.equals("report_billboard_man")) {
+            resId = R.drawable.icon_report_billboard;
+        } else if (functionCode.equals("report_by_performance")) {
+            resId = R.drawable.function_item_sales;
+        } else if (functionCode.equals("report_dealer_performance")) {
+            resId = R.drawable.function_item_sales;
         } else if (functionCode.equals("report_personal")) {
             resId = R.drawable.icon_report_personal;
         } else if (functionCode.equals("report_strategy")) {
@@ -291,13 +307,6 @@ public class MyGlobal {
     }
 
     public static FunctionData getFunctionData() {
-//        if(functionData.getFunctionInfos().size() == 0){
-//            FunctionInfo functionInfo = new FunctionInfo();
-//            functionInfo.setCode("warrant_manage");
-//            functionInfo.setName("发起担保");
-//            functionData.getFunctionInfos().add(functionInfo);
-//        }
-
         return functionData;
     }
 

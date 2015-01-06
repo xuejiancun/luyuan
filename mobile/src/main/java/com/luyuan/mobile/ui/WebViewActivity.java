@@ -126,6 +126,12 @@ public class WebViewActivity extends Activity {
         String result = "";
         if (function.equals("report_billboard")) {
             result = getText(R.string.function_report_billboard).toString();
+        } else if (function.equals("report_billboard_man")) {
+            result = getText(R.string.function_report_billboard_man).toString();
+        } else if (function.equals("report_by_performance")) {
+            result = getText(R.string.function_report_by_performance).toString();
+        } else if (function.equals("report_dealer_performance")) {
+            result = getText(R.string.function_report_dealer_performance).toString();
         } else if (function.equals("report_personal")) {
             result = getText(R.string.function_report_personal).toString();
         } else if (function.equals("report_strategy")) {
@@ -179,6 +185,12 @@ public class WebViewActivity extends Activity {
         String result = "";
         if (function.equals("report_billboard")) {
             result = MyGlobal.WEBVIEW_URL_BILLBOARD;
+        } else if (function.equals("report_billboard_man")) {
+            result = MyGlobal.WEBVIEW_URL_BILLBOARD_MAN;
+        } else if (function.equals("report_by_performance")) {
+            result = MyGlobal.WEBVIEW_URL_MY_PERFORMANCE;
+        } else if (function.equals("report_dealer_performance")) {
+            result = MyGlobal.WEBVIEW_URL_DEALER_PERFORMANCE;
         } else if (function.equals("report_personal")) {
             result = MyGlobal.WEBVIEW_URL_PERSONAL;
         } else if (function.equals("report_strategy")) {

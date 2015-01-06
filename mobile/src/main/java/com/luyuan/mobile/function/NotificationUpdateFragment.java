@@ -137,7 +137,7 @@ public class NotificationUpdateFragment extends Fragment {
             dialog.setCancelable(true);
             dialog.show();
 
-            GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION + "&versionCode=" + current_code,
+            GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION_NEW + "&versionCode=" + current_code,
                     VersionData.class, new Response.Listener<VersionData>() {
                 @Override
                 public void onResponse(final VersionData response) {
