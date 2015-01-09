@@ -62,6 +62,11 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
+            android:name=".function.PointReportActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>

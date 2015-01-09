@@ -7,11 +7,13 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.function.PointReportActivity;
 import com.luyuan.mobile.function.ScheduleManagerActivity;
 import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
 import com.luyuan.mobile.function.WarrantManageActivity;
 import com.luyuan.mobile.model.FunctionData;
+import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.production.WarehouseAutomaticScanActivity;
 import com.luyuan.mobile.production.WarehouseBinExchangectivity;
@@ -30,6 +32,7 @@ import com.luyuan.mobile.production.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class MyGlobal {
 
@@ -37,8 +40,8 @@ public class MyGlobal {
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
 //    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
 //    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
-    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
+//    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_ROLE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=chooserole";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
@@ -65,6 +68,9 @@ public class MyGlobal {
     public static final String API_FETCH_CITYS = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchcity";
     public static final String API_FETCH_DEALERS = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealer";
     public static final String API_FETCH_DEALER_ACCOUNT = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealeraccount";
+    public static final String API_FETCH_CITY_CHART = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchcitychart";
+    public static final String API_FETCH_CITY_DEALER_BY_USER = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealerbyuser";
+    public static final String API_SUBMIT_POINT_REPORT= SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=branchsave";
     public static final String API_SUBMIT_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addwarrant";
 
     // Added by Fangyi  -- Start
@@ -234,6 +240,8 @@ public class MyGlobal {
             clz = WarehouseBinSearchDetailActivity.class;
         } else if (functionCode.equals("warehouse_whbinexchange")) {
             clz = WarehouseBinExchangectivity.class;
+        } else if (functionCode.equals("point_report")) {
+            clz = PointReportActivity.class;
         }
         return clz;
     }
@@ -293,6 +301,8 @@ public class MyGlobal {
             resId = R.drawable.icon_schedule_manage;
         } else if (functionCode.equals("query_warrant")) {
             resId = R.drawable.icon_query_warrant;
+        } else if (functionCode.equals("point_report")) {
+            resId = R.drawable.function_item_sales;
         }
 
         return resId;
@@ -307,6 +317,12 @@ public class MyGlobal {
     }
 
     public static FunctionData getFunctionData() {
+        FunctionInfo functionInfo = new FunctionInfo();
+        functionInfo.setName("网点报备");
+        functionInfo.setCode("point_report");
+        ArrayList<FunctionInfo> functionInfos =  new ArrayList<FunctionInfo>();
+        functionInfos.add(functionInfo);
+        functionData.setFunctionInfos(functionInfos);
         return functionData;
     }
 

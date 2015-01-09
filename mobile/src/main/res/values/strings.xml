@@ -244,6 +244,7 @@
     <string name="hint_due_date_empty">请填写【到期日】</string>
     <string name="hint_due_date_invalid">【到期日】不能早于今天</string>
 
+    <string name="point_report">网点报备</string>
     <string name="sales_area">经销区域</string>
     <string name="detail_address">详细地址</string>
     <string name="shop_address">主店面地址</string>
@@ -252,5 +253,10 @@
     <string name="contract_num">签约量</string>
     <string name="man_name">负责人姓名</string>
     <string name="man_phone">负责人手机</string>
+    <string name="hint_address_shop_empty">请填写主店面地址【详细地址】</string>
+    <string name="hint_point_name_empty">请填写【网点名称】</string>
+    <string name="hint_contract_num_empty">请填写【签约量】</string>
+    <string name="hint_man_name_empty">请填写【负责人姓名】</string>
+    <string name="hint_man_phone_empty">请填写【负责人手机】</string>
 
 </resources>
