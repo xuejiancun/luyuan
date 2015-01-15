@@ -80,7 +80,8 @@ public class PointReportCreateFragment extends Fragment {
     private Gallery gallery;
 
     private Uri mCapturedImageURI;
-    private CityChartData provinceData;
+    private CityChartData provinceSalesData;
+    private CityChartData provinceShopData;
     private CityChartData citySalesData;
     private CityChartData cityShopData;
     private CityChartData countyData;
@@ -143,19 +144,48 @@ public class PointReportCreateFragment extends Fragment {
                                 }
                                 spinnerDealer.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
 
-                                GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_CITY_CHART + "&pid=10" , CityChartData.class,
+                                GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_DEALER_CITY_CHART + "&pid=10" , CityChartData.class,
 
                                         new Response.Listener<CityChartData>() {
                                             @Override
                                             public void onResponse(CityChartData response) {
                                                 if (response != null && response.getSuccess().equals("true")) {
-                                                    provinceData = response;
-                                                    String[] data = new String[provinceData.getCityCharts().size()];
-                                                    for(int i = 0; i< provinceData.getCityCharts().size(); i++){
-                                                        data[i] = provinceData.getCityCharts().get(i).getName();
+                                                    provinceSalesData = response;
+                                                    String[] data = new String[provinceSalesData.getCityCharts().size()];
+                                                    for(int i = 0; i< provinceSalesData.getCityCharts().size(); i++){
+                                                        data[i] = provinceSalesData.getCityCharts().get(i).getName();
                                                     }
                                                     spinnerProvinceSales.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
-                                                    spinnerProvinceShop.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
+
+                                                    GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_CITY_CHART + "&pid=10" , CityChartData.class,
+
+                                                            new Response.Listener<CityChartData>() {
+                                                                @Override
+                                                                public void onResponse(CityChartData response) {
+                                                                    if (response != null && response.getSuccess().equals("true")) {
+                                                                        provinceShopData = response;
+                                                                        String[] data = new String[provinceShopData.getCityCharts().size()];
+                                                                        for(int i = 0; i< provinceShopData.getCityCharts().size(); i++){
+                                                                            data[i] = provinceShopData.getCityCharts().get(i).getName();
+                                                                        }
+                                                                        spinnerProvinceShop.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
+                                                                    }
+                                                                }
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    new AlertDialog.Builder(getActivity())
+                                                                            .setMessage(R.string.interact_data_error)
+                                                                            .setTitle(R.string.dialog_hint)
+                                                                            .setPositiveButton(R.string.dialog_confirm, null)
+                                                                            .create()
+                                                                            .show();
+                                                                }
+                                                            });
+
+                                                    RequestManager.getRequestQueue().add(gsonObjRequest);
+
                                                 }
                                             }
                                         },
@@ -195,12 +225,12 @@ public class PointReportCreateFragment extends Fragment {
         ((Spinner) view.findViewById(R.id.spin_province_sales)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                provinceShopIndex = provinceSalesIndex = position;
+                provinceSalesIndex = position;
                 citySalesIndex = 0;
 
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
 
-                    GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_CITY_CHART + "&pid=" + provinceData.getCityCharts().get(provinceSalesIndex).getId(), CityChartData.class,
+                    GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_DEALER_CITY_CHART + "&pid=" + provinceSalesData.getCityCharts().get(provinceSalesIndex).getId(), CityChartData.class,
 
                             new Response.Listener<CityChartData>() {
                                 @Override
@@ -215,6 +245,7 @@ public class PointReportCreateFragment extends Fragment {
                                             data[i] = citySalesData.getCityCharts().get(i).getName();
                                         }
                                         spinnerCitySales.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
+                                        provinceShopIndex = getCityChartIndex(provinceShopData, provinceSalesData.getCityCharts().get(provinceSalesIndex).getName());
                                         spinnerProvinceShop.setSelection(provinceShopIndex, true);
                                     }
                                 }
@@ -245,8 +276,9 @@ public class PointReportCreateFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 citySalesIndex = position;
-                if(provinceSalesIndex == provinceShopIndex && !citySalesData.getCityCharts().get(citySalesIndex).getName().isEmpty()){
-                    cityShopIndex = citySalesIndex;
+                if(cityShopData != null && !citySalesData.getCityCharts().get(citySalesIndex).getName().isEmpty()
+                        && provinceSalesData.getCityCharts().get(provinceSalesIndex).getName().equals(provinceShopData.getCityCharts().get(provinceShopIndex).getName())){
+                    cityShopIndex = getCityChartIndex(cityShopData, citySalesData.getCityCharts().get(citySalesIndex).getName());
                     spinnerCityShop.setSelection(cityShopIndex, true);
                 }
             }
@@ -261,10 +293,9 @@ public class PointReportCreateFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 provinceShopIndex = position;
-                cityShopIndex =0;
 
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
-                    GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_CITY_CHART + "&pid=" + provinceData.getCityCharts().get(provinceShopIndex).getId(), CityChartData.class,
+                    GsonRequest gsonObjRequest = new GsonRequest<CityChartData>(Request.Method.GET, MyGlobal.API_FETCH_CITY_CHART + "&pid=" + provinceShopData.getCityCharts().get(provinceShopIndex).getId(), CityChartData.class,
 
                             new Response.Listener<CityChartData>() {
                                 @Override
@@ -277,6 +308,9 @@ public class PointReportCreateFragment extends Fragment {
                                             data[i] = cityShopData.getCityCharts().get(i).getName();
                                         }
                                         spinnerCityShop.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data));
+                                        cityShopIndex = (citySalesData == null ? 0 : getCityChartIndex(cityShopData, citySalesData.getCityCharts().get(citySalesIndex).getName()));
+                                        spinnerCityShop.setSelection(cityShopIndex, true);
+
                                     }
                                 }
                             },
@@ -469,12 +503,12 @@ public class PointReportCreateFragment extends Fragment {
         ((Button) view.findViewById(R.id.button_submit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String provinceSalesId = provinceData.getCityCharts().get(provinceSalesIndex).getId();
+                String provinceSalesId = provinceSalesData.getCityCharts().get(provinceSalesIndex).getId();
                 String citySalesId = citySalesData.getCityCharts().get(citySalesIndex).getId();
                 String areaSales = provinceSalesId + "-" + (citySalesId.isEmpty() ? "0" : citySalesId) + "-0-0-0" ;
                 String addressSales = editSalesAddress.getText().toString();
 
-                String provinceShopId = provinceData.getCityCharts().get(provinceShopIndex).getId();
+                String provinceShopId = provinceShopData.getCityCharts().get(provinceShopIndex).getId();
                 String cityShopId = cityShopData.getCityCharts().get(cityShopIndex).getId();
                 String countyId = countyData.getCityCharts().get(countyIndex).getId();
                 String townId = countyData.getCityCharts().get(townIndex).getId();
@@ -728,6 +762,15 @@ public class PointReportCreateFragment extends Fragment {
 
             return imageView;
         }
+    }
+
+    public int getCityChartIndex(CityChartData data, String selectedItemName){
+        for(int i = 0; i < data.getCityCharts().size(); i++){
+            if(data.getCityCharts().get(i).getName().equals(selectedItemName)){
+                return i;
+            }
+        }
+        return 0;
     }
 
 }

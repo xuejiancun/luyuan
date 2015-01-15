@@ -13,7 +13,6 @@ import com.luyuan.mobile.function.UploadMaterialActivity;
 import com.luyuan.mobile.function.UploadMaterialDedicatedActivity;
 import com.luyuan.mobile.function.WarrantManageActivity;
 import com.luyuan.mobile.model.FunctionData;
-import com.luyuan.mobile.model.FunctionInfo;
 import com.luyuan.mobile.model.User;
 import com.luyuan.mobile.production.WarehouseAutomaticScanActivity;
 import com.luyuan.mobile.production.WarehouseBinExchangectivity;
@@ -32,7 +31,6 @@ import com.luyuan.mobile.production.WarehouseVoucherManagerActivity;
 import com.luyuan.mobile.ui.WebViewActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class MyGlobal {
 
@@ -44,6 +42,7 @@ public class MyGlobal {
 //    public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_ROLE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=chooserole";
+    public static final String API_CHECK_SESSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=checksession";
     public static final String API_FETCH_FUNCTION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=fetchfunctions4app";
     public static final String API_QUERY_MATERIAL = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querymaterials";
     public static final String API_QUERY_DEDICATED = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=querydedicatedmaterial";
@@ -69,6 +68,7 @@ public class MyGlobal {
     public static final String API_FETCH_DEALERS = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealer";
     public static final String API_FETCH_DEALER_ACCOUNT = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealeraccount";
     public static final String API_FETCH_CITY_CHART = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchcitychart";
+    public static final String API_FETCH_DEALER_CITY_CHART = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealercitychart";
     public static final String API_FETCH_CITY_DEALER_BY_USER = SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=fetchdealerbyuser";
     public static final String API_SUBMIT_POINT_REPORT= SERVER_URL_PREFIX + "/modules/An.App.Web/Ajax/AppService.ashx?fn=branchsave";
     public static final String API_SUBMIT_WARRANT = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=addwarrant";
@@ -317,16 +317,18 @@ public class MyGlobal {
     }
 
     public static FunctionData getFunctionData() {
-        FunctionInfo functionInfo = new FunctionInfo();
-        functionInfo.setName("网点报备");
-        functionInfo.setCode("point_report");
-        ArrayList<FunctionInfo> functionInfos =  new ArrayList<FunctionInfo>();
-        functionInfos.add(functionInfo);
-        functionData.setFunctionInfos(functionInfos);
+//        FunctionInfo functionInfo = new FunctionInfo();
+//        functionInfo.setName("网点报备");
+//        functionInfo.setCode("point_report");
+//        ArrayList<FunctionInfo> functionInfos =  new ArrayList<FunctionInfo>();
+//        functionInfos.add(functionInfo);
+//        functionData.setFunctionInfos(functionInfos);
         return functionData;
     }
 
     public static void setFunctionData(FunctionData functionData) {
         MyGlobal.functionData = functionData;
     }
+
+    public static boolean isBackground = false;
 }

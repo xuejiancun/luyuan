@@ -1,7 +1,6 @@
 package com.luyuan.mobile.function;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
@@ -48,6 +47,7 @@ import com.luyuan.mobile.model.ScheduleData;
 import com.luyuan.mobile.model.ScheduleInfo;
 import com.luyuan.mobile.model.SubordinateData;
 import com.luyuan.mobile.model.SuccessData;
+import com.luyuan.mobile.ui.BaseActivity;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
@@ -61,7 +61,7 @@ import java.util.Date;
 import java.util.List;
 
 // 日程管理页面
-public class ScheduleManagerActivity extends Activity implements SearchView.OnQueryTextListener {
+public class ScheduleManagerActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     private CalendarPickerView calendarPickerView;
     private AlertDialog theDialog;

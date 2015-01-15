@@ -1,7 +1,6 @@
 package com.luyuan.mobile.function;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -24,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.DedicatedData;
 import com.luyuan.mobile.model.DedicatedInfo;
+import com.luyuan.mobile.ui.BaseActivity;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
@@ -33,7 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 // 门店打点功能
-public class UploadMaterialDedicatedActivity extends Activity implements SearchView.OnQueryTextListener {
+public class UploadMaterialDedicatedActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;
     private ProgressDialog dialog;

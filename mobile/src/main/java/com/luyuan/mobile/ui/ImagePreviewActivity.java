@@ -1,6 +1,5 @@
 package com.luyuan.mobile.ui;
 
-import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import com.luyuan.mobile.R;
 
 // 图片预览功能
-public class ImagePreviewActivity extends Activity {
+public class ImagePreviewActivity extends BaseActivity {
 
     private static final int DELAY_MILLIS = 1000;
     private String filePath = "";

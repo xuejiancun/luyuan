@@ -1,7 +1,6 @@
 package com.luyuan.mobile.ui;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -33,7 +32,7 @@ import cn.jpush.android.api.TagAliasCallback;
 // 2. 功能Tab
 // 3. 探索Tab
 // 4. 用户Tab
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String MESSAGE_RECEIVED_ACTION = "com.luyuan.mobile.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_MESSAGE = "message";
@@ -264,7 +263,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         //调用JPush API设置Tag
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
-
     }
 
     private void setAlias() {

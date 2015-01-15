@@ -1,7 +1,6 @@
 package com.luyuan.mobile.function;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,13 +16,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.model.SuccessData;
+import com.luyuan.mobile.ui.BaseActivity;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
 // 帐户 -> 我的资料 页面
-public class AboutMeActivity extends Activity {
+public class AboutMeActivity extends BaseActivity {
 
     private ProgressDialog dialog;
 

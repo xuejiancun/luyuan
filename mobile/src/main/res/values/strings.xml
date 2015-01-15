@@ -249,7 +249,7 @@
     <string name="detail_address">详细地址</string>
     <string name="shop_address">主店面地址</string>
     <string name="parent_dealer">上级经销商</string>
-    <string name="point_name">网店名称</string>
+    <string name="point_name">网点名称</string>
     <string name="contract_num">签约量</string>
     <string name="man_name">负责人姓名</string>
     <string name="man_phone">负责人手机</string>

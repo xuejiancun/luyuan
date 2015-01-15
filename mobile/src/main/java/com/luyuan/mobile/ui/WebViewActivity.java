@@ -1,7 +1,6 @@
 package com.luyuan.mobile.ui;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +18,7 @@ import android.webkit.WebViewClient;
 import com.luyuan.mobile.R;
 import com.luyuan.mobile.util.MyGlobal;
 
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends BaseActivity {
 
     private WebView webview;
     private String function = "";

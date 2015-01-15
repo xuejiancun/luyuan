@@ -1,7 +1,6 @@
 package com.luyuan.mobile.function;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -11,12 +10,13 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.ui.BaseActivity;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
 // 网点报备功能
-public class PointReportActivity extends Activity {
+public class PointReportActivity extends BaseActivity {
 
     private String tab = "home";
 
