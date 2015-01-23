@@ -77,6 +77,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
     private ProgressDialog dialog;
     private double latitude;
     private double longitude;
+    private String province = "";
+    private String city = "";
+    private String district = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
                 mLocationClient.stop();
                 latitude = bdLocation.getLatitude();
                 longitude = bdLocation.getLongitude();
+                province = bdLocation.getProvince();
+                city = bdLocation.getCity();
+                district = bdLocation.getDistrict();
                 editTextLocation.setText(bdLocation.getAddrStr());
             }
         });
@@ -226,6 +232,9 @@ public class UploadMaterialDedicatedFragment extends Fragment {
 
                 pairs = new ArrayList<BasicNameValuePair>();
                 pairs.add(new BasicNameValuePair("location", location));
+                pairs.add(new BasicNameValuePair("province", province));
+                pairs.add(new BasicNameValuePair("city", city));
+                pairs.add(new BasicNameValuePair("district", district));
                 pairs.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
                 pairs.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
                 pairs.add(new BasicNameValuePair("area", area));

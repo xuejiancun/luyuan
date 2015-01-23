@@ -16,13 +16,15 @@ import cn.jpush.android.api.JPushInterface;
 
 public class BaseActivity extends Activity {
 
+    private HomeWatcher mHomeWatcher;
+
     @Override
     protected void onResume() {
         super.onResume();
 
         JPushInterface.onResume(this);
 
-        HomeWatcher mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher = new HomeWatcher(this);
         mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
             @Override
             public void onHomePressed() {
@@ -53,4 +55,9 @@ public class BaseActivity extends Activity {
         }
      }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mHomeWatcher.stopWatch();
+    }
 }
