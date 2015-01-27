@@ -6,6 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,13 +27,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.JSONHelper;
+import com.luyuan.mobile.model.ReturnJson;
 import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.WarehousePurchaseVoucherDetail;
+import com.luyuan.mobile.model.http1;
 import com.luyuan.mobile.model.tbl_whPurchaseOrder;
 import com.luyuan.mobile.model.tbl_whPurchaseOrderDetail;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +57,25 @@ public class WarehouseVoucherExamineDetailFragment extends Fragment implements A
     List<TextView> list_exqty = new ArrayList<TextView>();
     List<TextView> list_badqty = new ArrayList<TextView>();
     private int count = 0;
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
 
+            switch (msg.what) {
+                case 1:
+                    Bundle data = msg.getData();
+                    new AlertDialog.Builder(getActivity()).setMessage(data.getString("data")).setTitle(R.string.dialog_hint).
+                            setPositiveButton(R.string.dialog_confirm, null).create().show();
+                    break;
+
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+
+
+        }
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -110,12 +136,13 @@ public class WarehouseVoucherExamineDetailFragment extends Fragment implements A
                 tbl_whPurchaseOrder warehouseVouchersave = new tbl_whPurchaseOrder();
                 warehouseVouchersave.setExamineBy(MyGlobal.getUser().getUsername());
                 warehouseVouchersave.setwhpCode(code);
-                for (int i = 0; i < listView.getChildCount(); i++) {
+                for (int i = 0; i < listView.getCount(); i++) {
+                    View v = listView.getAdapter().getView(i,null,null);
                     tbl_whPurchaseOrderDetail data = new tbl_whPurchaseOrderDetail();
-                    String itemID = ((TextView) listView.getChildAt(i).findViewById(R.id.textview_item_id)).getText().toString();
-                    String ActualQTY = ((EditText) listView.getChildAt(i).findViewById(R.id.textview_item_actqty)).getText().toString();
-                    String BADQTY = ((TextView) listView.getChildAt(i).findViewById(R.id.textview_item_badqty)).getText().toString();
-                    String ExamineQTY = ((TextView) listView.getChildAt(i).findViewById(R.id
+                    String itemID = ((TextView) v.findViewById(R.id.textview_item_id)).getText().toString();
+                    String ActualQTY = ((EditText) v.findViewById(R.id.textview_item_actqty)).getText().toString();
+                    String BADQTY = ((TextView) v.findViewById(R.id.textview_item_badqty)).getText().toString();
+                    String ExamineQTY = ((TextView) v.findViewById(R.id
                             .textview_item_exqty)).getText().toString();
                     data.setActualQTY(ActualQTY);
                     data.setitemID(itemID);
@@ -123,92 +150,124 @@ public class WarehouseVoucherExamineDetailFragment extends Fragment implements A
                     data.setExamineQTY(ExamineQTY);
                     warehouseVouchersave.gettbl_whPurchaseOrderDetail().add(i, data);
                 }
-                String json = new Gson().toJson(warehouseVouchersave);
-                StringBuffer url = new StringBuffer(MyGlobal.API_WHPUREXAMINE);
-                url.append("&json=" + json);
+                final String json = new Gson().toJson(warehouseVouchersave);
                 if (MyGlobal.checkNetworkConnection(getActivity())) {
                     dialog = new ProgressDialog(getActivity());
                     dialog.setMessage(getText(R.string.search_loading));
                     dialog.setCancelable(true);
                     dialog.show();
 
-                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(), SuccessData.class,
-                            new Response.Listener<SuccessData>() {
+                    Thread thread = new Thread(new Runnable() {
 
-                                @Override
-                                public void onResponse(SuccessData response) {
-                                    dialog.dismiss();
-                                    if (response.getSuccess().equals("true")) {
-                                        new AlertDialog.Builder(getActivity()).setMessage(R
-                                                .string.examine_success).setTitle(R.string
-                                                .dialog_hint)
-                                                .setPositiveButton(R.string.dialog_confirm, null).create().show();
-
-                                    } else {
-                                        new AlertDialog.Builder(getActivity()).setMessage(response.getData().get(0).getInfo()).setTitle(R.string.dialog_hint)
-                                                .setPositiveButton(R.string.dialog_confirm, null).create().show();
-                                    }
-                                }
-
-                            }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void run() {
+                            try {
+                                String s = "";
+                                List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+                                list.add(new BasicNameValuePair("json", json));
+                                s = http1.PostData(list, "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=finishexamin");
+                                Message msg = new Message();
+                                msg.what=1;
+                                Bundle d = new Bundle();
+                                d.putString("data", JSONHelper.parseObject(s, ReturnJson.class).getData().get(0).getInfo());
+                                msg.setData(d);
+                                handler.sendMessage(msg);
+
+                            } catch (Exception e) {
+
+                                e.printStackTrace();
+                            }
                             dialog.dismiss();
 
-                            new AlertDialog.Builder(getActivity()).setMessage(error.getMessage().toString()).setTitle(R.string.dialog_hint)
-                                    .setPositiveButton(R.string.dialog_confirm, null).create().show();
                         }
                     });
-
-                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                    thread.start();
                 }
-
+           //     StringBuffer url = new StringBuffer(MyGlobal.API_WHPUREXAMINE);
+//                url.append("&json=" + json);
+//                if (MyGlobal.checkNetworkConnection(getActivity())) {
+//                    dialog = new ProgressDialog(getActivity());
+//                    dialog.setMessage(getText(R.string.search_loading));
+//                    dialog.setCancelable(true);
+//                    dialog.show();
+//
+//                    GsonRequest gsonObjRequest = new GsonRequest<SuccessData>(Request.Method.GET, url.toString(), SuccessData.class,
+//                            new Response.Listener<SuccessData>() {
+//
+//                                @Override
+//                                public void onResponse(SuccessData response) {
+//                                    dialog.dismiss();
+//                                    if (response.getSuccess().equals("true")) {
+//                                        new AlertDialog.Builder(getActivity()).setMessage(R
+//                                                .string.examine_success).setTitle(R.string
+//                                                .dialog_hint)
+//                                                .setPositiveButton(R.string.dialog_confirm, null).create().show();
+//
+//                                    } else {
+//                                        new AlertDialog.Builder(getActivity()).setMessage(response.getData().get(0).getInfo()).setTitle(R.string.dialog_hint)
+//                                                .setPositiveButton(R.string.dialog_confirm, null).create().show();
+//                                    }
+//                                }
+//
+//                            }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            dialog.dismiss();
+//
+//                            new AlertDialog.Builder(getActivity()).setMessage(error.getMessage().toString()).setTitle(R.string.dialog_hint)
+//                                    .setPositiveButton(R.string.dialog_confirm, null).create().show();
+//                        }
+//                    });
+//
+//                    RequestManager.getRequestQueue().add(gsonObjRequest);
+//                }
+//
             }
-        });
+         });
 
 
         return view;
 
     }
 
-    TextWatcher watcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            // TODO Auto-generated method stub
-            for (int i = 0; i < list_actqty.size(); i++) {
-                if (!list_actqty.get(i).getText().toString().equals("")) {
-                    list_badqty.get(i).setText(String.valueOf(Integer.parseInt(list_exqty.get(i)
-                            .getText().toString()) - Integer.parseInt(list_actqty.get(i).getText()
-                            .toString())));
-                    if (Integer.parseInt(list_badqty.get(i).getText().toString()) < 0) {
-                        new AlertDialog.Builder(getActivity()).setTitle("提示").setIcon(R.drawable.wrong).setMessage("不合格数不能为负").setNeutralButton("确定",
-                                new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                }).show();
-                    }
-                }
-
-            }
-        }
-    };
+//    TextWatcher watcher = new TextWatcher() {
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count,
+//                                      int after) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//            // TODO Auto-generated method stub
+//            for (int i = 0; i < list_actqty.size(); i++) {
+//                if (!list_actqty.get(i).getText().toString().equals("")) {
+//                    list_badqty.get(i).setText(String.valueOf(Integer.parseInt(list_exqty.get(i)
+//                            .getText().toString()) - Integer.parseInt(list_actqty.get(i).getText()
+//                            .toString())));
+//                    if (Integer.parseInt(list_badqty.get(i).getText().toString()) < 0) {
+//                        new AlertDialog.Builder(getActivity()).setTitle("提示").setIcon(R.drawable.wrong).setMessage("不合格数不能为负").setNeutralButton("确定",
+//                                new DialogInterface.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                }).show();
+//                    }
+//                }
+//
+//            }
+//        }
+//    };
 
     public class SearchListAdapter extends ArrayAdapter<String> {
 
@@ -218,8 +277,8 @@ public class WarehouseVoucherExamineDetailFragment extends Fragment implements A
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = layoutInflater.inflate(R.layout.item_warehouse_purchasevoucher_detail, null);
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final View view = layoutInflater.inflate(R.layout.item_warehouse_purchasevoucher_detail, null);
             ((TextView) view.findViewById(R.id.textview_item_code)).setText
                     (warehousePurchaseVoucherDetail.getWarehousePurchaseVoucherDetailInfo().get(position)
                             .getitemCode());
@@ -243,8 +302,69 @@ public class WarehouseVoucherExamineDetailFragment extends Fragment implements A
             list_actqty.add(((EditText) view.findViewById(R.id.textview_item_actqty)));
             list_exqty.add(((TextView) view.findViewById(R.id.textview_item_exqty)));
             list_badqty.add(((TextView) view.findViewById(R.id.textview_item_badqty)));
-            list_actqty.get(count).addTextChangedListener(watcher);
+          // list_actqty.get(count).addTextChangedListener(watcher);
             count++;
+            ((TextView) view.findViewById(R.id.textview_item_actqty)).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+//                for (int i = 0; i < list_actqty.size(); i++) {
+//                if (!list_actqty.get(i).getText().toString().equals("")) {
+//                    list_badqty.get(i).setText(String.valueOf(Integer.parseInt(list_exqty.get(i)
+//                            .getText().toString()) - Integer.parseInt(list_actqty.get(i).getText()
+//                            .toString())));
+//                    if (Integer.parseInt(list_badqty.get(i).getText().toString()) < 0) {
+//                        new AlertDialog.Builder(getActivity()).setTitle("提示").setIcon(R.drawable.wrong).setMessage("不合格数不能为负").setNeutralButton("确定",
+//                                new DialogInterface.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                }).show();
+//                    }
+//                }
+//
+//            }
+                    String old =warehousePurchaseVoucherDetail.getWarehousePurchaseVoucherDetailInfo().get(position).getActualQTY();
+
+                    String txt=editable.toString();
+                    if(txt.length()==0)
+                        txt = "0";
+                    if(Float.parseFloat(txt) !=Float.parseFloat(old)) {
+                        String exqty=warehousePurchaseVoucherDetail.getWarehousePurchaseVoucherDetailInfo().get(position).getExamineQTY();
+                        if(Float.parseFloat(exqty)<Float.parseFloat(txt))
+                        {
+                            new AlertDialog.Builder(getActivity()).setTitle("提示").setIcon(R.drawable.wrong).setMessage("不合格数不能为负").setNeutralButton("确定",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
+                        }
+                        else {
+                            float bqty=Float.parseFloat(exqty)-Float.parseFloat(txt);
+                            ((TextView) view.findViewById(R.id.textview_item_badqty)).setText
+                                    (String.valueOf(bqty));
+                            warehousePurchaseVoucherDetail.getWarehousePurchaseVoucherDetailInfo().get(position).setBADQTY(String.valueOf(bqty));
+                            warehousePurchaseVoucherDetail.getWarehousePurchaseVoucherDetailInfo().get(position).setActualQTY(txt);
+                        }
+
+                    }
+                }
+            });
             return view;
         }
 

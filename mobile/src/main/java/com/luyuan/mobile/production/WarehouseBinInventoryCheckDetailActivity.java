@@ -42,6 +42,7 @@ import com.luyuan.mobile.util.RequestManager;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,10 +174,10 @@ public class WarehouseBinInventoryCheckDetailActivity extends Activity  {
 					wb.setActualQty(((EditText) ly1.getChildAt(i).findViewById(R.id.ActualQtyItem1)).getText().toString());
 					wb.setVoucherid(li.getData().get(i).getVoucherid());
 					wb.setWbID(li.getData().get(i).getWbID());
-					wb.setWbName(li.getData().get(i).getWbName());
+					wb.setWbName(URLEncoder.encode(li.getData().get(i).getWbName()));
 					wb.setProductCode(li.getData().get(i).getProductCode());
-					wb.setPrefixName(li.getData().get(i).getPrefixName());
-					wb.setItemSpec(li.getData().get(i).getItemSpec());
+					wb.setPrefixName(URLEncoder.encode(li.getData().get(i).getPrefixName()));
+					wb.setItemSpec(URLEncoder.encode(li.getData().get(i).getItemSpec()));
 					wb.setQty(li.getData().get(i).getQty());
 					wb.setActualQtyBack(li.getData().get(i).getActualQtyBack());
 					//json = JSONHelper.toJSON(wb).replace("\"[", "[").replace("]\"", "]").replace("'", "\"");
@@ -379,7 +380,7 @@ public class WarehouseBinInventoryCheckDetailActivity extends Activity  {
 //					progressDialog.dismiss();
 
                     StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_BININFOMODIFY);
-                    url.append("&wbName=" + editText1.getText().toString());
+                    url.append("&wbName=" + URLEncoder.encode(editText1.getText().toString()));
 
                     if (MyGlobal.checkNetworkConnection(WarehouseBinInventoryCheckDetailActivity.this)) {
                         dialog = new ProgressDialog(WarehouseBinInventoryCheckDetailActivity.this);

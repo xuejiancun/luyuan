@@ -26,6 +26,8 @@ import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
 
+import java.net.URLEncoder;
+
 public class WarehouseLocationInventorySearchFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private LayoutInflater layoutInflater;
@@ -46,7 +48,7 @@ public class WarehouseLocationInventorySearchFragment extends Fragment implement
             query = args.getString("api");
         }
         StringBuffer url = new StringBuffer(MyGlobal.API_WAREHOUSE_LOCATIONINVENTORY_QUERY);
-        url.append("&UnitID=" + MyGlobal.getUser().getUnitId() + "&wbName=" + query);
+        url.append("&UnitID=" + MyGlobal.getUser().getUnitId() + "&wbName=" + URLEncoder.encode(query));
         if (MyGlobal.checkNetworkConnection(getActivity())) {
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage(getText(R.string.search_loading));

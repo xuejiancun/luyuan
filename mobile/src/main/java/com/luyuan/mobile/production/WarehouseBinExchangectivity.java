@@ -46,6 +46,8 @@ import com.luyuan.mobile.util.RequestManager;
 import android.text.TextWatcher;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -169,8 +171,8 @@ public class WarehouseBinExchangectivity extends Activity  {
                                 }
                             }
                             whBinExchangeData wb = new whBinExchangeData();
-                            wb.setOutbin(outbin);
-                            wb.setInbin(inbin);
+                            wb.setOutbin(URLEncoder.encode(outbin));
+                            wb.setInbin(URLEncoder.encode(inbin));
                             wb.setRecentproduct(temp);
                             wb.setUnitID(MyGlobal.getUser().getUnitId());
                             //ListAdapter ld = listView.getAdapter();
@@ -259,7 +261,7 @@ public class WarehouseBinExchangectivity extends Activity  {
                                                     } else {
 
                                                         listproduct.add(recentproduct);
-                                                    }
+                                                     }
                                                     listView.setAdapter(new SearchListAdapter(WarehouseBinExchangectivity.this));
                                                 }
                                                 else
@@ -412,8 +414,8 @@ public class WarehouseBinExchangectivity extends Activity  {
                 return;
             }
             whBinExchangeData savewb = new whBinExchangeData();
-            savewb.setOutbin(outbin);
-            savewb.setInbin(inbin);
+            savewb.setOutbin(URLEncoder.encode(outbin));
+            savewb.setInbin(URLEncoder.encode(inbin));
             savewb.setUnitID(MyGlobal.getUser().getUnitId());
             if(listproduct.size()>0) {
                 List<whBinExchangeDetail> data = new ArrayList<whBinExchangeDetail>();

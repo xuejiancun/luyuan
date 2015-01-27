@@ -75,7 +75,7 @@ public class LoginActivity extends Activity {
 //        password = "123456";
 
 //        username = "ceshi2";
-//        password = "Xx8888..";
+ //       password = "Abc123456";
 
 //        username = "123";
 //        password = "Wlwdsa12";

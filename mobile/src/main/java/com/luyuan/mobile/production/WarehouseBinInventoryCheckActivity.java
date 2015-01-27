@@ -43,6 +43,8 @@ import com.luyuan.mobile.util.RequestManager;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -174,7 +176,7 @@ public class WarehouseBinInventoryCheckActivity extends Activity {
                         .setPositiveButton(R.string.dialog_confirm, null).create().show();
                 return;
             }
-            wb.setWbName(binnum);
+            wb.setWbName(URLEncoder.encode(binnum));
             String pbarcode = editText_pbarcode
                     .getText().toString().replace("\r\n", ",").replace("\n", ",");
             if (pbarcode.equals("")) {

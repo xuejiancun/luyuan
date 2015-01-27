@@ -1,44 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE LinearLayout [
-	<!ELEMENT LinearLayout (LinearLayout|CheckBox|TableLayout|EditText)*>
-	<!ATTLIST LinearLayout
-		android:descendantFocusability CDATA #IMPLIED
-		android:layout_height CDATA #REQUIRED
-		android:layout_width CDATA #REQUIRED
-		android:orientation CDATA #IMPLIED
-		xmlns:android CDATA #IMPLIED>
-	<!ELEMENT CheckBox (#PCDATA)>
-	<!ATTLIST CheckBox
-		android:id CDATA #REQUIRED
-		android:layout_height CDATA #REQUIRED
-		android:layout_width CDATA #REQUIRED
-		android:layout_weight CDATA #REQUIRED>
-	<!ELEMENT TableLayout (TableRow)*>
-	<!ATTLIST TableLayout
-		android:layout_height CDATA #REQUIRED
-		android:layout_width CDATA #REQUIRED
-		android:layout_weight CDATA #REQUIRED
-		android:layout_gravity CDATA #REQUIRED
-		android:stretchColumns CDATA #REQUIRED>
-	<!ELEMENT TableRow (TextView)*>
-	<!ELEMENT TextView (#PCDATA)>
-	<!ATTLIST TextView
-		android:id CDATA #IMPLIED
-		android:layout_height CDATA #IMPLIED
-		android:layout_weight CDATA #IMPLIED
-		android:layout_width CDATA #IMPLIED
-		android:text CDATA #IMPLIED
-		android:textStyle CDATA #IMPLIED>
-	<!ELEMENT EditText (#PCDATA)>
-	<!ATTLIST EditText
-		android:id CDATA #REQUIRED
-		android:layout_weight CDATA #REQUIRED
-		android:layout_width CDATA #REQUIRED
-		android:layout_height CDATA #REQUIRED
-		android:textSize CDATA #REQUIRED
-		android:gravity CDATA #REQUIRED
-		android:singleLine CDATA #REQUIRED>
-	]>
+<!DOCTYPE LinearLayout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">

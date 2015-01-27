@@ -9,6 +9,8 @@ public class WarehouseVoucheritemDetailList {
     private String ExamineQTY = "";
     private String QTY = "";
     private String itemID = "";
+    private Boolean Check= false;
+
 
     private String getitemName() {
         return itemName;
@@ -64,5 +66,14 @@ public class WarehouseVoucheritemDetailList {
 
     public void setitemID(String itemID) {
         this.itemID = itemID;
+    }
+
+
+    public Boolean getCheck() {
+        return Check;
+    }
+
+    public void setCheck(Boolean check) {
+        Check = check;
     }
 }
