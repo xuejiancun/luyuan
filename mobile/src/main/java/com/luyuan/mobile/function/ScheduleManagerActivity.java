@@ -119,14 +119,21 @@ public class ScheduleManagerActivity extends BaseActivity implements SearchView.
                 String latitude = String.valueOf(bdLocation.getLatitude());
                 String longitude = String.valueOf(bdLocation.getLongitude());
                 String mLocationResult = bdLocation.getAddrStr();
+                String province = bdLocation.getProvince();
+                String city = bdLocation.getCity();
+                String district = bdLocation.getDistrict();
 
                 StringBuilder url = new StringBuilder();
                 url.append(MyGlobal.API_ADD_LOCATION);
                 url.append("&userId=" + MyGlobal.getUser().getId());
                 url.append("&latitude=" + latitude);
                 url.append("&longitude=" + longitude);
+
                 try {
                     url.append("&location=" + URLEncoder.encode(mLocationResult, "utf-8"));
+                    url.append("&province=" + URLEncoder.encode(province, "utf-8"));
+                    url.append("&city=" + URLEncoder.encode(city, "utf-8"));
+                    url.append("&district=" + URLEncoder.encode(district, "utf-8"));
                 } catch (UnsupportedEncodingException e) {
                 }
 
