@@ -181,6 +181,7 @@
     <string name="training_remind">培训通知</string>
     <string name="notification_remind">重要事项通知</string>
     <string name="warrant_remind">担保到期通知</string>
+    <string name="notice_remind">消息推送</string>
 
     <string name="searchvoucher">请输入单号</string>
     <string name="search_loading">正在查询,请稍候...</string>

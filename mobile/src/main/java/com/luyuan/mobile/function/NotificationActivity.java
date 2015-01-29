@@ -68,6 +68,9 @@ public class NotificationActivity extends Activity {
         } else if (key.contains("warrant")) {
             fragment = new NotificationWarrantFragment();
             actionBar.setTitle(R.string.warrant_remind);
+        } else if (key.contains("notice")) {
+            fragment = new NotificationNoticeFragment();
+            actionBar.setTitle(R.string.notice_remind);
         }
 
         // 根据参数不同，显示对应的推送通知页面
