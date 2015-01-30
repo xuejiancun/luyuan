@@ -343,9 +343,13 @@ public class ScheduleManagerActivity extends BaseActivity implements SearchView.
     public boolean onQueryTextChange(String newText) {
         return true;
     }
-
+    private long lastClick ;
     public boolean onQueryTextSubmit(String query) {
-
+        if (System.currentTimeMillis() - lastClick <= 1000)
+        {
+            return false;
+        }
+        lastClick = System.currentTimeMillis();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         DialogFragment newFragment = ScheduleDialogFragment.newInstance(calendarPickerView.getSelectedDate(), MyGlobal.getUser().getId(), query);
         newFragment.show(fragmentTransaction, "dialog");

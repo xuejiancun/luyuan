@@ -1,9 +1,8 @@
 package com.luyuan.mobile.production;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,39 +17,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.luyuan.mobile.R;
+import com.luyuan.mobile.model.JSONHelper;
+import com.luyuan.mobile.model.ReturnJson;
 import com.luyuan.mobile.model.SuccessData;
-import com.luyuan.mobile.model.WarehouseLocationInventoryListAdapter;
 import com.luyuan.mobile.model.WarehouseVoucheritemList;
+import com.luyuan.mobile.model.http1;
 import com.luyuan.mobile.model.tbl_whPurchaseOrder;
 import com.luyuan.mobile.model.tbl_whPurchaseOrderDetail;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
+
 import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import com.luyuan.mobile.model.http1;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-import com.luyuan.mobile.model.JSONHelper;
-import com.luyuan.mobile.model.ReturnJson;
-import com.google.gson.Gson;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public class WarehouseVoucherConfirmFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -89,6 +79,19 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
         layoutInflater = inflater;
         View view = inflater.inflate(R.layout.warehouse_voucher_confirm_fragment, null);
         listView = (ListView) view.findViewById(R.id.listview_warehouse_voucher_confirm_list);
+        CheckBox chkAll = (CheckBox)view.findViewById(R.id.checkbox_select_all);
+        chkAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                  for (int i = 0; i < warehouseVoucheritemList.getWarehouseVoucheritemDetailList().size(); i++)
+                  {
+                      // View v = listView.getAdapter().getView(i, null, null);
+                      warehouseVoucheritemList.getWarehouseVoucheritemDetailList().get(i).setCheck(b);
+                  }
+                 listView.setAdapter(new SearchListAdapter(getActivity()));
+            }
+        });
 //        ((EditText) view.findViewById(R.id.edittext_confirm_num)).addTextChangedListener(new TextWatcher() {
 //            public void onTextChanged(CharSequence s, int start, int before, int count) {
 //
@@ -135,39 +138,45 @@ public class WarehouseVoucherConfirmFragment extends Fragment implements Adapter
                         j++;
                     }
                 }
-                if (MyGlobal.checkNetworkConnection(getActivity())) {
-                    dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage(getText(R.string.search_loading));
-                    dialog.setCancelable(true);
-                    dialog.show();
-                    final String json = new Gson().toJson(warehouseVouchersave);
-                    Thread thread = new Thread(new Runnable() {
+                if(j>0) {
+                    if (MyGlobal.checkNetworkConnection(getActivity())) {
+                        dialog = new ProgressDialog(getActivity());
+                        dialog.setMessage(getText(R.string.search_loading));
+                        dialog.setCancelable(true);
+                        dialog.show();
+                        final String json = new Gson().toJson(warehouseVouchersave);
+                        Thread thread = new Thread(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            try {
-                                String s = "";
-                                List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-                                list.add(new BasicNameValuePair("json", json));
-                                s = http1.PostData(list,"/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=save");
-                                Message msg = new Message();
-                                msg.what=1;
-                                Bundle d = new Bundle();
-                                d.putString("data",JSONHelper.parseObject(s, ReturnJson.class).getData().get(0).getInfo());
-                                msg.setData(d);
-                                handler.sendMessage(msg);
+                            @Override
+                            public void run() {
+                                try {
+                                    String s = "";
+                                    List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+                                    list.add(new BasicNameValuePair("json", json));
+                                    s = http1.PostData(list, "/modules/An.Warehouse.Web/Ajax/ArrivalChkQuery.ashx?fn=save");
+                                    Message msg = new Message();
+                                    msg.what = 1;
+                                    Bundle d = new Bundle();
+                                    d.putString("data", JSONHelper.parseObject(s, ReturnJson.class).getData().get(0).getInfo());
+                                    msg.setData(d);
+                                    handler.sendMessage(msg);
 
-                            } catch (Exception e) {
+                                } catch (Exception e) {
 
-                                e.printStackTrace();
+                                    e.printStackTrace();
+                                }
+                                dialog.dismiss();
+
                             }
-                            dialog.dismiss();
-
-                        }
-                    });
-                    thread.start();
+                        });
+                        thread.start();
+                    }
                 }
-
+                else
+                {
+                         new AlertDialog.Builder(getActivity()).setMessage("请先至少勾选一个物料").setTitle(R.string.dialog_hint)
+                                                .setPositiveButton(R.string.dialog_confirm, null).create().show();
+                }
 
 
 //                StringBuffer url = new StringBuffer(MyGlobal.API_WHPURSAVE);

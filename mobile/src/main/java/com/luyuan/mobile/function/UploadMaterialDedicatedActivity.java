@@ -83,8 +83,13 @@ public class UploadMaterialDedicatedActivity extends BaseActivity implements Sea
     public boolean onQueryTextChange(String newText) {
         return true;
     }
-
+    private long lastClick ;
     public boolean onQueryTextSubmit(String query) {
+        if (System.currentTimeMillis() - lastClick <= 1000)
+        {
+            return false;
+        }
+        lastClick = System.currentTimeMillis();
         url = new StringBuffer(MyGlobal.API_QUERY_DEDICATED).toString();
         try {
             url = url + "&query=" + URLEncoder.encode(query, "utf-8");

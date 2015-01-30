@@ -46,13 +46,24 @@ public class WarehouseVoucherMakeFragment extends Fragment implements AdapterVie
         View view = inflater.inflate(R.layout.warehouse_voucher_make_fragment, null);
 
         //listView = (ListView) view.findViewById(R.id.listview_warehouse_choose_list);
+	     // Spinner wp  =(Spinner) view.findViewById(R.id.spinner_whname);
+//          wp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//              @Override
+//              public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//              }
+//          });
+
         ((Button) view.findViewById(R.id.button_next)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WarehouseVoucherConfirmFragment warehouseVoucherConfirmFragment = new WarehouseVoucherConfirmFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                whID = widValues[wPosition];
-                unitID = uidValues[uPosition];
+               int wpositon = wspinner.getSelectedItemPosition();
+               int uposition = uspinner.getSelectedItemPosition();
+
+
+                whID = widValues[wpositon];
+                unitID = uidValues[uposition];
                 Bundle args = new Bundle();
                 Bundle data = new Bundle();
                 data.putString("code", code);

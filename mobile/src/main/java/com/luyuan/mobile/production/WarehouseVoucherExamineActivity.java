@@ -56,7 +56,14 @@ public class WarehouseVoucherExamineActivity extends Activity implements SearchV
         return true;
     }
 
+    long lastClick ;
     public boolean onQueryTextSubmit(String query) {
+         if (System.currentTimeMillis() - lastClick <= 1000)
+    {
+       // showToast("点那么快干什么!!!");
+        return false;
+    }
+    lastClick = System.currentTimeMillis();
         rePlaceTabContentForSearch(query);
         return true;
     }
@@ -75,10 +82,10 @@ public class WarehouseVoucherExamineActivity extends Activity implements SearchV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-            return true;
-        }
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            getFragmentManager().popBackStack();
+//            return true;
+//        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

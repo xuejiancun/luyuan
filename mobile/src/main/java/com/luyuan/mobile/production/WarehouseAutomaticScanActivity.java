@@ -1,5 +1,6 @@
 package com.luyuan.mobile.production;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,10 +31,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.luyuan.mobile.R;
-import com.luyuan.mobile.model.JSONHelper;
 import com.luyuan.mobile.model.SuccessData;
 import com.luyuan.mobile.model.WarehouseLocationInventoryListAdapter;
-import com.luyuan.mobile.model.http;
 import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
@@ -41,9 +40,6 @@ import com.luyuan.mobile.util.RequestManager;
 
 import org.apache.http.message.BasicNameValuePair;
 
-import android.annotation.SuppressLint;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -299,10 +295,10 @@ public class WarehouseAutomaticScanActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-            return true;
-        }
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            getFragmentManager().popBackStack();
+//            return true;
+//        }
         if (item.getItemId() == android.R.id.home) {
             finish();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

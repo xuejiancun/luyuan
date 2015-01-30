@@ -83,9 +83,14 @@ public class UploadMaterialActivity extends BaseActivity implements SearchView.O
     public boolean onQueryTextChange(String newText) {
         return true;
     }
-
+    private long lastClick ;
     // 搜索资料
     public boolean onQueryTextSubmit(String query) {
+        if (System.currentTimeMillis() - lastClick <= 1000)
+        {
+            return false;
+        }
+        lastClick = System.currentTimeMillis();
         url = new StringBuffer(MyGlobal.API_QUERY_MATERIAL).toString();
         try {
             url = url + "&query=" + URLEncoder.encode(query, "utf-8");

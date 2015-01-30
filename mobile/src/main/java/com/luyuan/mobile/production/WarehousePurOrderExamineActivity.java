@@ -56,8 +56,14 @@ public class WarehousePurOrderExamineActivity extends Activity implements Search
         return true;
     }
 
+   long lastClick ;
     public boolean onQueryTextSubmit(String query) {
-       // rePlaceTabContentForSearch(MyGlobal.API_WAREHOUSE_VOUCHER_SEARCH + "&whpCode=" + query);
+         if (System.currentTimeMillis() - lastClick <= 1000)
+    {
+       // showToast("点那么快干什么!!!");
+        return false;
+    }
+    lastClick = System.currentTimeMillis();
         rePlaceTabContentForSearch(query);
         return true;
     }
