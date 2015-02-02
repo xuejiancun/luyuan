@@ -2,11 +2,20 @@ package com.luyuan.mobile.model;
 
 public class whBinExchangeDetail {
 
-    private String ProductCode = "";
-    private String PrefixName = "";
-    private String ColorName = "";
-    private String Qty = "";
-    private String ProductBarcode = "";
+    public String ProductCode = "";
+    public String PrefixName = "";
+    public String ColorName = "";
+    public String Qty = "";
+    public String ProductBarcode = "";
+    public String result = "";
+
+    public String getresult() {
+        return result;
+    }
+
+    public void setresult(String result) {
+        this.result = result;
+    }
 
     public String getProductBarCode() {
         return ProductBarcode;

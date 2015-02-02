@@ -20,16 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,10 +38,9 @@ import com.luyuan.mobile.ui.MainActivity;
 import com.luyuan.mobile.util.GsonRequest;
 import com.luyuan.mobile.util.MyGlobal;
 import com.luyuan.mobile.util.RequestManager;
-import android.text.TextWatcher;
+
 import org.apache.http.message.BasicNameValuePair;
 
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +54,7 @@ public class WarehouseBinExchangectivity extends Activity  {
 	private ListView listView;
 	private ProgressDialog progressDialog;
 	private EditText edittext_inbin,edittext_outbin,edittext_product;
+    private TextView textview_product;
 	//private WarehouseBinExchangectivity li = null ;
 	private List<BasicNameValuePair> list;
 	private List<String> list1;
@@ -73,6 +68,7 @@ public class WarehouseBinExchangectivity extends Activity  {
     private HashMap spMap;
     private whBinExchangeData whbinexchangedata = new whBinExchangeData();
     private String recentproduct="";
+   // private Boolean flag=false;
     private List listproduct = new ArrayList();
 	private Handler handler = new Handler() {
 		@Override
@@ -110,25 +106,41 @@ public class WarehouseBinExchangectivity extends Activity  {
         edittext_inbin = (EditText) findViewById(R.id.edittext_inbin);
         edittext_outbin = (EditText) findViewById(R.id.edittext_outbin);
         edittext_product = (EditText) findViewById(R.id.edittext_product);
-
+        textview_product = (TextView)findViewById(R.id.textview_product);
 	    listView = (ListView)findViewById(R.id.listView_information);
 	    c = this;
 	    save.setOnClickListener(savecilck);
         clear.setOnClickListener(clearclick);
+//        edittext_product.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                ((TextView) findViewById(R.id.edittext_product)).setText("");
+//                return true;
+//            }
+//        });
+        edittext_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if(flag==true)
 
-
-
+              ((TextView) findViewById(R.id.edittext_product)).setText("");
+            }
+        });
         edittext_product.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 recentproduct="";
                 try{
                     if(s.length()>16)
                     {
+                        //((TextView) findViewById(R.id.edittext_product)).setText("");
                         edittext_product.setText(s.subSequence(0,16).toString());
+                        textview_product.setText(s.subSequence(0,16).toString());
                     }
                     if(s.length()==16) {
+                        textview_product.setText(s.toString());
                         String outbin = edittext_outbin.getText().toString();
                         if (outbin.equals("")) {
                             new AlertDialog.Builder(WarehouseBinExchangectivity.this).setMessage("无调出库位号").setTitle(R.string.dialog_hint)
@@ -141,17 +153,13 @@ public class WarehouseBinExchangectivity extends Activity  {
                                     .setPositiveButton(R.string.dialog_confirm, null).create().show();
                             return;
                         }
-                        String temp = edittext_product.getText().toString().trim();
+                        final String temp = s.toString();
                         if (temp.length() != 16) {
                             //TextView_bc.setText(TextView_bc.getText().toString().trim()+"\n" +  editText2.getText().toString().trim() +"\r" +  "错误"+  ": " +"扫描有误" );
                             playSounds(1, 0);
                             new AlertDialog.Builder(WarehouseBinExchangectivity.this).setMessage("扫描有误").setTitle(R.string.dialog_hint)
                                     .setPositiveButton(R.string.dialog_confirm, null).create().show();
-                            edittext_product.setText("");
-                            edittext_product.setFocusable(true);
 
-                            edittext_product.setFocusableInTouchMode(true);
-                            edittext_product.requestFocus();
 
 
                         } else {
@@ -182,7 +190,7 @@ public class WarehouseBinExchangectivity extends Activity  {
                                 for (int i = 0; i < listView.getCount(); i++) {
 
                                     whBinExchangeDetail detail = new whBinExchangeDetail();
-                                    View v = listView.getChildAt(i);
+                                    View v = listView.getAdapter().getView(i,null,null);
                                     String productcode=((TextView) v.findViewById(R.id.textview_wbcode)).getText().toString();
                                     detail.setProductCode(productcode);
                                     //wb.getData().get(i).setProductCode(productcode);
@@ -263,10 +271,11 @@ public class WarehouseBinExchangectivity extends Activity  {
                                                         listproduct.add(recentproduct);
                                                      }
                                                     listView.setAdapter(new SearchListAdapter(WarehouseBinExchangectivity.this));
+
                                                 }
                                                 else
                                                 {
-                                                    new AlertDialog.Builder(WarehouseBinExchangectivity.this).setMessage(response.getInfo().toString()).setTitle(R.string.dialog_hint)
+                                                    new AlertDialog.Builder(WarehouseBinExchangectivity.this).setMessage(response.getData().get(0).getresult()).setTitle(R.string.dialog_hint)
                                                             .setPositiveButton(R.string.dialog_confirm, null).create().show();
                                                 }
 
@@ -280,7 +289,10 @@ public class WarehouseBinExchangectivity extends Activity  {
 
                                     }
                                 });
-
+//                                 ((TextView) findViewById(R.id.edittext_product)).setText("");
+//                                   edittext_product.setFocusable(true);
+//                    edittext_product.setFocusableInTouchMode(true);
+//                    edittext_product.requestFocus();
                                 RequestManager.getRequestQueue().add(gsonObjRequest);
                             }
 
@@ -297,12 +309,7 @@ public class WarehouseBinExchangectivity extends Activity  {
                     playSounds(1,0);
                     new AlertDialog.Builder(WarehouseBinExchangectivity.this).setMessage(e.getMessage().toString()).setTitle(R.string.dialog_hint)
                             .setPositiveButton(R.string.dialog_confirm, null).create().show();
-                    recentproduct="";
-                    edittext_product.setText("");
-                    edittext_product.setFocusable(true);
 
-                    edittext_product.setFocusableInTouchMode(true);
-                    edittext_product.requestFocus();
                 }
 
 
@@ -319,6 +326,11 @@ public class WarehouseBinExchangectivity extends Activity  {
             @Override
             public void afterTextChanged(Editable arg0) {
                 // TODO Auto-generated method stub
+//                if(edittext_product.isFocused()==false) {
+//                    edittext_product.setFocusable(true);
+//                    edittext_product.setFocusableInTouchMode(true);
+//                    edittext_product.requestFocus();
+//                }
 
             }
         });

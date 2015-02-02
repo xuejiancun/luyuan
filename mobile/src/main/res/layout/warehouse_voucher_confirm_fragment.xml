@@ -23,16 +23,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:orientation="horizontal"
-            android:gravity="center">
-
+            android:gravity="left">
+            <CheckBox
+			android:id="@+id/checkbox_select_all"
+			android:layout_height="match_parent"
+			android:layout_width="50dp"/>
             <Button
                 android:id="@+id/button_warehouse_voucher_confirm"
                 android:layout_height="50dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="300dp"
                 android:text="@string/save"
                 android:textSize="20dp"
                 android:textColor="#FFFFFF"
@@ -43,16 +44,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:paddingLeft="30dp"
+            android:paddingLeft="50dp"
             android:paddingRight="30dp"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="left">
 
             <Button
                 android:id="@+id/button_warehouse_voucher_check"
-                android:layout_width="0dp"
+                android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:text="@string/check"
                 android:background="#FFEDEDED"
                 android:textSize="20dp" />

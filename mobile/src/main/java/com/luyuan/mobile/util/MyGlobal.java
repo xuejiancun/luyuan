@@ -127,6 +127,7 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_FOLLOWING_SOMEONE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/attention.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
+//    public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/ProductRequirements/DeluxeRequirements.html";
     public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
     public static final String WEBVIEW_URL_EXPRESS = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/EnemyExpress/EnemyExpress.html";
     public static final String WEBVIEW_URL_PRODUCT = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/NewProduct/NewProduct.html";
