@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -123,6 +124,9 @@ public class ScheduleManagerActivity extends BaseActivity implements SearchView.
                 String city = bdLocation.getCity();
                 String district = bdLocation.getDistrict();
 
+                TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                String IMEI = tMgr.getDeviceId();
+
                 StringBuilder url = new StringBuilder();
                 url.append(MyGlobal.API_ADD_LOCATION);
                 url.append("&userId=" + MyGlobal.getUser().getId());
@@ -134,6 +138,7 @@ public class ScheduleManagerActivity extends BaseActivity implements SearchView.
                     url.append("&province=" + URLEncoder.encode(province, "utf-8"));
                     url.append("&city=" + URLEncoder.encode(city, "utf-8"));
                     url.append("&district=" + URLEncoder.encode(district, "utf-8"));
+                    url.append("&IMEI=" + URLEncoder.encode(IMEI, "utf-8"));
                 } catch (UnsupportedEncodingException e) {
                 }
 
@@ -147,6 +152,7 @@ public class ScheduleManagerActivity extends BaseActivity implements SearchView.
                             dialog.dismiss();
 
                             if (response != null && response.getSuccess().equals("true")) {
+
                                 new AlertDialog.Builder(ScheduleManagerActivity.this)
                                         .setMessage(R.string.located_success)
                                         .setTitle(R.string.dialog_hint)

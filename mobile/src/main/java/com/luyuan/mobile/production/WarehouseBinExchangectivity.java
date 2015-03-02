@@ -118,6 +118,14 @@ public class WarehouseBinExchangectivity extends Activity  {
 //                return true;
 //            }
 //        });
+//        edittext_product.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                    edittext_product.setFocusable(true);
+//                    edittext_product.setFocusableInTouchMode(true);
+//                    edittext_product.requestFocus();
+//            }
+//        });
         edittext_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

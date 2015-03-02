@@ -44,69 +44,66 @@ public class WelcomeActivity extends Activity {
                     e.printStackTrace();
                 }
 
-                if (MyGlobal.checkNetworkConnection(WelcomeActivity.this)) {
+                dialog = new ProgressDialog(WelcomeActivity.this);
+                dialog.setMessage(getText(R.string.check_update));
+                dialog.setCancelable(false);
+                dialog.show();
 
-                    dialog = new ProgressDialog(WelcomeActivity.this);
-                    dialog.setMessage(getText(R.string.check_update));
-                    dialog.setCancelable(false);
-                    dialog.show();
+                GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION_NEW + "&versionCode=" + current_code ,
+                        VersionData.class, new Response.Listener<VersionData>() {
+                    @Override
+                    public void onResponse(VersionData response) {
+                        int latestCode = response.getCode();
+                        int need = response.getNeed();
 
-                    GsonRequest gsonObjRequest = new GsonRequest<VersionData>(Request.Method.GET, MyGlobal.API_CHECK_VERSION_NEW + "&versionCode=" + current_code ,
-                            VersionData.class, new Response.Listener<VersionData>() {
-                        @Override
-                        public void onResponse(VersionData response) {
-                            int latestCode = response.getCode();
-                            int need = response.getNeed();
-
-                            if (response != null && response.getSuccess().equals("true") && latestCode > current_code) {
-                                if (need == 0) {
-                                    Dialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
-                                            .setMessage(R.string.dialog_hint_new_version)
-                                            .setTitle(R.string.dialog_hint)
-                                            .setCancelable(false)
-                                            .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    Intent intent = new Intent(WelcomeActivity.this, NotificationActivity.class);
-                                                    intent.putExtra("function", "check_version");
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            })
-                                            .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            })
-                                            .create();
-                                    alertDialog.show();
-                                } else if (need == 1) {
-                                    Intent intent = new Intent(WelcomeActivity.this, NotificationActivity.class);
-                                    intent.putExtra("function", "check_version");
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            } else {
-                                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        if (response != null && response.getSuccess().equals("true") && latestCode > current_code) {
+                            if (need == 0) {
+                                Dialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
+                                        .setMessage(R.string.dialog_hint_new_version)
+                                        .setTitle(R.string.dialog_hint)
+                                        .setCancelable(false)
+                                        .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent intent = new Intent(WelcomeActivity.this, NotificationActivity.class);
+                                                intent.putExtra("function", "check_version");
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .create();
+                                alertDialog.show();
+                            } else if (need == 1) {
+                                Intent intent = new Intent(WelcomeActivity.this, NotificationActivity.class);
+                                intent.putExtra("function", "check_version");
                                 startActivity(intent);
                                 finish();
                             }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                        } else {
                             Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     }
-                    );
-
-                    RequestManager.getRequestQueue().add(gsonObjRequest);
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
+                );
+
+                RequestManager.getRequestQueue().add(gsonObjRequest);
             }
 
         }, 1000);

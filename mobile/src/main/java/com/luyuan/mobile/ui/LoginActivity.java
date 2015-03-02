@@ -75,7 +75,7 @@ public class LoginActivity extends Activity {
 //        password = "123456";
 
 //        username = "ceshi2";
- //       password = "Abc123456";
+//        password = "Abc123456";
 
 //        username = "123";
 //        password = "Wlwdsa12";
@@ -239,6 +239,13 @@ public class LoginActivity extends Activity {
                     } else if (response != null && response.getSuccess().equals("false_account_10nlatter")) {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setMessage(R.string.account_10nlatter)
+                                .setTitle(R.string.dialog_hint)
+                                .setPositiveButton(R.string.dialog_confirm, null)
+                                .create()
+                                .show();
+                    } else if (response != null && response.getSuccess().equals("false_account_disabled")) {
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setMessage(R.string.false_account_disabled)
                                 .setTitle(R.string.dialog_hint)
                                 .setPositiveButton(R.string.dialog_confirm, null)
                                 .create()
