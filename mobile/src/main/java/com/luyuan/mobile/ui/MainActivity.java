@@ -3,6 +3,7 @@ package com.luyuan.mobile.ui;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
     private static final int MSG_SET_ALIAS = 1001;
+    private static   Fragment fragment = null;
+    private ProgressDialog dialog;
 
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
 
@@ -130,21 +133,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         actionBar.setDisplayShowTitleEnabled(true);
 
         setContentView(R.layout.main_activity);
-
         initTab();
-
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("tab") != null) {
             replaceTabContent(intent.getStringExtra("tab"));
         } else {
             replaceTabContent("home");
         }
-
         // setTag();
         setAlias(); // 设置别名，这样才可以实现单点推送
     }
 
-    private void initTab() {
+        private void initTab() {
         LinearLayout layout_tab_home = (LinearLayout) findViewById(R.id.layout_tab_home);
         LinearLayout layout_tab_function = (LinearLayout) findViewById(R.id.layout_tab_function);
         LinearLayout layout_tab_explore = (LinearLayout) findViewById(R.id.layout_tab_explore);
@@ -199,9 +199,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void replaceTabContent(String tab) {
         int tabIndex = 1;
-        Fragment fragment = null;
         if (tab.equals("home")) {
-            fragment = new HomeFragment();
+          fragment = new HomeFragment();
             tabIndex = 1;
         } else if (tab.equals("function")) {
             fragment = new FunctionFragment();
@@ -213,11 +212,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             fragment = new AccountFragment();
             tabIndex = 4;
         }
-
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_content, fragment);
         fragmentTransaction.commit();
-
         changeTabSelectedStyle(tabIndex);
     }
 

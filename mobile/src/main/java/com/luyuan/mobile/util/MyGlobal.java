@@ -36,11 +36,8 @@ public class MyGlobal {
 
     public static final String COLOR_BOTTOM_TAB_SELECTED = "#00CC00";
     public static final String COLOR_BOTTOM_TAB_UNSELECTED = "#000000";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.100.230";    // Develop Server
-//      public static final String SERVER_URL_PREFIX = "http://122.226.37.242:8230/";    // Develop Server
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.60:801";
-//    public static final String SERVER_URL_PREFIX = "http://192.168.10.141";
     public static final String SERVER_URL_PREFIX = "https://erp.luyuan.cn";
+
     public static final String API_FETCH_LOGIN = SERVER_URL_PREFIX + "/modules/An.Systems.Web/Ajax/Login.ashx?fn=login4app";
     public static final String API_FETCH_ROLE = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=chooserole";
     public static final String API_CHECK_SESSION = SERVER_URL_PREFIX + "/modules/An.APP.Web/Ajax/AppService.ashx?fn=checksession";
@@ -127,6 +124,10 @@ public class MyGlobal {
     public static final String WEBVIEW_URL_FOLLOWING_SOMEONE = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/attention.html";
     public static final String WEBVIEW_URL_CHANGE_PASSWORD = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/modifyPwd.html";
     public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/Account/noticeHistory.html";
+
+
+    public static final String chart = SERVER_URL_PREFIX +  "/modules/An.APP.Web/view/HomePage.html";
+
 //    public static final String WEBVIEW_URL_NOTIFICATION_HISTORY = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/ProductRequirements/DeluxeRequirements.html";
     public static final String WEBVIEW_URL_QUERY_PAYROLL = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/PayRoll.aspx";
     public static final String WEBVIEW_URL_EXPRESS = SERVER_URL_PREFIX + "/modules/An.APP.Web/view/EnemyExpress/EnemyExpress.html";
