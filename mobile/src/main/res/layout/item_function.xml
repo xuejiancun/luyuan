@@ -46,6 +46,7 @@
             android:layout_weight="1"
             android:padding="14dp"
             android:layout_gravity="right"
+            android:id="@+id/point_icon"
             android:src="@drawable/function_item_forward_grey" />
 
     </LinearLayout>

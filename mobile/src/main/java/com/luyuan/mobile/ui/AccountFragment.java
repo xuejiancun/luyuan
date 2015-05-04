@@ -62,11 +62,17 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
         functionInfo4.setName(getString(R.string.function_change_password));
         functionInfos.add(functionInfo4);
 
+
         FunctionInfo functionInfo5 = new FunctionInfo();
         functionInfo5.setCode("notification_history");
         functionInfo5.setName(getString(R.string.function_notification_history));
         functionInfos.add(functionInfo5);
 
+        //手势密码
+        FunctionInfo functionInfo6 = new FunctionInfo();
+        functionInfo6.setCode("lock_setting");
+        functionInfo6.setName(getString(R.string.function_lock_setting));
+        functionInfos.add(functionInfo6);
         functionData.setFunctionInfos(functionInfos);
 
         listView = (ListView) view.findViewById(R.id.listview_function_list);
@@ -80,11 +86,9 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
                 editor = sharedPreferences.edit();
-
                 editor.putString("username", "");
                 // editor.putString("password", "");
                 editor.commit();
-
                 startActivity(intent);
             }
         });
@@ -131,7 +135,13 @@ public class AccountFragment extends Fragment implements AdapterView.OnItemClick
                 intent.setClass(getActivity(), WebViewActivity.class);
                 intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
                 intent.putExtra("tab", "account");
-
+                startActivity(intent);
+                break;
+            case 5:
+               intent = new Intent();
+                intent.setClass(getActivity(), SettingActivity.class);
+                intent.putExtra("function", functionData.getFunctionInfos().get(i).getCode());
+                intent.putExtra("tab", "account");
                 startActivity(intent);
                 break;
         }

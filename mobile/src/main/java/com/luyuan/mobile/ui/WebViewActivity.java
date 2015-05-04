@@ -47,7 +47,7 @@ public class WebViewActivity extends BaseActivity {
         if (intent != null && intent.getStringExtra("tab") != null) {
             tab = intent.getStringExtra("tab");
         }
-
+        //设置actionbar
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(false);
@@ -60,6 +60,8 @@ public class WebViewActivity extends BaseActivity {
 
             webview = (WebView) findViewById(R.id.webview);
             WebSettings settings = webview.getSettings();
+
+
             settings.setJavaScriptEnabled(true);
             settings.setJavaScriptCanOpenWindowsAutomatically(true);
             settings.setDomStorageEnabled(true);
@@ -119,7 +121,7 @@ public class WebViewActivity extends BaseActivity {
                 .setPositiveButton(R.string.confirm, null)
                 .create()
                 .show();
-    }
+}
 
     public String getFunctionTitle(String function) {
         String result = "";
@@ -175,8 +177,9 @@ public class WebViewActivity extends BaseActivity {
             result = getText(R.string.function_notification_history).toString();
         } else if (function.equals("query_warrant")) {
             result = getText(R.string.function_query_warrant).toString();
+        }else if(function.equals("chart")){
+            result = getText(R.string.function_chart).toString();
         }
-
         return result;
     }
 
@@ -234,8 +237,9 @@ public class WebViewActivity extends BaseActivity {
             result = MyGlobal.WEBVIEW_URL_NOTIFICATION_HISTORY;
         } else if (function.equals("query_warrant")) {
             result = MyGlobal.WEBVIEW_URL_QUERY_WARRANT;
+        } else if (function.equals("chart")) {//饼状图
+            result = MyGlobal.chart;
         }
-
         return result;
     }
 

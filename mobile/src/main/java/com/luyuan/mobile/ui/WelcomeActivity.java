@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -88,8 +90,20 @@ public class WelcomeActivity extends Activity {
                                 finish();
                             }
                         } else {
-                            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            SharedPreferences sharedPreferences = getSharedPreferences("lockInfo", Context.MODE_APPEND);
+                            String status =sharedPreferences.getString("status", "");//status:on;off 开关
+                            //判断用户是否启用手势解锁
+                            if("on".equals(status)){
+                                //true 跳转到核对密码界面  跳转信息:当前操作option：login
+                                Intent intent = new Intent(WelcomeActivity.this, GestureVerifyActivity.class);
+                                intent.putExtra("option","login");
+                                startActivity(intent);
+                            }else{
+                                //false 正常登陆
+                                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+
                             finish();
                         }
                     }

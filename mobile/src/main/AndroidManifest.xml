@@ -80,6 +80,17 @@
             android:name=".ui.WebViewActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".ui.SettingActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".ui.GestureEditActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.GestureVerifyActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
             android:name=".function.UploadMaterialActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="orientation|screenSize"
@@ -147,6 +158,12 @@
         <activity
             android:name=".production.WarehousePurOrderExamineActivity"
             android:screenOrientation="portrait" />
+
+
+
+
+
+
 
 
         <service
